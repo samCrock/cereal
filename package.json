@@ -1,0 +1,20 @@
+{
+  "name"            : "node-web-scrape",
+  "version"         : "0.0.1",
+  "description"     : "Scrape le web.",
+  "main"            : "server.js",
+  "author"          : "samCrock",
+  "dependencies"    : {
+    "express"       : "latest",
+    "request"       : "latest",
+    "cheerio"       : "latest",
+    "request"       : "latest",
+    "bluebird"      : "latest",
+    "transmission"  : "latest",
+    "fs-path"       : "latest",
+    "electrolyte"   : "latest",
+    "magnet-uri"    : "latest",
+    "fs-extra"      : "latest",
+    "sleep"      : "latest"
+  }
+}
