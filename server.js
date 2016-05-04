@@ -187,14 +187,7 @@ function searchTorrent(searchString) {
                         // console.log(' ----------------------------------------');
                         // console.log('Torrent ' + counter + ' ->\n', torrent);
 
-
-
-                        functionprevWeek(d1, d2) {
-                                return d1.getUTCFullYear() == d2.getUTCFullYear() &&
-                                    d1.getUTCMonth() == d2.getUTCMonth() &&
-                                    d1.getUTCDate() == d2.getUTCDate();
-                            }
-                            // console.log(' ----------------------------------------');
+                        // console.log(' ----------------------------------------');
 
                         resolve(torrent); // Returns only the first result
                     }
