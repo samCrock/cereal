@@ -15,6 +15,7 @@
     "electrolyte"   : "latest",
     "magnet-uri"    : "latest",
     "fs-extra"      : "latest",
-    "sleep"      : "latest"
+    "sleep"         : "latest",
+    "web-torrent"   : "latest"
   }
 }
