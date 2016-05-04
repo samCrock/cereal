@@ -24,7 +24,7 @@ function init() {
 
     request(url, function(error, response, html) {
         if (!error) {
-            console.log('Started..');
+            console.log(chalk.dim('Starting..'));
 
             var $ = cheerio.load(html);
             var json = [];
@@ -84,12 +84,12 @@ function init() {
         }
         // Write monthly.json with all the info regarding the series
         fs.writeFile('monthly.json', JSON.stringify(json, null, 4), function(err) {
-            console.log('File successfully written! - Check your project directory for the monthly.json file');
+            console.log(chalk.yellow('monthly.json file successfully written!'));
 
             // Search from my favourites
             fs.readFile('./following.json', (err, data) => {
                 if (err) throw err;
-                console.log('following.json found! Searching for today\'s series..');
+                console.log(chalk.yellow('following.json found! Searching for today\'s series..'));
                 var following = JSON.parse(data);
                 var following_torrents = [];
 
@@ -100,10 +100,13 @@ function init() {
                 for (var i = json.length - 1; i >= 0; i--) {
                     var nday = json[i].date;
                     if (sameDay(today, nday)) {
-                        console.log('-------------------');
-                        console.log('| Today\'s series  |');
-                        console.log('-------------------');
+                        
+                        console.log(chalk.inverse('-------------------'));
+                        console.log(chalk.inverse('| Today\'s series  |'));
+                        console.log(chalk.inverse('-------------------'));
                         console.log(json[i].series);
+                        console.log();
+
                         getMatch(json[i].series);
                     }
                 }
@@ -120,11 +123,12 @@ function init() {
                         }
                     }
                     Promise.all(following_torrents).then(function(results) {
-                        console.log(following_torrents.length, 'instances found');
+                        console.log(chalk.green(following_torrents.length, 'instances found'));
+                        console.log();
                         if (results.length > 0) {
                             downloadTorrents(results).then(function() {});
                         } else {
-                            console.log('Nothing to see today');
+                            console.log(chalk.bgBlack('Nothing to see today'));
                         }
                     }).catch(function(e) {
                         console.error('That\'s bullshit! ->', e);
@@ -146,7 +150,8 @@ function searchTorrent(searchString) {
 
         // var searchString = json[0].series[0].title + ' ' + json[0].series[0].episode; // First serie first day
 
-        console.log('Searching Kickass for: ', '"' + searchString + '"');
+        console.log(chalk.yellow('Searching Kickass for: '), chalk.white('"' + searchString + '"'));
+        console.log();
 
         searchString = encodeURIComponent(searchString);
 
@@ -195,16 +200,22 @@ function searchTorrent(searchString) {
 function downloadTorrents(tArray) {
     return new Promise(function(resolve, reject) {
         tArray.forEach(function(t) {
-            console.log('Downloading', "'" + t.title + "'");
+            
+            console.log(chalk.magenta('Downloading', "'" + t.title + "'"));
+            console.log();
+            
             var parsed = magnet_uri.decode(t.magnet);
             var path = __dirname + '/download/';
+            
             fsExtra.mkdirp(path, function(err) {
+            
                 if (err) return console.error(err)
+            
                 wt_client.add(t.magnet, {
                     path: path
                 }, function(torrent) {
                     torrent.files.forEach(function(file) {
-                        console.log('Started saving ' + file.name);
+                        console.log(chalk.green('Started saving ') + file.name);
                         file.getBuffer(function(err, buffer) {
                             if (err) {
                                 console.error('Error downloading ' + file.name);
@@ -215,6 +226,7 @@ function downloadTorrents(tArray) {
                             torrent.on('download', function(chunkSize) {
                                     // console.log('chunk size: ' + chunkSize);
                                     var output = [
+                                        chalk.cyan(''),
                                         chalk.cyan('=================='),
                                         chalk.dim('              Name : ') + torrent.name,
                                         chalk.dim('        Downloaded : ') + formatBytes(torrent.downloaded),
