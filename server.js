@@ -221,10 +221,7 @@ function downloadTorrents(tArray) {
                                 console.error('Error downloading ' + file.name);
                                 return;
                             }
-                            // fs.writeFile(path + file.name, buffer, function(err) {
-                            // console.log('Finished downloading ' + file.name);
                             torrent.on('download', function(chunkSize) {
-                                    // console.log('chunk size: ' + chunkSize);
                                     var output = [
                                         chalk.cyan(''),
                                         chalk.cyan('=================='),
@@ -235,16 +232,10 @@ function downloadTorrents(tArray) {
                                         chalk.cyan('==================')
                                     ];
                                     logUpdate(output.join('\n'));
-                                    // logUpdate('Total downloaded: ' + torrent.downloaded);
-                                    // logUpdae('Download speed: ' + formatBytes(torrent.downloadSpeed) + '/s');
-                                    // logUpdate('Progress: ' + Math.floor(torrent.progress * 100) + '%');
-                                    // logUpdate('======');
-
                                 })
-                                // });
 
                             torrent.on('done', function() {
-                                console.log(torrent, ' finished downloading');
+                                console.log(chalk.bgGreen(torrent.name, ' finished downloading'));
                             })
 
                         });
@@ -265,12 +256,6 @@ function replaceAll(str, find, replace) {
 
 
 function sameDay(d1, d2) {
-    return d1.getUTCFullYear() == d2.getUTCFullYear() &&
-        d1.getUTCMonth() == d2.getUTCMonth() &&
-        d1.getUTCDate() == d2.getUTCDate();
-}
-
-function prevWeek(d1, d2) {
     return d1.getUTCFullYear() == d2.getUTCFullYear() &&
         d1.getUTCMonth() == d2.getUTCMonth() &&
         d1.getUTCDate() == d2.getUTCDate();
