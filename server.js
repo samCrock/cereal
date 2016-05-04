@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var fs = require('fs');
 var fsPath = require('fs-path');
@@ -5,14 +7,21 @@ var request = require('request');
 var cheerio = require('cheerio');
 var Promise = require('bluebird');
 var ioc = require('./ioc');
-var app = express();
+var WebTorrent = require('webtorrent');
+let fsExtra = require('fs-extra');
+let magnet_uri = require('magnet-uri');
 
-var transmission = ioc.create('transmission');
+// var sys = require('sys');
+// var exec = require('child_process').exec;
+
+var wt_client = new WebTorrent();
+
+var app = express();
 
 // app.get('/scrape', function(req, res) {
 function init() {
 
-    url = 'http://www.pogdesign.co.uk/cat/';
+    let url = 'http://www.pogdesign.co.uk/cat/';
 
     request(url, function(error, response, html) {
         if (!error) {
@@ -51,7 +60,7 @@ function init() {
                         title = title.split('\r\n        ')[0];
                         var episode = data[i].children[3].children[3].children[0].data;
                         var rex = /\s*[-:p]\s*/;
-                        episode__ = episode.split(rex);
+                        var episode__ = episode.split(rex);
                         // Normalize 
                         if (episode__[1].length === 1) episode__[1] = '0' + episode__[1];
                         if (episode__[4].length === 1) episode__[4] = '0' + episode__[4];
@@ -62,8 +71,8 @@ function init() {
                             episode: episode
                         });
 
-                        // console.log('	Title ->', title);
-                        // console.log('	Ep    -> ', episode);
+                        // console.log('    Title ->', title);
+                        // console.log('    Ep    -> ', episode);
                         // console.log();
 
                     }
@@ -91,7 +100,6 @@ function init() {
 
                 for (var i = json.length - 1; i >= 0; i--) {
                     var nday = json[i].date;
-                    // console.log('today:', today, 'nday:', nday);
                     if (sameDay(today, nday)) {
                         console.log('-------------------');
                         console.log('| Today\'s series  |');
@@ -115,9 +123,7 @@ function init() {
                     Promise.all(following_torrents).then(function(results) {
                         console.log(following_torrents.length, 'instances found');
                         if (results.length > 0) {
-                            downloadTorrents(results).then(function() {
-                                // transmission.getTransmissionStats();
-                            });
+                            downloadTorrents(results).then(function() {});
                         } else {
                             console.log('Nothing to see today');
                         }
@@ -180,7 +186,15 @@ function searchTorrent(searchString) {
                         }
                         // console.log(' ----------------------------------------');
                         // console.log('Torrent ' + counter + ' ->\n', torrent);
-                        // console.log(' ----------------------------------------');
+
+
+
+                        functionprevWeek(d1, d2) {
+                                return d1.getUTCFullYear() == d2.getUTCFullYear() &&
+                                    d1.getUTCMonth() == d2.getUTCMonth() &&
+                                    d1.getUTCDate() == d2.getUTCDate();
+                            }
+                            // console.log(' ----------------------------------------');
 
                         resolve(torrent); // Returns only the first result
                     }
@@ -198,12 +212,46 @@ function downloadTorrents(tArray) {
     return new Promise(function(resolve, reject) {
         tArray.forEach(function(t) {
             console.log('Downloading', "'" + t.title + "'");
-            transmission.addTorrent(t.magnet);
+
+            var parsed = magnet_uri.decode(t.magnet);
+            // console.log(parsed.dn);
+            var path = __dirname + '/download/';
+            fsExtra.mkdirp(path, function(err) {
+                if (err) return console.error(err)
+                wt_client.add(t.magnet, {
+                    path: path
+                }, function(torrent) {
+                    torrent.files.forEach(function(file) {
+                        console.log('Started saving ' + file.name);
+                        file.getBuffer(function(err, buffer) {
+                            if (err) {
+                                console.error('Error downloading ' + file.name)
+                                return
+                            }
+                            fs.writeFile(file.name, buffer, function(err) {
+                                console.log('Finished downloading ' + file.name);
+                                torrent.on('download', function(chunkSize) {
+                                    console.log('chunk size: ' + chunkSize);
+                                    console.log('total downloaded: ' + torrent.downloaded);
+                                    console.log('download speed: ' + torrent.downloadSpeed);
+                                    console.log('progress: ' + torrent.progress);
+                                    console.log('======');
+                                })
+                            });
+
+                            torrent.on('done', function() {
+                                console.log(torrent, ' finished downloading');
+                            })
+
+                        });
+                    });
+                });
+
+            });
         });
         resolve();
     });
 }
-
 
 
 // Utils
@@ -211,14 +259,24 @@ function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
+
 function sameDay(d1, d2) {
     return d1.getUTCFullYear() == d2.getUTCFullYear() &&
         d1.getUTCMonth() == d2.getUTCMonth() &&
         d1.getUTCDate() == d2.getUTCDate();
 }
 
+function prevWeek(d1, d2) {
+    return d1.getUTCFullYear() == d2.getUTCFullYear() &&
+        d1.getUTCMonth() == d2.getUTCMonth() &&
+        d1.getUTCDate() == d2.getUTCDate();
+}
 
-app.listen('8081')
-console.log('Magic happens on port 8081');
+
+
+
+
+// app.listen('8081')
+// console.log('Magic happens on port 8081');
 init();
 exports = module.exports = app;
