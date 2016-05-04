@@ -1,21 +1,20 @@
 'use strict';
 
-var express = require('express');
-var fs = require('fs');
-var fsPath = require('fs-path');
-var request = require('request');
-var cheerio = require('cheerio');
-var Promise = require('bluebird');
-var ioc = require('./ioc');
-var WebTorrent = require('webtorrent');
+let express = require('express');
+let fs = require('fs');
+let fsPath = require('fs-path');
+let request = require('request');
+let cheerio = require('cheerio');
+let Promise = require('bluebird');
+let ioc = require('./ioc');
+let WebTorrent = require('webtorrent');
 let fsExtra = require('fs-extra');
 let magnet_uri = require('magnet-uri');
+let logUpdate = require('log-update');
+let chalk = require('chalk');
 
-// var sys = require('sys');
-// var exec = require('child_process').exec;
 
 var wt_client = new WebTorrent();
-
 var app = express();
 
 // app.get('/scrape', function(req, res) {
@@ -156,17 +155,12 @@ function searchTorrent(searchString) {
         request.get(path, function(error, response, body) {
             if (error) reject(error);
             if (!error && response.statusCode == 200) {
-                // console.log(body);
                 var $ = cheerio.load(body);
                 var json = [];
-
-                // $('td').filter(function() {
                 var counter = 0;
                 $('tr').filter(function() {
-                    // return this.id.match(/torrent_/);
                     var torrent = {};
                     var data = $(this);
-
                     // if (data['0'].attribs) {
                     if (data['0'].attribs.id && data['0'].attribs.id.match(/torrent_/) && counter < 3) {
                         counter++;
@@ -186,13 +180,10 @@ function searchTorrent(searchString) {
                         }
                         // console.log(' ----------------------------------------');
                         // console.log('Torrent ' + counter + ' ->\n', torrent);
-
                         // console.log(' ----------------------------------------');
 
                         resolve(torrent); // Returns only the first result
                     }
-
-                    // json.push(day);
 
                 });
             }
@@ -205,9 +196,7 @@ function downloadTorrents(tArray) {
     return new Promise(function(resolve, reject) {
         tArray.forEach(function(t) {
             console.log('Downloading', "'" + t.title + "'");
-
             var parsed = magnet_uri.decode(t.magnet);
-            // console.log(parsed.dn);
             var path = __dirname + '/download/';
             fsExtra.mkdirp(path, function(err) {
                 if (err) return console.error(err)
@@ -218,19 +207,29 @@ function downloadTorrents(tArray) {
                         console.log('Started saving ' + file.name);
                         file.getBuffer(function(err, buffer) {
                             if (err) {
-                                console.error('Error downloading ' + file.name)
-                                return
+                                console.error('Error downloading ' + file.name);
+                                return;
                             }
-                            fs.writeFile(file.name, buffer, function(err) {
-                                console.log('Finished downloading ' + file.name);
-                                torrent.on('download', function(chunkSize) {
-                                    console.log('chunk size: ' + chunkSize);
-                                    console.log('total downloaded: ' + torrent.downloaded);
-                                    console.log('download speed: ' + torrent.downloadSpeed);
-                                    console.log('progress: ' + torrent.progress);
-                                    console.log('======');
+                            // fs.writeFile(path + file.name, buffer, function(err) {
+                            // console.log('Finished downloading ' + file.name);
+                            torrent.on('download', function(chunkSize) {
+                                    // console.log('chunk size: ' + chunkSize);
+                                    var output = [
+                                        chalk.cyan('=================='),
+                                        chalk.dim('              Name : ') + torrent.name,
+                                        chalk.dim('        Downloaded : ') + formatBytes(torrent.downloaded),
+                                        chalk.dim('             Speed : ') + formatBytes(torrent.downloadSpeed) + '/s',
+                                        chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100) + '%',
+                                        chalk.cyan('==================')
+                                    ];
+                                    logUpdate(output.join('\n'));
+                                    // logUpdate('Total downloaded: ' + torrent.downloaded);
+                                    // logUpdae('Download speed: ' + formatBytes(torrent.downloadSpeed) + '/s');
+                                    // logUpdate('Progress: ' + Math.floor(torrent.progress * 100) + '%');
+                                    // logUpdate('======');
+
                                 })
-                            });
+                                // });
 
                             torrent.on('done', function() {
                                 console.log(torrent, ' finished downloading');
@@ -265,11 +264,18 @@ function prevWeek(d1, d2) {
         d1.getUTCDate() == d2.getUTCDate();
 }
 
-
-
-
+function formatBytes(bytes, decimals) {
+    if (bytes == 0) return '0 Byte';
+    var k = 1000; // or 1024 for binary
+    var dm = decimals + 1 || 3;
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    var i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
 
 // app.listen('8081')
 // console.log('Magic happens on port 8081');
+
 init();
+
 exports = module.exports = app;
