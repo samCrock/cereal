@@ -472,6 +472,10 @@
                 "episode": "S02E16"
             },
             {
+                "title": "American Pickers",
+                "episode": "S09E10"
+            },
+            {
                 "title": "NOVA",
                 "episode": "S43E21"
             },
@@ -498,6 +502,10 @@
             {
                 "title": "Modern Family",
                 "episode": "S07E20"
+            },
+            {
+                "title": "Rogue",
+                "episode": "S04E07"
             },
             {
                 "title": "Black-ish",
@@ -590,6 +598,10 @@
             {
                 "title": "Houdini & Doyle",
                 "episode": "S01E09"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "S03E31"
             }
         ]
     },
@@ -628,6 +640,10 @@
             {
                 "title": "The 100",
                 "episode": "S03E14"
+            },
+            {
+                "title": "Project Runway All-Stars",
+                "episode": "S05E13"
             },
             {
                 "title": "Scandal",
@@ -784,6 +800,10 @@
                 "episode": "S02E01"
             },
             {
+                "title": "Transformers: Robots in Disguise",
+                "episode": "S02E12"
+            },
+            {
                 "title": "My Little Pony",
                 "episode": "S06E07"
             },
@@ -878,6 +898,10 @@
             {
                 "title": "The Last Man On Earth",
                 "episode": "S02E17"
+            },
+            {
+                "title": "The Carmichael Show",
+                "episode": "S02E10"
             },
             {
                 "title": "Bordertown",
@@ -1158,6 +1182,10 @@
                 "episode": "S02E17"
             },
             {
+                "title": "American Pickers",
+                "episode": "S09E11"
+            },
+            {
                 "title": "NOVA",
                 "episode": "S43E22"
             },
@@ -1188,6 +1216,10 @@
             {
                 "title": "Black-ish",
                 "episode": "S02E23"
+            },
+            {
+                "title": "Catfish",
+                "episode": "S05E12"
             },
             {
                 "title": "Chicago PD",
@@ -1228,6 +1260,10 @@
             {
                 "title": "Janet King",
                 "episode": "S02E08"
+            },
+            {
+                "title": "Peaky Blinders",
+                "episode": "S03E02"
             },
             {
                 "title": "Houdini & Doyle",
@@ -1290,6 +1326,14 @@
             {
                 "title": "Inside Amy Schumer",
                 "episode": "S04E04"
+            },
+            {
+                "title": "Impractical Jokers",
+                "episode": "S05E14"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "S02E15"
             },
             {
                 "title": "The Catch",
@@ -1390,6 +1434,10 @@
                 "episode": "S02E08"
             },
             {
+                "title": "Transformers: Robots in Disguise",
+                "episode": "S02E13"
+            },
+            {
                 "title": "My Little Pony",
                 "episode": "S06E08"
             }
@@ -1468,6 +1516,10 @@
             {
                 "title": "The Last Man On Earth",
                 "episode": "S02E18"
+            },
+            {
+                "title": "The Carmichael Show",
+                "episode": "S02E11"
             },
             {
                 "title": "Bordertown",
@@ -1692,6 +1744,10 @@
         "date": "2016-05-18T22:00:00.000Z",
         "series": [
             {
+                "title": "Rosewood",
+                "episode": "S01E21"
+            },
+            {
                 "title": "Heartbeat",
                 "episode": "S01E09"
             },
@@ -1778,6 +1834,14 @@
             {
                 "title": "Grace and Frankie",
                 "episode": "S02E13"
+            },
+            {
+                "title": "Peaky Blinders",
+                "episode": "S03E03"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "S03E03"
             }
         ]
     },
@@ -1820,6 +1884,10 @@
             {
                 "title": "The Catch",
                 "episode": "S01E09"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "S02E16"
             },
             {
                 "title": "The Catch",
@@ -2094,6 +2162,10 @@
         "date": "2016-05-25T22:00:00.000Z",
         "series": [
             {
+                "title": "Rosewood",
+                "episode": "S01E22"
+            },
+            {
                 "title": "Heartbeat",
                 "episode": "S01E10"
             },
@@ -2156,6 +2228,10 @@
             {
                 "title": "The Soul Man",
                 "episode": "S05E09"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "S03E04"
             }
         ]
     },
@@ -2163,6 +2239,14 @@
         "date_label": "Friday 27th May 2016",
         "date": "2016-05-26T22:00:00.000Z",
         "series": [
+            {
+                "title": "Bones",
+                "episode": "S11E17"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "S02E17"
+            },
             {
                 "title": "Rush Hour",
                 "episode": "S01E09"
