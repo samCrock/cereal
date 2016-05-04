@@ -16,6 +16,8 @@
     "magnet-uri"    : "latest",
     "fs-extra"      : "latest",
     "sleep"         : "latest",
-    "web-torrent"   : "latest"
+    "webtorrent"   : "latest",
+    "log-update"    : "latest",
+    "chalk"    : "latest"
   }
 }
