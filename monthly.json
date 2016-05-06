@@ -346,6 +346,10 @@
                 "episode": "S01E03"
             },
             {
+                "title": "You Me Her",
+                "episode": "S01E07"
+            },
+            {
                 "title": "Deadliest Catch",
                 "episode": "S12E06"
             },
@@ -958,6 +962,10 @@
             {
                 "title": "Marcella",
                 "episode": "S01E06"
+            },
+            {
+                "title": "Plebs",
+                "episode": "S03E07"
             }
         ]
     },
@@ -1110,6 +1118,10 @@
             {
                 "title": "Containment",
                 "episode": "S01E04"
+            },
+            {
+                "title": "You Me Her",
+                "episode": "S01E08"
             },
             {
                 "title": "The Grinder",
@@ -1572,6 +1584,10 @@
             {
                 "title": "Marcella",
                 "episode": "S01E07"
+            },
+            {
+                "title": "Plebs",
+                "episode": "S03E08"
             }
         ]
     },

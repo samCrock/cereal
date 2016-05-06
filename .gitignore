@@ -2,3 +2,8 @@
 node_modules
 # Donloaded torrents
 download
+
+*.map
+*.log
+typings
+frontend/*/*.js
