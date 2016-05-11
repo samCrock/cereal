@@ -23,6 +23,20 @@ exports = module.exports = function() {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
+    common_module['formatTime'] = function formatTime(millis) {
+        var str = '';
+        var date = new Date(millis);
+        var days = date.getUTCDate() - 1;
+        var hours = date.getUTCHours();
+        var minutes = date.getUTCMinutes();
+        var seconds = date.getUTCSeconds();
+        if (days != 0) str += days + 'd ';
+        if (hours != 0) str += hours + 'h ';
+        if (minutes != 0) str += minutes + 'm ';
+        if (seconds != 0) str += seconds + 's ';
+        return str;
+    }
+
     return common_module;
 }
 

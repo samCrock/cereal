@@ -1,26 +1,21 @@
 'use strict';
 
 let express = require('express');
-let fs = require('fs');
+let fsExtra = require('fs-extra');
 let fsPath = require('fs-path');
 let request = require('request');
 let cheerio = require('cheerio');
 let Promise = require('bluebird');
 let ioc = require('./ioc');
-// let WebTorrent = require('webtorrent');
-let fsExtra = require('fs-extra');
-let magnet_uri = require('magnet-uri');
 let logUpdate = require('log-update');
 let chalk = require('chalk');
 
-// var wt_client = new WebTorrent();
 // var app = express();
 
-var torrentService = ioc.create('services/torrent-service');
-var commonService = ioc.create('services/common-service');
+let torrentService = ioc.create('services/torrent-service');
+let commonService = ioc.create('services/common-service');
 
 // app.get('/scrape', function(req, res) {
-// function init() {
 return new Promise(function(resolve, reject) {
 
     let url = 'http://www.pogdesign.co.uk/cat/';
@@ -86,11 +81,11 @@ return new Promise(function(resolve, reject) {
 
         }
         // Write monthly.json with all the info regarding the series
-        fs.writeFile('monthly.json', JSON.stringify(json, null, 4), function(err) {
+        fsExtra.writeFile('monthly.json', JSON.stringify(json, null, 4), function(err) {
             console.log(chalk.yellow('monthly.json file successfully written!'));
 
             // Search from my favourites
-            fs.readFile('./following.json', (err, data) => {
+            fsExtra.readFile('../following.json', (err, data) => {
                 if (err) throw err;
                 console.log(chalk.yellow('following.json found! Searching for today\'s series..'));
                 var following = JSON.parse(data);
@@ -100,39 +95,43 @@ return new Promise(function(resolve, reject) {
                 var today = new Date();
                 today.setDate(today.getDate() - 1); // actually yesterday
 
-                for (var i = json.length - 1; i >= 0; i--) {
-                    var nday = json[i].date;
-                    if (commonService.sameDay(today, nday)) {
+                if (json) {
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        var nday = json[i].date;
+                        if (commonService.sameDay(today, nday)) {
 
-                        console.log(chalk.inverse('-------------------'));
-                        console.log(chalk.inverse('| Today\'s series  |'));
-                        console.log(chalk.inverse('-------------------'));
-                        console.log(json[i].series);
-                        console.log();
+                            console.log(chalk.inverse('--------------------------------------'));
+                            console.log(chalk.inverse(json[i].date_label));
+                            console.log(chalk.inverse('--------------------------------------'));
+                            console.log(json[i].series);
+                            console.log();
 
-                        getMatch(json[i].series);
+                            getMatch(json[i]);
+                        }
                     }
-                }
+                    
+                } else reject('Check your connection');
+
 
                 // Then cycle through dailySeries to match myFollowing   
-                function getMatch(dailySeries) {
+                function getMatch(day) {
+                    var dailySeries = day.series;
                     for (var i = following.length - 1; i >= 0; i--) {
                         var myTitle = following[i].title;
                         // console.log('Current serie:', myTitle);
                         for (var j = dailySeries.length - 1; j >= 0; j--) {
                             if (myTitle.toUpperCase() === dailySeries[j].title.toUpperCase()) { // perfect match is bs!
-                                // following_torrents.push(searchTorrent(dailySeries[j].title + ' ' + dailySeries[j].episode));
                                 following_torrents.push(torrentService.searchTorrent(dailySeries[j].title + ' ' + dailySeries[j].episode));
                             }
                         }
                     }
                     Promise.all(following_torrents).then(function(results) {
-                        console.log(chalk.green(following_torrents.length, 'instances found'));
+                        console.log(chalk.green(results.length, 'instances found'));
                         console.log();
                         if (results.length > 0) {
-                            // downloadTorrents(results)
-                            torrentService.downloadArray(results)
+                            torrentService.downloadArray(results, day.date_label)
                                 .then(function() {
+                                    console.log(chalk.green('S\'all good!'));
                                     resolve();
                                 });
                         } else {
@@ -140,7 +139,7 @@ return new Promise(function(resolve, reject) {
                             resolve();
                         }
                     }).catch(function(e) {
-                        console.error('That\'s bullshit! ->', e);
+                        return console.error(chalk.red('That\'s bullshit! ->', e));
                     });
 
                 }
@@ -151,8 +150,6 @@ return new Promise(function(resolve, reject) {
     });
 });
 
-// }
 
-// init();
 
 // exports = module.exports = app;
