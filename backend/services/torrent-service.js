@@ -1,39 +1,39 @@
-'use strict';
+'use strict'
 
-let chalk = require('chalk');
-let request = require('request');
-let cheerio = require('cheerio');
-let ioc = require('../ioc');
-let fsExtra = require('fs-extra');
-let magnet_uri = require('magnet-uri');
-let WebTorrent = require('webtorrent');
-let logUpdate = require('log-update');
-let chokidar = require('chokidar');
+let chalk = require('chalk')
+let request = require('request')
+let cheerio = require('cheerio')
+let ioc = require('../ioc')
+let fsExtra = require('fs-extra')
+let magnet_uri = require('magnet-uri')
+let WebTorrent = require('webtorrent')
+let logUpdate = require('log-update')
+let chokidar = require('chokidar')
 
-let wt_client = new WebTorrent();
+let wt_client = new WebTorrent()
+
+let jsonService = ioc.create('services/json-service')
 
 exports = module.exports = function(commonService) {
 
-    let torrent_module = {};
-    let path = process.cwd() + '/../download/';
-    let watcher = chokidar.watch(path);
+    let torrent_module = {}
+    let path = process.cwd() + '/../download/'
+    let watcher = chokidar.watch(path)
 
-    torrent_module['downloadArray'] = function downloadTorrents(tArray, day_label) {
-
+    torrent_module['downloadTorrent'] = function downloadTorrent(t, day_label) {
         return new Promise(function(resolve, reject) {
-
             // var tPromises = [];
             // Initialize watcher
             watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
 
-            tArray.forEach(function(t) {
+            // tArray.forEach(function(t) {
 
-                console.log(chalk.magenta("'" + t.title + "'"));
-                console.log();
+            console.log(chalk.magenta("'" + t.title + "'"))
+            console.log()
 
-                // var parsed = magnet_uri.decode(t.magnet);
+            // var parsed = magnet_uri.decode(t.magnet);
 
-                fsExtra.mkdirp(path, function(err) {
+            fsExtra.mkdirp(path, function(err) {
 
                     if (err) return console.error(err)
 
@@ -43,22 +43,22 @@ exports = module.exports = function(commonService) {
 
                         if (torrent.progress != 1) {
                             torrent.files.forEach(function(file) {
-                                console.log(chalk.green('Started downloading ') + file.name + '\n');
+                                console.log(chalk.green('Started downloading ') + file.name + '\n')
                                 file.getBuffer(function(err, buffer) {
                                     if (err) {
-                                        console.error('Error downloading ' + file.name);
-                                        reject(err);
+                                        console.error('Error downloading ' + file.name)
+                                        reject(err)
                                     }
-                                });
-                            });
+                                })
+                            })
                         }
 
                         torrent.on('done', function() {
-                            console.log(chalk.bgGreen(torrent.name, ' ready'));
-                            console.log();
-                            logUpdate.done();
-                            resolve();
-                            updateLocalTorrents({
+                            console.log(chalk.bgGreen(torrent.name, ' ready'))
+                            console.log()
+                            logUpdate.done()
+                            resolve()
+                            jsonService.updateLibrary({
                                 // date: day_label,
                                 // name: string,
                                 title: torrent.name,
@@ -70,7 +70,7 @@ exports = module.exports = function(commonService) {
                                 video_location: torrent.name + '/' + torrent.name + '.' + t.extension,
                                 progress: torrent.progress,
                                 ready: torrent.progress === 1 ? true : false
-                            });
+                            })
                         })
 
                         torrent.on('download', function(chunkSize) {
@@ -83,15 +83,15 @@ exports = module.exports = function(commonService) {
                                 chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100) + '%',
                                 chalk.dim('         Remaining : ') + commonService.formatTime(torrent.timeRemaining),
                                 chalk.cyan('==================')
-                            ];
-                            logUpdate(output.join('\n'));
+                            ]
+                            logUpdate(output.join('\n'))
                         })
 
-                    });
+                    })
 
-                });
-            });
-        });
+                })
+                // })
+        })
     }
 
 
@@ -160,43 +160,6 @@ exports = module.exports = function(commonService) {
                     resolve(JSON.parse(data));
                 }
             })
-        })
-    }
-
-    let updateLocalTorrents = function(torrent_object) {
-        return new Promise(function(resolve, reject) {
-            fsExtra.readFile('local_torrents.json', (err, data) => {
-                // if (err) throw err;
-                var json = [];
-                if (data) { // Locals exists
-                    // console.log(chalk.blue('local_torrents found\n'));
-                    json = JSON.parse(data);
-                    for (var i = json.length - 1; i >= 0; i--) {
-                        if (json[i].title === torrent_object.title && json[i].ready === true) {
-                            // console.log(chalk.blue('torrent already downloaded\n'));
-                            resolve(json);
-                            return;
-                        }
-                    }
-                    json.push(torrent_object);
-                    // console.log(chalk.bgBlue(JSON.stringify(json)) + '\n');
-                    fsExtra.writeFile('local_torrents.json', JSON.stringify(json, null, 4), function(err) {
-                        if (err) reject('Cannot write file :', err);
-                        // console.log(chalk.blue('new torrent added to locals\n'));
-                        // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
-                        resolve(json);
-                    });
-                } else { // first entry
-                    // console.log(chalk.blue('first local download!\n'));
-                    json.push(torrent_object);
-                    fsExtra.writeFile('local_torrents.json', JSON.stringify(json, null, 4), function(err) {
-                        if (err) reject('Cannot write file :', err);
-                        // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
-                        resolve(json);
-                    });
-                }
-            });
-
         })
     }
 

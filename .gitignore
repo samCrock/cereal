@@ -2,6 +2,8 @@
 node_modules
 # Donloaded torrents
 download
+# json
+backend/json
 
 *.map
 *.log

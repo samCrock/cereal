@@ -9,9 +9,13 @@ exports = module.exports = function() {
     }
 
     common_module['sameDay'] = function sameDay(d1, d2) {
-        return d1.getUTCFullYear() == d2.getUTCFullYear() &&
-            d1.getUTCMonth() == d2.getUTCMonth() &&
-            d1.getUTCDate() == d2.getUTCDate();
+        // let result = d1.getUTCFullYear() == d2.getUTCFullYear() &&
+        //     d1.getUTCMonth() == d2.getUTCMonth() &&
+        //     d1.getUTCDate() == d2.getUTCDate()
+        // console.log(typeof d1, typeof d2)
+        // console.log(result)
+        // return result
+        return d1.toDateString() === d2.toDateString()
     }
 
     common_module['formatBytes'] = function formatBytes(bytes, decimals) {
