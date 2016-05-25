@@ -1,25 +1,25 @@
 {
-    "name": "Cereal",
-    "version": "0.0.1",
-    "description": "stream & download series",
-    "main": "express.js",
-    "author": "samCrock",
-    "dependencies": {
-        "express": "latest",
-        "request": "latest",
-        "cheerio": "latest",
-        "request": "latest",
-        "bluebird": "latest",
-        "transmission": "latest",
-        "fs-path": "latest",
-        "electrolyte": "latest",
-        "magnet-uri": "latest",
-        "fs-extra": "latest",
-        "sleep": "latest",
-        "webtorrent": "latest",
-        "log-update": "latest",
-        "chalk": "latest",
-        "chokidar": "latest",
-        "body-parser": "latest"
-    }
+  "name": "Cereal",
+  "version": "0.0.1",
+  "description": "stream & download series",
+  "main": "express.js",
+  "author": "samCrock",
+  "dependencies": {
+    "bluebird": "latest",
+    "body-parser": "latest",
+    "chalk": "latest",
+    "cheerio": "latest",
+    "chokidar": "latest",
+    "electrolyte": "latest",
+    "express": "latest",
+    "fs-extra": "latest",
+    "fs-path": "latest",
+    "log-update": "latest",
+    "magnet-uri": "latest",
+    "node-zip": "^1.1.1",
+    "request": "latest",
+    "sleep": "latest",
+    "transmission": "latest",
+    "webtorrent": "latest"
+  }
 }

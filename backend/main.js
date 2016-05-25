@@ -12,20 +12,23 @@ let chalk = require('chalk');
 let torrentService = ioc.create('services/torrent-service');
 let commonService = ioc.create('services/common-service');
 let jsonService = ioc.create('services/json-service');
+let subService = ioc.create('services/subs-service')
 
 jsonService.month()
     .then(function(json) {
         console.log(chalk.yellow('monthly.json file successfully written!'))
             // Search from my favourites
-        fsExtra.readFile('../following.json', (err, data) => {
+        fsExtra.readFile('./json/following.json', (err, data) => {
             if (err) throw err;
             console.log(chalk.yellow('following.json found! Searching for today\'s series..'))
-            var following = JSON.parse(data)
-            var following_torrents = []
+            let following = JSON.parse(data)
+            let following_torrents = []
 
             // dailySeries contains today's series
-            var today = new Date()
-            today.setDate(today.getDate() - 1); // actually yesterday
+            let today = new Date()
+
+            let searchDay = process.argv[2] ? process.argv[2] : 1
+            today.setDate(today.getDate() - searchDay); // actually yesterday
 
             // console.log(json)
             for (var i = json.length - 1; i >= 0; i--) {
@@ -33,17 +36,14 @@ jsonService.month()
 
                 if (commonService.sameDay(today, nday)) {
 
-                    console.log(chalk.inverse('--------------------------------------'))
+                    console.log()
                     console.log(chalk.inverse(json[i].date_label))
-                    console.log(chalk.inverse('--------------------------------------'))
                     console.log(json[i].series)
                     console.log()
 
                     getMatch(json[i])
                 }
             }
-
-
 
             // Then cycle through dailySeries to match myFollowing   
             function getMatch(day) {
@@ -57,6 +57,7 @@ jsonService.month()
                     }
                 }
                 Promise.all(following_torrents).then(function(results) {
+                    console.log()
                     console.log(chalk.green(results.length, 'instances found'))
                     console.log()
                     let torrentsArray = []
@@ -65,8 +66,9 @@ jsonService.month()
                             torrentsArray.push(torrentService.downloadTorrent(results[i], day.date_label))
                         }
 
-                        Promise.all(torrentsArray).then( (results) => {
-                            console.log(chalk.green('Done'))
+                        Promise.all(torrentsArray).then((results) => {
+                            console.log(chalk.green('Done\n'))
+                            // subService.download(results[1])
                         })
 
                     } else {
@@ -81,3 +83,8 @@ jsonService.month()
 
         })
     })
+
+// subService.search("Silicon.Valley.S03E05.720p.HDTV.x264-AVS[rarbg]")
+// .then( (link) => {
+//     subService.download(link)
+// })
