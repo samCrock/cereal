@@ -18,11 +18,6 @@ $ npm run start [x]
 ```
 x => Optional integer setting the day to search (default = yesterday)
 
-## Start (backend scripts only)
-```
-$ npm run backend [x]
-```
-
 ### Example   
 ```
 $ node main.js 2
