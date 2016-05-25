@@ -1,7 +1,9 @@
 {
     "name": "Cereal",
     "version": "0.0.1",
+    "repository": "https://github.com/samCrock/cereal",
     "description": "stream & download series",
+    "license": "MIT",
     "main": "express.js",
     "author": "samCrock",
     "dependencies": {
@@ -23,7 +25,8 @@
         "webtorrent": "latest"
     },
     "scripts": {
-        "start": "electron main.js && node ./backend/main.js"
+        "backend": "node ./backend/main.js",
+        "start": "electron main.js & node ./backend/main.js"
     },
     "devDependencies": {
         "electron-prebuilt": "^1.1.2"
