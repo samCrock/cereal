@@ -74,7 +74,7 @@ exports = module.exports = function() {
                             series: []
                         }
                         for (var i = this.children.length - 1; i >= 0; i--) {
-                            if (this.children[i].name === 'div' && this.children[i].attribs.class === 'ep info') {
+                            if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep info')) {
                                 var d = this.children[i].children;
                                 for (var j = d.length - 1; j >= 0; j--) {
                                     if (d[j].name === 'span') {
