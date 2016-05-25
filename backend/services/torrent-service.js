@@ -18,14 +18,14 @@ let subService = ioc.create('services/subs-service')
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '/../download/'
+    let path = process.cwd() + '/download/'
     let watcher = chokidar.watch(path)
 
     torrent_module['downloadTorrent'] = function downloadTorrent(t, day_label) {
         return new Promise(function(resolve, reject) {
 
             // Initialize watcher
-            watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
+            // watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
 
             console.log(chalk.magenta("'" + t.title + "'"))
             console.log()
@@ -56,10 +56,10 @@ exports = module.exports = function(commonService) {
                         logUpdate.done()
 
                         subService.search(torrent.name)
-                            .then((link) => {
-                                subService.download(link)
+                            .then((opts) => {
+                                subService.download(opts)
                             })
-                            
+
                         resolve(torrent.name)
 
                         jsonService.updateLibrary({

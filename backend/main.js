@@ -18,7 +18,7 @@ jsonService.month()
     .then(function(json) {
         console.log(chalk.yellow('monthly.json file successfully written!'))
             // Search from my favourites
-        fsExtra.readFile('./json/following.json', (err, data) => {
+        fsExtra.readFile('./backend/json/following.json', (err, data) => {
             if (err) throw err;
             console.log(chalk.yellow('following.json found! Searching for today\'s series..'))
             let following = JSON.parse(data)
