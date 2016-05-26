@@ -21,7 +21,7 @@ exports = module.exports = function(commonService) {
     let path = process.cwd() + '/download/'
     let watcher = chokidar.watch(path)
 
-    torrent_module['downloadTorrent'] = function downloadTorrent(t, day_label) {
+    torrent_module['downloadTorrent'] = function downloadTorrent(t) {
         return new Promise(function(resolve, reject) {
 
             // Initialize watcher
@@ -63,14 +63,14 @@ exports = module.exports = function(commonService) {
                         resolve(torrent.name)
 
                         jsonService.updateLibrary({
-                            // date: day_label,
-                            // name: string,
+                            serie: t.serie,
+                            episode: t.episode,
                             title: torrent.name,
                             seeds: torrent.seeds,
                             size: torrent.size,
-                            released: day_label,
+                            // released: day_label,
                             extension: t.extension,
-                            magnet: torrent.magnet,
+                            magnet: t.magnet,
                             video_location: torrent.name + '/' + torrent.name + '.' + t.extension,
                             progress: torrent.progress,
                             ready: torrent.progress === 1 ? true : false
@@ -98,11 +98,12 @@ exports = module.exports = function(commonService) {
     }
 
 
-    torrent_module['searchTorrent'] = function searchTorrent(searchString) {
+    torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
         return new Promise(function(resolve, reject) {
 
-            // var searchString = json[0].series[0].title + ' ' + json[0].series[0].episode; // First serie first day
-
+            var serie = searchObj.serie
+            var episode = searchObj.episode
+            var searchString = serie + ' ' + episode
             console.log(chalk.yellow('Searching Kickass for: '), chalk.white('"' + searchString + '"'))
             console.log()
 
@@ -128,7 +129,8 @@ exports = module.exports = function(commonService) {
                             if (data_params) {
                                 var json_obj = commonService.replaceAll(data_params, "'", '"')
                                 json_obj = JSON.parse(json_obj)
-
+                                torrent.serie = serie
+                                torrent.episode = episode
                                 torrent.title = decodeURIComponent(json_obj.name)
                                 torrent.seeds = row[4].children[0].data
                                 torrent.size = row.children()['2'].prev.data + row.children()['2'].children[0].data

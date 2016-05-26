@@ -6,6 +6,7 @@
     "license": "MIT",
     "main": "express.js",
     "author": "samCrock",
+    "main": "main.js",
     "dependencies": {
         "bluebird": "latest",
         "body-parser": "latest",
@@ -25,7 +26,7 @@
         "webtorrent": "latest"
     },
     "scripts": {
-        "start": "node ./backend/main.js"
+        "start": "./node_modules/.bin/electron main.js & node ./backend/main.js"
     },
     "devDependencies": {
         "electron-prebuilt": "^1.1.2"

@@ -1,0 +1,57 @@
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+</head>
+
+<body ng-app="CerealApp" ng-cloak>
+    <div ng-controller="mainCtrl">
+        <md-content class="md-padding" layout-xs="column" layout="row">
+            <div flex-xs flex-gt-xs="50" ng-repeat="local in locals track by $index">
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{ local.serie }}</span>
+                            <span class="md-subhead">{{ local.episode }}</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>Watch</md-button>
+                        <md-button>Delete</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+    <!-- Your application bootstrap  -->
+    <script type="text/javascript">
+    angular.module('CerealApp', ['ngMaterial'])
+        .controller('mainCtrl', ['$scope', function($scope) {
+            let fsExtra = require('fs-extra')
+            $scope.locals = [];
+            fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
+                if (err) console.error(err)
+                if (data) { // Locals exists
+                    $scope.locals = JSON.parse(data)
+                    $scope.$apply()
+                }
+            })
+
+        }]);
+    require('./renderer.js')
+    </script>
+</body>
+
+</html>

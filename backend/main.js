@@ -9,8 +9,8 @@ let chalk = require('chalk');
 
 // var app = express();
 
-let torrentService = ioc.create('services/torrent-service');
 let commonService = ioc.create('services/common-service');
+let torrentService = ioc.create('services/torrent-service');
 let jsonService = ioc.create('services/json-service');
 let subService = ioc.create('services/subs-service')
 
@@ -27,6 +27,11 @@ jsonService.month()
             // dailySeries contains today's series
             let today = new Date()
 
+            for (var i = process.argv.length - 1; i >= 0; i--) {
+                process.argv[i]
+                console.log(chalk.bgGreen(process.argv[i]))
+            }
+            
             let searchDay = process.argv[2] ? process.argv[2] : 1
             today.setDate(today.getDate() - searchDay); // actually yesterday
 
@@ -52,7 +57,10 @@ jsonService.month()
                     var myTitle = following[i].title;
                     for (var j = dailySeries.length - 1; j >= 0; j--) {
                         if (myTitle.toUpperCase() === dailySeries[j].title.toUpperCase()) { // perfect match is bs!
-                            following_torrents.push(torrentService.searchTorrent(dailySeries[j].title + ' ' + dailySeries[j].episode));
+                            following_torrents.push(torrentService.searchTorrent({
+                                serie: dailySeries[j].title, 
+                                episode: dailySeries[j].episode
+                            }));
                         }
                     }
                 }
@@ -63,17 +71,13 @@ jsonService.month()
                     let torrentsArray = []
                     if (results.length > 0) {
                         for (var i = results.length - 1; i >= 0; i--) {
-                            torrentsArray.push(torrentService.downloadTorrent(results[i], day.date_label))
+                            torrentsArray.push(torrentService.downloadTorrent(results[i]))
                         }
-
                         Promise.all(torrentsArray).then((results) => {
                             console.log(chalk.green('Done\n'))
-                            // subService.download(results[1])
                         })
-
                     } else {
-                        console.log(chalk.bgBlack('Nothing to see today'))
-                        return
+                        return console.log(chalk.bgBlack('Nothing to see today'))
                     }
                 }).catch(function(e) {
                     return console.error(chalk.red('That\'s bullshit! ->', e))

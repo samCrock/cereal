@@ -19,7 +19,7 @@ exports = module.exports = function() {
                 var json = []
                 if (data) { // Locals exists
                     // console.log(chalk.blue('local_torrents found\n'));
-                    json = JSON.parse(data);
+                    json = JSON.parse(data)
                     for (var i = json.length - 1; i >= 0; i--) {
                         if (json[i].title === torrent_object.title && json[i].ready === true) {
                             // console.log(chalk.blue('torrent already downloaded\n'));
