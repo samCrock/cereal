@@ -23,3 +23,14 @@ x => Optional integer setting the day to search (default = yesterday)
 $ node main.js 2
 ```
 Look for shows aired 2 days ago
+
+
+## Single episode download
+```
+$ npm run download [serie] [episode]
+```
+### Example   
+```
+$ node run download "Silicon Valley" "s03e01"
+```
+
