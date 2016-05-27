@@ -2,6 +2,7 @@
 
 let chalk = require('chalk');
 
+let ioc = require('./ioc')
 let torrentService = ioc.create('services/torrent-service');
 let jsonService = ioc.create('services/json-service');
 let subService = ioc.create('services/subs-service')
