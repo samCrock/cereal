@@ -8,8 +8,8 @@
 
 <body ng-app="CerealApp" ng-cloak>
     <div ng-controller="mainCtrl">
-        <md-content class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="50" ng-repeat="local in locals track by $index">
+        <!--         <md-content class="md-padding" layout-xs="column" layout="column">
+            <div flex-xs flex-gt-xs="50" ng-repeat="local in locals track by $index" layout-margin class="box">
                 <md-card>
                     <md-card-title>
                         <md-card-title-text>
@@ -17,7 +17,9 @@
                             <span class="md-subhead">{{ local.episode }}</span>
                         </md-card-title-text>
                         <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
+                            <div class="md-media-lg card-media">
+                                <img ng-src="./res/thumbs/archer.jpg" class="md-card-image">
+                            </div>
                         </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
@@ -26,7 +28,16 @@
                     </md-card-actions>
                 </md-card>
             </div>
-        </md-content>
+        </md-content> -->
+        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+            <md-grid-tile md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" ng-repeat="local in locals track by $index" style="background: #ff8a80;">
+            <!-- <md-icon md-svg-icon="./res/thumbs/archer.jpg"></md-icon> -->
+            <img ng-src="{{ imagePath }}" class="md-card-image" alt="image">
+                <md-grid-tile-footer>
+                    <h1>{{ local.serie }} {{ local.episode }}</h1>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
     </div>
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
@@ -45,6 +56,7 @@
                 if (err) console.error(err)
                 if (data) { // Locals exists
                     $scope.locals = JSON.parse(data)
+                    $scope.imagePath = './res/thumbs/maron.jpeg'
                     $scope.$apply()
                 }
             })

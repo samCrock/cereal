@@ -16,7 +16,7 @@ $ npm install
 ```
 $ npm run start [x]
 ```
-x => Optional integer setting the day to search (default = yesterday)
+x => Optional integer setting the day to search (default = 1 = yesterday)
 
 ### Example   
 ```
