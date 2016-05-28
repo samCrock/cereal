@@ -4,6 +4,7 @@ let request = require('request')
 let cheerio = require('cheerio')
 let Promise = require('bluebird')
 let fsExtra = require('fs-extra')
+let chalk = require('chalk')
 
 let url = 'http://www.pogdesign.co.uk/cat/'
 let json
@@ -12,6 +13,38 @@ exports = module.exports = function() {
 
     let json_module = {}
 
+    json_module['updateFollowing'] = function updateFollowing(showObj) {
+        return new Promise(function(resolve, reject) {
+            fsExtra.readFile('./backend/json/following.json', (err, data) => {
+                // if (err) throw err;
+                var json = []
+                if (data) { // Locals exists
+                    // console.log(chalk.blue('local_torrents found\n'));
+                    json = JSON.parse(data)
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        if (json[i].title.toLowerCase() === showObj.title.toLowerCase() && json[i].poster) {
+                            // console.log(chalk.blue('already following'));
+                            resolve(json)
+                            return
+                        }
+                    }
+                    json.push(showObj);
+                    // console.log(chalk.bgBlue(JSON.stringify(json)) + '\n');
+                    fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
+                        if (err) reject('Cannot write file :', err)
+                            // console.log(chalk.blue('new torrent added to locals\n'));
+                            // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
+                        resolve(json)
+                    })
+                }else {
+                    console.log(chalk.red('Problems writing following.json'));
+                    reject()
+                }
+            })
+
+        })
+    }
+    
     json_module['updateLibrary'] = function updateLibrary(torrent_object) {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
@@ -52,6 +85,8 @@ exports = module.exports = function() {
 
     json_module['month'] = function month() {
 
+        console.log(chalk.blue('Checking calendar'))
+
         return new Promise(function(resolve, reject) {
 
             request(url, function(error, response, html) {
@@ -71,7 +106,7 @@ exports = module.exports = function() {
                         var day = {
                             date: date_obj,
                             date_label: date_label,
-                            series: []
+                            shows: []
                         }
                         for (var i = this.children.length - 1; i >= 0; i--) {
                             if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep info')) {
@@ -83,7 +118,7 @@ exports = module.exports = function() {
                                             if (children[k].name === 'p') {
                                                 var title = children[k].children[0].children[0].data
                                                 var episode = children[k].children[0].next.next.children[0].data
-                                                day.series.push({
+                                                day.shows.push({
                                                     title: title,
                                                     episode: episode
                                                 })
@@ -96,11 +131,11 @@ exports = module.exports = function() {
                         json.push(day)
                     })
 
+                    // Write monthly.json with all the info regarding the shows
+                    fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
+                        resolve(json)
+                    })
                 }
-                // Write monthly.json with all the info regarding the series
-                fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
-                    resolve(json)
-                })
             })
         })
     }

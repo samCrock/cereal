@@ -3,65 +3,208 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
 </head>
 
 <body ng-app="CerealApp" ng-cloak>
     <div ng-controller="mainCtrl">
-        <!--         <md-content class="md-padding" layout-xs="column" layout="column">
-            <div flex-xs flex-gt-xs="50" ng-repeat="local in locals track by $index" layout-margin class="box">
-                <md-card>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">{{ local.serie }}</span>
-                            <span class="md-subhead">{{ local.episode }}</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media">
-                                <img ng-src="./res/thumbs/archer.jpg" class="md-card-image">
-                            </div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Watch</md-button>
-                        <md-button>Delete</md-button>
+        <md-content layout-gt-sm="row" layout-padding>
+            <form ng-submit="search()">
+                <md-input-container>
+                    <label>Show</label>
+                    <input ng-model="search.show" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Season</label>
+                    <input ng-model="search.season" required>
+                </md-input-container>
+                <md-input-container>
+                    <label>Episode</label>
+                    <input ng-model="search.episode" required>
+                </md-input-container>
+                <md-button type="submit" aria-label="Search">
+                    <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+<!--                     <md-progress-circular class="md-accent md-hue-2" md-mode="indeterminate" md-diameter="20" flex ng-show="search_loading" style="margin-left: 100px;"></md-progress-circular> -->
+                </md-button>
+            </form>
+        </md-content>
+        <md-content class="md-padding">
+            <md-card ng-repeat="local in locals track by $index">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ local.show }}</span>
+                        <span class="md-subhead">ep {{ local.episode }}</span>
+                        <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="local.download_info"></md-progress-linear>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content layout="row" layout-align="space-between center center">
+                    <img ng-src="{{ local.poster }}" class="md-card-image">
+                    <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info" style="margin-left: 100px;"></md-progress-circular>
+                    <div layout-align="start" ng-show="local.download_info && local.download_info.progress < 100" flex>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">Speed</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.download_info.speed }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">Downloaded</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.download_info.downloaded }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">Size</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.size }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">Seeds</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.seeds }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">ETA</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.download_info.remaining }}</div>
+                        </div>
+                    </div>
+                    <md-card-actions layout="row" layout-align="end center" ng-show="local.download_info && local.download_info.progress == 100">
+                        <md-button ng-click="console.log('Not there yet..')">Watch</md-button>
+                        <!-- <md-button>Action 2</md-button> -->
                     </md-card-actions>
-                </md-card>
-            </div>
-        </md-content> -->
-        <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
-            <md-grid-tile md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" ng-repeat="local in locals track by $index" style="background: #ff8a80;">
-            <!-- <md-icon md-svg-icon="./res/thumbs/archer.jpg"></md-icon> -->
-            <img ng-src="{{ imagePath }}" class="md-card-image" alt="image">
-                <md-grid-tile-footer>
-                    <h1>{{ local.serie }} {{ local.episode }}</h1>
-                </md-grid-tile-footer>
-            </md-grid-tile>
-        </md-grid-list>
+                </md-card-content>
+            </md-card>
+        </md-content>
     </div>
     <!-- Angular Material requires Angular.js Libraries -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="node_modules/angular-messages/angular-messages.min.js"></script>
     <!-- Angular Material Library -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-    <!-- Your application bootstrap  -->
+    <script src="node_modules/angular-material/angular-material.min.js"></script>
+    <script src="node_modules/angular-material-icons/angular-material-icons.min.js"></script>
+    <!-- ngElectron  -->
     <script type="text/javascript">
-    angular.module('CerealApp', ['ngMaterial'])
-        .controller('mainCtrl', ['$scope', function($scope) {
-            let fsExtra = require('fs-extra')
-            $scope.locals = [];
-            fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
-                if (err) console.error(err)
-                if (data) { // Locals exists
-                    $scope.locals = JSON.parse(data)
-                    $scope.imagePath = './res/thumbs/maron.jpeg'
-                    $scope.$apply()
-                }
-            })
+    angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
+        .controller('mainCtrl', ['$scope', '$interval', function($scope, $interval) {
 
-        }]);
+            $scope.locals = []
+
+            let fsExtra = require('fs-extra');
+            let fsPath = require('fs-path');
+            let ioc = require('./ioc');
+            let logUpdate = require('log-update');
+            let chalk = require('chalk');
+
+            let commonService = ioc.create('services/common-service');
+            let torrentService = ioc.create('services/torrent-service');
+            let jsonService = ioc.create('services/json-service');
+            let subService = ioc.create('services/subs-service')
+
+            // console.log('CURRENT TORRENTS -->', torrentService.getCurrents())
+
+            $scope.search = () => {
+                $scope.search_loading = true
+                if ($scope.search.season.length === 1) $scope.search.season = '0' + $scope.search.season
+                if ($scope.search.episode.length === 1) $scope.search.episode = '0' + $scope.search.episode
+                torrentService.searchTorrent({
+                    show: $scope.search.show,
+                    episode: 'S' + $scope.search.season + 'E' + $scope.search.episode
+                }).then((torrent) => {
+                    console.log('Torrent found:', torrent)
+                    torrent.show = commonService.getShowTitleFromTorrent(torrent)
+                    $scope.locals.push(torrent)
+                    $scope.search_loading = false
+                    $scope.$apply()
+                    torrentService.downloadTorrent(torrent, $scope)
+                        .then(() => {
+                            console.log('Done')
+                        })
+                })
+
+            }
+
+            // let posterService = ioc.create('services/poster-service')
+
+            jsonService.month()
+                .then(function(json) {
+                    console.log(chalk.yellow('monthly.json file successfully written!'))
+                        // Search from my favourites
+                    fsExtra.readFile('./backend/json/following.json', (err, data) => {
+                        if (err) throw err;
+                        console.log(chalk.yellow('following.json found! Searching for today\'s shows..'))
+                        let following = JSON.parse(data)
+                        let following_torrents = []
+
+                        // dailyShows contains today's shows
+                        let today = new Date()
+                            // let searchDay = process.argv[2] ? process.argv[2] : 1
+                        today.setDate(today.getDate() - 2); // actually yesterday
+
+                        // console.log(json)
+                        for (var i = json.length - 1; i >= 0; i--) {
+                            var nday = json[i].date
+
+                            if (commonService.sameDay(today, nday)) {
+
+                                console.log()
+                                console.log(chalk.inverse(json[i].date_label))
+                                console.log(json[i].shows)
+                                console.log()
+
+                                getMatch(json[i])
+                            }
+                        }
+
+                        // Then cycle through dailyShows to match myFollowing   
+                        function getMatch(day) {
+                            var dailyShows = day.shows;
+                            for (var i = following.length - 1; i >= 0; i--) {
+                                var myTitle = following[i].title;
+                                for (var j = dailyShows.length - 1; j >= 0; j--) {
+                                    if (myTitle.toUpperCase() === dailyShows[j].title.toUpperCase()) { // perfect match is bs!
+                                        let searchObj = {
+                                                show: dailyShows[j].title,
+                                                episode: dailyShows[j].episode
+                                            }
+                                            // console.log('searchObj', searchObj)
+                                        following_torrents.push(torrentService.searchTorrent(searchObj));
+                                    }
+                                }
+                            }
+                            Promise.all(following_torrents).then(function(results) {
+                                console.log()
+                                console.log(chalk.green(results.length, 'instances found'))
+                                console.log()
+
+                                let torrentsArray = []
+                                if (results.length > 0) {
+                                    for (var i = results.length - 1; i >= 0; i--) {
+                                        // posterService.getPoster(results[i].show)
+                                        following.filter((followed_show) => {
+                                            if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
+                                                results[i].poster = followed_show.poster
+                                            }
+                                        })
+                                        console.log('---> ', results[i])
+                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
+                                        $scope.locals.push(results[i])
+                                    }
+                                    $scope.$apply()
+                                    Promise.all(torrentsArray).then((results) => {
+                                        console.log(chalk.green('Done\n'))
+                                    })
+                                } else {
+                                    return console.log(chalk.bgBlack('Nothing to see today'))
+                                }
+                            }).catch(function(e) {
+                                return console.error(chalk.red('That\'s bullshit! ->', e))
+                            })
+
+                        }
+
+                    })
+                })
+
+        }])
+        // require('./backend/main.js')
+
+    require('./backend/services/torrent-service.js')
     require('./renderer.js')
     </script>
 </body>

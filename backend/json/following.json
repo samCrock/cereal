@@ -1,15 +1,49 @@
 [
-	{ "title" : "Game Of Thrones" },
-	{ "title" : "Family Guy" },
-	{ "title" : "Better Call Saul" }, 
-	{ "title" : "Vice" }, 
-	{ "title" : "Archer" }, 
-	{ "title" : "Vinyl" },
-	{ "title" : "The Simpsons" },
-	{ "title" : "Silicon Valley" },
-	{ "title" : "Gotham" },
-	{ "title" : "New Girl" },
-	{ "title" : "Real Time with Bill Maher" },
-	{ "title" : "Last Week Tonight" },
-	{ "title" : "Preacher" }
+    {
+        "title": "game of thrones"
+    },
+    {
+        "title": "family guy"
+    },
+    {
+        "title": "better call saul"
+    },
+    {
+        "title": "vice"
+    },
+    {
+        "title": "archer"
+    },
+    {
+        "title": "vinyl"
+    },
+    {
+        "title": "the simpsons"
+    },
+    {
+        "title": "silicon valley"
+    },
+    {
+        "title": "gotham"
+    },
+    {
+        "title": "new girl"
+    },
+    {
+        "title": "Real Time with Bill Maher"
+    },
+    {
+        "title": "last week tonight"
+    },
+    {
+        "title": "preacher"
+    },
+    {
+        "title": "wayward pines",
+        "poster": "./res/posters/wayward-pines.jpg"
+    },
+    {
+        "title": "maron",
+        "poster": "./res/posters/maron.jpg"
+    }
 ]

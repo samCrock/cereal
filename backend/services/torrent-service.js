@@ -5,23 +5,28 @@ let request = require('request')
 let cheerio = require('cheerio')
 let ioc = require('../ioc')
 let fsExtra = require('fs-extra')
-let magnet_uri = require('magnet-uri')
 let WebTorrent = require('webtorrent')
 let logUpdate = require('log-update')
 let chokidar = require('chokidar')
+let magnetUri = require('magnet-uri')
 
 let wt_client = new WebTorrent()
 
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
+let posterService = ioc.create('services/poster-service')
 
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '/download/'
+    let path = process.cwd() + '\\download\\'
     let watcher = chokidar.watch(path)
 
-    torrent_module['downloadTorrent'] = function downloadTorrent(t) {
+    torrent_module['getCurrents'] = function getCurrents() {
+        return wt_client.torrents
+    }
+
+    torrent_module['downloadTorrent'] = function downloadTorrent(t, scope) {
         return new Promise(function(resolve, reject) {
 
             // Initialize watcher
@@ -29,6 +34,8 @@ exports = module.exports = function(commonService) {
 
             console.log(chalk.magenta("'" + t.title + "'"))
             console.log()
+
+            // commonService.getShowTitleFromTorrent(t)
 
             fsExtra.mkdirp(path, function(err) {
 
@@ -60,21 +67,11 @@ exports = module.exports = function(commonService) {
                                 subService.download(opts)
                             })
 
-                        resolve(torrent.name)
+                        jsonService.updateLibrary(torrent)
 
-                        jsonService.updateLibrary({
-                            serie: t.serie,
-                            episode: t.episode,
-                            title: torrent.name,
-                            seeds: torrent.seeds,
-                            size: torrent.size,
-                            // released: day_label,
-                            extension: t.extension,
-                            magnet: t.magnet,
-                            video_location: torrent.name + '/' + torrent.name + '.' + t.extension,
-                            progress: torrent.progress,
-                            ready: torrent.progress === 1 ? true : false
-                        })
+                        resolve(torrent.name)
+                        scope.$apply()
+
                     })
 
                     torrent.on('download', function(chunkSize) {
@@ -89,6 +86,22 @@ exports = module.exports = function(commonService) {
                             chalk.cyan('==================')
                         ]
                         logUpdate(output.join('\n'))
+
+                        torrent.id = t.id
+
+                        scope.locals.filter(function(obj) {
+                            if (obj.id === torrent.id) {
+                                obj.download_info = {
+                                        progress: Math.floor(torrent.progress * 100),
+                                        remaining: commonService.formatTime(torrent.timeRemaining),
+                                        ready: torrent.progress === 1 ? true : false,
+                                        speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
+                                        downloaded: commonService.formatBytes(torrent.downloaded)
+                                    }
+                                    // console.log('obj:', obj)
+                                scope.$apply()
+                            }
+                        })
                     })
 
                 })
@@ -101,9 +114,9 @@ exports = module.exports = function(commonService) {
     torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
         return new Promise(function(resolve, reject) {
 
-            var serie = searchObj.serie
+            var show = searchObj.show
             var episode = searchObj.episode
-            var searchString = serie + ' ' + episode
+            var searchString = show + ' ' + episode
             console.log(chalk.yellow('Searching Kickass for: '), chalk.white('"' + searchString + '"'))
             console.log()
 
@@ -112,8 +125,11 @@ exports = module.exports = function(commonService) {
             var url = 'https://kickass.unblocked.tv/usearch/' + searchString
 
             request.get(url, function(error, response, body) {
-                if (error) reject(error);
-                if (response.statusCode) console.log(chalk.yellow(response.statusCode));
+
+                if (error || !response) return reject(error);
+
+                console.log(chalk.yellow(response.statusCode));
+
                 if (!error && response.statusCode == 200) {
                     var $ = cheerio.load(body);
                     var json = [];
@@ -129,7 +145,7 @@ exports = module.exports = function(commonService) {
                             if (data_params) {
                                 var json_obj = commonService.replaceAll(data_params, "'", '"')
                                 json_obj = JSON.parse(json_obj)
-                                torrent.serie = serie
+                                torrent.show = show
                                 torrent.episode = episode
                                 torrent.title = decodeURIComponent(json_obj.name)
                                 torrent.seeds = row[4].children[0].data
@@ -137,10 +153,10 @@ exports = module.exports = function(commonService) {
                                 torrent.released = row[3].children[0].data
                                 torrent.extension = json_obj.extension
                                 torrent.magnet = json_obj.magnet
-
-                                // console.log(chalk.blue(' ----------------------------------------'));
-                                // console.log(chalk.blue('Torrent ' + counter + ' ->\n', torrent.title));
-                                // console.log(chalk.blue(' ----------------------------------------'));
+                                torrent.id = commonService.generateID()
+                                    // console.log(chalk.blue(' ----------------------------------------'));
+                                    // console.log(chalk.blue('Torrent ' + counter + ' ->\n', torrent.title));
+                                    // console.log(chalk.blue(' ----------------------------------------'));
 
                                 resolve(torrent) // Returns only the first result
                             }

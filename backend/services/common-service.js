@@ -8,6 +8,16 @@ exports = module.exports = function() {
         return str.replace(new RegExp(find, 'g'), replace);
     }
 
+    common_module['getShowTitleFromTorrent'] = function getShowTitleFromTorrent(torrent) {
+        let show_title = torrent.title.split(/S[0-9]+E[0-9]+/)
+        show_title = show_title[0].slice(0, -1)
+        return show_title
+    }
+
+    common_module['generateID'] = function getRandomInt() {
+        return Math.floor(Math.random() * (999999999 - 1)) + 1;
+    }
+
     common_module['sameDay'] = function sameDay(d1, d2) {
         // let result = d1.getUTCFullYear() == d2.getUTCFullYear() &&
         //     d1.getUTCMonth() == d2.getUTCMonth() &&

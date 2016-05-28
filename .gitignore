@@ -4,6 +4,8 @@ node_modules
 download
 # json
 backend/json
+# resources
+res
 
 *.map
 *.log
