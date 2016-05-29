@@ -37,13 +37,48 @@ exports = module.exports = function(commonService) {
 
             // commonService.getShowTitleFromTorrent(t)
 
+            // Set poster
+            scope.locals.filter(function(obj) {
+                // console.log('obj', obj)
+                jsonService.getPoster(obj.show).then((poster) => {
+                    if (poster) {
+                        obj.poster = poster
+                    } else {
+                        posterService.downloadPoster(obj.show).then(() => {
+                            oj.poster = poster
+                        })
+                    }
+                })
+            })
+
             fsExtra.mkdirp(path, function(err) {
 
                 if (err) return console.error(err)
 
+                // console.log('TORRENTS:', wt_client.torrents)
+
                 wt_client.add(t.magnet, {
                     path: path
                 }, function(torrent) {
+
+                    t.path = torrent.path + torrent.name
+
+                    jsonService.getLocalTorrent(t.title).then((result) => {
+                        if (result) {
+                            scope.locals.filter(function(obj) {
+                                if (result.title === obj.title) {
+                                    console.log('Already here baby', result)
+                                    obj = result
+                                    t.ready = true
+
+                                    resolve(result.name)
+                                    scope.$apply()
+                                }
+                            })
+                        } else { console.log('not found') }
+                    })
+
+                    jsonService.updateLibrary(t)
 
                     if (torrent.progress != 1) {
                         torrent.files.forEach(function(file) {
@@ -60,14 +95,14 @@ exports = module.exports = function(commonService) {
                     torrent.on('done', function() {
                         console.log(chalk.bgGreen(torrent.name, ' ready'))
                         console.log()
-                        logUpdate.done()
+                            // logUpdate.done()
 
-                        subService.search(torrent.name)
-                            .then((opts) => {
-                                subService.download(opts)
-                            })
+                        subService.search(torrent.name).then((opts) => {
+                            subService.download(opts)
+                        })
 
-                        jsonService.updateLibrary(torrent)
+                        t.ready = true
+                        jsonService.updateLibrary(t)
 
                         resolve(torrent.name)
                         scope.$apply()

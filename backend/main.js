@@ -87,5 +87,5 @@ let posterService = ioc.create('services/poster-service')
 //     subService.download(link)
 // })
 
-// posterService.getPoster("Archer")
+// posterService.downloadPoster("Archer")
 // .then( () => {})

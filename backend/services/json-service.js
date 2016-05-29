@@ -16,27 +16,23 @@ exports = module.exports = function() {
     json_module['updateFollowing'] = function updateFollowing(showObj) {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
-                // if (err) throw err;
+                if (err) throw err;
                 var json = []
                 if (data) { // Locals exists
                     // console.log(chalk.blue('local_torrents found\n'));
                     json = JSON.parse(data)
                     for (var i = json.length - 1; i >= 0; i--) {
                         if (json[i].title.toLowerCase() === showObj.title.toLowerCase() && json[i].poster) {
-                            // console.log(chalk.blue('already following'));
                             resolve(json)
                             return
                         }
                     }
                     json.push(showObj);
-                    // console.log(chalk.bgBlue(JSON.stringify(json)) + '\n');
                     fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
                         if (err) reject('Cannot write file :', err)
-                            // console.log(chalk.blue('new torrent added to locals\n'));
-                            // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
                         resolve(json)
                     })
-                }else {
+                } else {
                     console.log(chalk.red('Problems writing following.json'));
                     reject()
                 }
@@ -44,42 +40,85 @@ exports = module.exports = function() {
 
         })
     }
-    
-    json_module['updateLibrary'] = function updateLibrary(torrent_object) {
+
+    json_module['getPoster'] = function getPoster(showName) {
         return new Promise(function(resolve, reject) {
-            fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
-                // if (err) throw err;
-                var json = []
+            // console.log('showName', showName)
+            fsExtra.readFile('./backend/json/following.json', (err, data) => {
                 if (data) { // Locals exists
-                    // console.log(chalk.blue('local_torrents found\n'));
-                    json = JSON.parse(data)
+                    let json = JSON.parse(data)
                     for (var i = json.length - 1; i >= 0; i--) {
-                        if (json[i].title === torrent_object.title && json[i].ready === true) {
-                            // console.log(chalk.blue('torrent already downloaded\n'));
-                            resolve(json)
-                            return
+                        if (json[i].title.toLowerCase() === showName.toLowerCase()) {
+                            resolve(json[i].poster)
                         }
                     }
-                    json.push(torrent_object);
-                    // console.log(chalk.bgBlue(JSON.stringify(json)) + '\n');
-                    fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
-                        if (err) reject('Cannot write file :', err)
-                        // console.log(chalk.blue('new torrent added to locals\n'));
-                        // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
-                        resolve(json)
-                    })
-                } else { // first entry
-                    // console.log(chalk.blue('first local download!\n'));
-                    json.push(torrent_object);
-                    fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
-                        if (err) reject('Cannot write file :', err)
-                        // console.log(chalk.blue('Successfully updated local_torrents: ', JSON.stringify(json)));
-                        resolve(json)
-                    })
                 }
             })
 
         })
+    }
+
+    json_module['getLocalTorrent'] = function getLocalTorrent(title) {
+        return new Promise(function(resolve, reject) {
+            // console.log('local title', title)
+            fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
+                if (data) { // Locals exists
+                    let json = JSON.parse(data)
+                    json.filter((torrent) => {
+                        // console.log('torrent title', torrent.title)
+                        if (torrent.title.toLowerCase() === title.toLowerCase()) {
+                            // console.log('match:', torrent)
+                            resolve(torrent)
+                        }
+                    })
+                    reject()
+                }
+            })
+        })
+    }
+
+    json_module['getLocals'] = function getLocals(locals) {
+        return new Promise(function(resolve, reject) {
+            // console.log('local title', title)
+            fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
+                if (data) { // Locals exists
+                    let json = JSON.parse(data)
+                    json.filter((torrent) => {
+                        locals.push(torrent)
+                    })
+                    resolve()
+                }
+            })
+        })
+    }
+
+
+    json_module['updateLibrary'] = function updateLibrary(torrent_object) {
+        // return new Promise(function(resolve, reject) {
+        fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
+            if (err) throw err;
+            var json = []
+            if (data) { // Locals exists
+                json = JSON.parse(data)
+                json.filter((jsonObj, i) => {
+                    if (jsonObj.title === torrent_object.title) json.splice(i, 1)
+                })
+                json.push(torrent_object)
+                fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
+                    if (err) reject('Cannot write file :', err)
+                        // console.log(torrent_object.title, 'added')
+                    return json
+                })
+            } else { // first entry
+                json.push(torrent_object);
+                fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
+                    if (err) reject('Cannot write file :', err)
+                    return json
+                })
+            }
+        })
+
+        // })
     }
 
 

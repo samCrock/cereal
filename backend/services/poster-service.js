@@ -20,7 +20,7 @@ exports = module.exports = function(commonService) {
     let torrent_module = {}
     let path = process.cwd() + '/download/'
 
-    torrent_module['getPoster'] = function getPoster(showName) {
+    torrent_module['downloadPoster'] = function downloadPoster(showName) {
         return new Promise(function(resolve, reject) {
 
             console.log(chalk.yellow('Searching trakt.tv for: '), chalk.white('"' + showName + '"'))

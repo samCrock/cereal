@@ -1,11 +1,30 @@
 'use strict';
 
+let util = require('util')
+
 exports = module.exports = function() {
 
     let common_module = {};
 
     common_module['replaceAll'] = function replaceAll(str, find, replace) {
         return str.replace(new RegExp(find, 'g'), replace);
+    }
+
+    common_module['openFile'] = function openFile(filePath) {
+        function getCommandLine() {
+            switch (process.platform) {
+                case 'darwin':
+                    return 'open';
+                case 'win32':
+                    return 'start';
+                case 'win64':
+                    return 'start';
+                default:
+                    return 'xdg-open';
+            }
+        }
+        var exec = require('child_process').exec;
+        exec(getCommandLine() + ' ' + filePath);
     }
 
     common_module['getShowTitleFromTorrent'] = function getShowTitleFromTorrent(torrent) {

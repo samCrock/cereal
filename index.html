@@ -24,7 +24,7 @@
                 </md-input-container>
                 <md-button type="submit" aria-label="Search">
                     <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
-<!--                     <md-progress-circular class="md-accent md-hue-2" md-mode="indeterminate" md-diameter="20" flex ng-show="search_loading" style="margin-left: 100px;"></md-progress-circular> -->
+                    <!--                     <md-progress-circular class="md-accent md-hue-2" md-mode="indeterminate" md-diameter="20" flex ng-show="search_loading" style="margin-left: 100px;"></md-progress-circular> -->
                 </md-button>
             </form>
         </md-content>
@@ -39,8 +39,8 @@
                 </md-card-title>
                 <md-card-content layout="row" layout-align="space-between center center">
                     <img ng-src="{{ local.poster }}" class="md-card-image">
-                    <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info" style="margin-left: 100px;"></md-progress-circular>
-                    <div layout-align="start" ng-show="local.download_info && local.download_info.progress < 100" flex>
+                    <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular>
+                    <div layout-align="start" ng-show="!local.ready && local.download_info" flex>
                         <div layout="row" style="padding-left: 10px;">
                             <div flex-gt-sm="66" flex="33">Speed</div>
                             <div flex-gt-sm="33" flex="66">{{ local.download_info.speed }}</div>
@@ -62,9 +62,8 @@
                             <div flex-gt-sm="33" flex="66">{{ local.download_info.remaining }}</div>
                         </div>
                     </div>
-                    <md-card-actions layout="row" layout-align="end center" ng-show="local.download_info && local.download_info.progress == 100">
-                        <md-button ng-click="console.log('Not there yet..')">Watch</md-button>
-                        <!-- <md-button>Action 2</md-button> -->
+                    <md-card-actions layout="row" ng-show="local.ready" flex>
+                        <md-button class="md-raised md-primary" ng-click="watch(local)" style="margin-left: 100px;">Watch</md-button>
                     </md-card-actions>
                 </md-card-content>
             </md-card>
@@ -83,7 +82,6 @@
     angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
         .controller('mainCtrl', ['$scope', '$interval', function($scope, $interval) {
 
-            $scope.locals = []
 
             let fsExtra = require('fs-extra');
             let fsPath = require('fs-path');
@@ -97,6 +95,12 @@
             let subService = ioc.create('services/subs-service')
 
             // console.log('CURRENT TORRENTS -->', torrentService.getCurrents())
+            $scope.locals = []
+
+            jsonService.getLocals($scope.locals)
+            .then( () => { 
+                $scope.$apply() 
+            })
 
             $scope.search = () => {
                 $scope.search_loading = true
@@ -111,15 +115,23 @@
                     $scope.locals.push(torrent)
                     $scope.search_loading = false
                     $scope.$apply()
-                    torrentService.downloadTorrent(torrent, $scope)
-                        .then(() => {
-                            console.log('Done')
-                        })
+                    torrentService.downloadTorrent(torrent, $scope).then(() => {
+                        console.log('Done')
+                    })
                 })
-
             }
 
-            // let posterService = ioc.create('services/poster-service')
+            $scope.watch = (local) => {
+                let fileName = local.path.split('\\')
+                fileName = local.path.split('[')
+                let path = fileName[0] + '\\'
+                fileName = fileName[0]
+                fileName = fileName + '.' + local.extension
+                fileName = fileName.split('\\')
+                fileName = fileName[fileName.length - 1]
+                console.log(local.path + '\\' + fileName)
+                commonService.openFile(local.path + '\\' + fileName)
+            }
 
             jsonService.month()
                 .then(function(json) {
@@ -175,15 +187,14 @@
                                 let torrentsArray = []
                                 if (results.length > 0) {
                                     for (var i = results.length - 1; i >= 0; i--) {
-                                        // posterService.getPoster(results[i].show)
                                         following.filter((followed_show) => {
                                             if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
                                                 results[i].poster = followed_show.poster
                                             }
                                         })
-                                        console.log('---> ', results[i])
-                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
+                                        console.log('--->', results[i])
                                         $scope.locals.push(results[i])
+                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
                                     }
                                     $scope.$apply()
                                     Promise.all(torrentsArray).then((results) => {
@@ -205,6 +216,7 @@
         // require('./backend/main.js')
 
     require('./backend/services/torrent-service.js')
+    require('./backend/services/json-service.js')
     require('./renderer.js')
     </script>
 </body>

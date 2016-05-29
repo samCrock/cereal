@@ -54,7 +54,7 @@ exports = module.exports = function() {
                             console.log(chalk.yellow("TITLE :", title))
                             console.log()
 
-                            resolve({link: link, path: path + searchString})
+                            resolve({ link: link, path: path + searchString })
 
                         }
                         // if (title === searchString) console.log(chalk.green("FOUND :", link))
@@ -80,11 +80,11 @@ exports = module.exports = function() {
                     let dButton = $('#downloadButton')
                     let downloadUrl = 'http://subscene.com' + dButton['0'].attribs.href
                     let zipTitle = ''
-                    
+
                     console.log()
                     console.log(chalk.bgYellow('Download subs in:', path))
                     console.log()
-                    
+
                     $('.release').filter(function() {
                         zipTitle = $(this)['0'].children[3].children[0].data.trim()
                     })

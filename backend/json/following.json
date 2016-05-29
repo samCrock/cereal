@@ -12,9 +12,6 @@
         "title": "vice"
     },
     {
-        "title": "archer"
-    },
-    {
         "title": "vinyl"
     },
     {
@@ -45,5 +42,9 @@
     {
         "title": "maron",
         "poster": "./res/posters/maron.jpg"
+    },
+    {
+        "title": "archer",
+        "poster": "./res/posters/archer.jpg"
     }
 ]
