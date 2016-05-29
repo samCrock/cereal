@@ -29,6 +29,7 @@
     "request": "latest",
     "socket.io": "^1.4.6",
     "transmission": "latest",
+    "util": "^0.10.3",
     "webtorrent": "latest"
   },
   "scripts": {
