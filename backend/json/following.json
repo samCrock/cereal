@@ -21,9 +21,6 @@
         "title": "the simpsons"
     },
     {
-        "title": "silicon valley"
-    },
-    {
         "title": "gotham"
     },
     {
@@ -45,5 +42,13 @@
     {
         "title": "maron",
         "poster": "./res/posters/maron.jpg"
+    },
+    {
+        "title": "silicon valley",
+        "poster": "./res/posters/silicon-valley.jpg"
+    },
+    {
+        "title": "game of thrones",
+        "poster": "./res/posters/game-of-thrones.jpg"
     }
 ]

@@ -20,7 +20,7 @@ exports = module.exports = function(commonService) {
     let torrent_module = {}
     let path = process.cwd() + '/download/'
 
-    torrent_module['getPoster'] = function getPoster(showName) {
+    torrent_module['getPoster'] = function getPoster(showName, scope) {
         return new Promise(function(resolve, reject) {
 
             console.log(chalk.yellow('Searching trakt.tv for: '), chalk.white('"' + showName + '"'))
@@ -28,14 +28,17 @@ exports = module.exports = function(commonService) {
 
             showName = showName.toLowerCase()
             let dashedShowName = showName.replace(' ', '-')
+            dashedShowName = dashedShowName.replace(' ', '-')
 
             var url = 'https://trakt.tv/shows/' + dashedShowName
+
+            console.log('https://trakt.tv/shows/' + dashedShowName)
 
             request.get(url, function(error, response, body) {
 
                 if (error || !response) return reject(error)
 
-                console.log(chalk.yellow(response.statusCode))
+                console.log(response.statusCode)
 
                 if (!error && response.statusCode == 200) {
                     let $ = cheerio.load(body)
@@ -47,8 +50,15 @@ exports = module.exports = function(commonService) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
                             fsExtra.writeFile(posterPath, body, 'binary', function(err) {
                                 if (err) reject('Cannot write file :', err)
-                                console.log(chalk.green(dashedShowName, 'poster successfuly saved'))
-                                resolve(showName)
+                                console.log(dashedShowName, 'poster successfuly saved')
+                                if (scope) {
+                                    scope.locals.filter( (local) => {
+                                        if (local.show === showName) {
+                                            local.poster = posterPath
+                                        }
+                                    })
+                                }
+                                resolve(posterPath)
                             })
                             jsonService.updateFollowing({"title" : showName, "poster" : posterPath})
 

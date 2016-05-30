@@ -24,7 +24,7 @@
                 </md-input-container>
                 <md-button type="submit" aria-label="Search">
                     <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
-<!--                     <md-progress-circular class="md-accent md-hue-2" md-mode="indeterminate" md-diameter="20" flex ng-show="search_loading" style="margin-left: 100px;"></md-progress-circular> -->
+                    <!--                     <md-progress-circular class="md-accent md-hue-2" md-mode="indeterminate" md-diameter="20" flex ng-show="search_loading" style="margin-left: 100px;"></md-progress-circular> -->
                 </md-button>
             </form>
         </md-content>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <md-card-actions layout="row" layout-align="end center" ng-show="local.download_info && local.download_info.progress == 100">
-                        <md-button ng-click="console.log('Not there yet..')">Watch</md-button>
+                        <md-button ng-click="watch(local)">Watch</md-button>
                         <!-- <md-button>Action 2</md-button> -->
                     </md-card-actions>
                 </md-card-content>
@@ -85,18 +85,38 @@
 
             $scope.locals = []
 
-            let fsExtra = require('fs-extra');
-            let fsPath = require('fs-path');
-            let ioc = require('./ioc');
-            let logUpdate = require('log-update');
-            let chalk = require('chalk');
+            let fsExtra = require('fs-extra')
+            let fsPath = require('fs-path')
+            let ioc = require('./ioc')
+            let logUpdate = require('log-update')
+            let chalk = require('chalk')
+            let util = require('util')
 
-            let commonService = ioc.create('services/common-service');
-            let torrentService = ioc.create('services/torrent-service');
-            let jsonService = ioc.create('services/json-service');
+            let commonService = ioc.create('services/common-service')
+            let torrentService = ioc.create('services/torrent-service')
+            let jsonService = ioc.create('services/json-service')
             let subService = ioc.create('services/subs-service')
 
             // console.log('CURRENT TORRENTS -->', torrentService.getCurrents())
+
+            $scope.watch = (local) => {
+                let getCommandLine = () => {
+                    switch (process.platform) {
+                        case 'darwin':
+                            return 'open';
+                        case 'win32':
+                            return 'start';
+                        case 'win64':
+                            return 'start';
+                        default:
+                            return 'xdg-open';
+                    }
+                }
+
+                let exec = require('child_process').exec
+                console.log('---->', local.path)
+                exec(getCommandLine() + ' ' + local.path);
+            }
 
             $scope.search = () => {
                 $scope.search_loading = true
@@ -119,7 +139,7 @@
 
             }
 
-            // let posterService = ioc.create('services/poster-service')
+            let posterService = ioc.create('services/poster-service')
 
             jsonService.month()
                 .then(function(json) {
@@ -134,7 +154,7 @@
                         // dailyShows contains today's shows
                         let today = new Date()
                             // let searchDay = process.argv[2] ? process.argv[2] : 1
-                        today.setDate(today.getDate() - 2); // actually yesterday
+                            // today.setDate(today.getDate() - 1); // actually yesterday
 
                         // console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {
@@ -143,7 +163,7 @@
                             if (commonService.sameDay(today, nday)) {
 
                                 console.log()
-                                console.log(chalk.inverse(json[i].date_label))
+                                console.log(json[i].date_label)
                                 console.log(json[i].shows)
                                 console.log()
 
@@ -175,15 +195,25 @@
                                 let torrentsArray = []
                                 if (results.length > 0) {
                                     for (var i = results.length - 1; i >= 0; i--) {
-                                        // posterService.getPoster(results[i].show)
-                                        following.filter((followed_show) => {
-                                            if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
-                                                results[i].poster = followed_show.poster
-                                            }
-                                        })
-                                        console.log('---> ', results[i])
-                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
-                                        $scope.locals.push(results[i])
+
+                                        if (results[i].title) {
+
+                                            following.filter((followed_show) => {
+                                                if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
+                                                    console.log('followed_show.poster', followed_show.poster)
+                                                    if (followed_show.poster) {
+                                                        results[i].poster = followed_show.poster
+                                                    } else {
+                                                        posterService.getPoster(results[i].show, $scope)
+                                                    }
+                                                }
+                                            })
+                                            console.log('---> ', results[i])
+                                            torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
+                                            $scope.locals.push(results[i])
+                                        } else {
+                                            results = results.splice(i, 1)
+                                        }
                                     }
                                     $scope.$apply()
                                     Promise.all(torrentsArray).then((results) => {
