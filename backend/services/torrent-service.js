@@ -39,13 +39,14 @@ exports = module.exports = function(commonService) {
 
             // Set poster
             scope.locals.filter(function(obj) {
-                // console.log('obj', obj)
+                console.log('obj', obj)
                 jsonService.getPoster(obj.show).then((poster) => {
                     if (poster) {
                         obj.poster = poster
+                        scope.$apply()
                     } else {
                         posterService.downloadPoster(obj.show).then(() => {
-                            oj.poster = poster
+                            obj.poster = poster
                         })
                     }
                 })
@@ -192,7 +193,7 @@ exports = module.exports = function(commonService) {
                                     // console.log(chalk.blue(' ----------------------------------------'));
                                     // console.log(chalk.blue('Torrent ' + counter + ' ->\n', torrent.title));
                                     // console.log(chalk.blue(' ----------------------------------------'));
-
+                                console.log('Search torrent result : ', torrent)
                                 resolve(torrent) // Returns only the first result
                             }
 

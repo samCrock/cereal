@@ -146,7 +146,7 @@
                         // dailyShows contains today's shows
                         let today = new Date()
                             // let searchDay = process.argv[2] ? process.argv[2] : 1
-                        today.setDate(today.getDate() - 2); // actually yesterday
+                        today.setDate(today.getDate() - 1); // actually yesterday
 
                         // console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {
@@ -187,12 +187,13 @@
                                 let torrentsArray = []
                                 if (results.length > 0) {
                                     for (var i = results.length - 1; i >= 0; i--) {
-                                        following.filter((followed_show) => {
-                                            if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
-                                                results[i].poster = followed_show.poster
-                                            }
-                                        })
-                                        console.log('--->', results[i])
+                                        // following.filter((followed_show) => {
+                                        //     console.log('results[i]', results[i])
+                                        //     if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
+                                        //         results[i].poster = followed_show.poster
+                                        //     }
+                                        // })
+                                        console.log('---->', results[i])
                                         $scope.locals.push(results[i])
                                         torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
                                     }

@@ -79,11 +79,11 @@ exports = module.exports = function() {
 
     json_module['getLocals'] = function getLocals(locals) {
         return new Promise(function(resolve, reject) {
-            // console.log('local title', title)
             fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
                 if (data) { // Locals exists
                     let json = JSON.parse(data)
                     json.filter((torrent) => {
+                        console.log(' ->', torrent.title)
                         locals.push(torrent)
                     })
                     resolve()
