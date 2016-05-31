@@ -18,23 +18,22 @@ exports = module.exports = function() {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
 
                 if (err) throw err
-                let json = []
-
                 if (data) { // Locals exists
-                    json = JSON.parse(data)
-                    for (var i = json.length - 1; i >= 0; i--) {
 
-                        if (json[i].title.toLowerCase() === showObj.title.toLowerCase()) {
-                            json = json.splice(i, 1)
+                    let json = JSON.parse(data)
+                    json.filter((following, index) => {
+                        // console.log('following', following, '===', showObj)
+                        if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
+                            json = json.splice(index, 1)
                         }
-                    }
+                    })
                     json.push(showObj);
                     fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
                         if (err) reject('Cannot write file :', err)
                         resolve(json)
                     })
                 } else {
-                    reject('Cannot write following.json')
+                    reject('Cannot find following.json')
                 }
             })
 
@@ -77,11 +76,18 @@ exports = module.exports = function() {
         })
     }
 
-    json_module['getLocals'] = function getLocals() {
+    json_module['getCompleted'] = function getCompleted() {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
-                if (data) { // Locals exists
-                    resolve(JSON.parse(data))
+                let completed = []
+                if (data) {
+                    data = JSON.parse(data)
+                    data.filter( (show) => {
+                        if (show.ready) {
+                            completed.push(show)
+                        }
+                    })
+                    resolve(completed)
                 } else reject()
             })
         })
@@ -117,13 +123,11 @@ exports = module.exports = function() {
 
 
     json_module['month'] = function month() {
-
-        console.log(chalk.blue('Checking calendar'))
-
         return new Promise(function(resolve, reject) {
-
             request(url, function(error, response, html) {
+                
                 if (!error) {
+                    console.log(chalk.blue('Checking calendar'))
 
                     var $ = cheerio.load(html)
                     var json = []

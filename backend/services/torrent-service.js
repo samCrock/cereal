@@ -14,12 +14,12 @@ let wt_client = new WebTorrent()
 
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
-// let posterService = ioc.create('services/poster-service')
+let posterService = ioc.create('services/poster-service')
 
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '/download/'
+    let path = process.cwd() + '\\download\\'
     let watcher = chokidar.watch(path)
 
     torrent_module['getCurrents'] = function getCurrents() {
@@ -38,7 +38,7 @@ exports = module.exports = function(commonService) {
 
             // commonService.getShowTitleFromTorrent(t)
 
-            // Set poster
+            // Download & set poster
             scope.locals.filter(function(obj) {
                 console.log('obj', obj)
                 jsonService.getPoster(obj.show).then((poster) => {
@@ -46,8 +46,9 @@ exports = module.exports = function(commonService) {
                         obj.poster = poster
                         scope.$apply()
                     } else {
-                        posterService.downloadPoster(obj.show).then(() => {
+                        posterService.downloadPoster(obj.show).then((poster) => {
                             obj.poster = poster
+                            scope.$apply()
                         })
                     }
                 })
@@ -71,8 +72,6 @@ exports = module.exports = function(commonService) {
                                 if (result.title === obj.title) {
                                     console.log('Already here baby', result)
                                     obj = result
-                                    t.ready = true
-
                                     resolve(result.name)
                                     scope.$apply()
                                 }
@@ -127,6 +126,9 @@ exports = module.exports = function(commonService) {
                         torrent.id = t.id
 
                         scope.locals.filter(function(obj) {
+                            // console.log('scope & torrent check:')
+                            // console.log('obj:', obj)
+                            // console.log('torrent:', torrent)
                             if (obj.id === torrent.id) {
                                 obj.download_info = {
                                         progress: Math.floor(torrent.progress * 100),

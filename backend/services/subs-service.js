@@ -15,7 +15,7 @@ let jsonService = ioc.create('services/json-service')
 exports = module.exports = function() {
 
     let subs_module = {}
-    let path = process.cwd() + '/download/'
+    let path = process.cwd() + '\\download\\'
 
     subs_module['search'] = function search(searchString) {
         return new Promise(function(resolve, reject) {
@@ -27,8 +27,8 @@ exports = module.exports = function() {
 
             var url = 'http://subscene.com/subtitles/release?q=' + searchString;
             request.get(url, function(error, response, body) {
-                if (error) reject(error)
-                if (response.statusCode) console.log(chalk.yellow(response.statusCode))
+                if (error || !response) reject(error)
+                if (response && response.statusCode) console.log(chalk.yellow(response.statusCode))
                 if (!error && response.statusCode == 200) {
                     var $ = cheerio.load(body)
                     var json = []

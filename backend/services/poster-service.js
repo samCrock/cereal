@@ -18,9 +18,8 @@ let subService = ioc.create('services/subs-service')
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '/download/'
 
-    torrent_module['getPoster'] = function getPoster(showName, scope) {
+    torrent_module['downloadPoster'] = function downloadPoster(showName, scope) {
 
         return new Promise(function(resolve, reject) {
 
@@ -59,9 +58,9 @@ exports = module.exports = function(commonService) {
                                         }
                                     })
                                 }
+                                jsonService.updateFollowing({"title" : showName, "poster" : posterPath})
                                 resolve(posterPath)
                             })
-                            jsonService.updateFollowing({"title" : showName, "poster" : posterPath})
 
                         } else console.log(chalk.red('Couldn\'t save this poster'))
                     })

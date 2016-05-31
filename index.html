@@ -94,33 +94,16 @@
             let torrentService = ioc.create('services/torrent-service')
             let jsonService = ioc.create('services/json-service')
             let subService = ioc.create('services/subs-service')
+            let posterService = ioc.create('services/poster-service')
 
             // console.log('CURRENT TORRENTS -->', torrentService.getCurrents())
             $scope.locals = []
-
-            jsonService.getLocals($scope.locals)
-            .then( () => { 
-                $scope.$apply() 
-            })
-
-            $scope.watch = (local) => {
-                let getCommandLine = () => {
-                    switch (process.platform) {
-                        case 'darwin':
-                            return 'open';
-                        case 'win32':
-                            return 'start';
-                        case 'win64':
-                            return 'start';
-                        default:
-                            return 'xdg-open';
-                    }
-                }
-
-                let exec = require('child_process').exec
-                console.log('---->', local.path)
-                exec(getCommandLine() + ' ' + local.path);
-            }
+            jsonService.getCompleted()
+                .then((completed) => {
+                    console.log('Library --->', completed)
+                    $scope.locals = completed
+                    $scope.$apply()
+                })
 
             $scope.search = () => {
                 $scope.search_loading = true
@@ -141,20 +124,14 @@
                 })
             }
 
-
             $scope.watch = (local) => {
                 let fileName = local.path.split('\\')
-                fileName = local.path.split('[')
                 let path = fileName[0] + '\\'
-                fileName = fileName[0]
-                fileName = fileName + '.' + local.extension
-                fileName = fileName.split('\\')
                 fileName = fileName[fileName.length - 1]
+                fileName = fileName + '.' + local.extension
                 console.log(local.path + '\\' + fileName)
                 commonService.openFile(local.path + '\\' + fileName)
             }
-
-            let posterService = ioc.create('services/poster-service')
 
             jsonService.month()
                 .then(function(json) {
@@ -164,47 +141,57 @@
                         if (err) throw err;
                         console.log(chalk.yellow('following.json found! Searching for today\'s shows..'))
                         let following = JSON.parse(data)
-                        let following_torrents = []
+                        let searchCandidates = []
+                        let episodesToSearch = []
 
-                        // dailyShows contains today's shows
                         let today = new Date()
-                        // let searchDay = process.argv[2] ? process.argv[2] : 1
 
-                        // today.setDate(today.getDate() - 1); // actually yesterday
-
+                        today.setDate(today.getDate() - 4)
 
                         // console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {
                             var nday = json[i].date
-
                             if (commonService.sameDay(today, nday)) {
-
                                 console.log()
                                 console.log(json[i].date_label)
                                 console.log(json[i].shows)
                                 console.log()
-
                                 getMatch(json[i])
                             }
                         }
 
                         // Then cycle through dailyShows to match myFollowing   
                         function getMatch(day) {
-                            var dailyShows = day.shows;
+                            var dailyShows = day.shows
                             for (var i = following.length - 1; i >= 0; i--) {
                                 var myTitle = following[i].title;
                                 for (var j = dailyShows.length - 1; j >= 0; j--) {
                                     if (myTitle.toUpperCase() === dailyShows[j].title.toUpperCase()) { // perfect match is bs!
                                         let searchObj = {
-                                                show: dailyShows[j].title,
-                                                episode: dailyShows[j].episode
-                                            }
-                                            // console.log('searchObj', searchObj)
-                                        following_torrents.push(torrentService.searchTorrent(searchObj));
+                                            show: dailyShows[j].title,
+                                            episode: dailyShows[j].episode
+                                        }
+                                        searchCandidates.push(searchObj)
                                     }
                                 }
                             }
-                            Promise.all(following_torrents).then(function(results) {
+
+                            // check if locals already contains current day shows, if true skip
+                            $scope.locals.filter((local) => {
+                                searchCandidates.filter((following, i) => {
+                                    let fString = following.show.toLowerCase() + following.episode.toLowerCase()
+                                    let lString = local.show.toLowerCase() + local.episode.toLowerCase()
+                                    if (fString === lString) searchCandidates.splice(i, 1)
+                                })
+                            })
+
+                            console.log('searchCandidates', searchCandidates)
+                            searchCandidates.filter((searchObj) => {
+                                episodesToSearch.push(torrentService.searchTorrent(searchObj))
+                            })
+
+                            Promise.all(episodesToSearch).then(function(results) {
+
                                 console.log()
                                 console.log(chalk.green(results.length, 'instances found'))
                                 console.log()
@@ -212,33 +199,19 @@
                                 let torrentsArray = []
                                 if (results.length > 0) {
                                     for (var i = results.length - 1; i >= 0; i--) {
-                                        // following.filter((followed_show) => {
-                                        //     console.log('results[i]', results[i])
-                                        //     if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
-                                        //         results[i].poster = followed_show.poster
-                                        //     }
-                                        // })
-                                        console.log('---->', results[i])
-                                        $scope.locals.push(results[i])
-                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
-
-                                        if (results[i].title) {
-
+                                        if (typeof results[i] !== 'number') {
                                             following.filter((followed_show) => {
                                                 if (followed_show.title.toLowerCase() === results[i].show.toLowerCase()) {
-                                                    console.log('followed_show.poster', followed_show.poster)
-                                                    if (followed_show.poster) {
-                                                        results[i].poster = followed_show.poster
-                                                    } else {
-                                                        posterService.getPoster(results[i].show, $scope)
-                                                    }
+                                                    results[i].poster = followed_show.poster
                                                 }
                                             })
-                                            console.log('---> ', results[i])
-                                            torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
-                                            $scope.locals.push(results[i])
-                                        } else {
-                                            results = results.splice(i, 1)
+                                            if (results[i].title) {
+                                                console.log('---> ', results[i])
+                                                $scope.locals.push(results[i])
+                                                torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
+                                            } else {
+                                                results = results.splice(i, 1)
+                                            }
                                         }
                                     }
                                     $scope.$apply()
@@ -246,7 +219,7 @@
                                         console.log(chalk.green('Done\n'))
                                     })
                                 } else {
-                                    return console.log(chalk.bgBlack('Nothing to see today'))
+                                    return console.log(chalk.bgBlack('Nothing new today'))
                                 }
                             }).catch(function(e) {
                                 return console.error(chalk.red('That\'s bullshit! ->', e))
