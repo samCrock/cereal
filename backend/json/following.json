@@ -1,9 +1,50 @@
 [
     {
-        "title": "archer"
+        "title": "family guy"
+    },
+    {
+        "title": "better call saul"
+    },
+    {
+        "title": "vice"
+    },
+    {
+        "title": "vinyl"
+    },
+    {
+        "title": "the simpsons"
+    },
+    {
+        "title": "gotham"
+    },
+    {
+        "title": "new girl"
+    },
+    {
+        "title": "Real Time with Bill Maher"
+    },
+    {
+        "title": "last week tonight"
+    },
+    {
+        "title": "preacher"
+    },
+    {
+        "title": "wayward pines"
+    },
+    {
+        "title": "maron"
     },
     {
         "title": "archer",
         "poster": "./res/posters/archer.jpg"
+    },
+    {
+        "title": "silicon valley",
+        "poster": "./res/posters/silicon-valley.jpg"
+    },
+    {
+        "title": "game of thrones",
+        "poster": "./res/posters/game-of-thrones.jpg"
     }
 ]

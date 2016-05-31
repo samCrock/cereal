@@ -42,6 +42,10 @@
                     <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular>
                     <div layout-align="start" ng-show="!local.ready && local.download_info" flex>
                         <div layout="row" style="padding-left: 10px;">
+                            <div flex-gt-sm="66" flex="33">Progress</div>
+                            <div flex-gt-sm="33" flex="66">{{ local.download_info.progress }} %</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
                             <div flex-gt-sm="66" flex="33">Speed</div>
                             <div flex-gt-sm="33" flex="66">{{ local.download_info.speed }}</div>
                         </div>

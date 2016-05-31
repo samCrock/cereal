@@ -24,10 +24,10 @@ exports = module.exports = function() {
                     json.filter((following, index) => {
                         // console.log('following', following, '===', showObj)
                         if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
-                            json = json.splice(index, 1)
+                            following.poster = showObj.poster
                         }
                     })
-                    json.push(showObj);
+                    // json.push(showObj);
                     fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
                         if (err) reject('Cannot write file :', err)
                         resolve(json)
