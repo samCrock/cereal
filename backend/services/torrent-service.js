@@ -14,12 +14,12 @@ let wt_client = new WebTorrent()
 
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
-let posterService = ioc.create('services/poster-service')
+// let posterService = ioc.create('services/poster-service')
 
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '\\download\\'
+    let path = process.cwd() + '/download/'
     let watcher = chokidar.watch(path)
 
     torrent_module['getCurrents'] = function getCurrents() {
@@ -29,10 +29,11 @@ exports = module.exports = function(commonService) {
     torrent_module['downloadTorrent'] = function downloadTorrent(t, scope) {
         return new Promise(function(resolve, reject) {
 
-            // Initialize watcher
-            // watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
+            if (t === 404) resolve()
+                // Initialize watcher
+                // watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
 
-            console.log(chalk.magenta("'" + t.title + "'"))
+            console.log("'" + t.title + "'")
             console.log()
 
             // commonService.getShowTitleFromTorrent(t)
@@ -200,7 +201,7 @@ exports = module.exports = function(commonService) {
                         }
 
                     });
-                } else resolve()
+                } else resolve(404)
             });
         });
     }

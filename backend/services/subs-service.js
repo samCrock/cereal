@@ -48,11 +48,11 @@ exports = module.exports = function() {
                         spliced_search = spliced_search[0]
 
                         if (lang === 'English' && spliced_search === spliced_title) {
-                            console.log()
-                            console.log(chalk.yellow("LINK  :", link))
-                            console.log(chalk.yellow("LANG  :", lang))
-                            console.log(chalk.yellow("TITLE :", title))
-                            console.log()
+                            // console.log()
+                            // console.log(chalk.yellow("LINK  :", link))
+                            // console.log(chalk.yellow("LANG  :", lang))
+                            // console.log(chalk.yellow("TITLE :", title))
+                            // console.log()
 
                             resolve({ link: link, path: path + searchString })
 

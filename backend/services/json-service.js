@@ -16,15 +16,16 @@ exports = module.exports = function() {
     json_module['updateFollowing'] = function updateFollowing(showObj) {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
-                if (err) throw err;
-                var json = []
+
+                if (err) throw err
+                let json = []
+
                 if (data) { // Locals exists
-                    // console.log(chalk.blue('local_torrents found\n'));
                     json = JSON.parse(data)
                     for (var i = json.length - 1; i >= 0; i--) {
-                        if (json[i].title.toLowerCase() === showObj.title.toLowerCase() && json[i].poster) {
-                            resolve(json)
-                            return
+
+                        if (json[i].title.toLowerCase() === showObj.title.toLowerCase()) {
+                            json = json.splice(i, 1)
                         }
                     }
                     json.push(showObj);
@@ -33,8 +34,7 @@ exports = module.exports = function() {
                         resolve(json)
                     })
                 } else {
-                    console.log(chalk.red('Problems writing following.json'));
-                    reject()
+                    reject('Cannot write following.json')
                 }
             })
 
@@ -77,21 +77,15 @@ exports = module.exports = function() {
         })
     }
 
-    json_module['getLocals'] = function getLocals(locals) {
+    json_module['getLocals'] = function getLocals() {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
                 if (data) { // Locals exists
-                    let json = JSON.parse(data)
-                    json.filter((torrent) => {
-                        console.log(' ->', torrent.title)
-                        locals.push(torrent)
-                    })
-                    resolve()
-                }
+                    resolve(JSON.parse(data))
+                } else reject()
             })
         })
     }
-
 
     json_module['updateLibrary'] = function updateLibrary(torrent_object) {
         // return new Promise(function(resolve, reject) {
@@ -134,7 +128,7 @@ exports = module.exports = function() {
                     var $ = cheerio.load(html)
                     var json = []
 
-                    $('.day').filter(function() {
+                    $('.day, .today').filter(function() {
                         var date = this.attribs.id
                         date = date.split('_')
                         var date_d = date[1]
@@ -148,7 +142,7 @@ exports = module.exports = function() {
                             shows: []
                         }
                         for (var i = this.children.length - 1; i >= 0; i--) {
-                            if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep info')) {
+                            if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
                                 var d = this.children[i].children;
                                 for (var j = d.length - 1; j >= 0; j--) {
                                     if (d[j].name === 'span') {

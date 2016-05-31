@@ -1,50 +1,56 @@
 [
     {
-        "title": "game of thrones"
-    },
-    {
-        "title": "family guy"
-    },
-    {
-        "title": "better call saul"
-    },
-    {
-        "title": "vice"
-    },
-    {
-        "title": "vinyl"
-    },
-    {
-        "title": "the simpsons"
-    },
-    {
-        "title": "silicon valley"
-    },
-    {
-        "title": "gotham"
-    },
-    {
-        "title": "new girl"
-    },
-    {
-        "title": "Real Time with Bill Maher"
-    },
-    {
-        "title": "last week tonight"
-    },
-    {
-        "title": "preacher"
-    },
-    {
-        "title": "wayward pines",
-        "poster": "./res/posters/wayward-pines.jpg"
-    },
-    {
-        "title": "maron",
-        "poster": "./res/posters/maron.jpg"
-    },
-    {
-        "title": "archer",
-        "poster": "./res/posters/archer.jpg"
-    }
+    "title": "game of thrones"
+}, 
+{
+    "title": "family guy"
+}, 
+{
+    "title": "better call saul"
+}, 
+{
+    "title": "vice"
+}, 
+{
+    "title": "vinyl"
+}, 
+{
+    "title": "the simpsons"
+}, 
+{
+    "title": "gotham"
+}, 
+{
+    "title": "new girl"
+}, 
+{
+    "title": "Real Time with Bill Maher"
+}, 
+{
+    "title": "last week tonight"
+}, 
+{
+    "title": "preacher"
+}, 
+{
+    "title": "wayward pines",
+    "poster": "./res/posters/wayward-pines.jpg"
+}, 
+{
+    "title": "maron",
+    "poster": "./res/posters/maron.jpg"
+}, 
+{
+
+    "title": "archer",
+    "poster": "./res/posters/archer.jpg"
+}, 
+{
+    "title": "silicon valley",
+    "poster": "./res/posters/silicon-valley.jpg"
+}, 
+{
+    "title": "game of thrones",
+    "poster": "./res/posters/game-of-thrones.jpg"
+}
 ]
