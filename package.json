@@ -33,9 +33,7 @@
     "webtorrent": "latest"
   },
   "scripts": {
-    "start": "npm-run-all --parallel backend frontend",
-    "backend": "node ./backend/main.js",
-    "frontend": "./node_modules/.bin/electron main.js",
+    "start": "./node_modules/.bin/electron main.js",
     "download": "node ./backend/download.js"
   },
   "devDependencies": {
