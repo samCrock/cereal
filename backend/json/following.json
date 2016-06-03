@@ -30,14 +30,15 @@
         "title": "preacher"
     },
     {
-        "title": "wayward pines"
+        "title": "wayward pines",
+        "poster": "./res/posters/wayward-pines.jpg"
     },
     {
-        "title": "maron"
+        "title": "maron",
+        "poster": "./res/posters/maron.jpg"
     },
     {
-        "title": "archer",
-        "poster": "./res/posters/archer.jpg"
+        "title": "archer"
     },
     {
         "title": "silicon valley",

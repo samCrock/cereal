@@ -19,7 +19,7 @@ let posterService = ioc.create('services/poster-service')
 exports = module.exports = function(commonService) {
 
     let torrent_module = {}
-    let path = process.cwd() + '\\download\\'
+    let path = process.cwd() + '/download/'
     let watcher = chokidar.watch(path)
 
     torrent_module['getCurrents'] = function getCurrents() {
@@ -83,7 +83,7 @@ exports = module.exports = function(commonService) {
 
                     if (torrent.progress != 1) {
                         torrent.files.forEach(function(file) {
-                            console.log(chalk.green('Started downloading ') + file.name + '\n')
+                            console.log('Started downloading ' + file.name)
                             file.getBuffer(function(err, buffer) {
                                 if (err) {
                                     console.error('Error downloading ' + file.name)
@@ -94,7 +94,7 @@ exports = module.exports = function(commonService) {
                     }
 
                     torrent.on('done', function() {
-                        console.log(chalk.bgGreen(torrent.name, ' ready'))
+                        console.log(torrent.name, ' ready')
                         console.log()
                             // logUpdate.done()
 
@@ -156,7 +156,7 @@ exports = module.exports = function(commonService) {
             var show = searchObj.show
             var episode = searchObj.episode
             var searchString = show + ' ' + episode
-            console.log(chalk.yellow('Searching Kickass for: '), chalk.white('"' + searchString + '"'))
+            console.log('Searching Kickass for: ' + searchString)
             console.log()
 
             searchString = encodeURIComponent(searchString)
@@ -167,7 +167,7 @@ exports = module.exports = function(commonService) {
 
                 if (error || !response) return reject(error);
 
-                console.log(chalk.yellow(response.statusCode));
+                console.log(response.statusCode);
 
                 if (!error && response.statusCode == 200) {
                     var $ = cheerio.load(body);
@@ -193,9 +193,6 @@ exports = module.exports = function(commonService) {
                                 torrent.extension = json_obj.extension
                                 torrent.magnet = json_obj.magnet
                                 torrent.id = commonService.generateID()
-                                    // console.log(chalk.blue(' ----------------------------------------'));
-                                    // console.log(chalk.blue('Torrent ' + counter + ' ->\n', torrent.title));
-                                    // console.log(chalk.blue(' ----------------------------------------'));
                                 console.log('Search torrent result : ', torrent)
                                 resolve(torrent) // Returns only the first result
                             }

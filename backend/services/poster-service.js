@@ -1,6 +1,5 @@
 'use strict'
 
-let chalk = require('chalk')
 let request = require('request')
 let cheerio = require('cheerio')
 let ioc = require('../ioc')
@@ -23,7 +22,7 @@ exports = module.exports = function(commonService) {
 
         return new Promise(function(resolve, reject) {
 
-            console.log(chalk.yellow('Searching trakt.tv for: '), chalk.white('"' + showName + '"'))
+            console.log('Searching trakt.tv for: ', showName)
             console.log()
 
             showName = showName.toLowerCase()
@@ -44,7 +43,7 @@ exports = module.exports = function(commonService) {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
-                    console.log(chalk.green('Poster found ->', posterSrc))
+                    console.log('Poster found ->', posterSrc)
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
@@ -62,7 +61,7 @@ exports = module.exports = function(commonService) {
                                 resolve(posterPath)
                             })
 
-                        } else console.log(chalk.red('Couldn\'t save this poster'))
+                        } else console.log('Couldn\'t save this poster')
                     })
                 } else reject()
             });

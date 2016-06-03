@@ -4,7 +4,6 @@ let request = require('request')
 let cheerio = require('cheerio')
 let Promise = require('bluebird')
 let fsExtra = require('fs-extra')
-let chalk = require('chalk')
 
 let url = 'http://www.pogdesign.co.uk/cat/'
 let json
@@ -127,7 +126,7 @@ exports = module.exports = function() {
             request(url, function(error, response, html) {
                 
                 if (!error) {
-                    console.log(chalk.blue('Checking calendar'))
+                    console.log('Checking calendar')
 
                     var $ = cheerio.load(html)
                     var json = []

@@ -1,6 +1,5 @@
 'use strict'
 
-let chalk = require('chalk')
 let request = require('request')
 let cheerio = require('cheerio')
 let ioc = require('../ioc')
@@ -15,12 +14,12 @@ let jsonService = ioc.create('services/json-service')
 exports = module.exports = function() {
 
     let subs_module = {}
-    let path = process.cwd() + '\\download\\'
+    let path = process.cwd() + '/download/'
 
     subs_module['search'] = function search(searchString) {
         return new Promise(function(resolve, reject) {
 
-            console.log(chalk.yellow('Searching Subscene for: '), chalk.white('"' + searchString + '"'))
+            console.log('Searching Subscene for: ' + searchString)
             console.log()
 
             searchString = encodeURIComponent(searchString)
@@ -28,7 +27,7 @@ exports = module.exports = function() {
             var url = 'http://subscene.com/subtitles/release?q=' + searchString;
             request.get(url, function(error, response, body) {
                 if (error || !response) reject(error)
-                if (response && response.statusCode) console.log(chalk.yellow(response.statusCode))
+                if (response && response.statusCode) console.log(response.statusCode)
                 if (!error && response.statusCode == 200) {
                     var $ = cheerio.load(body)
                     var json = []
@@ -48,19 +47,10 @@ exports = module.exports = function() {
                         spliced_search = spliced_search[0]
 
                         if (lang === 'English' && spliced_search === spliced_title) {
-                            // console.log()
-                            // console.log(chalk.yellow("LINK  :", link))
-                            // console.log(chalk.yellow("LANG  :", lang))
-                            // console.log(chalk.yellow("TITLE :", title))
-                            // console.log()
-
                             resolve({ link: link, path: path + searchString })
-
                         }
-                        // if (title === searchString) console.log(chalk.green("FOUND :", link))
-
                     })
-                    console.log(chalk.dim('No suitable subs found\n'))
+                    console.log('No suitable subs found')
 
                 } else reject()
             })
@@ -74,7 +64,7 @@ exports = module.exports = function() {
             let url = 'http://subscene.com' + link
             request.get(url, function(error, response, body) {
                 if (error) reject(error)
-                if (response.statusCode) console.log(chalk.yellow(response.statusCode))
+                if (response.statusCode) console.log(response.statusCode)
                 if (!error && response.statusCode == 200) {
                     let $ = cheerio.load(body)
                     let dButton = $('#downloadButton')
@@ -82,7 +72,7 @@ exports = module.exports = function() {
                     let zipTitle = ''
 
                     console.log()
-                    console.log(chalk.bgYellow('Download subs in:', path))
+                    console.log('Download subs in:', path)
                     console.log()
 
                     $('.release').filter(function() {
@@ -101,7 +91,7 @@ exports = module.exports = function() {
                                 fsExtra.writeFile(path + '/' + subName, subFile._data, function(err) {
                                     if (err) reject('Cannot write file :', err)
                                     fsExtra.unlinkSync(path + '/' + zipTitle + '.zip')
-                                    console.log(chalk.blue('Subs for ' + zipTitle + ' downloaded'))
+                                    console.log('Subs for ' + zipTitle + ' downloaded')
                                 })
                             })
                         })

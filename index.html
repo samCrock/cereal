@@ -34,7 +34,7 @@
                     <md-card-title-text>
                         <span class="md-headline">{{ local.show }}</span>
                         <span class="md-subhead">ep {{ local.episode }}</span>
-                        <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="local.download_info"></md-progress-linear>
+                        <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content layout="row" layout-align="space-between center center">
@@ -91,7 +91,6 @@
             let fsPath = require('fs-path')
             let ioc = require('./ioc')
             let logUpdate = require('log-update')
-            let chalk = require('chalk')
             let util = require('util')
 
             let commonService = ioc.create('services/common-service')
@@ -129,28 +128,35 @@
             }
 
             $scope.watch = (local) => {
-                let fileName = local.path.split('\\')
-                let path = fileName[0] + '\\'
-                fileName = fileName[fileName.length - 1]
-                fileName = fileName + '.' + local.extension
-                console.log(local.path + '\\' + fileName)
-                commonService.openFile(local.path + '\\' + fileName)
+                let fileName = local.path.split('/')
+                fsExtra.readdir(local.path, (err, files) => {
+                    if (err) return console.error(err)
+                    files.filter((file) => {
+                        let ext = file.split('.')
+                        ext = ext[ext.length - 1]
+                            // console.log(ext, local.extension)
+                        if (ext === local.extension) {
+                            console.log(local.path + '/' + file)
+                            commonService.openFile(local.path + '/' + file)
+                        }
+                    })
+                })
             }
 
             jsonService.month()
                 .then(function(json) {
-                    console.log(chalk.yellow('monthly.json file successfully written!'))
+                    console.log('This month calendar was successfully written!')
                         // Search from my favourites
                     fsExtra.readFile('./backend/json/following.json', (err, data) => {
                         if (err) throw err;
-                        console.log(chalk.yellow('following.json found! Searching for today\'s shows..'))
+                        console.log('Searching for today\'s shows..')
                         let following = JSON.parse(data)
                         let searchCandidates = []
                         let episodesToSearch = []
 
                         let today = new Date()
 
-                        today.setDate(today.getDate() - 4)
+                        today.setDate(today.getDate())
 
                         // console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {
@@ -197,7 +203,7 @@
                             Promise.all(episodesToSearch).then(function(results) {
 
                                 console.log()
-                                console.log(chalk.green(results.length, 'instances found'))
+                                console.log(results.length, 'instances found')
                                 console.log()
 
                                 let torrentsArray = []
@@ -220,13 +226,13 @@
                                     }
                                     $scope.$apply()
                                     Promise.all(torrentsArray).then((results) => {
-                                        console.log(chalk.green('Done\n'))
+                                        console.log(':::Done:::')
                                     })
                                 } else {
-                                    return console.log(chalk.bgBlack('Nothing new today'))
+                                    return console.log('Nothing new today')
                                 }
                             }).catch(function(e) {
-                                return console.error(chalk.red('That\'s bullshit! ->', e))
+                                return console.error('That\'s bullshit! ->', e)
                             })
 
                         }

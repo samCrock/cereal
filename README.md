@@ -14,18 +14,10 @@ $ npm install
 
 ## Start
 ```
-$ npm run start [x]
+$ npm run start
 ```
-x => Optional integer setting the day to search (default = 1 = yesterday)
 
-### Example   
-```
-$ node main.js 2
-```
-Look for shows aired 2 days ago
-
-
-## Single episode download
+## Single episode download from console
 ```
 $ npm run download [serie] [episode]
 ```
