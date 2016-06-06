@@ -1,6 +1,7 @@
 'use strict';
 
-const {shell} = require('electron')
+const os = require('os')
+const { shell } = require('electron')
 
 exports = module.exports = function() {
 
@@ -11,7 +12,19 @@ exports = module.exports = function() {
     }
 
     common_module['openFile'] = function openFile(filePath) {
-        shell.openExternal(filePath)
+        let util = require('util');
+        let exec = require('child_process').exec;
+        let platform = os.platform()
+        switch (process.platform) {
+            case 'darwin':
+                return exec('open ' + filePath)
+            case 'win32':
+                return shell.openExternal(filePath)
+            case 'win64':
+                return shell.openExternal(filePath)
+            default:
+                return exec('xdg-open ' + filePath)
+        }
     }
 
     common_module['getShowTitleFromTorrent'] = function getShowTitleFromTorrent(torrent) {

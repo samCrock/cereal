@@ -27,7 +27,8 @@
         "title": "last week tonight"
     },
     {
-        "title": "preacher"
+        "title": "preacher",
+        "poster": "./res/posters/preacher.jpg"
     },
     {
         "title": "wayward pines",
