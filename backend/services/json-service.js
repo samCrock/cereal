@@ -8,7 +8,8 @@ let fsExtra = require('fs-extra')
 let url = 'http://www.pogdesign.co.uk/cat/'
 let json
 
-exports = module.exports = function() {
+
+exports = module.exports = function(commonService) {
 
     let json_module = {}
 
@@ -21,12 +22,12 @@ exports = module.exports = function() {
 
                     let json = JSON.parse(data)
                     json.filter((following, index) => {
-                        // console.log('following', following, '===', showObj)
-                        if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
-                            following.poster = showObj.poster
-                        }
-                    })
-                    // json.push(showObj);
+                            // console.log('following', following, '===', showObj)
+                            if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
+                                following.poster = showObj.poster
+                            }
+                        })
+                        // json.push(showObj);
                     fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
                         if (err) reject('Cannot write file :', err)
                         resolve(json)
@@ -81,7 +82,7 @@ exports = module.exports = function() {
                 let completed = []
                 if (data) {
                     data = JSON.parse(data)
-                    data.filter( (show) => {
+                    data.filter((show) => {
                         if (show.ready) {
                             completed.push(show)
                         }
@@ -120,11 +121,31 @@ exports = module.exports = function() {
         // })
     }
 
+    json_module['addInfo'] = function addInfo(t) {
+        return new Promise(function(resolve, reject) {
+            console.log('Addition info for ', t)
+            // fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
+            //     if (err) throw err;
+            //     var json = []
+            //     if (data) {
+                    
+            //     } else { // first entry
+            //         json.push(torrent_object);
+            //         fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
+            //             if (err) reject('Cannot write file :', err)
+            //             return json
+            //         })
+            //     }
+            // })
+
+        })
+    }
+
 
     json_module['month'] = function month() {
         return new Promise(function(resolve, reject) {
             request(url, function(error, response, html) {
-                
+
                 if (!error) {
                     console.log('Checking calendar')
 
@@ -175,7 +196,143 @@ exports = module.exports = function() {
             })
         })
     }
+
+    let getEpisodes = json_module['getEpisodes'] = function getEpisodes(show, category) {
+        return new Promise(function(resolve, reject) {
+
+            show = show.toLowerCase()
+
+            console.log('Searching Kickass for: ' + show)
+            console.log()
+
+            let episodes = []
+
+            let searchString = encodeURIComponent(show)
+
+            let url = 'https://kickass.unblocked.tv/usearch/' + searchString
+            if (category) url += 'category:tv/'
+
+            request.get({ url: url }, function(error, response, body) {
+
+                if (error || !response) return reject(error)
+
+                console.log('Status', response.statusCode);
+
+                if (!error && response.statusCode == 200) {
+
+                    let $ = cheerio.load(body)
+
+                    let show_title = $('h1')['0']
+                    let show_url
+                    if (show_title) show_url = 'https://kickass.unblocked.tv' + $('h1')['0'].children[0].attribs.href
+                    if (!show_title) return getEpisodes(show, true)
+                    console.log('show_url', show_url)
+
+                    request.get(show_url, function(error, response, body) {
+                        if (error || !response) return reject(error)
+                            // console.log(response.statusCode)
+                            // console.log('-', show, 'episodes -')
+                        if (!error && response.statusCode == 200) {
+                            let $ = cheerio.load(body)
+                            $('.infoList').filter((label, ep) => {
+                                let season = ep.parent.parent.prev.prev.children[0].data
+                                season = season.split(/Season /)
+                                season = season[1]
+                                let episode = ep.children[1].children[1].children[0].data
+                                episode = episode.split(/Episode /)
+                                episode = episode[1]
+                                episode = episode.split(/\t/)
+                                episode = episode[0]
+                                let title = ep.children[1].children[3].children[0].data
+                                let date_label = ep.children[1].children[5].children[1].children[0].data
+                                    // console.log('   Season', season, 'Episode', episode)
+                                    // console.log('       Title      :', title)
+                                    // console.log('       Date       :', date_label)
+                                episodes.push({
+                                    season: season,
+                                    episode: episode,
+                                    title: title,
+                                    date: date_label
+                                })
+                            })
+
+                            let dashedShowName = show.replace(' ', '-')
+                            dashedShowName = dashedShowName.replace(' ', '-')
+                            dashedShowName = dashedShowName.replace(' ', '-')
+
+                            fsExtra.writeFile('./backend/json/episodes/' + dashedShowName + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                                if (err) reject('Cannot write file :', err)
+                                resolve(episodes)
+                            })
+                        }
+                    })
+                }
+
+                if (!error && response.statusCode == 200) {
+                    let $ = cheerio.load(body);
+
+                } else resolve(404)
+            })
+        })
+    }
+
+
+    json_module['updateFollowingEpisodes'] = function updateFollowingEpisodes() {
+        return new Promise(function(resolve, reject) {
+            fsExtra.readFile('./backend/json/following.json', (err, data) => {
+
+                if (err) throw err
+                if (data) { // Locals exists
+
+                    let json = JSON.parse(data)
+                    let showEpisode = []
+                    json.filter((following, index) => {
+                        showEpisode.push(getEpisodes(following.title))
+                    })
+                    Promise.all(showEpisode)
+                        .then((results) => {
+                            console.log('All episodes from followed shows has been saved:', results)
+                            resolve()
+                        })
+                } else {
+                    reject('Cannot find following.json')
+                }
+            })
+
+        })
+    }
+
+    json_module['getLibrary'] = function getLibrary() {
+        return new Promise(function(resolve, reject) {
+            let library = []
+            fsExtra.readdirSync('./backend/json/episodes')
+                .filter((file) => {
+                    let dashedShowName = file.split('.json')
+                    dashedShowName = dashedShowName[0]
+                    let showName = dashedShowName.replace('-', ' ')
+                    showName = showName.replace('-', ' ')
+                    let show = {
+                        title: showName,
+                        poster: './res/posters/' + dashedShowName + '.jpg',
+                        episodes: []
+                    }
+                    fsExtra.readFile('./backend/json/episodes/' + file, (err, showEpisodes) => {
+                        if (err) throw err
+                        if (showEpisodes) {
+                            let episodes = JSON.parse(showEpisodes)
+                            show.episodes = episodes
+                        }
+                    })
+                    library.push(show)
+                })
+            resolve(library)
+
+        })
+    }
+
+
     return json_module
 }
 
 exports['@singleton'] = true
+exports['@require'] = ['services/common-service']

@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body ng-app="CerealApp" ng-cloak>
@@ -28,7 +29,7 @@
                 </md-button>
             </form>
         </md-content>
-        <md-content class="md-padding">
+        <md-content class="md-padding" layout="row" flex>
             <md-card ng-repeat="local in locals track by $index">
                 <md-card-title>
                     <md-card-title-text>
@@ -37,8 +38,8 @@
                         <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>
-                <md-card-content layout="row" layout-align="space-between center center">
-                    <img ng-src="{{ local.poster }}" class="md-card-image">
+                <md-card-content layout-align="center center" style="min-width: 200px;">
+                    <img ng-src="{{ local.poster }}" class="md-card-image" ng-click="watch(local)" ng-class="(!local.download_info && !local.ready) ? pulsating_poster : ''">
                     <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular>
                     <div layout-align="start" ng-show="!local.ready && local.download_info" flex>
                         <div layout="row" style="padding-left: 10px;">
@@ -66,9 +67,9 @@
                             <div flex-gt-sm="33" flex="66">{{ local.download_info.remaining }}</div>
                         </div>
                     </div>
-                    <md-card-actions layout="row" ng-show="local.ready" flex>
+                    <!--                     <md-card-actions layout="row" ng-show="local.ready" flex>
                         <md-button class="md-raised md-primary" ng-click="watch(local)" style="margin-left: 100px;">Watch</md-button>
-                    </md-card-actions>
+                    </md-card-actions> -->
                 </md-card-content>
             </md-card>
         </md-content>
@@ -86,7 +87,6 @@
     angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
         .controller('mainCtrl', ['$scope', '$interval', function($scope, $interval) {
 
-
             let fsExtra = require('fs-extra')
             let fsPath = require('fs-path')
             let ioc = require('./ioc')
@@ -99,14 +99,22 @@
             let subService = ioc.create('services/subs-service')
             let posterService = ioc.create('services/poster-service')
 
-            // console.log('CURRENT TORRENTS -->', torrentService.getCurrents())
+            // jsonService.updateFollowingEpisodes()
+            jsonService.getLibrary()
+
             $scope.locals = []
-            jsonService.getCompleted()
-                .then((completed) => {
-                    console.log('Library --->', completed)
-                    $scope.locals = completed
-                    $scope.$apply()
-                })
+                jsonService.getCompleted()
+                    .then((completed) => {
+                        console.log('Library --->', completed)
+                        $scope.locals = completed
+                        $scope.$apply()
+                    })
+
+            // jsonService.getLibrary()
+            //     .then((library) => {
+            //         console.log('Library --->', library)
+            //         $scope.locals = library
+            //     })
 
             $scope.search = () => {
                 $scope.search_loading = true
@@ -156,7 +164,7 @@
 
                         let today = new Date()
 
-                        today.setDate(today.getDate())
+                        today.setDate(today.getDate() )
 
                         // console.log(json)
                         for (var i = json.length - 1; i >= 0; i--) {

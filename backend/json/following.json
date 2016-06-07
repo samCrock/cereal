@@ -6,7 +6,8 @@
         "title": "better call saul"
     },
     {
-        "title": "vice"
+        "title": "vice",
+        "poster": "./res/posters/vice.jpg"
     },
     {
         "title": "vinyl"
@@ -24,7 +25,7 @@
         "title": "Real Time with Bill Maher"
     },
     {
-        "title": "last week tonight"
+        "title": "last week tonight with john oliver"
     },
     {
         "title": "preacher",

@@ -15,8 +15,9 @@ let wt_client = new WebTorrent()
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
 let posterService = ioc.create('services/poster-service')
+let commonService = ioc.create('services/common-service')
 
-exports = module.exports = function(commonService) {
+exports = module.exports = function() {
 
     let torrent_module = {}
     let path = process.cwd() + '/download/'
@@ -40,7 +41,7 @@ exports = module.exports = function(commonService) {
 
             // Download & set poster
             scope.locals.filter(function(obj) {
-                console.log('obj', obj)
+                // console.log('obj', obj)
                 jsonService.getPoster(obj.show).then((poster) => {
                     if (poster) {
                         obj.poster = poster
@@ -79,6 +80,11 @@ exports = module.exports = function(commonService) {
                         } else { console.log('not found') }
                     })
 
+                    torrent.on('metadata', () => {
+                        console.log('New torrent:', t)
+                        jsonService.addInfo(t)
+                    })
+
                     jsonService.updateLibrary(t)
 
                     if (torrent.progress != 1) {
@@ -93,10 +99,9 @@ exports = module.exports = function(commonService) {
                         })
                     }
 
-                    torrent.on('done', function() {
+                    torrent.on('done', () => {
                         console.log(torrent.name, ' ready')
                         console.log()
-                            // logUpdate.done()
 
                         subService.search(torrent.name).then((opts) => {
                             subService.download(opts)
@@ -110,7 +115,7 @@ exports = module.exports = function(commonService) {
 
                     })
 
-                    torrent.on('download', function(chunkSize) {
+                    torrent.on('download', (chunkSize) => {
                         var output = [
                             chalk.cyan(''),
                             chalk.cyan('=================='),
@@ -125,19 +130,15 @@ exports = module.exports = function(commonService) {
 
                         torrent.id = t.id
 
-                        scope.locals.filter(function(obj) {
-                            // console.log('scope & torrent check:')
-                            // console.log('obj:', obj)
-                            // console.log('torrent:', torrent)
+                        scope.locals.filter((obj) => {
                             if (obj.id === torrent.id) {
                                 obj.download_info = {
-                                        progress: Math.floor(torrent.progress * 100),
-                                        remaining: commonService.formatTime(torrent.timeRemaining),
-                                        ready: torrent.progress === 1 ? true : false,
-                                        speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
-                                        downloaded: commonService.formatBytes(torrent.downloaded)
-                                    }
-                                    // console.log('obj:', obj)
+                                    progress: Math.floor(torrent.progress * 100),
+                                    remaining: commonService.formatTime(torrent.timeRemaining),
+                                    ready: torrent.progress === 1 ? true : false,
+                                    speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
+                                    downloaded: commonService.formatBytes(torrent.downloaded)
+                                }
                                 scope.$apply()
                             }
                         })
@@ -219,4 +220,9 @@ exports = module.exports = function(commonService) {
 }
 
 exports['@singleton'] = true
-exports['@require'] = ['services/common-service']
+// exports['@require'] = [
+//     'services/common-service',
+//     'services/subs-service',
+//     'services/json-service',
+//     'services/poster-service'
+// ]
