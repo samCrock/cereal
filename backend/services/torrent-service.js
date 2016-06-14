@@ -80,12 +80,11 @@ exports = module.exports = function() {
                         } else { console.log('not found') }
                     })
 
-                    torrent.on('metadata', () => {
-                        console.log('New torrent:', t)
-                        jsonService.addInfo(t)
+                    jsonService.getEpisodeInfo(t)
+                    .then( (t) => {
+                        console.log('Updated torrent:', t)
+                        jsonService.updateLibrary(t)
                     })
-
-                    jsonService.updateLibrary(t)
 
                     if (torrent.progress != 1) {
                         torrent.files.forEach(function(file) {
@@ -108,6 +107,7 @@ exports = module.exports = function() {
                         })
 
                         t.ready = true
+                        delete t['download_info']
                         jsonService.updateLibrary(t)
 
                         resolve(torrent.name)
@@ -220,9 +220,9 @@ exports = module.exports = function() {
 }
 
 exports['@singleton'] = true
-// exports['@require'] = [
-//     'services/common-service',
-//     'services/subs-service',
-//     'services/json-service',
-//     'services/poster-service'
-// ]
+    // exports['@require'] = [
+    //     'services/common-service',
+    //     'services/subs-service',
+    //     'services/json-service',
+    //     'services/poster-service'
+    // ]

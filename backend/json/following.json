@@ -49,5 +49,8 @@
     {
         "title": "game of thrones",
         "poster": "./res/posters/game-of-thrones.jpg"
+    },
+    {
+        "title": "another period"
     }
 ]

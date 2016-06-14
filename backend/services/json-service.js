@@ -8,11 +8,11 @@ let fsExtra = require('fs-extra')
 let url = 'http://www.pogdesign.co.uk/cat/'
 let json
 
-
 exports = module.exports = function(commonService) {
 
     let json_module = {}
 
+    // Used to add poster location after download
     json_module['updateFollowing'] = function updateFollowing(showObj) {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
@@ -40,6 +40,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Returns poster path given the show name
     json_module['getPoster'] = function getPoster(showName) {
         return new Promise(function(resolve, reject) {
             // console.log('showName', showName)
@@ -57,6 +58,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Returns torrent object given the show title
     json_module['getLocalTorrent'] = function getLocalTorrent(title) {
         return new Promise(function(resolve, reject) {
             // console.log('local title', title)
@@ -76,6 +78,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Returns all completed shows from local_torrents
     json_module['getCompleted'] = function getCompleted() {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
@@ -93,6 +96,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Updates local_torrents given a torrent object
     json_module['updateLibrary'] = function updateLibrary(torrent_object) {
         // return new Promise(function(resolve, reject) {
         fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
@@ -121,27 +125,35 @@ exports = module.exports = function(commonService) {
         // })
     }
 
-    json_module['addInfo'] = function addInfo(t) {
+    // Returns additional episode info (date + ep title) given a torrent objecct
+    json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
         return new Promise(function(resolve, reject) {
-            console.log('Addition info for ', t)
-            // fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
-            //     if (err) throw err;
-            //     var json = []
-            //     if (data) {
-                    
-            //     } else { // first entry
-            //         json.push(torrent_object);
-            //         fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
-            //             if (err) reject('Cannot write file :', err)
-            //             return json
-            //         })
-            //     }
-            // })
+            let dashedShowName = t.show.toLowerCase().replace(' ', '-')
+            dashedShowName = dashedShowName.replace(' ', '-')
+            dashedShowName = dashedShowName.replace(' ', '-')
+            let tSeason = t.episode.substr(1, 2)
+            let tEpisode = t.episode.substr(4, 5)
+            fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
+                if (err) throw err;
+                if (data) {
+                    let episodes = JSON.parse(data)
+                    episodes.filter( (ep) => {
+                        if (ep.season === tSeason && ep.episode === tEpisode) {
+                            console.log('Title ->', ep.title, ep.date)
+                            t.date_label = ep.date
+                            t.date = new Date(ep.date)
+                            t.episode_title = ep.title
+                            resolve(t)
+                        }
+
+                    })
+                }
+            })
 
         })
     }
 
-
+    // Writes month.json and returns current month's shows calendar
     json_module['month'] = function month() {
         return new Promise(function(resolve, reject) {
             request(url, function(error, response, html) {
@@ -197,6 +209,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Writes and returns target show episode list (category is used internally to catch TV specific show names)
     let getEpisodes = json_module['getEpisodes'] = function getEpisodes(show, category) {
         return new Promise(function(resolve, reject) {
 
@@ -276,7 +289,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
-
+    // Get all shows from following.json and populates epipsode dir wi/ episodes list
     json_module['updateFollowingEpisodes'] = function updateFollowingEpisodes() {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
@@ -302,6 +315,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Returns all shows w/ all episodes
     json_module['getLibrary'] = function getLibrary() {
         return new Promise(function(resolve, reject) {
             let library = []
