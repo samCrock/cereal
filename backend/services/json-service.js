@@ -12,6 +12,24 @@ exports = module.exports = function(commonService) {
 
     let json_module = {}
 
+    json_module['getFollowing'] = function getFollowing() {
+        return new Promise((resolve, reject) => {
+            let following = []
+            fsExtra.readFile('./backend/json/following.json', (err, data) => {
+                if (data) {
+                    data = JSON.parse(data)
+                    data.filter( (show) => {
+                        if (!show.poster) {
+
+                        }
+                        following.push(show)
+                    })
+                    resolve(following)
+                }
+            })
+        })
+    }
+
     // Used to add poster location after download
     json_module['updateFollowing'] = function updateFollowing(showObj) {
         return new Promise(function(resolve, reject) {

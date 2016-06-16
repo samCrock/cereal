@@ -17,6 +17,7 @@ angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
         // jsonService.getLibrary()
 
         $scope.locals = []
+        $scope.following = []
 
         jsonService.getCompleted().then((completed) => {
             console.log('Completed --->', completed)
@@ -26,10 +27,28 @@ angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
 
         jsonService.getLibrary().then((library) => {
             console.log('Library --->', library)
-                // $scope.locals = library
         })
 
-
+        fsExtra.readFile('./backend/json/following.json', (err, data) => {
+            if (data) {
+                data = JSON.parse(data)
+                let missingPosters = []
+                data.filter((show) => {
+                    if (!show.poster) {
+                        missingPosters.push(posterService.downloadPoster(show.title))
+                    }
+                    $scope.following.push(show)
+                })
+                $scope.$apply()
+                Promise.all(missingPosters)
+                    .then((results) => {
+                        results.filter((f) => {
+                            console.log('f---->', f)
+                                // $scope.following.push(show)
+                        })
+                    })
+            }
+        })
 
 
         jsonService.month().then(function(json) {

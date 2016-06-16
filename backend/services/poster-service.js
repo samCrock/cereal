@@ -14,13 +14,14 @@ let wt_client = new WebTorrent()
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
 
-exports = module.exports = function(commonService) {
+exports = module.exports = (commonService) => {
 
     let torrent_module = {}
 
+    // Downloads poster image and updates following.json w/ the relative path then id scope is defined, refreshes locals
     torrent_module['downloadPoster'] = function downloadPoster(showName, scope) {
 
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
 
             console.log('Searching trakt.tv for: ', showName)
             console.log()

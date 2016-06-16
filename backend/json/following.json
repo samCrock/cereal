@@ -1,25 +1,31 @@
 [
     {
-        "title": "family guy"
+        "title": "family guy",
+        "poster": "./res/posters/family-guy.jpg"
     },
     {
-        "title": "better call saul"
+        "title": "better call saul",
+        "poster": "./res/posters/better-call-saul.jpg"
     },
     {
         "title": "vice",
         "poster": "./res/posters/vice.jpg"
     },
     {
-        "title": "vinyl"
+        "title": "vinyl",
+        "poster": "./res/posters/vinyl.jpg"
     },
     {
-        "title": "the simpsons"
+        "title": "the simpsons",
+        "poster": "./res/posters/the-simpsons.jpg"
     },
     {
-        "title": "gotham"
+        "title": "gotham",
+        "poster": "./res/posters/gotham.jpg"
     },
     {
-        "title": "new girl"
+        "title": "new girl",
+        "poster": "./res/posters/new-girl.jpg"
     },
     {
         "title": "Real Time with Bill Maher"
@@ -40,7 +46,8 @@
         "poster": "./res/posters/maron.jpg"
     },
     {
-        "title": "archer"
+        "title": "archer",
+        "poster": "./res/posters/archer.jpg"
     },
     {
         "title": "silicon valley",

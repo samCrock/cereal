@@ -4,12 +4,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body ng-app="CerealApp" ng-cloak>
     <div ng-controller="mainCtrl">
         <!-- <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular> -->
+        <!-- SEARCH -->
         <md-content layout-gt-sm="row" layout-padding>
             <form ng-submit="search()">
                 <md-input-container>
@@ -29,8 +31,22 @@
                 </md-button>
             </form>
         </md-content>
-
-
+        <!-- FOLLOWING -->
+        <h1 class="md-padding">My shows</h1>
+        <md-content class="md-padding" layout="row" flex>
+            <md-card ng-repeat="show in following">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ show.title }}</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content layout-align="center center" style="min-width: 200px;">
+                    <img ng-src="{{ show.poster }}" ng-click="" class="md-card-image poster">
+                </md-card-content>
+            </md-card>
+        </md-content>
+        <!-- LOCALS -->
+        <h1 class="md-padding">Library</h1>
         <md-content class="md-padding" layout="row" flex>
             <md-card ng-repeat="local in locals | filter : local.date">
                 <md-card-title>
