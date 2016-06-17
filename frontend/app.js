@@ -13,6 +13,8 @@ angular.module('CerealApp', ['ngMaterial', 'ngMdIcons'])
         let subService = ioc.create('services/subs-service')
         let posterService = ioc.create('services/poster-service')
 
+        $scope.default_poster = './res/posters/default.jpg'
+
         // jsonService.updateFollowingEpisodes()
         // jsonService.getLibrary()
 

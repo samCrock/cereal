@@ -23,12 +23,12 @@ exports = module.exports = (commonService) => {
 
         return new Promise((resolve, reject) => {
 
-            console.log('Searching trakt.tv for: ', showName)
-            console.log()
-
             showName = showName.toLowerCase()
             let dashedShowName = showName.replace(' ', '-')
             dashedShowName = dashedShowName.replace(' ', '-')
+
+            console.log('Searching trakt.tv for: ', showName)
+            console.log()
 
             var url = 'https://trakt.tv/shows/' + dashedShowName
 
@@ -48,7 +48,7 @@ exports = module.exports = (commonService) => {
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
-                            fsExtra.writeFile(posterPath, body, 'binary', function(err) {
+                            fsExtra.writeFile(posterPath, body, 'binary', (err) => {
                                 if (err) reject('Cannot write file :', err)
                                 console.log(dashedShowName, 'poster successfuly saved')
                                 if (scope) {
@@ -62,9 +62,12 @@ exports = module.exports = (commonService) => {
                                 resolve(posterPath)
                             })
 
-                        } else console.log('Couldn\'t save this poster')
+                        } else {
+                            console.log('Couldn\'t save this poster')
+                            resolve()
+                        }
                     })
-                } else reject()
+                } else resolve()
             });
         });
     }

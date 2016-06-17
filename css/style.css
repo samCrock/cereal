@@ -25,6 +25,14 @@ body {
     border-radius: 5px;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
+    width: 167px;
+    height: 251px;
+    background: #F0F4C3;
+    background: -webkit-linear-gradient(#F0F4C3, #CDDC39);
+    background: -o-linear-gradient(#F0F4C3, #CDDC39);
+    background: -moz-linear-gradient(#F0F4C3, #CDDC39);
+    background: linear-gradient(#F0F4C3, #CDDC39);
+    /* Standard syntax */
 }
 
 .poster:active {

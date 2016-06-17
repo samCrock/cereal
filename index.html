@@ -12,7 +12,31 @@
     <div ng-controller="mainCtrl">
         <!-- <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular> -->
         <!-- SEARCH -->
-        <md-content layout-gt-sm="row" layout-padding>
+        <md-fab-speed-dial ng-hide="demo.hidden" md-direction="left" md-open="demo.isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': demo.hover }" ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab" style="background-color: white;">
+                    <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+                </md-button>
+            </md-fab-trigger>
+            <md-fab-actions>
+                <div>
+                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
+                        Show
+                    </md-button>
+                </div>
+                <div>
+                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
+                        Episode
+                    </md-button>
+                </div>
+                <div>
+                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
+                        Movie
+                    </md-button>
+                </div>
+            </md-fab-actions>
+        </md-fab-speed-dial>
+<!--         <md-content layout-gt-sm="row" layout-padding>
             <form ng-submit="search()">
                 <md-input-container>
                     <label>Show</label>
@@ -30,9 +54,9 @@
                     <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
                 </md-button>
             </form>
-        </md-content>
+        </md-content> -->
         <!-- FOLLOWING -->
-        <h1 class="md-padding">My shows</h1>
+        <h1 class="md-padding md-content-1">My shows</h1>
         <md-content class="md-padding" layout="row" flex>
             <md-card ng-repeat="show in following">
                 <md-card-title>
@@ -46,42 +70,42 @@
             </md-card>
         </md-content>
         <!-- LOCALS -->
-        <h1 class="md-padding">Library</h1>
+        <h1 class="md-padding md-content-1">Library</h1>
         <md-content class="md-padding" layout="row" flex>
             <md-card ng-repeat="local in locals | filter : local.date">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{ local.show }}</span>
-                        <span class="md-subhead">ep {{ local.episode }}</span>
+                        <span class="md-subhead">{{ local.episode }}</span>
                         <span class="md-subhead">{{ local.episode_title }}</span>
                         <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready && local.download_info"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content layout-align="center center" style="min-width: 200px;">
-                    <div layout-align="start" ng-show="!local.ready && local.download_info" flex>
+                    <div layput-padding layout="column" layout-align="start" ng-show="!local.ready && local.download_info" flex>
+                        <!--                         <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Progress</div>
+                            <div layout-wrap flex="70">{{ local.download_info.progress }} %</div>
+                        </div> -->
                         <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">Progress</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.download_info.progress }} %</div>
+                            <div layout-wrap flex="30">Speed</div>
+                            <div layout-wrap flex="70">{{ local.download_info.speed }}</div>
+                        </div>
+                        <!--                         <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Downloaded</div>
+                            <div layout-wrap flex="70">{{ local.download_info.downloaded }}</div>
                         </div>
                         <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">Speed</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.download_info.speed }}</div>
+                            <div layout-wrap flex="30">Size</div>
+                            <div layout-wrap flex="70">{{ local.size }}</div>
                         </div>
                         <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">Downloaded</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.download_info.downloaded }}</div>
-                        </div>
+                            <div layout-wrap flex="30">Seeds</div>
+                            <div layout-wrap flex="70">{{ local.seeds }}</div>
+                        </div> -->
                         <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">Size</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.size }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">Seeds</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.seeds }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div flex-gt-sm="66" flex="33">ETA</div>
-                            <div flex-gt-sm="33" flex="66">{{ local.download_info.remaining }}</div>
+                            <div layout-wrap flex="30">ETA</div>
+                            <div layout-wrap flex="70">{{ local.download_info.remaining }}</div>
                         </div>
                     </div>
                     <img ng-src="{{ local.poster }}" ng-click="watch(local)" class="md-card-image poster" ng-class="!local.download_info ? pulsating_poster : ''">
