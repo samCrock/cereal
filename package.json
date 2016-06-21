@@ -13,6 +13,7 @@
     "angular-material": "^1.1.0-rc4-master-06e7e99",
     "angular-material-icons": "^0.7.0",
     "angular-messages": "^1.5.6",
+    "angular-ui-router": "^0.3.1",
     "bluebird": "latest",
     "body-parser": "latest",
     "chalk": "latest",

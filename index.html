@@ -8,119 +8,71 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body ng-app="CerealApp" ng-cloak>
-    <div ng-controller="mainCtrl">
-        <!-- <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100" flex ng-show="!local.download_info && !local.ready" style="margin-left: 100px;"></md-progress-circular> -->
-        <!-- SEARCH -->
-        <md-fab-speed-dial ng-hide="demo.hidden" md-direction="left" md-open="demo.isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': demo.hover }" ng-mouseenter="demo.isOpen=true" ng-mouseleave="demo.isOpen=false">
-            <md-fab-trigger>
-                <md-button aria-label="menu" class="md-fab" style="background-color: white;">
-                    <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+<body ng-app="App" ng-cloak>
+    <!-- SEARCH -->
+    <md-fab-speed-dial ng-hide="hidden" md-direction="left" md-open="isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': hover }" ng-mouseenter="isOpen=true" ng-mouseleave="isOpen=false">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab" style="background-color: white;">
+                <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <div>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">
+                    Movie
                 </md-button>
-            </md-fab-trigger>
-            <md-fab-actions>
-                <div>
-                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
-                        Show
-                    </md-button>
-                </div>
-                <div>
-                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
-                        Episode
-                    </md-button>
-                </div>
-                <div>
-                    <md-button class="md-button md-raised" ng-click="demo.openDialog($event, item)">
-                        Movie
-                    </md-button>
-                </div>
-            </md-fab-actions>
-        </md-fab-speed-dial>
-<!--         <md-content layout-gt-sm="row" layout-padding>
-            <form ng-submit="search()">
-                <md-input-container>
-                    <label>Show</label>
-                    <input ng-model="search.show" required>
-                </md-input-container>
-                <md-input-container>
-                    <label>Season</label>
-                    <input ng-model="search.season" required>
-                </md-input-container>
-                <md-input-container>
-                    <label>Episode</label>
-                    <input ng-model="search.episode" required>
-                </md-input-container>
-                <md-button type="submit" aria-label="Search">
-                    <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+            </div>
+            <div>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">
+                    Show
                 </md-button>
-            </form>
-        </md-content> -->
-        <!-- FOLLOWING -->
-        <h1 class="md-padding md-content-1">My shows</h1>
-        <md-content class="md-padding" layout="row" flex>
-            <md-card ng-repeat="show in following">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{ show.title }}</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content layout-align="center center" style="min-width: 200px;">
-                    <img ng-src="{{ show.poster }}" ng-click="" class="md-card-image poster">
-                </md-card-content>
-            </md-card>
-        </md-content>
-        <!-- LOCALS -->
-        <h1 class="md-padding md-content-1">Library</h1>
-        <md-content class="md-padding" layout="row" flex>
-            <md-card ng-repeat="local in locals | filter : local.date">
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">{{ local.show }}</span>
-                        <span class="md-subhead">{{ local.episode }}</span>
-                        <span class="md-subhead">{{ local.episode_title }}</span>
-                        <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready && local.download_info"></md-progress-linear>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content layout-align="center center" style="min-width: 200px;">
-                    <div layput-padding layout="column" layout-align="start" ng-show="!local.ready && local.download_info" flex>
-                        <!--                         <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Progress</div>
-                            <div layout-wrap flex="70">{{ local.download_info.progress }} %</div>
-                        </div> -->
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Speed</div>
-                            <div layout-wrap flex="70">{{ local.download_info.speed }}</div>
-                        </div>
-                        <!--                         <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Downloaded</div>
-                            <div layout-wrap flex="70">{{ local.download_info.downloaded }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Size</div>
-                            <div layout-wrap flex="70">{{ local.size }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Seeds</div>
-                            <div layout-wrap flex="70">{{ local.seeds }}</div>
-                        </div> -->
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">ETA</div>
-                            <div layout-wrap flex="70">{{ local.download_info.remaining }}</div>
-                        </div>
-                    </div>
-                    <img ng-src="{{ local.poster }}" ng-click="watch(local)" class="md-card-image poster" ng-class="!local.download_info ? pulsating_poster : ''">
-                </md-card-content>
-            </md-card>
-        </md-content>
-    </div>
+            </div>
+            <div>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">
+                    Episode
+                </md-button>
+            </div>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-sref="library" name="library">Library</md-nav-item>
+        <md-nav-item md-nav-sref="favourites" name="favourites">Favourites</md-nav-item>
+        <!-- <md-nav-item md-nav-sref="app.calendar" name="calendar">Calendar</md-nav-item> -->
+    </md-nav-bar>
+    <!--     <md-content layout-gt-sm="row" layout-padding>
+        <form ng-submit="search()">
+            <md-input-container>
+                <label>Show</label>
+                <input ng-model="search.show" required>
+            </md-input-container>
+            <md-input-container>
+                <label>Season</label>
+                <input ng-model="search.season" required>
+            </md-input-container>
+            <md-input-container>
+                <label>Episode</label>
+                <input ng-model="search.episode" required>
+            </md-input-container>
+            <md-button type="submit" aria-label="Search">
+                <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+            </md-button>
+        </form>
+    </md-content> -->
+    <!-- INJECT IT ALL -->
+    <ui-view>
+        <div layout="column" layout-fill layout-align="center center">
+            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+        </div>
+    </ui-view>
     <!-- Angular Material requires Angular.js Libraries -->
-    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
     <script src="node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="node_modules/angular-aria/angular-aria.min.js"></script>
     <script src="node_modules/angular-messages/angular-messages.min.js"></script>
     <!-- Angular Material Library -->
     <script src="node_modules/angular-material/angular-material.min.js"></script>
     <script src="node_modules/angular-material-icons/angular-material-icons.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!-- ngElectron  -->
     <script type="text/javascript">
     require('./frontend/app.js')

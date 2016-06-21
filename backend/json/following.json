@@ -28,10 +28,12 @@
         "poster": "./res/posters/new-girl.jpg"
     },
     {
-        "title": "Real Time with Bill Maher"
+        "title": "Real Time with Bill Maher",
+        "poster": "./res/posters/real-time-with-bill-maher.jpg"
     },
     {
-        "title": "last week tonight with john oliver"
+        "title": "last week tonight with john oliver",
+        "poster": "./res/posters/last-week-tonight-with-john-oliver.jpg"
     },
     {
         "title": "preacher",
@@ -58,6 +60,7 @@
         "poster": "./res/posters/game-of-thrones.jpg"
     },
     {
-        "title": "another period"
+        "title": "another period",
+        "poster": "./res/posters/another-period.jpg"
     }
 ]

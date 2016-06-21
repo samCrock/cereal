@@ -146,9 +146,8 @@ exports = module.exports = function(commonService) {
     // Returns additional episode info (date + ep title) given a torrent objecct
     json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
         return new Promise(function(resolve, reject) {
-            let dashedShowName = t.show.toLowerCase().replace(' ', '-')
-            dashedShowName = dashedShowName.replace(' ', '-')
-            dashedShowName = dashedShowName.replace(' ', '-')
+            let dashedShowName = t.show.toLowerCase().split(' ').join('-'); 
+
             let tSeason = t.episode.substr(1, 2)
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
@@ -287,9 +286,7 @@ exports = module.exports = function(commonService) {
                                 })
                             })
 
-                            let dashedShowName = show.replace(' ', '-')
-                            dashedShowName = dashedShowName.replace(' ', '-')
-                            dashedShowName = dashedShowName.replace(' ', '-')
+                            let dashedShowName = show.split(' ').join('-'); 
 
                             fsExtra.writeFile('./backend/json/episodes/' + dashedShowName + '.json', JSON.stringify(episodes, null, 4), function(err) {
                                 if (err) reject('Cannot write file :', err)
@@ -341,8 +338,7 @@ exports = module.exports = function(commonService) {
                 .filter((file) => {
                     let dashedShowName = file.split('.json')
                     dashedShowName = dashedShowName[0]
-                    let showName = dashedShowName.replace('-', ' ')
-                    showName = showName.replace('-', ' ')
+                    let showName = dashedShowName.split(' ').join('-')
                     let show = {
                         title: showName,
                         poster: './res/posters/' + dashedShowName + '.jpg',

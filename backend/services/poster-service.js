@@ -24,10 +24,9 @@ exports = module.exports = (commonService) => {
         return new Promise((resolve, reject) => {
 
             showName = showName.toLowerCase()
-            let dashedShowName = showName.replace(' ', '-')
-            dashedShowName = dashedShowName.replace(' ', '-')
+            let dashedShowName = showName.split(' ').join('-')
 
-            console.log('Searching trakt.tv for: ', showName)
+            console.log('Searching trakt.tv for: ', dashedShowName)
             console.log()
 
             var url = 'https://trakt.tv/shows/' + dashedShowName

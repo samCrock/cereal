@@ -1,0 +1,44 @@
+        <!-- LOCALS -->
+        <!-- <h1 class="md-padding md-content-1">Library</h1> -->
+        <md-content class="md-padding" layout="row" flex>
+            <md-card ng-repeat="local in locals | orderBy : '-date'">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ local.show }}</span>
+                        <span class="md-subhead">{{ local.episode }}</span>
+                        <span class="md-subhead">{{ local.episode_title }}</span>
+                        <span class="md-subhead">{{ local.date_label }}</span>
+                        <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready && local.download_info"></md-progress-linear>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content layout-align="center center" style="min-width: 200px;">
+                    <div layput-padding layout="column" layout-align="start" ng-show="!local.ready && local.download_info" flex>
+                        <!--                         <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Progress</div>
+                            <div layout-wrap flex="70">{{ local.download_info.progress }} %</div>
+                        </div> -->
+                        <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Speed</div>
+                            <div layout-wrap flex="70">{{ local.download_info.speed }}</div>
+                        </div>
+                        <!--                         <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Downloaded</div>
+                            <div layout-wrap flex="70">{{ local.download_info.downloaded }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Size</div>
+                            <div layout-wrap flex="70">{{ local.size }}</div>
+                        </div>
+                        <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">Seeds</div>
+                            <div layout-wrap flex="70">{{ local.seeds }}</div>
+                        </div> -->
+                        <div layout="row" style="padding-left: 10px;">
+                            <div layout-wrap flex="30">ETA</div>
+                            <div layout-wrap flex="70">{{ local.download_info.remaining }}</div>
+                        </div>
+                    </div>
+                    <img ng-src="{{ local.poster }}" ng-click="watch(local)" class="md-card-image poster" ng-class="!local.download_info ? pulsating_poster : ''">
+                </md-card-content>
+            </md-card>
+        </md-content>
