@@ -19,9 +19,14 @@
 body {
     font-family: 'Oswald', sans-serif;
     font-weight: 100;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .poster {
+    cursor: pointer;
     border-radius: 5px;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
@@ -32,11 +37,32 @@ body {
     background: -o-linear-gradient(#F0F4C3, #CDDC39);
     background: -moz-linear-gradient(#F0F4C3, #CDDC39);
     background: linear-gradient(#F0F4C3, #CDDC39);
-    /* Standard syntax */
 }
 
 .poster:active {
     border-radius: 5px;
     box-shadow: 1px 1px 2px #888888;
     color: #888888;
+}
+
+.calendar_card {
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px #888888;
+    outline: none;
+}
+
+.calendar_card:active {
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #888888;
+}
+
+.wp {
+    background-color: black;
+    background-size: cover;
+    background-position: 50% 10%;
+    transition: all .5s;
+    width: 100%;
+    color: white;
+    position: relative;
 }

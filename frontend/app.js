@@ -6,16 +6,16 @@ App.config(($stateProvider, $urlRouterProvider) => {
     // $urlRouterProvider.when('', '/library')
 
     // $urlRouterProvider.otherwise('/library')
-        // Now set up the states
+    // Now set up the states
     $stateProvider
-        // .state('app', {
-        //     url: '',
-        //     views: {
-        //         '@': {
-        //             controller: 'mainCtrl'
-        //         }
-        //     }
-        // })
+    // .state('app', {
+    //     url: '',
+    //     views: {
+    //         '@': {
+    //             controller: 'mainCtrl'
+    //         }
+    //     }
+    // })
         .state('favourites', {
             url: '/favourites',
             views: {
@@ -36,10 +36,30 @@ App.config(($stateProvider, $urlRouterProvider) => {
         })
         .state('calendar', {
             url: '/calendar',
-            templateUrl: './frontend/partials/calendar.html'
+            views: {
+                '@': {
+                    controller: 'calendarCtrl',
+                    templateUrl: './frontend/partials/calendar.html'
+                }
+            }
+        })
+        .state('episode', {
+            url: '/episode',
+            params: {
+                show: '',
+                episode: ''
+            },
+            views: {
+                '@': {
+                    controller: 'episodeCtrl',
+                    templateUrl: './frontend/partials/episode.html'
+                }
+            }
         })
 })
 
 require('./controllers/main.js')
 require('./controllers/library.js')
 require('./controllers/favourites.js')
+require('./controllers/calendar.js')
+require('./controllers/episode.js')

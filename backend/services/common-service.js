@@ -140,6 +140,13 @@ exports = module.exports = function() {
         return dateObj
     }
 
+    common_module['dashedToSpaced'] = function dashedToSpace(dashed) {
+        return dashed.toLowerCase().split('-').join(' ')
+    }
+    common_module['spacedToDashed'] = function spacedToDashed(spaced) {
+        return spaced.toLowerCase().split(' ').join('-')
+    }
+
     return common_module;
 }
 

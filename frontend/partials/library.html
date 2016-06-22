@@ -1,7 +1,7 @@
         <!-- LOCALS -->
         <!-- <h1 class="md-padding md-content-1">Library</h1> -->
         <md-content class="md-padding" layout="row" flex>
-            <md-card ng-repeat="local in locals | orderBy : '-date'">
+            <md-card ng-repeat="local in locals | orderBy : '-date' track by $index">
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{ local.show }}</span>

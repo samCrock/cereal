@@ -1,0 +1,17 @@
+<section layout="column" layout-fill>
+    <md-content>
+        <md-card-title layout="column" style="padding:10px 10px 10px">
+            <span layout-padding class="md-display-3" style="text-align: center;">{{ show }}</span>
+            <span class="md-headline" style="text-align: center;">{{ episode }}</span>
+            <div layout="row" layout-padding layout-align="center center" ng-show="show">
+                <md-button aria-label="fav" class="md-fab" style="background-color: transparent;">
+                    <ng-md-icon icon="star"></ng-md-icon>
+                </md-button>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">Download All Episodes</md-button>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">Stream From Ep 1</md-button>
+                <md-button class="md-button md-raised" ng-click="openDialog($event, item)">Stream This Ep</md-button>
+            </div>
+            <img ng-show="poster" ng-src="{{ poster }}" ng-click="watch(local)" class="wp">
+        </md-card-title>
+    </md-content>
+</section>

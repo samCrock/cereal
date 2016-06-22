@@ -18,7 +18,7 @@ exports = module.exports = function(commonService) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
                 if (data) {
                     data = JSON.parse(data)
-                    data.filter( (show) => {
+                    data.filter((show) => {
                         if (!show.poster) {
 
                         }
@@ -33,13 +33,13 @@ exports = module.exports = function(commonService) {
     // Used to add poster location after download
     json_module['updateFollowing'] = function updateFollowing(showObj) {
         return new Promise(function(resolve, reject) {
-            fsExtra.readFile('./backend/json/following.json', (err, data) => {
+            fsExtra.readJson('./backend/json/following.json', function(err, data) {
 
                 if (err) throw err
                 if (data) { // Locals exists
 
-                    let json = JSON.parse(data)
-                    json.filter((following, index) => {
+                    // let json = JSON.parse(data)
+                    data.filter((following, index) => {
                             // console.log('following', following, '===', showObj)
                             if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
                                 following.poster = showObj.poster
@@ -57,6 +57,7 @@ exports = module.exports = function(commonService) {
 
         })
     }
+
 
     // Returns poster path given the show name
     json_module['getPoster'] = function getPoster(showName) {
@@ -146,15 +147,14 @@ exports = module.exports = function(commonService) {
     // Returns additional episode info (date + ep title) given a torrent objecct
     json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
         return new Promise(function(resolve, reject) {
-            let dashedShowName = t.show.toLowerCase().split(' ').join('-'); 
-
+            let dashedShowName = t.show.toLowerCase().split(' ').join('-')
             let tSeason = t.episode.substr(1, 2)
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
                 if (err) throw err;
                 if (data) {
                     let episodes = JSON.parse(data)
-                    episodes.filter( (ep) => {
+                    episodes.filter((ep) => {
                         if (ep.season === tSeason && ep.episode === tEpisode) {
                             console.log('Title ->', ep.title, ep.date)
                             t.date_label = ep.date
@@ -286,7 +286,7 @@ exports = module.exports = function(commonService) {
                                 })
                             })
 
-                            let dashedShowName = show.split(' ').join('-'); 
+                            let dashedShowName = show.split(' ').join('-');
 
                             fsExtra.writeFile('./backend/json/episodes/' + dashedShowName + '.json', JSON.stringify(episodes, null, 4), function(err) {
                                 if (err) reject('Cannot write file :', err)

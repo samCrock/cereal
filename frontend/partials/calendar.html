@@ -1,0 +1,15 @@
+<div layout="row" ng-cloak>
+    <section layout="row">
+        <div ng-repeat="day in days | limitTo:7" flex layout="column">
+            <h2 class="md-padding md-content-1">{{ day.date_label }}</h2>
+            <md-content>
+                <md-card ui-sref="episode( { show: show.title, episode: show.episode } )" ng-repeat="show in day.shows" flex layout="column" layout-align="center center" layout-margin class="calendar_card">
+                    <md-card-title layout="column" style="padding:10px 10px 10px">
+                        <span class="md-subhead" style="text-align: center;">{{ show.title }}</span>
+                        <span class="md-subhead" style="text-align: center;">{{ show.episode }}</span>
+                    </md-card-title>
+                </md-card>
+            </md-content>
+        </div>
+    </section>
+</div>
