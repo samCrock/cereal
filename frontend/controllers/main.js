@@ -1,11 +1,29 @@
 angular.module('App')
-    .controller('mainCtrl', ['$scope', '$interval', function($scope, $interval) {
+    .controller('mainCtrl', ['$scope', '$interval', '$state', '$rootScope', function($scope, $interval, $state, $rootScope) {
 
         let ioc = require('../../ioc')
 
         let commonService = ioc.create('services/common-service')
         let torrentService = ioc.create('services/torrent-service')
-        // Called in search form
+
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
+            // console.log('event', event)
+            // console.log('toState', toState)
+            // console.log('toParams', toParams)
+            // console.log('fromState', fromState)
+            // console.log($scope.currentNavItem)
+            if (toState.name === 'app.episode') {
+                $scope.isBack = true
+            } else $scope.isBack = false
+        })
+
+        $scope.currentNavItem = 'calendar'
+        $state.go('app.calendar')
+        
+        $scope.back = () => {
+            if ($state.includes('app.episode')) $state.go('app.calendar')
+        }
+
         $scope.search = () => {
             $scope.search_loading = true
             if ($scope.search.season.length === 1) $scope.search.season = '0' + $scope.search.season

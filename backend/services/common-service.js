@@ -31,9 +31,9 @@ exports = module.exports = function() {
         let m_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         let d_names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         let myDate = new Date(date)
-        myDate.setDate(myDate.getDate() + 7)
+        myDate.setDate(myDate.getDate())
         let curr_date = myDate.getDate()
-        let curr_month = myDate.getMonth() - 1
+        let curr_month = myDate.getMonth()
         let curr_day = myDate.getDay()
         return {
             dotw: d_names[curr_day],

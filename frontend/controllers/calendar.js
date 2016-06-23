@@ -6,14 +6,22 @@ angular.module('App')
 
         let jsonService = ioc.create('services/json-service')
         let posterService = ioc.create('services/poster-service')
+        let commonService = ioc.create('services/common-service')
 
         $scope.days = []
-
+        let today = new Date()
+        let _6daysago = new Date()
+        today.setHours(0, 0, 0, 0)
+        _6daysago.setDate(today.getDate() - 6)
+        
         fsExtra.readFile('./backend/json/monthly.json', (err, data) => {
             if (err) return
             data = JSON.parse(data)
             data.filter((day) => {
-                $scope.days.push(day)
+                if (new Date(day.date) >= _6daysago) {
+                    day.dateObj = commonService.getDayObject(day.date)
+                    $scope.days.push(day)
+                }
             })
             $scope.$apply()
         })

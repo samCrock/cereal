@@ -1,3 +1,4 @@
+
 let App = angular.module('App', ['ngMaterial', 'ngMdIcons', 'ui.router'])
 
 App.config(($stateProvider, $urlRouterProvider) => {
@@ -5,18 +6,20 @@ App.config(($stateProvider, $urlRouterProvider) => {
     // For any unmatched url, redirect to /state1
     // $urlRouterProvider.when('', '/library')
 
-    // $urlRouterProvider.otherwise('/library')
+    $urlRouterProvider.otherwise('/calendar')
     // Now set up the states
     $stateProvider
-    // .state('app', {
-    //     url: '',
-    //     views: {
-    //         '@': {
-    //             controller: 'mainCtrl'
-    //         }
-    //     }
-    // })
-        .state('favourites', {
+    .state('app', {
+        url: '',
+        abstract: true,
+        views: {
+            'header@': {
+                controller: 'mainCtrl',
+                templateUrl: './frontend/partials/navbar.html'
+            }
+        }
+    })
+        .state('app.favourites', {
             url: '/favourites',
             views: {
                 '@': {
@@ -25,7 +28,7 @@ App.config(($stateProvider, $urlRouterProvider) => {
                 }
             }
         })
-        .state('library', {
+        .state('app.library', {
             url: '/library',
             views: {
                 '@': {
@@ -34,7 +37,7 @@ App.config(($stateProvider, $urlRouterProvider) => {
                 }
             }
         })
-        .state('calendar', {
+        .state('app.calendar', {
             url: '/calendar',
             views: {
                 '@': {
@@ -43,7 +46,7 @@ App.config(($stateProvider, $urlRouterProvider) => {
                 }
             }
         })
-        .state('episode', {
+        .state('app.episode', {
             url: '/episode',
             params: {
                 show: '',

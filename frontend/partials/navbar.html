@@ -1,0 +1,29 @@
+<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" >
+    <md-nav-item md-nav-sref="app.library" name="library">Library</md-nav-item>
+    <md-nav-item md-nav-sref="app.favourites" name="favourites">Favourites</md-nav-item>
+    <md-nav-item md-nav-sref="app.calendar" name="calendar">Calendar</md-nav-item>
+    <md-button aria-label="menu" class="md-fab back" ng-click="back()" ng-if="isBack">
+        <ng-md-icon icon="chevron_left" ng-show="!search_loading"></ng-md-icon>
+    </md-button>
+</md-nav-bar>
+    <!-- SEARCH -->
+
+<!--         <md-content layout-gt-sm="row" layout-padding>
+        <form ng-submit="search()">
+            <md-input-container>
+                <label>Show</label>
+                <input ng-model="search.show" required>
+            </md-input-container>
+            <md-input-container>
+                <label>Season</label>
+                <input ng-model="search.season" required>
+            </md-input-container>
+            <md-input-container>
+                <label>Episode</label>
+                <input ng-model="search.episode" required>
+            </md-input-container>
+            <md-button type="submit" aria-label="Search">
+                <ng-md-icon icon="search" ng-show="!search_loading"></ng-md-icon>
+            </md-button>
+        </form>
+    </md-content> -->

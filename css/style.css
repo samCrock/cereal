@@ -1,3 +1,39 @@
+/*PALETTE:
+$mdThemingProvider.definePalette('mcgpalette', {
+  '50': '#ffffff',
+  '100': '#fdfefe',
+  '200': '#d1f2ee',
+  '300': '#99e3d9',
+  '400': '#81ddd0',
+  '500': '#69d6c7',
+  '600': '#51cfbe',
+  '700': '#39c9b5',
+  '800': '#31b2a1',
+  '900': '#2a9a8b',
+  'A100': '#ffffff',
+  'A200': '#fdfefe',
+  'A400': '#81ddd0',
+  'A700': '#39c9b5',
+  'contrastDefaultColor': 'light',
+  'contrastDarkColors': '50 100 200 300 400 500 600 700 800 A100 A200 A400 A700'
+});
+*/
+
+body {
+    font-family: 'Fjalla One', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.showCard {
+  /*background: hsla(0,0%,0%,.1);*/
+  /*margin: 1em;*/
+  /*min-width: 200px;*/
+  /*padding: 1em;*/
+}
+
 .pulsating_poster {
     -webkit-animation: pulsate 2s ease-out;
     -webkit-animation-iteration-count: infinite;
@@ -14,15 +50,6 @@
     100% {
         opacity: 0.6;
     }
-}
-
-body {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 100;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 .poster {
@@ -58,11 +85,31 @@ body {
 }
 
 .wp {
-    background-color: black;
     background-size: cover;
-    background-position: 50% 10%;
     transition: all .5s;
     width: 100%;
     color: white;
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 50px;
 }
+
+.wp_gradient {
+    color: white;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(to bottom, white, transparent)
+}
+
+.back {
+    position: absolute;
+    right: 20px;
+}
+
+.bgColor {
+    background: #67CACA
+}
+

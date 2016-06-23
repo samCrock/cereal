@@ -1,7 +1,7 @@
         <!-- LOCALS -->
         <!-- <h1 class="md-padding md-content-1">Library</h1> -->
-        <md-content class="md-padding" layout="row" flex>
-            <md-card ng-repeat="local in locals | orderBy : '-date' track by $index">
+        <md-content style="width: 100%" layout layout-wrap layout-padding layout-align="center">
+            <md-card ng-repeat="local in locals | orderBy : '-date' track by $index" class="showCard" >
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">{{ local.show }}</span>
@@ -11,7 +11,7 @@
                         <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready && local.download_info"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>
-                <md-card-content layout-align="center center" style="min-width: 200px;">
+                <md-card-content layout-align="center center">
                     <div layput-padding layout="column" layout-align="start" ng-show="!local.ready && local.download_info" flex>
                         <!--                         <div layout="row" style="padding-left: 10px;">
                             <div layout-wrap flex="30">Progress</div>

@@ -1,11 +1,14 @@
 <div layout="row" ng-cloak>
     <section layout="row">
-        <div ng-repeat="day in days | limitTo:7" flex layout="column">
-            <h2 class="md-padding md-content-1">{{ day.date_label }}</h2>
-            <md-content>
-                <md-card ui-sref="episode( { show: show.title, episode: show.episode } )" ng-repeat="show in day.shows" flex layout="column" layout-align="center center" layout-margin class="calendar_card">
+        <div ng-repeat="day in days | limitTo:7" flex layout="column" ng-class="$index == 5 ? 'bgColor' : ''">
+            <div ng-style="{ 'color' : ($index == 5 ? 'white':'')}">
+                <h2 class="md-content-1" style="text-align: center; margin-bottom: 0;">{{ day.dateObj.dotw }}</h2>
+                <h3 class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0;">{{ day.dateObj.month }} {{ day.dateObj.dotm }}</h3>
+            </div>
+            <md-content ng-class="$index == 5 ? 'bgColor' : ''">
+                <md-card ui-sref="app.episode( { show: show.title, episode: show.episode } )" ng-repeat="show in day.shows" flex layout="column" layout-align="center center" layout-margin class="calendar_card">
                     <md-card-title layout="column" style="padding:10px 10px 10px">
-                        <span class="md-subhead" style="text-align: center;">{{ show.title }}</span>
+                        <span class="md-subhead" style="text-align: center;" >{{ show.title }}</span>
                         <span class="md-subhead" style="text-align: center;">{{ show.episode }}</span>
                     </md-card-title>
                 </md-card>

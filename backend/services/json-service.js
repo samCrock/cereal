@@ -151,7 +151,11 @@ exports = module.exports = function(commonService) {
             let tSeason = t.episode.substr(1, 2)
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
-                if (err) throw err;
+                if (err) {
+                    getEpisodes(t.show).then( (episodes) => {
+                        getEpisodeInfo(t)
+                    })
+                }
                 if (data) {
                     let episodes = JSON.parse(data)
                     episodes.filter((ep) => {
