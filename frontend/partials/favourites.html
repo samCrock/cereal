@@ -1,7 +1,7 @@
 <!-- FOLLOWING -->
 <!-- <h1 class="md-padding md-content-1">My shows</h1> -->
 <md-content style="width: 100%" layout layout-wrap layout-padding layout-align="center center">
-    <md-card class="showCard" ng-repeat="show in following | orderBy : '-title' : reverse = true" layout-align="center center">
+    <md-card class="borderless" ng-repeat="show in following | orderBy : '-title' : reverse = true" layout-align="center center">
 <!--         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{ show.title }}</span>

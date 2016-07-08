@@ -8,8 +8,8 @@ angular.module('App')
         let jsonService = ioc.create('services/json-service')
         let posterService = ioc.create('services/poster-service')
 
-        let show = $scope.show = $stateParams.show
-        let episode = $scope.episode = $stateParams.episode
+        let show = $scope.show = $stateParams.show.trim()
+        let episode = $scope.episode = $stateParams.episode.trim()
         console.log('$stateParams', $stateParams)
 
         if (show !== '') {

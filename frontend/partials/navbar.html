@@ -1,5 +1,7 @@
 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" >
-    <md-nav-item md-nav-sref="app.library" name="library">Library</md-nav-item>
+    <md-nav-item md-nav-sref="app.library" name="library">
+        <ng-md-icon class="icons" icon="play_arrow"></ng-md-icon>
+    </md-nav-item>
     <md-nav-item md-nav-sref="app.favourites" name="favourites">Favourites</md-nav-item>
     <md-nav-item md-nav-sref="app.calendar" name="calendar">Calendar</md-nav-item>
     <md-button aria-label="menu" class="md-fab back" ng-click="back()" ng-if="isBack">

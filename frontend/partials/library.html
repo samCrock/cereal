@@ -4,10 +4,10 @@
             <md-card ng-repeat="local in locals | orderBy : '-date' track by $index" class="showCard" >
                 <md-card-title>
                     <md-card-title-text>
-                        <span class="md-headline">{{ local.show }}</span>
-                        <span class="md-subhead">{{ local.episode }}</span>
-                        <span class="md-subhead">{{ local.episode_title }}</span>
-                        <span class="md-subhead">{{ local.date_label }}</span>
+                        <!-- <span class="md-headline">{{ local.show }}</span> -->
+                        <span style="font-size: 1.8em;">{{ local.episode }}</span>
+                        <span style="font-size: 2.4em;">{{ local.episode_title }}</span>
+                        <span style="font-size: 1em;">{{ local.date_label }}</span>
                         <md-progress-linear md-mode="determinate" value="{{ local.download_info.progress }}" ng-show="!local.ready && local.download_info"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>

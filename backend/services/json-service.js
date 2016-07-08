@@ -115,6 +115,22 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    // Returns all downloaded poster show names
+    json_module['getLocalPosters'] = function getLocalPosters() {
+        return new Promise(function(resolve, reject) {
+            let local_posters = []
+            fsExtra.readdirSync('./res/posters')
+                .filter((file) => {
+                    let dashedShowName = file.split('.jpg')
+                    dashedShowName = dashedShowName[0]
+                    local_posters.push(dashedShowName)
+                })
+            resolve(local_posters)
+
+        })
+    }
+
+
     // Updates local_torrents given a torrent object
     json_module['updateLibrary'] = function updateLibrary(torrent_object) {
         // return new Promise(function(resolve, reject) {
@@ -152,7 +168,7 @@ exports = module.exports = function(commonService) {
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
                 if (err) {
-                    getEpisodes(t.show).then( (episodes) => {
+                    getEpisodes(t.show).then((episodes) => {
                         getEpisodeInfo(t)
                     })
                 }

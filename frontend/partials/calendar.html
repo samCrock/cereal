@@ -1,18 +1,22 @@
-<div layout="row" ng-cloak>
-    <section layout="row">
-        <div ng-repeat="day in days | limitTo:7" flex layout="column" ng-class="$index == 5 ? 'bgColor' : ''">
-            <div ng-style="{ 'color' : ($index == 5 ? 'white':'')}">
-                <h2 class="md-content-1" style="text-align: center; margin-bottom: 0;">{{ day.dateObj.dotw }}</h2>
-                <h3 class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0;">{{ day.dateObj.month }} {{ day.dateObj.dotm }}</h3>
-            </div>
-            <md-content ng-class="$index == 5 ? 'bgColor' : ''">
-                <md-card ui-sref="app.episode( { show: show.title, episode: show.episode } )" ng-repeat="show in day.shows" flex layout="column" layout-align="center center" layout-margin class="calendar_card">
-                    <md-card-title layout="column" style="padding:10px 10px 10px">
-                        <span class="md-subhead" style="text-align: center;" >{{ show.title }}</span>
-                        <span class="md-subhead" style="text-align: center;">{{ show.episode }}</span>
-                    </md-card-title>
-                </md-card>
-            </md-content>
+<section>
+    <div ng-repeat="day in days | limitTo:7 | orderBy:'-date' " flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
+        <div ng-style="{ 'color' : ($index == 5 ? '':'')}" style="padding-bottom: 0.4em; padding-top: 3em;">
+            <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:3em;">{{ day.dateObj.dotw }}</span>
+            <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2.2em; padding: 0.4em;">{{ day.dateObj.month }} {{ day.dateObj.dotm }}</span>
         </div>
-    </section>
-</div>
+        <md-content ng-class="$index == 5 ? '' : ''" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white;">
+
+            <md-card ui-sref="app.episode( { show: show.title, episode: show.episode } )" ng-repeat="show in day.shows" flex="30" layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="min-width: 240px; min-height: 140px;">
+                
+                <md-card-content ng-if="show.poster">
+                    <img ng-src="{{ show.poster }}" ng-click="" class="md-card-image poster">
+                </md-card-content>
+                <md-card-title ng-if="!show.poster" layout="column" style="padding:10px 10px 10px">
+                    <span id="calendar_title" class="md-subhead" style="text-align: center;">{{ show.title }}</span>
+                    <span id="calendar_episode" class="md-subhead" style="text-align: center;">{{ show.episode }}</span>
+                </md-card-title>
+            
+            </md-card>
+        </md-content>
+    </div>
+</section>

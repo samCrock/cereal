@@ -43,8 +43,10 @@ exports = module.exports = (commonService) => {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
+                    console.log('->', sidebar['0'].children[0])
                     console.log('Poster found ->', posterSrc)
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
+                        console.error(error)
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
                             fsExtra.writeFile(posterPath, body, 'binary', (err) => {
@@ -58,7 +60,7 @@ exports = module.exports = (commonService) => {
                                     })
                                     jsonService.updateFollowing({ "title": showName, "poster": posterPath })
                                 }
-                                resolve(posterPath)
+                                resolve({ 'title': showName, 'poster': posterPath })
                             })
 
                         } else {
@@ -79,12 +81,12 @@ exports = module.exports = (commonService) => {
             showTitle = showTitle.toLowerCase()
             let dashedShowName = showTitle.split(' ').join('-')
 
-            console.log('Searching trakt.tv for: ', dashedShowName)
-            console.log()
+            // console.log('Searching trakt.tv for: ', dashedShowName)
+            // console.log()
 
             var url = 'https://trakt.tv/shows/' + dashedShowName
 
-            console.log('https://trakt.tv/shows/' + dashedShowName)
+            // console.log('https://trakt.tv/shows/' + dashedShowName)
 
             request.get(url, function(error, response, body) {
 
@@ -96,7 +98,8 @@ exports = module.exports = (commonService) => {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
-                    console.log('Poster found ->', posterSrc)
+                    // console.log('Poster found ->', posterSrc)
+
                     resolve(posterSrc)
                 } else resolve()
             });
