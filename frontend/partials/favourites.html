@@ -1,13 +1,11 @@
-<!-- FOLLOWING -->
-<!-- <h1 class="md-padding md-content-1">My shows</h1> -->
-<md-content style="width: 100%" layout layout-wrap layout-padding layout-align="center center">
-    <md-card class="borderless" ng-repeat="show in following | orderBy : '-title' : reverse = true" layout-align="center center">
-<!--         <md-card-title>
+<md-content style="width: 100%; padding-top: 10%;" layout layout-wrap layout-padding layout-align="center">
+    <md-card class="borderless" ng-repeat="show in following | orderBy : '-title' : reverse = true" layout-align="center center" style="background-color: white;">
+        <!--         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{ show.title }}</span>
             </md-card-title-text>
         </md-card-title> -->
-        <md-card-content >
+        <md-card-content>
             <img ng-src="{{ show.poster }}" ng-click="" class="md-card-image poster">
         </md-card-content>
     </md-card>
