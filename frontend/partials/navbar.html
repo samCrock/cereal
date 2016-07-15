@@ -1,15 +1,18 @@
-<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" >
+<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" layout layout-align="center center">
     <md-nav-item md-nav-sref="app.library" name="library">
-        <ng-md-icon class="icons" icon="play_arrow"></ng-md-icon>
+        <i class="white fa fa-play" aria-hidden="true"></i>
     </md-nav-item>
-    <md-nav-item md-nav-sref="app.favourites" name="favourites">Favourites</md-nav-item>
-    <md-nav-item md-nav-sref="app.calendar" name="calendar">Calendar</md-nav-item>
+    <md-nav-item md-nav-sref="app.favourites" name="favourites">
+        <i class="white fa fa-heart" aria-hidden="true"></i>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="app.calendar" name="calendar">
+        <i class="white fa fa-calendar-o" aria-hidden="true"></i>
+    </md-nav-item>
     <md-button aria-label="menu" class="md-fab back" ng-click="back()" ng-if="isBack">
         <ng-md-icon icon="chevron_left" ng-show="!search_loading"></ng-md-icon>
     </md-button>
 </md-nav-bar>
-    <!-- SEARCH -->
-
+<!-- SEARCH -->
 <!--         <md-content layout-gt-sm="row" layout-padding>
         <form ng-submit="search()">
             <md-input-container>
