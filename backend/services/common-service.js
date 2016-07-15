@@ -43,7 +43,7 @@ exports = module.exports = function() {
         }
 
     }
-    
+
     common_module['getShowTitleFromTorrent'] = function getShowTitleFromTorrent(torrent) {
         let show_title = torrent.title.split(/S[0-9]+E[0-9]+/)
         show_title = show_title[0].slice(0, -1)
@@ -144,7 +144,8 @@ exports = module.exports = function() {
         return dashed.toLowerCase().split('-').join(' ')
     }
     common_module['spacedToDashed'] = function spacedToDashed(spaced) {
-        return spaced.toLowerCase().split(' ').join('-')
+        let niceAndSpaced = spaced.toLowerCase().split('.').join('')
+        return niceAndSpaced.split(' ').join('-')
     }
 
     return common_module;

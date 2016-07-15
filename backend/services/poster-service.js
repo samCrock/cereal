@@ -24,7 +24,9 @@ exports = module.exports = (commonService) => {
         return new Promise((resolve, reject) => {
 
             showName = showName.toLowerCase()
-            let dashedShowName = showName.split(' ').join('-')
+            let dashedShowName = showName.split('.').join('')
+            dashedShowName = dashedShowName.split('?').join('')
+            dashedShowName = dashedShowName.split(' ').join('-')
 
             console.log('Searching trakt.tv for: ', dashedShowName)
             console.log()
@@ -43,10 +45,9 @@ exports = module.exports = (commonService) => {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
-                    console.log('->', sidebar['0'].children[0])
+                    // console.log('->', sidebar['0'].children[0])
                     console.log('Poster found ->', posterSrc)
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
-                        console.error(error)
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
                             fsExtra.writeFile(posterPath, body, 'binary', (err) => {
@@ -58,13 +59,12 @@ exports = module.exports = (commonService) => {
                                             local.poster = posterPath
                                         }
                                     })
-                                    jsonService.updateFollowing({ "title": showName, "poster": posterPath })
                                 }
                                 resolve({ 'title': showName, 'poster': posterPath })
                             })
 
                         } else {
-                            console.log('Couldn\'t save this poster')
+                            console.error('Couldn\'t save this poster')
                             resolve()
                         }
                     })
@@ -112,7 +112,8 @@ exports = module.exports = (commonService) => {
         return new Promise((resolve, reject) => {
 
             showTitle = showTitle.toLowerCase()
-            let dashedShowName = showTitle.split(' ').join('-')
+            let dashedShowName = showTitle.split('.').join('')
+            dashedShowName = dashedShowName.split(' ').join('-')
 
             console.log('Searching trakt.tv for: ', dashedShowName)
             console.log()

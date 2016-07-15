@@ -30,30 +30,29 @@ exports = module.exports = function(commonService) {
         })
     }
 
-    // Used to add poster location after download
-    json_module['updateFollowing'] = function updateFollowing(showObj) {
+    // Used to add poster location after download (from array)
+    json_module['updateFollowing'] = function updateFollowing(shows) {
         return new Promise(function(resolve, reject) {
-            fsExtra.readJson('./backend/json/following.json', function(err, data) {
-
-                if (err) throw err
-                if (data) { // Locals exists
-
-                    // let json = JSON.parse(data)
-                    data.filter((following, index) => {
-                            // console.log('following', following, '===', showObj)
+            let data = fsExtra.readFileSync('./backend/json/following.json', 'utf8')
+            if (data) { // Following exists
+                let json = JSON.parse(data)
+                json.filter((following, index) => {
+                        shows.filter((showObj, index) => {
+                            // console.log(following.title.toLowerCase(), showObj.title.toLowerCase())
                             if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
+                                console.log('Updating', showObj.title)
                                 following.poster = showObj.poster
                             }
                         })
-                        // json.push(showObj);
-                    fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
-                        if (err) reject('Cannot write file :', err)
-                        resolve(json)
                     })
-                } else {
-                    reject('Cannot find following.json')
-                }
-            })
+                    // json.push(showObj);
+                fsExtra.writeFile('./backend/json/following.json', JSON.stringify(json, null, 4), function(err) {
+                    if (err) reject('Cannot write file :', err)
+                    resolve(json)
+                })
+            } else {
+                reject('Cannot find following.json')
+            }
 
         })
     }

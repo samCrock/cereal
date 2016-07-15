@@ -1,5 +1,10 @@
 'use strict'
 
+const os = require('os')
+let util = require('util');
+let exec = require('child_process').exec;
+let platform = os.platform()
+
 let chalk = require('chalk')
 let request = require('request')
 let cheerio = require('cheerio')
@@ -27,7 +32,7 @@ exports = module.exports = function() {
         return wt_client.torrents
     }
 
-    torrent_module['downloadTorrent'] = function downloadTorrent(t, scope) {
+    let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t, scope) {
         return new Promise(function(resolve, reject) {
 
             if (t === 404) resolve()
@@ -39,21 +44,21 @@ exports = module.exports = function() {
 
             // commonService.getShowTitleFromTorrent(t)
 
-            // Download & set poster
-            scope.locals.filter(function(obj) {
-                // console.log('obj', obj)
-                jsonService.getPoster(obj.show).then((poster) => {
-                    if (poster) {
-                        obj.poster = poster
-                        scope.$apply()
-                    } else {
-                        posterService.downloadPoster(obj.show).then((poster) => {
-                            obj.poster = poster
-                            scope.$apply()
-                        })
-                    }
-                })
-            })
+            // // Download & set poster
+            // scope.locals.filter(function(obj) {
+            //     // console.log('obj', obj)
+            //     jsonService.getPoster(obj.show).then((poster) => {
+            //         if (poster) {
+            //             obj.poster = poster
+            //             scope.$apply()
+            //         } else {
+            //             posterService.downloadPoster(obj.show).then((poster) => {
+            //                 obj.poster = poster
+            //                 scope.$apply()
+            //             })
+            //         }
+            //     })
+            // })
 
             fsExtra.mkdirp(path, function(err) {
 
@@ -81,10 +86,10 @@ exports = module.exports = function() {
                     })
 
                     jsonService.getEpisodeInfo(t)
-                    .then( (t) => {
-                        console.log('Updated torrent:', t)
-                        jsonService.updateLibrary(t)
-                    })
+                        .then((t) => {
+                            console.log('Updated torrent:', t)
+                            jsonService.updateLibrary(t)
+                        })
 
                     if (torrent.progress != 1) {
                         torrent.files.forEach(function(file) {
@@ -151,10 +156,12 @@ exports = module.exports = function() {
     }
 
 
-    torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
+    let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
         return new Promise(function(resolve, reject) {
 
             var show = searchObj.show
+            show = show.toLowerCase().split('.').join('')
+
             var episode = searchObj.episode
             var searchString = show + ' ' + episode
             console.log('Searching Kickass for: ' + searchString)
@@ -214,6 +221,23 @@ exports = module.exports = function() {
                 }
             })
         })
+    }
+
+    torrent_module['streamEpisode'] = function streamEpisode(searchObj) {
+        searchTorrent(searchObj)
+            .then(function(t) {
+                console.log('streamEpisode search result ->', t)
+                switch (process.platform) {
+                    case 'darwin':
+                        return exec('webtorrent download "' + t.magnet + '" --vlc')
+                    case 'win32':
+                        return shell.openExternal('webtorrent download "' + t.magnet + '" --vlc')
+                    case 'win64':
+                        return shell.openExternal('webtorrent download "' + t.magnet + '" --vlc')
+                    default:
+                        return exec('webtorrent download "' + t.magnet + '" --vlc')
+                }
+            })
     }
 
     return torrent_module

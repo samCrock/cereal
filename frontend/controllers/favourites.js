@@ -1,6 +1,7 @@
 angular.module('App')
-    .controller('favouritesCtrl', ['$scope', '$interval', function($scope, $interval) {
+    .controller('favouritesCtrl', ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval) {
         console.log('Favourites')
+        $rootScope.loading = false
         let ioc = require('../../ioc')
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -28,7 +29,8 @@ angular.module('App')
                     .then((results) => {
                         results.filter((f) => {
                             console.log('f---->', f)
-                                // $scope.following.push(show)
+                            jsonService.updateFollowing({ "title": f.title, "poster": f.poster })
+                            // $scope.following.push(show)
                         })
                     })
             }

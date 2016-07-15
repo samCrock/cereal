@@ -1,6 +1,7 @@
 angular.module('App')
     .controller('libraryCtrl', ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval) {
         console.log('Library')
+        $rootScope.loading = false
         let ioc = require('../../ioc')
         let fsExtra = require('fs-extra')
 

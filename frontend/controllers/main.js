@@ -15,6 +15,10 @@ angular.module('App')
         let subService = ioc.create('services/subs-service')
         let posterService = ioc.create('services/poster-service')
 
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
+            $rootScope.loading = true
+        })
+        
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
             // console.log('event', event)
             // console.log('toState', toState)
