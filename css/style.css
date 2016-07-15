@@ -1,4 +1,3 @@
-
 body {
     font-family: 'Fjalla One', sans-serif;
     -webkit-user-select: none;
@@ -9,11 +8,32 @@ body {
     /*background-color: #182927;*/
 }
 
+.spinner {
+    z-index: 99999;
+    color: white;
+    /* display: block; */
+    position: relative;
+}
+
+.md-nav-bar {
+    z-index: 9999;
+    position: fixed;
+    background-color: #2f4149 !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.white {
+    color: white;
+    font-size: 1.8em;
+}
+
 .showCard {
-  /*background: hsla(0,0%,0%,.1);*/
-  /*margin: 1em;*/
-  /*min-width: 200px;*/
-  /*padding: 1em;*/
+    /*background: hsla(0,0%,0%,.1);*/
+    /*margin: 1em;*/
+    /*min-width: 200px;*/
+    /*padding: 1em;*/
 }
 
 .pulsating_poster {
@@ -39,14 +59,107 @@ body {
     border-radius: 0.5em;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
-    width: 25vw;
+    width: 18vw;
     min-width: 200px;
     height: auto;
-    background: #F0F4C3;
-    background: -webkit-linear-gradient(#F0F4C3, #CDDC39);
-    background: -o-linear-gradient(#F0F4C3, #CDDC39);
-    background: -moz-linear-gradient(#F0F4C3, #CDDC39);
-    background: linear-gradient(#F0F4C3, #CDDC39);
+    opacity: 1;
+}
+
+.poster:hover {
+    opacity: 0.6;
+}
+
+.poster_sub_container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background-color: rgba(47, 65, 73, 0.5);
+    transition: all .5s;
+}
+.poster_sub_loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(47, 65, 73, 0.5);
+    transition: all .5s;
+}
+
+.poster_sub_container:hover {
+    opacity: 1;
+}
+
+.poster_sub {
+    cursor: pointer;
+    position: absolute;
+    font-size: 3em;
+    left: 50%;
+    color: white;
+    opacity: 0.95;
+    transition: all .1s;
+}
+
+.poster_sub:focus {
+    outline: transparent;
+}
+
+.poster_sub.spinner {
+    cursor: default;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.poster_sub.ep {
+    font-size: 2.4em;
+    top: 10%;
+    transform: translate(-50%, -10%);
+}
+
+.poster_sub.ep:hover {
+    font-size: 2.6em;
+}
+
+.poster_sub.download {
+    font-size: 2.8em;
+    top: 45%;
+    left: 70%;
+    transform: translate(-70%, -45%);
+}
+
+.poster_sub.download:hover {
+    font-size: 4em;
+}
+
+.poster_sub.play {
+    font-size: 2.8em;
+    top: 45%;
+    left: 30%;
+    transform: translate(-30%, -45%);
+}
+
+.poster_sub.play:hover {
+    font-size: 4em;
+}
+
+.poster_sub.fav {
+    font-size: 2em;
+    top: 80%;
+    transform: translate(-50%, -80%);
+}
+
+.poster_sub.fav:hover {
+    font-size: 2.4em;
+}
+
+.text_bg_lime:hover {
+    background: -webkit-linear-gradient(#cddc39, #f9fbe7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all .2s;
 }
 
 .poster:active {
@@ -62,7 +175,6 @@ body {
     outline: none;
 }
 
-
 .calendar_card:active {
     border-radius: 0.2em;
     box-shadow: 1px 1px 2px #888888;
@@ -70,7 +182,8 @@ body {
 
 .borderless {
     box-shadow: 0 0 0 0;
-    outline: none;   
+    outline: none;
+    background-color: black;
 }
 
 .wp {
@@ -78,19 +191,21 @@ body {
     transition: all .5s;
     width: 100%;
     color: white;
-    position: absolute;
+    position: relative;
     left: 0;
-    top: 50px;
+    top: 0;
 }
 
 .wp_gradient {
-    color: white;
+    color: #2f4149;
     position: absolute;
+    display: inline-block;
     left: 0;
-    top: 50px;
-    width: 100%;
-    height: 400px;
-    background: linear-gradient(to bottom, white, transparent)
+    bottom: -25%;
+    width: 200%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to top, #2f4149, transparent)
 }
 
 .back {
@@ -111,20 +226,47 @@ body {
 }
 
 #calendar_title {
-  font-size: 1.6em;
+    font-size: 1.6em;
 }
 
 #calendar_episode {
-  font-size: 1.4em;
+    font-size: 1.4em;
 }
 
 section {
-  background-color: #2f4149;
+    background-color: #2f4149;
 }
 
 .icons {
-  color: #f9fbe7;
+    color: #f9fbe7;
 }
 
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+md-card md-card-content {
+    padding: 0;
+}
+
+md-content {
+    width: 100%;
+    padding-top: 10%;
+    /*background-color: #2f4149;*/
+}
+
+.ep_number {
+    font-size: 4em;
+    color: white;
+    text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+.ep_show {
+    font-size: 5em;
+    color: white;
+    text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
