@@ -162,26 +162,34 @@ exports = module.exports = function(commonService) {
     // Returns additional episode info (date + ep title) given a torrent objecct
     json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
         return new Promise(function(resolve, reject) {
+            // console.log('-----getEpisodeInfo-----')
             let dashedShowName = t.show.toLowerCase().split(' ').join('-')
             let tSeason = t.episode.substr(1, 2)
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
                 if (err) {
-                    getEpisodes(t.show).then((episodes) => {
-                        getEpisodeInfo(t)
-                    })
+                    console.err('Cannot retrieve episode list for', dashedShowName)
+                    resolve(t)
+                    // console.log('Fetching show episodes', t.title)
+                    // getEpisodes(t.show).then((episodes) => {
+                    //     getEpisodeInfo(t)
+                    // })
                 }
                 if (data) {
-                    let episodes = JSON.parse(data)
-                    episodes.filter((ep) => {
-                        if (ep.season === tSeason && ep.episode === tEpisode) {
-                            console.log('Title ->', ep.title, ep.date)
-                            t.date_label = ep.date
-                            t.date = new Date(ep.date)
-                            t.episode_title = ep.title
-                            resolve(t)
-                        }
+                    console.log('Updating show episode', t.title)
+                    getEpisodes(t.show).then((episodes) => {
+                        // let episodes = JSON.parse(data)
+                        episodes.filter((ep) => {
+                            if (ep.season === tSeason && ep.episode === tEpisode) {
+                                console.log('   Title ->', ep.title, ep.date)
+                                t.date_label = ep.date
+                                t.date = new Date(ep.date)
+                                t.episode_title = ep.title
+                                resolve(t)
+                                // getEpisodeInfo(t)
+                            }
 
+                        })
                     })
                 }
             })
@@ -258,7 +266,7 @@ exports = module.exports = function(commonService) {
 
             let searchString = encodeURIComponent(show)
 
-            let url = 'https://kickass.unblocked.tv/usearch/' + searchString
+            let url = 'https://kickass.unblocked.cat/usearch/' + searchString
             if (category) url += 'category:tv/'
 
             request.get({ url: url }, function(error, response, body) {
@@ -323,7 +331,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
-    // Get all shows from following.json and populates epipsode dir wi/ episodes list
+    // Get all shows from following.json and populates episode dir w/ episodes list
     json_module['updateFollowingEpisodes'] = function updateFollowingEpisodes() {
         return new Promise(function(resolve, reject) {
             fsExtra.readFile('./backend/json/following.json', (err, data) => {
@@ -334,6 +342,7 @@ exports = module.exports = function(commonService) {
                     let json = JSON.parse(data)
                     let showEpisode = []
                     json.filter((following, index) => {
+                        console.log('Updating', following.title, 'episode list')
                         showEpisode.push(getEpisodes(following.title))
                     })
                     Promise.all(showEpisode)

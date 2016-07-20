@@ -5,9 +5,12 @@
   "description": "stream & download series",
   "license": "MIT",
   "main": "main.js",
-  "author": "samCrock",
+  "author": {
+    "name": "samCrock",
+    "email": "samlombardi86@gmail.com"
+  },
   "dependencies": {
-    "angular": "^1.5.6",
+    "angular": "^1.5.7",
     "angular-animate": "^1.5.6",
     "angular-aria": "^1.5.6",
     "angular-material": "^1.1.0-rc4-master-06e7e99",
@@ -18,9 +21,10 @@
     "body-parser": "latest",
     "chalk": "latest",
     "cheerio": "latest",
-    "chokidar": "latest",
+    "chokidar": "=1.4.3",
     "electrolyte": "latest",
     "express": "latest",
+    "font-awesome": "^4.6.3",
     "fs-extra": "latest",
     "fs-path": "latest",
     "log-update": "latest",
@@ -35,9 +39,16 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
-    "download": "node ./backend/download.js"
+    "download": "node ./backend/download.js",
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.1.2"
+  },
+  "build": {
+    "appId": "cereal.io",
+    "app-category-type": "media"
   }
 }

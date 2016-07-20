@@ -1,10 +1,14 @@
 const electron = require('electron')
+const path = require('path')
     // Module to control application life.
 const app = electron.app
     // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
 const os = require('os')
+
+const PATH_APP_NODE_MODULES = path.join(__dirname, '..', '..', 'app', 'node_modules');
+require('module').globalPaths.push(PATH_APP_NODE_MODULES);
 
 console.log('Current OS arch:', os.arch())
 console.log('Current OS platform:', os.platform())

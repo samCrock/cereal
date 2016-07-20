@@ -8,7 +8,19 @@ angular.module('App')
         let commonService = ioc.create('services/common-service')
         let jsonService = ioc.create('services/json-service')
 
-        $scope.default_poster = './res/posters/default.jpg'
+        jsonService.getCompleted().then( (completed) => {
+            console.log('Completed --->', completed)
+            let ranges = commonService.putInRange(completed)
+                // .then( (ranges) => {
+            $rootScope.ranges = ranges
+            console.log('**********')
+            console.log(ranges)
+            console.log('**********')
+            $rootScope.$apply()
+                // })
+                // $rootScope.locals = completed
+        })
+
 
         $scope.watch = (local) => {
             let fileName = local.path.split('/')

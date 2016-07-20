@@ -29,7 +29,7 @@ angular.module('App')
                     episode: episode
                 })
                 .then((result) => {
-                    torrentService.downloadTorrent(result)
+                    torrentService.downloadTorrent(result, $rootScope)
                         .then(() => {
                             console.log(show, episode, 'finished downloading')
                         })

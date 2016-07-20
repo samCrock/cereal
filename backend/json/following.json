@@ -62,5 +62,9 @@
     {
         "title": "mr. robot",
         "poster": "./res/posters/mr-robot.jpg"
+    },
+    {
+        "title": "stranger things",
+        "poster": "./res/posters/stranger-things.jpg"
     }
 ]

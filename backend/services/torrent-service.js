@@ -32,33 +32,41 @@ exports = module.exports = function() {
         return wt_client.torrents
     }
 
-    let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t, scope) {
+    let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t, $rootScope) {
         return new Promise(function(resolve, reject) {
 
             if (t === 404) resolve()
                 // Initialize watcher
                 // watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
 
-            console.log("'" + t.title + "'")
-            console.log()
+            // console.log("'" + t.title + "'")
+            // console.log()
 
             // commonService.getShowTitleFromTorrent(t)
 
             // // Download & set poster
-            // scope.locals.filter(function(obj) {
+            // $rootScope.locals.filter(function(obj) {
             //     // console.log('obj', obj)
             //     jsonService.getPoster(obj.show).then((poster) => {
             //         if (poster) {
             //             obj.poster = poster
-            //             scope.$apply()
+            //             $rootScope.$apply()
             //         } else {
             //             posterService.downloadPoster(obj.show).then((poster) => {
             //                 obj.poster = poster
-            //                 scope.$apply()
+            //                 $rootScope.$apply()
             //             })
             //         }
             //     })
             // })
+
+            t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
+
+            jsonService.getEpisodeInfo(t)
+                .then((t) => {
+                    console.log('Updating library w\\ torrent:', t)
+                    jsonService.updateLibrary(t)
+                })
 
             fsExtra.mkdirp(path, function(err) {
 
@@ -74,22 +82,16 @@ exports = module.exports = function() {
 
                     jsonService.getLocalTorrent(t.title).then((result) => {
                         if (result) {
-                            scope.locals.filter(function(obj) {
+                            $rootScope.locals.filter(function(obj) {
                                 if (result.title === obj.title) {
                                     console.log('Already here baby', result)
                                     obj = result
                                     resolve(result.name)
-                                    scope.$apply()
+                                    $rootScope.$apply()
                                 }
                             })
                         } else { console.log('not found') }
                     })
-
-                    jsonService.getEpisodeInfo(t)
-                        .then((t) => {
-                            console.log('Updated torrent:', t)
-                            jsonService.updateLibrary(t)
-                        })
 
                     if (torrent.progress != 1) {
                         torrent.files.forEach(function(file) {
@@ -113,10 +115,11 @@ exports = module.exports = function() {
 
                         t.ready = true
                         delete t['download_info']
+
                         jsonService.updateLibrary(t)
 
                         resolve(torrent.name)
-                        scope.$apply()
+                        $rootScope.$apply()
 
                     })
 
@@ -135,7 +138,7 @@ exports = module.exports = function() {
 
                         torrent.id = t.id
 
-                        scope.locals.filter((obj) => {
+                        $rootScope.locals.filter((obj) => {
                             if (obj.id === torrent.id) {
                                 obj.download_info = {
                                     progress: Math.floor(torrent.progress * 100),
@@ -144,7 +147,7 @@ exports = module.exports = function() {
                                     speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
                                     downloaded: commonService.formatBytes(torrent.downloaded)
                                 }
-                                scope.$apply()
+                                $rootScope.$apply()
                             }
                         })
                     })
@@ -169,7 +172,7 @@ exports = module.exports = function() {
 
             searchString = encodeURIComponent(searchString)
 
-            var url = 'https://kickass.unblocked.tv/usearch/' + searchString
+            var url = 'https://kickass.unblocked.cat/usearch/' + searchString
 
             request.get(url, function(error, response, body) {
 
@@ -208,7 +211,7 @@ exports = module.exports = function() {
                         }
 
                     });
-                } else resolve(404)
+                } else resolve(parseInt(response.statusCode))
             });
         });
     }

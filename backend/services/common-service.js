@@ -144,8 +144,38 @@ exports = module.exports = function() {
         return dashed.toLowerCase().split('-').join(' ')
     }
     common_module['spacedToDashed'] = function spacedToDashed(spaced) {
-        let niceAndSpaced = spaced.toLowerCase().split('.').join('')
-        return niceAndSpaced.split(' ').join('-')
+            let niceAndSpaced = spaced.toLowerCase().split('.').join('')
+            return niceAndSpaced.split(' ').join('-')
+        }
+        // Takes an array of downloaded torrents w/ dates and returns an array of 'ranged' group of torrents (e.g  last week) 
+    common_module['putInRange'] = function putInRange(completed) {
+        let today = [] 
+        let last_week = []
+        let last_month = []
+        let last_year = []
+        let older = []
+        let no_date = []
+        let now = new Date()
+        let ranges = {}
+        completed.filter( (torrent) => {
+            let t = new Date(torrent.date)
+            let diff = now.getTime() - t.getTime()
+            let days = Math.floor(diff / (1000 * 60 * 60 * 24))
+            console.log(torrent.title, days)
+            if (days == 1) { today.push(torrent) }
+            else if (days > 1 && days < 8) { last_week.push(torrent) }
+            else if (days >= 8 && days < 31) { last_month.push(torrent) }
+            else if (days >= 31 && days < 365) { last_year.push(torrent) }
+            else if (days >= 365) { older.push(torrent) }
+            else {no_date.push(torrent) }
+        })
+        ranges.today      = { label: 'Today', data: today }
+        ranges.last_week  = { label: 'Last Week', data: last_week }
+        ranges.last_month = { label: 'Last Month', data: last_month }
+        ranges.last_year  = { label: 'Last Year', data: last_year }
+        ranges.older      = { label: 'Older', data: older }
+        ranges.no_date    = { label: 'No date', data: no_date }
+        return ranges
     }
 
     return common_module;

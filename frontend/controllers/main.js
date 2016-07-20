@@ -64,11 +64,11 @@ angular.module('App')
 
         $rootScope.locals = []
 
-        jsonService.getCompleted().then((completed) => {
-            console.log('Completed --->', completed)
-            $rootScope.locals = completed
-            $scope.$apply()
-        })
+        // jsonService.getCompleted().then((completed) => {
+        //     console.log('Completed --->', completed)
+        //     $rootScope.locals = completed
+        //     $rootScope.$apply()
+        // })
 
         jsonService.getLibrary().then((library) => {
             console.log('Library --->', library)
@@ -149,7 +149,7 @@ angular.module('App')
                                     if (results[i].title) {
                                         console.log('---> ', results[i])
                                         $rootScope.locals.push(results[i])
-                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $scope))
+                                        torrentsArray.push(torrentService.downloadTorrent(results[i], $rootScope))
                                     } else {
                                         results = results.splice(i, 1)
                                     }
