@@ -28,25 +28,25 @@ exports = module.exports = (commonService) => {
             dashedShowName = dashedShowName.split('?').join('')
             dashedShowName = dashedShowName.split(' ').join('-')
 
-            console.log('Searching trakt.tv for: ', dashedShowName)
-            console.log()
+            // console.log('Searching trakt.tv for: ', dashedShowName)
+            // console.log()
 
             var url = 'https://trakt.tv/shows/' + dashedShowName
 
-            console.log('https://trakt.tv/shows/' + dashedShowName)
+            // console.log('https://trakt.tv/shows/' + dashedShowName)
 
             request.get(url, function(error, response, body) {
 
                 if (error || !response) return reject(error)
 
-                console.log(response.statusCode)
+                // console.log(response.statusCode)
 
                 if (!error && response.statusCode == 200) {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
                     // console.log('->', sidebar['0'].children[0])
-                    console.log('Poster found ->', posterSrc)
+                    // console.log('Poster found ->', posterSrc)
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'

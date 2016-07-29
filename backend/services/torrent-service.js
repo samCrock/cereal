@@ -1,8 +1,8 @@
 'use strict'
 
 const os = require('os')
-let util = require('util');
-let exec = require('child_process').exec;
+let util = require('util')
+let exec = require('child_process').exec
 let platform = os.platform()
 
 let chalk = require('chalk')
@@ -35,30 +35,13 @@ exports = module.exports = function() {
     let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t, $rootScope) {
         return new Promise(function(resolve, reject) {
 
-            if (t === 404) resolve()
-                // Initialize watcher
-                // watcher.on('add', path => console.log(chalk.bgMagenta(`File ${path} has been added\n`)))
+            if (!t.show) {
+                console.log('---' + typeof t + '---')
+                resolve( parseInt(t) )
+            }
 
             // console.log("'" + t.title + "'")
             // console.log()
-
-            // commonService.getShowTitleFromTorrent(t)
-
-            // // Download & set poster
-            // $rootScope.locals.filter(function(obj) {
-            //     // console.log('obj', obj)
-            //     jsonService.getPoster(obj.show).then((poster) => {
-            //         if (poster) {
-            //             obj.poster = poster
-            //             $rootScope.$apply()
-            //         } else {
-            //             posterService.downloadPoster(obj.show).then((poster) => {
-            //                 obj.poster = poster
-            //                 $rootScope.$apply()
-            //             })
-            //         }
-            //     })
-            // })
 
             t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
 
@@ -167,53 +150,40 @@ exports = module.exports = function() {
 
             var episode = searchObj.episode
             var searchString = show + ' ' + episode
-            console.log('Searching Kickass for: ' + searchString)
+            console.log('Searching PB for: ' + searchString)
             console.log()
 
             searchString = encodeURIComponent(searchString)
 
-            var url = 'https://kickass.unblocked.cat/usearch/' + searchString
+            var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
 
             request.get(url, function(error, response, body) {
 
-                if (error || !response) return reject(error);
+                if (error || !response) return reject(error)
 
-                console.log(response.statusCode);
+                console.log('[', response.statusCode, ']')
 
-                if (!error && response.statusCode == 200) {
-                    var $ = cheerio.load(body);
-                    var json = [];
-                    var counter = 0;
-                    $('tr').filter(function() {
-                        var torrent = {};
-                        var data = $(this);
-                        // if (data['0'].attribs) {
-                        if (data['0'].attribs && data['0'].attribs.id && data['0'].attribs.id.match(/torrent_/) && counter < 3) {
-                            counter++
-                            var row = data.children()
-                            var data_params = row.children()['0'].children[3].next.next.attribs['data-sc-params']
-                            if (data_params) {
-                                var json_obj = commonService.replaceAll(data_params, "'", '"')
-                                json_obj = JSON.parse(json_obj)
-                                torrent.show = show
-                                torrent.episode = episode
-                                torrent.title = decodeURIComponent(json_obj.name)
-                                torrent.seeds = row[4].children[0].data
-                                torrent.size = row.children()['2'].prev.data + row.children()['2'].children[0].data
-                                torrent.released = row[3].children[0].data
-                                torrent.extension = json_obj.extension
-                                torrent.magnet = json_obj.magnet
-                                torrent.id = commonService.generateID()
-                                console.log('Search torrent result : ', torrent)
-                                resolve(torrent) // Returns only the first result
-                            }
+                if (!error && response.statusCode === 200) {
+                    var $ = cheerio.load(body)
+                    var data = $('#searchResult')
+                    var torrent = {}
+                        // console.log('*************************')
+                        // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
+                        // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
+                        // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
+                        // console.log('', data['0'].children[3])
+                        // console.log('*************************')
+                    torrent.show = show
+                    torrent.episode = episode
+                    torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
+                    torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
+                    torrent.seeds = data['0'].children[3].children[5].children[0].data
+                    console.log('-------', torrent)
+                    resolve(torrent)
 
-                        }
-
-                    });
                 } else resolve(parseInt(response.statusCode))
-            });
-        });
+            })
+        })
     }
 
     torrent_module['getLocalTorrents'] = function getLocalTorrents() {

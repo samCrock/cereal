@@ -7,26 +7,10 @@
             <md-card ng-repeat="show in range.data | orderBy : '-date' track by $index" class="showCard" style="max-width: 600px;" layout="row">
                 <md-card-content layout-align="center center" style="position: relative;">
                     <div layput-padding layout="column" ng-show="!show.ready && show.download_info" flex>
-                        <!--                         <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Progress</div>
-                            <div layout-wrap flex="70">{{ show.download_info.progress }} %</div>
-                        </div> -->
                         <div layout="row" style="padding-left: 10px;">
                             <div layout-wrap flex="30">Speed</div>
                             <div layout-wrap flex="70">{{ show.download_info.speed }}</div>
                         </div>
-                        <!--                         <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Downloaded</div>
-                            <div layout-wrap flex="70">{{ show.download_info.downloaded }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Size</div>
-                            <div layout-wrap flex="70">{{ show.size }}</div>
-                        </div>
-                        <div layout="row" style="padding-left: 10px;">
-                            <div layout-wrap flex="30">Seeds</div>
-                            <div layout-wrap flex="70">{{ show.seeds }}</div>
-                        </div> -->
                         <div layout="row" style="padding-left: 10px;">
                             <div layout-wrap flex="30">ETA</div>
                             <div layout-wrap flex="70">{{ show.download_info.remaining }}</div>
@@ -44,10 +28,10 @@
                 </md-card-content>
                 <md-card-title>
                     <md-card-title-text>
-                        <!-- <span class="md-headline">{{ show.show }}</span> -->
                         <span style="font-size: 1.8em;">{{ show.episode }}</span>
                         <span style="font-size: 2.4em;">{{ show.episode_title }}</span>
-                        <span style="font-size: 1em;">{{ show.date_label }}</span>
+                        <span style="font-size: 1em;">{{ show.date_label.dotw }}</span>
+                        <span style="font-size: 1em;">{{ show.date_label.dotm }}</span>
                         <md-progress-linear md-mode="determinate" value="{{ show.download_info.progress }}" ng-show="!show.ready && show.download_info"></md-progress-linear>
                     </md-card-title-text>
                 </md-card-title>

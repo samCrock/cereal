@@ -32,6 +32,7 @@
     "node-zip": "^1.1.1",
     "npm-run-all": "latest",
     "request": "latest",
+    "request-promise": "^4.0.2",
     "socket.io": "^1.4.6",
     "transmission": "latest",
     "util": "^0.10.3",
@@ -39,7 +40,6 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
-    "download": "node ./backend/download.js",
     "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build"

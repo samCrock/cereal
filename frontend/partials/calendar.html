@@ -5,7 +5,7 @@
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2.2em; padding: 0.4em;">{{ day.dateObj.month }} {{ day.dateObj.dotm }}</span>
         </div>
         <md-content ng-class="$index == 5 ? '' : ''" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 2vw;">
-            <md-card ng-repeat="show in day.shows" flex="20" layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="min-width: 200px; min-height: 140px;">
+            <md-card ng-repeat="show in day.shows | filter:posterOnly" flex="20" layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="min-width: 200px; min-height: 140px;">
                 <md-card-content ng-if="show.poster" style="position: relative;">
                     <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster">
                     <div ng-show="!show.loading" class="poster_sub_container">

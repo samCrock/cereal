@@ -76,7 +76,7 @@ exports = module.exports = function(commonService) {
         })
     }
 
-    // Returns torrent object given the show title
+    // Returns torrent object given the torrent title
     json_module['getLocalTorrent'] = function getLocalTorrent(title) {
         return new Promise(function(resolve, reject) {
             // console.log('local title', title)
@@ -85,7 +85,7 @@ exports = module.exports = function(commonService) {
                     let json = JSON.parse(data)
                     json.filter((torrent) => {
                         // console.log('torrent title', torrent.title)
-                        if (torrent.title.toLowerCase() === title.toLowerCase()) {
+                        if (torrent.title === title) {
                             // console.log('match:', torrent)
                             resolve(torrent)
                         }
@@ -170,13 +170,13 @@ exports = module.exports = function(commonService) {
                 if (err) {
                     console.err('Cannot retrieve episode list for', dashedShowName)
                     resolve(t)
-                    // console.log('Fetching show episodes', t.title)
-                    // getEpisodes(t.show).then((episodes) => {
-                    //     getEpisodeInfo(t)
-                    // })
+                        // console.log('Fetching show episodes', t.title)
+                        // getEpisodes(t.show).then((episodes) => {
+                        //     getEpisodeInfo(t)
+                        // })
                 }
                 if (data) {
-                    console.log('Updating show episode', t.title)
+                    console.log('Updating show episode', t.show)
                     getEpisodes(t.show).then((episodes) => {
                         // let episodes = JSON.parse(data)
                         episodes.filter((ep) => {
@@ -186,7 +186,7 @@ exports = module.exports = function(commonService) {
                                 t.date = new Date(ep.date)
                                 t.episode_title = ep.title
                                 resolve(t)
-                                // getEpisodeInfo(t)
+                                    // getEpisodeInfo(t)
                             }
 
                         })
@@ -253,23 +253,18 @@ exports = module.exports = function(commonService) {
         })
     }
 
-    // Writes and returns target show episode list (category is used internally to catch TV specific show names)
-    let getEpisodes = json_module['getEpisodes'] = function getEpisodes(show, category) {
+    // Writes and returns target show episode list
+    let getEpisodes = json_module['getEpisodes'] = function getEpisodes(show) {
         return new Promise(function(resolve, reject) {
 
-            show = show.toLowerCase()
+            show = commonService.spacedToDashed(show)
 
-            console.log('Searching Kickass for: ' + show)
+            console.log('Searching Trakt for: ' + show)
             console.log()
 
-            let episodes = []
+            let urlMain = 'https://trakt.tv/shows/' + show
 
-            let searchString = encodeURIComponent(show)
-
-            let url = 'https://kickass.unblocked.cat/usearch/' + searchString
-            if (category) url += 'category:tv/'
-
-            request.get({ url: url }, function(error, response, body) {
+            request.get({ url: urlMain }, function(error, response, body) {
 
                 if (error || !response) return reject(error)
 
@@ -278,55 +273,54 @@ exports = module.exports = function(commonService) {
                 if (!error && response.statusCode == 200) {
 
                     let $ = cheerio.load(body)
-
-                    let show_title = $('h1')['0']
-                    let show_url
-                    if (show_title) show_url = 'https://kickass.unblocked.tv' + $('h1')['0'].children[0].attribs.href
-                    if (!show_title) return getEpisodes(show, true)
-                    console.log('show_url', show_url)
-
-                    request.get(show_url, function(error, response, body) {
-                        if (error || !response) return reject(error)
-                            // console.log(response.statusCode)
-                            // console.log('-', show, 'episodes -')
-                        if (!error && response.statusCode == 200) {
-                            let $ = cheerio.load(body)
-                            $('.infoList').filter((label, ep) => {
-                                let season = ep.parent.parent.prev.prev.children[0].data
-                                season = season.split(/Season /)
-                                season = season[1]
-                                let episode = ep.children[1].children[1].children[0].data
-                                episode = episode.split(/Episode /)
-                                episode = episode[1]
-                                episode = episode.split(/\t/)
-                                episode = episode[0]
-                                let title = ep.children[1].children[3].children[0].data
-                                let date_label = ep.children[1].children[5].children[1].children[0].data
-                                    // console.log('   Season', season, 'Episode', episode)
-                                    // console.log('       Title      :', title)
-                                    // console.log('       Date       :', date_label)
-                                episodes.push({
-                                    season: season,
-                                    episode: episode,
-                                    title: title,
-                                    date: date_label
-                                })
-                            })
-
-                            let dashedShowName = show.split(' ').join('-');
-
-                            fsExtra.writeFile('./backend/json/episodes/' + dashedShowName + '.json', JSON.stringify(episodes, null, 4), function(err) {
-                                if (err) reject('Cannot write file :', err)
+                    let seasons = $('#seasons')['0'].children[0].children[0].data
+                    console.log('seasons', seasons)
+                    let currentSeason = seasons
+                    let episodes = []
+                    while (currentSeason > 0) {
+                        let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
+                        request.get({ url: urlSeasons }, function(error, response, body) {
+                            if (error || !response) return reject(error)
+                            if (!error && response.statusCode == 200) {
+                                let $ = cheerio.load(body)
+                                    // console.log('Titles', $('.titles'))
+                                for (var i = $('.titles').length - 1; i >= 0; i--) {
+                                    if (i !== 1) {
+                                        if ($('.titles')[i].children.length == 2) {
+                                            // console.log('Title Regular', i, $('.titles')[i])
+                                            let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
+                                            let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                            let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
+                                                // console.log('      ep', ep)
+                                                // console.log('   title', title)
+                                                // console.log('    date', date)
+                                            episodes.push({
+                                                episode: ep,
+                                                title: title,
+                                                date: date
+                                            })
+                                        } else if ($('.titles')[i].children.length == 6) {
+                                            // console.log('Title Premiere', i, $('.titles')[i])
+                                            let ep = $('.titles')[i].children[2].children[0].children[0].data
+                                            let title = $('.titles')[i].children[2].children[2].children[0].data
+                                            let date = $('.titles')[i].children[1].children[0].children[0].data
+                                                // console.log('      ep', ep)
+                                                // console.log('   title', title)
+                                                // console.log('    date', date)
+                                            episodes.push({
+                                                episode: ep,
+                                                title: title,
+                                                date: date
+                                            })
+                                        }
+                                    }
+                                }
                                 resolve(episodes)
-                            })
-                        }
-                    })
-                }
-
-                if (!error && response.statusCode == 200) {
-                    let $ = cheerio.load(body);
-
-                } else resolve(404)
+                            } else resolve(response.statusCode)
+                        })
+                        currentSeason--
+                    }
+                } else resolve(response.statusCode)
             })
         })
     }

@@ -6,7 +6,7 @@ App.config(($stateProvider, $urlRouterProvider, $mdThemingProvider) => {
     // $urlRouterProvider.when('', '/library')
 
     $mdThemingProvider.theme('default')
-        .primaryPalette('lime', {
+        .primaryPalette('cereal_palette', {
             'default': '200', // by default use shade 400 from the pink palette for primary intentions
             'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
             'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class

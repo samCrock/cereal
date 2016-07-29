@@ -21,8 +21,12 @@ angular.module('App')
         //     torrentService.streamEpisode({ show: show.title, episode: show.episode })
         // }
 
+        $scope.posterOnly = (show) => {
+            return show.poster
+        }
+
         $scope.downloadEpisode = (showObj) => {
-            let show = showObj.show 
+            let show = showObj.show
             let episode = showObj.episode
             torrentService.searchTorrent({
                     show: show,
@@ -30,8 +34,13 @@ angular.module('App')
                 })
                 .then((result) => {
                     torrentService.downloadTorrent(result, $rootScope)
-                        .then(() => {
-                            console.log(show, episode, 'finished downloading')
+                        .then((t) => {
+                            console.log('downloadTorrent result', t)
+                            if (typeof t !== Object) {
+                                console.log('Unable to download', show, episode, '\nCode ->', t)
+                            } else {
+                                console.log(show, episode, 'finished downloading')
+                            }
                         })
                 })
         }
@@ -58,8 +67,7 @@ angular.module('App')
                                             // console.log('--poster found--')
                                         show.poster = posterPath
                                     } else {
-                                        // posters.push(posterService.getPosterUrl(show.title))
-                                        console.log('Poster to download:', show.title)
+                                        // console.log('Poster to download:', show.title)
                                         posters.push(posterService.downloadPoster(show.title))
                                     }
                                 })
