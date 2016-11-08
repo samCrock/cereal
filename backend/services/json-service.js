@@ -163,22 +163,25 @@ exports = module.exports = function(commonService) {
     json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
         return new Promise(function(resolve, reject) {
             // console.log('-----getEpisodeInfo-----')
-            let dashedShowName = t.show.toLowerCase().split(' ').join('-')
+            let dashedShowName = commonService.spacedToDashed(t.show)
             let tSeason = t.episode.substr(1, 2)
             let tEpisode = t.episode.substr(4, 5)
             fsExtra.readFile('./backend/json/episodes/' + dashedShowName + '.json', (err, data) => {
                 if (err) {
-                    console.err('Cannot retrieve episode list for', dashedShowName)
-                    resolve(t)
-                        // console.log('Fetching show episodes', t.title)
-                        // getEpisodes(t.show).then((episodes) => {
-                        //     getEpisodeInfo(t)
-                        // })
+                    // console.error('Cannot retrieve episode list for', dashedShowName)
+                    // resolve(t)
+                    console.log('Fetching show episodes', t.show)
+                    getEpisodes(t.show).then((episodes) => {
+                        getEpisodeInfo(t).then((info) => {
+                            resolve(info)
+                        })
+                    })
                 }
                 if (data) {
                     console.log('Updating show episode', t.show)
                     getEpisodes(t.show).then((episodes) => {
                         // let episodes = JSON.parse(data)
+                        console.log('episodes ->', episodes)
                         episodes.filter((ep) => {
                             if (ep.season === tSeason && ep.episode === tEpisode) {
                                 console.log('   Title ->', ep.title, ep.date)
@@ -200,57 +203,96 @@ exports = module.exports = function(commonService) {
     // Writes month.json and returns current month's shows calendar
     json_module['month'] = function month() {
         return new Promise(function(resolve, reject) {
-            request(url, function(error, response, html) {
+            const now = new Date()
+            var year = now.getFullYear()
+            var month = now.getMonth()
+            if (month < 10) {
+                month = month.toString()
+                month = '0' + month
+            }
 
-                if (!error) {
-                    console.log('Checking calendar')
 
-                    var $ = cheerio.load(html)
-                    var json = []
+            var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
+            var promises = []
+            console.log(url + months[0])
 
-                    $('.day, .today').filter(function() {
-                        var date = this.attribs.id
-                        date = date.split('_')
-                        var date_d = date[1]
-                        var date_m = date[2] - 1
-                        var date_y = date[3]
-                        var date_obj = new Date(date_y, date_m, date_d)
-                        var date_label = date_obj.toDateString()
-                        var day = {
-                            date: date_obj,
-                            date_label: date_label,
-                            shows: []
-                        }
-                        for (var i = this.children.length - 1; i >= 0; i--) {
-                            if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
-                                var d = this.children[i].children;
-                                for (var j = d.length - 1; j >= 0; j--) {
-                                    if (d[j].name === 'span') {
-                                        var children = d[j].children
-                                        for (var k = children.length - 1; k >= 0; k--) {
-                                            if (children[k].name === 'p') {
-                                                var title = children[k].children[0].children[0].data
-                                                var episode = children[k].children[0].next.next.children[0].data
-                                                day.shows.push({
-                                                    title: title,
-                                                    episode: episode
-                                                })
+            for (var i = months.length - 1; i >= 0; i--) {
+                promises.push(new Promise(function(resolve, reject) {
+                    request(url + months[i], function(error, response, html) {
+
+                        if (!error) {
+                            console.log('Checking calendar')
+
+                            var $ = cheerio.load(html)
+                            var json = []
+
+                            $('.day, .today').filter(function() {
+                                var date = this.attribs.id
+                                date = date.split('_')
+                                var date_d = date[1]
+                                var date_m = date[2] - 1
+                                var date_y = date[3]
+                                var date_obj = new Date(date_y, date_m, date_d)
+                                var date_label = date_obj.toDateString()
+                                var day = {
+                                    date: date_obj,
+                                    date_label: date_label,
+                                    shows: []
+                                }
+                                for (var i = this.children.length - 1; i >= 0; i--) {
+                                    if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
+                                        var d = this.children[i].children;
+                                        for (var j = d.length - 1; j >= 0; j--) {
+                                            if (d[j].name === 'span') {
+                                                var children = d[j].children
+                                                for (var k = children.length - 1; k >= 0; k--) {
+                                                    if (children[k].name === 'p') {
+                                                        var title = children[k].children[0].children[0].data
+                                                        var episode = children[k].children[0].next.next.children[0].data
+                                                        day.shows.push({
+                                                            title: title,
+                                                            episode: episode
+                                                        })
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        }
-                        json.push(day)
-                    })
+                                json.push(day)
+                            })
 
-                    // Write monthly.json with all the info regarding the shows
-                    fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
-                        resolve(json)
+                            resolve(json)
+                                // // Write monthly.json with all the info regarding the shows
+                                // fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
+                                //     resolve(json)
+                                // })
+                        }
                     })
+                }))
+            }
+
+            Promise.all(promises).then((data) => {
+                var days = []
+                for (var i = data.length - 1; i >= 0; i--) {
+                    for (var j = data[i].length - 1; j >= 0; j--) {
+                        days.push(data[i][j])
+                    }
                 }
+                days.sort( (a, b) => {
+                    var c = new Date(a.date);
+                    var d = new Date(b.date);
+                    return c - d;
+                });
+                // console.log('days', days)
+                    // Write monthly.json with all the info regarding the shows
+                fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
+                    resolve(days)
+                })
             })
+
         })
+
     }
 
     // Writes and returns target show episode list
@@ -315,11 +357,21 @@ exports = module.exports = function(commonService) {
                                         }
                                     }
                                 }
-                                resolve(episodes)
+                                fsExtra.writeFile('./backend/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                                    if (err) {
+                                        reject('Cannot write file :', err)
+                                    } else {
+                                        console.log(show, 'episodes list written!')
+                                        resolve(episodes)
+
+                                    }
+                                })
                             } else resolve(response.statusCode)
                         })
                         currentSeason--
                     }
+
+
                 } else resolve(response.statusCode)
             })
         })

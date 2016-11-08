@@ -10,12 +10,9 @@ let request = require('request')
 let cheerio = require('cheerio')
 let ioc = require('../ioc')
 let fsExtra = require('fs-extra')
-let WebTorrent = require('webtorrent')
 let logUpdate = require('log-update')
 let chokidar = require('chokidar')
 let magnetUri = require('magnet-uri')
-
-let wt_client = new WebTorrent()
 
 let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
@@ -37,7 +34,7 @@ exports = module.exports = function() {
 
             if (!t.show) {
                 console.log('---' + typeof t + '---')
-                resolve( parseInt(t) )
+                resolve(parseInt(t))
             }
 
             // console.log("'" + t.title + "'")
@@ -144,7 +141,6 @@ exports = module.exports = function() {
 
     let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
         return new Promise(function(resolve, reject) {
-
             var show = searchObj.show
             show = show.toLowerCase().split('.').join('')
 
@@ -155,7 +151,8 @@ exports = module.exports = function() {
 
             searchString = encodeURIComponent(searchString)
 
-            var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
+            // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
+            var url = 'https://pirateproxy.vip/search/' + searchString + '/0/99/0'
 
             request.get(url, function(error, response, body) {
 
@@ -175,11 +172,16 @@ exports = module.exports = function() {
                         // console.log('*************************')
                     torrent.show = show
                     torrent.episode = episode
-                    torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
-                    torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
-                    torrent.seeds = data['0'].children[3].children[5].children[0].data
-                    console.log('-------', torrent)
-                    resolve(torrent)
+
+                    if (data['0']) {
+                        torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
+                        torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
+                        torrent.seeds = data['0'].children[3].children[5].children[0].data
+                        console.log('-------', torrent)
+                        resolve(torrent)
+                    } else {
+                        resolve(0)
+                    }
 
                 } else resolve(parseInt(response.statusCode))
             })
@@ -196,21 +198,36 @@ exports = module.exports = function() {
         })
     }
 
-    torrent_module['streamEpisode'] = function streamEpisode(searchObj) {
-        searchTorrent(searchObj)
-            .then(function(t) {
-                console.log('streamEpisode search result ->', t)
-                switch (process.platform) {
-                    case 'darwin':
-                        return exec('webtorrent download "' + t.magnet + '" --vlc')
-                    case 'win32':
-                        return shell.openExternal('webtorrent download "' + t.magnet + '" --vlc')
-                    case 'win64':
-                        return shell.openExternal('webtorrent download "' + t.magnet + '" --vlc')
-                    default:
-                        return exec('webtorrent download "' + t.magnet + '" --vlc')
-                }
-            })
+    torrent_module['streamEpisode'] = function streamEpisode(searchObj, $rootScope) {
+        $rootScope.msg = 'Searching for' + ' ' + searchObj.show + ' ' + searchObj.episode
+        return new Promise(function(resolve, reject) {
+            searchTorrent(searchObj)
+                .then(function(t) {
+                    // console.log('streamEpisode search result ->', t)
+                    if (t.name) {
+                        $rootScope.msg = 'Loading \n' + t.name
+                        $rootScope.$apply()
+                        switch (process.platform) {
+                            case 'darwin':
+                                resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
+                                break
+                            case 'win32':
+                                resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
+                                break
+                            case 'win64':
+                                resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
+                                break
+                            default:
+                                resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
+                                break
+                        }
+                    } else {
+                        $rootScope.msg = 'This episode in not available'
+                        $rootScope.$apply()
+                        reject($rootScope.msg)
+                    }
+                })
+        })
     }
 
     return torrent_module

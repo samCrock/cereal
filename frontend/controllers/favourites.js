@@ -1,7 +1,6 @@
 angular.module('App')
     .controller('favouritesCtrl', ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval) {
         console.log('Favourites')
-        $rootScope.loading = false
         let ioc = require('../../ioc')
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -14,8 +13,10 @@ angular.module('App')
 
         $scope.following = []
 
+        $rootScope.msg = 'Retrieving favourites'
         fsExtra.readFile('./backend/json/following.json', (err, data) => {
             if (data) {
+                $rootScope.loading = false
                 data = JSON.parse(data)
                 let missingPosters = []
                 data.filter((show) => {

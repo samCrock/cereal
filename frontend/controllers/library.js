@@ -8,7 +8,7 @@ angular.module('App')
         let commonService = ioc.create('services/common-service')
         let jsonService = ioc.create('services/json-service')
 
-        jsonService.getCompleted().then( (completed) => {
+        jsonService.getCompleted().then((completed) => {
             console.log('Completed --->', completed)
             let ranges = commonService.putInRange(completed)
                 // .then( (ranges) => {
@@ -22,20 +22,23 @@ angular.module('App')
         })
 
 
+        // $scope.watch = (local) => {
+        //     let fileName = local.path.split('/')
+        //     fsExtra.readdir(local.path, (err, files) => {
+        //         if (err) return console.error(err)
+        //         files.filter((file) => {
+        //             let ext = file.split('.')
+        //             ext = ext[ext.length - 1]
+        //                 // console.log(ext, local.extension)
+        //             if (ext === local.extension) {
+        //                 console.log(local.path + '/' + file)
+        //                 commonService.openFile(local.path + '/' + file)
+        //             }
+        //         })
+        //     })
+        // }
         $scope.watch = (local) => {
-            let fileName = local.path.split('/')
-            fsExtra.readdir(local.path, (err, files) => {
-                if (err) return console.error(err)
-                files.filter((file) => {
-                    let ext = file.split('.')
-                    ext = ext[ext.length - 1]
-                        // console.log(ext, local.extension)
-                    if (ext === local.extension) {
-                        console.log(local.path + '/' + file)
-                        commonService.openFile(local.path + '/' + file)
-                    }
-                })
-            })
+            commonService.openFile(local.path)
         }
 
 

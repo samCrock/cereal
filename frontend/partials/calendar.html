@@ -1,10 +1,10 @@
 <section>
-    <div ng-repeat="day in days | limitTo:7 | orderBy:'-date' " flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
+    <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
         <div ng-style="{ 'color' : ($index == 5 ? '':'')}" style="padding-bottom: 0.4em; padding-top: 4em;">
             <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:3em;">{{ day.dateObj.dotw }}</span>
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2.2em; padding: 0.4em;">{{ day.dateObj.month }} {{ day.dateObj.dotm }}</span>
         </div>
-        <md-content ng-class="$index == 5 ? '' : ''" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 2vw;">
+        <md-content ng-class="$index == 5 ? '' : ''" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 1vw;">
             <md-card ng-repeat="show in day.shows | filter:posterOnly" flex="20" layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="min-width: 200px; min-height: 140px;">
                 <md-card-content ng-if="show.poster" style="position: relative;">
                     <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster">

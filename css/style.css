@@ -59,7 +59,7 @@ body {
     border-radius: 0.5em;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
-    width: 18vw;
+    width: 15vw;
     min-width: 200px;
     height: auto;
     opacity: 1;
@@ -226,7 +226,7 @@ body {
 .borderless {
     box-shadow: 0 0 0 0;
     outline: none;
-    background-color: black;
+    /*background-color: black;*/
 }
 
 .wp {
@@ -254,6 +254,7 @@ body {
 .back {
     position: absolute;
     right: 20px;
+    top: 20px;
 }
 
 .bg_today {
@@ -303,13 +304,30 @@ md-content {
 }
 
 .ep_number {
-    font-size: 4em;
+    font-size: 3em;
     color: white;
-    text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
 }
 
 .ep_show {
     font-size: 5em;
     color: white;
-    text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
+}
+
+#root-msg {
+    color: white;
+    font-size: 2em;
+    padding-top: 1.5em;
+    text-align: center;
+}
+
+.video_container {
+    position: absolute;
+}
+
+.video_player {
+    position: relative;
+    left: 10%;
+    width: 80%;
 }

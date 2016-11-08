@@ -1,9 +1,9 @@
-<section layout-padding>
+<section>
     <div ng-repeat="range in $root.ranges" flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
         <div ng-if="range.data.length > 0" style="padding-bottom: 0.4em; padding-top: 4em;">
             <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:3em;">{{ range.label }}</span>
         </div>
-        <md-content ng-if="range.data.length > 0" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 2vw;">
+        <md-content ng-if="range.data.length > 0" layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 1vw;">
             <md-card ng-repeat="show in range.data | orderBy : '-date' track by $index" class="showCard" style="max-width: 600px;" layout="row">
                 <md-card-content layout-align="center center" style="position: relative;">
                     <div layput-padding layout="column" ng-show="!show.ready && show.download_info" flex>
@@ -29,7 +29,7 @@
                 <md-card-title>
                     <md-card-title-text>
                         <span style="font-size: 1.8em;">{{ show.episode }}</span>
-                        <span style="font-size: 2.4em;">{{ show.episode_title }}</span>
+                        <span style="font-size: 2em;">{{ show.episode_title }}</span>
                         <span style="font-size: 1em;">{{ show.date_label.dotw }}</span>
                         <span style="font-size: 1em;">{{ show.date_label.dotm }}</span>
                         <md-progress-linear md-mode="determinate" value="{{ show.download_info.progress }}" ng-show="!show.ready && show.download_info"></md-progress-linear>

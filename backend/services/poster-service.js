@@ -44,9 +44,12 @@ exports = module.exports = (commonService) => {
                 if (!error && response.statusCode == 200) {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
-                    let posterSrc = sidebar['0'].children[0].children[1].attribs.src
-                    // console.log('->', sidebar['0'].children[0])
-                    // console.log('Poster found ->', posterSrc)
+                    // let posterSrc = sidebar['0'].children[0].children[1].attribs.src
+                    let posterSrc = sidebar['0'].children[0].children[1].attribs['data-original']
+                        // console.log('->', sidebar['0'].children[0])
+                    if (dashedShowName.includes('walking')) {
+                        console.log('Poster found ->', sidebar['0'].children[0].children[1].attribs['data-original'])
+                    }
                     request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                         if (!error && response.statusCode == 200) {
                             let posterPath = './res/posters/' + dashedShowName + '.jpg'
@@ -64,7 +67,7 @@ exports = module.exports = (commonService) => {
                             })
 
                         } else {
-                            console.error('Couldn\'t save this poster')
+                            // console.error('Couldn\'t save this poster')
                             resolve()
                         }
                     })
@@ -98,7 +101,7 @@ exports = module.exports = (commonService) => {
                     let $ = cheerio.load(body)
                     let sidebar = $('.sidebar')
                     let posterSrc = sidebar['0'].children[0].children[1].attribs.src
-                    // console.log('Poster found ->', posterSrc)
+                        // console.log('Poster found ->', posterSrc)
 
                     resolve(posterSrc)
                 } else resolve()
@@ -133,8 +136,8 @@ exports = module.exports = (commonService) => {
                     let bg = $('#summary-wrapper')['0'].attribs.style
                     let regExp = /\(([^)]+)\)/
                     bg = regExp.exec(bg)
-                    console.log('bg', bg[1])
-                    resolve(bg[1])
+                    console.log('bg', bg)
+                    resolve(bg)
                 } else resolve()
             });
         });
