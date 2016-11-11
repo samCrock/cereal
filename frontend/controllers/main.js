@@ -84,4 +84,6 @@ angular.module('App')
         $rootScope.reload = true
         localStorage.topper = 0
 
+        if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
+
     }])

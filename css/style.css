@@ -4,7 +4,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #494351;
+    background-color: #2b282d;
     /*background-color: #182927;*/
 }
 
@@ -18,7 +18,7 @@ body {
 .md-nav-bar {
     z-index: 9999;
     position: fixed;
-    background-color: #494351 !important;
+    background-color: #2b282d !important;
     left: 0;
     top: 0;
     width: 100%;
@@ -27,13 +27,6 @@ body {
 .white {
     color: white;
     font-size: 1.8em;
-}
-
-.showCard {
-    /*background: hsla(0,0%,0%,.1);*/
-    /*margin: 1em;*/
-    /*min-width: 200px;*/
-    /*padding: 1em;*/
 }
 
 .pulsating_poster {
@@ -54,19 +47,30 @@ body {
     }
 }
 
+md-card {
+    min-width: 160px;
+    min-height: 140px;
+    margin: 1vw;
+}
+
 .poster {
     cursor: pointer;
     border-radius: 0.5em;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
-    width: 15vw;
-    min-width: 200px;
+    width: 10vw;
+    min-width: 160px;
     height: auto;
     opacity: 1;
+    transition: all linear 0.5s;
 }
 
 .poster:hover {
     opacity: 0.6;
+}
+
+.poster.ng-hide {
+    opacity: 0;
 }
 
 .poster_sub_container {
@@ -125,25 +129,27 @@ body {
 }
 
 .poster_sub.download {
-    font-size: 2.8em;
+    font-size: 2.4em;
     top: 45%;
     left: 70%;
     transform: translate(-70%, -45%);
 }
 
-.poster_sub.download:hover {
-    font-size: 4em;
+.poster_sub.download:active {
+    /*font-size: 3em;*/
+    -webkit-filter: blur(0.1em);
 }
 
 .poster_sub.play {
-    font-size: 2.8em;
+    font-size: 2.4em;
     top: 45%;
     left: 30%;
     transform: translate(-30%, -45%);
 }
 
-.poster_sub.play:hover {
-    font-size: 4em;
+.poster_sub.play:active {
+    /*font-size: 3em;*/
+    -webkit-filter: blur(0.1em);
 }
 
 .poster_sub.fav {
@@ -152,7 +158,7 @@ body {
     transform: translate(-50%, -80%);
 }
 
-.poster_sub.fav:hover {
+.poster_sub.fav:active {
     font-size: 2.4em;
 }
 
@@ -184,6 +190,7 @@ body {
 .poster_sub.delete:hover {
     font-size: 3em;
 }
+
 .poster_sub.delete:hover:active {
     font-size: 3.5em;
     opacity: 0.9;
@@ -216,6 +223,7 @@ body {
     border-radius: 0.2em;
     box-shadow: 2px 2px 4px #888888;
     outline: none;
+    transition: all linear 0.5s;
 }
 
 .calendar_card:active {
@@ -226,7 +234,6 @@ body {
 .borderless {
     box-shadow: 0 0 0 0;
     outline: none;
-    /*background-color: black;*/
 }
 
 .wp {
@@ -240,7 +247,7 @@ body {
 }
 
 .wp_gradient {
-    color: #494351;
+    color: #2b282d;
     position: absolute;
     display: inline-block;
     left: 0;
@@ -248,7 +255,7 @@ body {
     width: 200%;
     height: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(to top, #494351, transparent)
+    background: linear-gradient(to top, #2b282d, transparent)
 }
 
 .back {
@@ -258,19 +265,20 @@ body {
 }
 
 .bg_today {
-    background: #494351;
+    background: #2b282d;
     width: 95%;
     border-radius: 0.2em;
 }
 
 .bg_default {
-    background: #494351;
+    background: #2b282d;
     width: 95%;
     border-radius: 0.2em;
 }
 
 #calendar_title {
-    font-size: 1.6em;
+    height: 100%;
+    font-size: 1em;
 }
 
 #calendar_episode {
@@ -278,7 +286,7 @@ body {
 }
 
 section {
-    background-color: #494351;
+    background-color: #2b282d;
 }
 
 .icons {
@@ -300,7 +308,7 @@ md-card md-card-content {
 md-content {
     width: 100%;
     padding-top: 10%;
-    /*background-color: #494351;*/
+    /*background-color: #2b282d;*/
 }
 
 .ep_number {
@@ -327,7 +335,35 @@ md-content {
 }
 
 .video_player {
-    position: relative;
-    left: 10%;
-    width: 80%;
+    /*position: relative;*/
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.font-10 {
+    font-size: 1em;
+}
+
+.font-15 {
+    font-size: 1.5em;
+}
+
+.font-20 {
+    font-size: 2em;
+}
+
+.font-25 {
+    font-size: 2.5em;
+}
+
+.font-30 {
+    font-size: 3em;
+}
+
+.align-center {
+    text-align: center;
 }
