@@ -47,7 +47,7 @@ angular.module('App')
                 $rootScope.$broadcast('backToCalendar')
                 $state.go('app.calendar')
             }
-        };
+        }
 
         $scope.search = () => {
             $scope.search_loading = true;

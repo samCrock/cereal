@@ -18,12 +18,14 @@ let jsonService = ioc.create('services/json-service')
 let subService = ioc.create('services/subs-service')
 let posterService = ioc.create('services/poster-service')
 let commonService = ioc.create('services/common-service')
+let wtService = ioc.create('services/wt-service')
 
 exports = module.exports = function() {
 
     let torrent_module = {}
     let path = process.cwd() + '/download/'
     let watcher = chokidar.watch(path)
+    const wt_client = wtService.client()
 
     torrent_module['getCurrents'] = function getCurrents() {
         return wt_client.torrents
@@ -32,33 +34,29 @@ exports = module.exports = function() {
     let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t, $rootScope) {
         return new Promise(function(resolve, reject) {
 
+            console.log(t)
+
             if (!t.show) {
                 console.log('---' + typeof t + '---')
                 resolve(parseInt(t))
             }
 
-            // console.log("'" + t.title + "'")
-            // console.log()
-
             t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
 
-            jsonService.getEpisodeInfo(t)
-                .then((t) => {
-                    console.log('Updating library w\\ torrent:', t)
-                    jsonService.updateLibrary(t)
-                })
+            jsonService.getEpisodeInfo(t).then((t) => {
+                console.log('Updating library w\\ torrent:', t)
+                jsonService.updateLibrary(t)
+            })
 
             fsExtra.mkdirp(path, function(err) {
 
                 if (err) return console.error(err)
 
-                // console.log('TORRENTS:', wt_client.torrents)
-
                 wt_client.add(t.magnet, {
-                    path: path
+                    path: path + t.show + '/' + t.episode
                 }, function(torrent) {
 
-                    t.path = torrent.path + torrent.name
+                    t.path = path + t.show + '/' + t.episode
 
                     jsonService.getLocalTorrent(t.title).then((result) => {
                         if (result) {
@@ -86,15 +84,30 @@ exports = module.exports = function() {
                     }
 
                     torrent.on('done', () => {
-                        console.log(torrent.name, ' ready')
+                        console.log(torrent, ' ready')
                         console.log()
 
-                        subService.search(torrent.name).then((opts) => {
+                        subService.search({
+                            fileName: torrent.dn,
+                            show: t.show,
+                            episode: t.episode
+                        }).then((opts) => {
                             subService.download(opts)
                         })
 
                         t.ready = true
                         delete t['download_info']
+
+                        jsonService.getShowEpisodes(t.show).then( (episodes) => {
+                                for ( ep in episodes ) {
+                                    if (t.episode === episode) { 
+                                        console.log('Episode found and updated!')
+                                        t.present = true
+                                        jsonService.updateShowEpisodes(t.show, episodes)
+                                        break;
+                                    }
+                                }  
+                            })
 
                         jsonService.updateLibrary(t)
 
@@ -142,7 +155,7 @@ exports = module.exports = function() {
     let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
         return new Promise(function(resolve, reject) {
             var show = searchObj.show
-            show = show.toLowerCase().split('.').join('')
+            show = show.split('.').join('')
 
             var episode = searchObj.episode
             var searchString = show + ' ' + episode

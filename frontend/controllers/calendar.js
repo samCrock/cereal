@@ -16,7 +16,8 @@ angular.module('App')
             // }
 
         $scope.posterOnly = (show) => {
-            return show.poster
+            // return show.poster
+            return show
         }
 
         $scope.downloadEpisode = (showObj) => {

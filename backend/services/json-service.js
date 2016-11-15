@@ -30,6 +30,35 @@ exports = module.exports = function(commonService) {
         })
     }
 
+    json_module['getShowEpisodes'] = function getShowEpisodes(show) {
+        return new Promise((resolve, reject) => {
+            show = commonService.spacedToDashed(show)
+
+            fsExtra.readFile('./backend/json/' + show + '.json', (err, data) => {
+                if (data) {
+                    data = JSON.parse(data)
+                    resolve(following)
+                }
+            })
+        })
+    }
+
+    json_module['updateShowEpisodes'] = function updateShowEpisodes(show, episodes) {
+        return new Promise((resolve, reject) => {
+            show = commonService.spacedToDashed(show)
+            fsExtra.writeFile('./backend/json/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                if (err) {
+                    reject('Cannot write file :', err)
+                } else {
+                    console.log(show, 'episodes list updated!')
+                    resolve(episodes)
+                }
+            })
+        })
+    }
+
+
+
     // Used to add poster location after download (from array)
     json_module['updateFollowing'] = function updateFollowing(shows) {
         return new Promise(function(resolve, reject) {
@@ -134,7 +163,7 @@ exports = module.exports = function(commonService) {
     json_module['updateLibrary'] = function updateLibrary(torrent_object) {
         // return new Promise(function(resolve, reject) {
         fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
-            if (err) throw err;
+            if (err) throw err
             var json = []
             if (data) { // Locals exists
                 json = JSON.parse(data)
@@ -148,7 +177,7 @@ exports = module.exports = function(commonService) {
                     return json
                 })
             } else { // first entry
-                json.push(torrent_object);
+                json.push(torrent_object)
                 fsExtra.writeFile('./backend/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
                     if (err) reject('Cannot write file :', err)
                     return json
@@ -180,8 +209,7 @@ exports = module.exports = function(commonService) {
                 if (data) {
                     console.log('Updating show episode', t.show)
                     getEpisodes(t.show).then((episodes) => {
-                        // let episodes = JSON.parse(data)
-                        console.log('episodes ->', episodes)
+                        // console.log('episodes ->', episodes)
                         episodes.filter((ep) => {
                             if (ep.season === tSeason && ep.episode === tEpisode) {
                                 console.log('   Title ->', ep.title, ep.date)
@@ -203,94 +231,105 @@ exports = module.exports = function(commonService) {
     // Writes month.json and returns current month's shows calendar
     json_module['month'] = function month() {
         return new Promise(function(resolve, reject) {
-            const now = new Date()
-            var year = now.getFullYear()
-            var month = now.getMonth()
-            if (month < 10) {
-                month = month.toString()
-                month = '0' + month
-            }
+            let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
+            console.log(sinceLastUpdate + ' days since last update')
+            if (localStorage.lastUpdate && sinceLastUpdate < 2) {
+                fsExtra.readFile('./backend/json/monthly.json', (err, data) => {
+                    console.log('Retrieved local calendar')
+                    data = JSON.parse(data)
+                    resolve(data)
+                })
+            } else {
+
+                const now = new Date()
+                localStorage.lastUpdate = now
+                var year = now.getFullYear()
+                var month = now.getMonth()
+                if (month < 10) {
+                    month = month.toString()
+                    month = '0' + month
+                }
 
 
-            var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
-            var promises = []
-            console.log(url + months[0])
+                var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
+                var promises = []
+                console.log(url + months[0])
 
-            for (var i = months.length - 1; i >= 0; i--) {
-                promises.push(new Promise(function(resolve, reject) {
-                    request(url + months[i], function(error, response, html) {
+                for (var i = months.length - 1; i >= 0; i--) {
+                    promises.push(new Promise(function(resolve, reject) {
+                        request(url + months[i], function(error, response, html) {
 
-                        if (!error) {
-                            console.log('Checking calendar')
+                            if (!error) {
+                                console.log('Checking calendar')
 
-                            var $ = cheerio.load(html)
-                            var json = []
+                                var $ = cheerio.load(html)
+                                var json = []
 
-                            $('.day, .today').filter(function() {
-                                var date = this.attribs.id
-                                date = date.split('_')
-                                var date_d = date[1]
-                                var date_m = date[2] - 1
-                                var date_y = date[3]
-                                var date_obj = new Date(date_y, date_m, date_d)
-                                var date_label = date_obj.toDateString()
-                                var day = {
-                                    date: date_obj,
-                                    date_label: date_label,
-                                    shows: []
-                                }
-                                for (var i = this.children.length - 1; i >= 0; i--) {
-                                    if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
-                                        var d = this.children[i].children;
-                                        for (var j = d.length - 1; j >= 0; j--) {
-                                            if (d[j].name === 'span') {
-                                                var children = d[j].children
-                                                for (var k = children.length - 1; k >= 0; k--) {
-                                                    if (children[k].name === 'p') {
-                                                        var title = children[k].children[0].children[0].data
-                                                        var episode = children[k].children[0].next.next.children[0].data
-                                                        day.shows.push({
-                                                            title: title,
-                                                            episode: episode
-                                                        })
+                                $('.day, .today').filter(function() {
+                                    var date = this.attribs.id
+                                    date = date.split('_')
+                                    var date_d = date[1]
+                                    var date_m = date[2] - 1
+                                    var date_y = date[3]
+                                    var date_obj = new Date(date_y, date_m, date_d)
+                                    var date_label = date_obj.toDateString()
+                                    var day = {
+                                        date: date_obj,
+                                        date_label: date_label,
+                                        shows: []
+                                    }
+                                    for (var i = this.children.length - 1; i >= 0; i--) {
+                                        if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
+                                            var d = this.children[i].children;
+                                            for (var j = d.length - 1; j >= 0; j--) {
+                                                if (d[j].name === 'span') {
+                                                    var children = d[j].children
+                                                    for (var k = children.length - 1; k >= 0; k--) {
+                                                        if (children[k].name === 'p') {
+                                                            var title = children[k].children[0].children[0].data
+                                                            var episode = children[k].children[0].next.next.children[0].data
+                                                            day.shows.push({
+                                                                title: title,
+                                                                episode: episode
+                                                            })
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                json.push(day)
-                            })
+                                    json.push(day)
+                                })
 
-                            resolve(json)
-                                // // Write monthly.json with all the info regarding the shows
-                                // fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
-                                //     resolve(json)
-                                // })
-                        }
-                    })
-                }))
-            }
-
-            Promise.all(promises).then((data) => {
-                var days = []
-                for (var i = data.length - 1; i >= 0; i--) {
-                    for (var j = data[i].length - 1; j >= 0; j--) {
-                        days.push(data[i][j])
-                    }
+                                resolve(json)
+                                    // // Write monthly.json with all the info regarding the shows
+                                    // fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
+                                    //     resolve(json)
+                                    // })
+                            }
+                        })
+                    }))
                 }
-                days.sort( (a, b) => {
-                    var c = new Date(a.date);
-                    var d = new Date(b.date);
-                    return c - d;
-                });
-                // console.log('days', days)
-                    // Write monthly.json with all the info regarding the shows
-                fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
-                    resolve(days)
-                })
-            })
 
+                Promise.all(promises).then((data) => {
+                    var days = []
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        for (var j = data[i].length - 1; j >= 0; j--) {
+                            days.push(data[i][j])
+                        }
+                    }
+                    days.sort((a, b) => {
+                        var c = new Date(a.date);
+                        var d = new Date(b.date);
+                        return c - d;
+                    });
+                    // console.log('days', days)
+                    // Write monthly.json with all the info regarding the shows
+                    fsExtra.writeFile('./backend/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
+                        resolve(days)
+                    })
+                })
+            }
         })
 
     }
@@ -321,6 +360,7 @@ exports = module.exports = function(commonService) {
                     let episodes = []
                     while (currentSeason > 0) {
                         let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
+
                         request.get({ url: urlSeasons }, function(error, response, body) {
                             if (error || !response) return reject(error)
                             if (!error && response.statusCode == 200) {
@@ -329,35 +369,34 @@ exports = module.exports = function(commonService) {
                                 for (var i = $('.titles').length - 1; i >= 0; i--) {
                                     if (i !== 1) {
                                         if ($('.titles')[i].children.length == 2) {
-                                            // console.log('Title Regular', i, $('.titles')[i])
-                                            let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
-                                            let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
                                             let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
-                                                // console.log('      ep', ep)
-                                                // console.log('   title', title)
-                                                // console.log('    date', date)
+                                            let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
+                                            let title = $('.titles')[i].children[0].children[1].children[2].children[0] ? $('.titles')[i].children[0].children[1].children[2].children[0].data : ''
+                                            if (ep.length == 4) ep = '0' + ep
                                             episodes.push({
                                                 episode: ep,
                                                 title: title,
                                                 date: date
                                             })
                                         } else if ($('.titles')[i].children.length == 6) {
-                                            // console.log('Title Premiere', i, $('.titles')[i])
                                             let ep = $('.titles')[i].children[2].children[0].children[0].data
                                             let title = $('.titles')[i].children[2].children[2].children[0].data
                                             let date = $('.titles')[i].children[1].children[0].children[0].data
-                                                // console.log('      ep', ep)
-                                                // console.log('   title', title)
-                                                // console.log('    date', date)
+                                            if (ep.length == 4) ep = '0' + ep
                                             episodes.push({
-                                                episode: ep,
-                                                title: title,
-                                                date: date
-                                            })
+                                                    episode: ep,
+                                                    title: title,
+                                                    date: date
+                                                })
+                                                // console.log('Episode:', {
+                                                //     episode: ep,
+                                                //     title: title,
+                                                //     date: date
+                                                // })
                                         }
                                     }
                                 }
-                                fsExtra.writeFile('./backend/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                                fsExtra.writeFile('./backend/json/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
                                     if (err) {
                                         reject('Cannot write file :', err)
                                     } else {

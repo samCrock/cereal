@@ -54,16 +54,17 @@ exports = module.exports = function() {
         return Math.floor(Math.random() * (999999999 - 1)) + 1;
     }
 
-    common_module['sameDay'] = function sameDay(d1, d2) {
-        // console.log(d1.toDateString(), d2.toDateString())
-        return d1.toDateString() === d2.toDateString()
+    common_module['daysToNow'] = function daysToNow(d) {
+        let now = new Date()
+        let dtn = new Date(d)
+        return Math.round(( now - dtn ) / ( 1000 * 60 * 60 * 24 ))
     }
 
     common_module['formatBytes'] = function formatBytes(bytes, decimals) {
         if (bytes == 0) return '0 Byte';
         var k = 1000; // or 1024 for binary
         var dm = decimals + 1 || 3;
-        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        var sizes = ['Bytes', 'Kb', 'Mb', 'Gb'];
         var i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }

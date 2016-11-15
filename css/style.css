@@ -367,3 +367,12 @@ md-content {
 .align-center {
     text-align: center;
 }
+
+.msg_download {
+    text-align: -webkit-center;
+    color: white;
+}
+.msg_download label {
+    color: #cddc39;
+    font-size: 2em;
+}
