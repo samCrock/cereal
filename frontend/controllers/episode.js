@@ -2,7 +2,7 @@ angular.module('App')
     .controller('episodeCtrl', ['$rootScope', '$state', '$scope', '$interval', '$stateParams', function($rootScope, $state, $scope, $interval, $stateParams) {
         const supportedVideoExt = ['mkv', 'avi', 'mp4']
         console.log('Episode')
-        $rootScope.loading = false
+        $rootScope.loading = true
         delete $rootScope.msg
         let ioc = require('../../ioc')
         let fsExtra = require('fs-extra')
@@ -33,18 +33,17 @@ angular.module('App')
                 if (supportedVideoExt.indexOf(ext) > -1) {
                     console.log('Found video ->', name)
                     $rootScope.msg = title + ' ' + episode
-                    let video = torrent.files[i]
-                    video.src = path + title + '/' + episode + '/' + video.path
-                    console.log('video', video)
+                    let videoFile = torrent.files[i]
+                    console.log('videoFile ->', videoFile)
 
-                    $scope.progress = torrent.progress
+                    videoFile.appendTo('#video_container')
+                    let video = document.querySelector('video')
+                    video.setAttribute('width', '100%')
+                    // video.setAttribute('height', 'auto')
+                    if (torrent.progress === 1) video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
 
-                    video.appendTo('#video_container')
-                    let videoElement = document.getElementsByTagName('video')
-                    videoElement = videoElement[0]
-                    videoElement.className += 'video_player'
-
-                    videoElement.addEventListener('loadedmetadata', function() {
+                    video.addEventListener('loadedmetadata', function() {
+                        console.log('loadedmetadata')
                         $rootScope.msg = ''
                         delete $scope.msg
                         $rootScope.$apply()
@@ -63,14 +62,20 @@ angular.module('App')
                     })
 
                     // Refresh speed label
-                    setInterval(() => {
+                    $rootScope.loading = false
+                    let refreshIntervalId = setInterval(() => {
                             if (torrent.downloadSpeed && commonService.formatBytes(torrent.downloadSpeed)) {
                                 $scope.msg.download = commonService.formatBytes(torrent.downloadSpeed) + '/s'
                                 $scope.msg.remaining = commonService.formatTime(torrent.timeRemaining)
-                                $scope.msg.progress = torrent.progress.toFixed(2) + '%'
+                                $scope.msg.progress = Math.round(torrent.progress * 100) + '%'
                             }
-                            $rootScope.$apply()
-                        }, 1000) // Catch back event to delete torrent
+                            $scope.$apply()
+                            if (torrent.progress === 1) {
+                                video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
+                                clearInterval(refreshIntervalId)
+                            }
+                        }, 1000)
+                        // Catch back event to delete torrent
                     $rootScope.$on('backToCalendar', (e) => {
                             console.log('backToCalendar catched', e)
                             $rootScope.msg = ''
@@ -86,73 +91,61 @@ angular.module('App')
         }
 
         return new Promise(function(resolve, reject) {
-                $rootScope.msg = 'Searching for' + ' ' + title + ' ' + episode
-                torrentService.searchTorrent(searchObj)
-                    .then(function(t) {
-                        if (!t || !t.magnet) {
-                            console.log('No results')
-                                // let container = document.getElementById('video_container')
-                                // container.removeChild(container.childNodes[0])
-                            $rootScope.msg = 'No torrent found!'
-                            $rootScope.$apply()
-                            setTimeout(() => {
-                                $state.go('app.calendar')
-                            }, 3000)
-                        } else {
-                            // console.log('t', t.magnet)
-                            subsService.search({ fileName: t.name, show: title, episode: episode })
-                                .then((link) => {
-                                    console.log('link', link)
-                                    subsService.download(link)
-                                        .then((res) => {
-                                            var srtData = fsExtra.readFileSync(res)
-                                            srt2vtt(srtData, function(err, vttData) {
-                                                if (err) throw new Error(err)
-                                                $scope.subsPath = res.substring(0, res.length - 4) + '.vtt'
-                                                fsExtra.writeFileSync($scope.subsPath, vttData)
-                                            })
-                                        })
+            $rootScope.msg = 'Searching for' + ' ' + title + ' ' + episode
+            torrentService.searchTorrent(searchObj)
+                .then(function(t) {
+                    if (!t || !t.magnet) {
+                        console.log('No results')
+                        $rootScope.msg = 'No torrent found!'
+                        $rootScope.$apply()
+                        setTimeout(() => {
+                            $state.go('app.calendar')
+                        }, 3000)
+                    } else {
+                        subsService.search({ fileName: t.name, show: title, episode: episode })
+                            .then((link) => {
+                                console.log('link', link)
+                                subsService.download(link).then((res) => {
+                                    var srtData = fsExtra.readFileSync(res)
+                                    srt2vtt(srtData, function(err, vttData) {
+                                        if (err) throw new Error(err)
+                                        $scope.subsPath = res.substring(0, res.length - 4) + '.vtt'
+                                        fsExtra.writeFileSync($scope.subsPath, vttData)
+                                    })
                                 })
-
-                            // jsonService.getShowEpisodes(title).then( (episodes) => {
-                            //     for ( ep in episodes) {
-                            //         console.log('ep', ep)
-                            //         if (ep.present) mode = 'play'
-                            //     }  
-                            // })
-
-                            // console.log('Mode   :', mode)
-
-                            wt_client.add(t.magnet, {
-                                path: path + title + '/' + episode
-                            }, function(torrent) {
-                                stream(torrent)
                             })
-                        }
-                    })
-                    .catch((e) => {
-                        reject(e)
-                    })
-            })
-            // // Start streaming (vlc)
-            // torrentService.streamEpisode({ show: title, episode: episode }, $rootScope)
-            //     .then((res) => {
-            //         console.log(res);
-            //         res.stdout.on('data', function(data) {
-            //             console.log('data', data)
-            //         });
-            //         res.on('close', function(code) {
-            //             console.log('close')
-            //         });
-            //         res.on('exit', function(code) {
-            //             console.log('exit')
-            //         });
-            //     })
-            //     .catch((msg) => {
-            //         $rootScope.msg = msg
-            //         setTimeout(() => {
-            //             $rootScope.msg = ''
-            //             $state.go('app.calendar')
-            //         }, 3000)
-            //     })
+
+                        // Start
+                        wt_client.add(t.magnet, {
+                            path: path + title + '/' + episode
+                        }, function(torrent) {
+                            let refreshIntervalId = setInterval(function() {
+                                // Refresh speed label
+                                setInterval(() => {
+                                    if (torrent.downloadSpeed && commonService.formatBytes(torrent.downloadSpeed)) {
+                                        $scope.msg.download = commonService.formatBytes(torrent.downloadSpeed) + '/s'
+                                        $scope.msg.remaining = commonService.formatTime(torrent.timeRemaining)
+                                        $scope.msg.progress = Math.round(torrent.progress * 100) + '%'
+                                    }
+                                    $rootScope.$apply()
+                                }, 1000)
+                                if (torrent.progress > 0.1) {
+                                    clearInterval(refreshIntervalId)
+                                    stream(torrent)
+                                }
+                                $scope.$apply()
+                            }, 1000)
+                        })
+                    }
+                })
+                .catch((e) => {
+                    $rootScope.loading = false
+                    $rootScope.msg = 'I got 99 problems and connection is one'
+                    $rootScope.$apply()
+                    setTimeout(() => {
+                        $state.go('app.calendar')
+                    }, 3000)
+                    reject(e)
+                })
+        })
     }])

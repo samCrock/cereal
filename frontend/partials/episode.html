@@ -2,13 +2,14 @@
     <label id="root-msg" ng-show="$root.msg.length > 0" style="font-size: 1.6em;">{{ $root.msg }}</label>
     <div ng-show="msg.download" layout="column" layout-align="center center" layout-wrap>
         <div class="msg_download" ng-show="msg.download">
-        <label>{{ msg.download }}</label>
+            <label>{{ msg.download }}</label>
         </div>
         <div class="msg_download" ng-show="msg.remaining">
-        <label>{{ msg.remaining }}</label>
+            <label>{{ msg.remaining }}</label>
         </div>
         <div class="msg_download" ng-show="msg.remaining">
-        <label>{{ msg.progress }}</label>
+            <label>{{ msg.progress }}</label>
         </div>
     </div>
+    <!-- <video id="player" autoplay controls preload="auto" width="100%" height="auto"></video> -->
 </section>

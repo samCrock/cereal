@@ -46,7 +46,8 @@
     "dist": "build"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.1.2"
+    "electron-prebuilt": "^1.1.2",
+    "video.js": "^5.12.6"
   },
   "build": {
     "appId": "cereal.io",

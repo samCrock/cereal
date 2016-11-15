@@ -58,7 +58,7 @@ md-card {
     border-radius: 0.5em;
     box-shadow: 3px 3px 6px #888888;
     outline: none;
-    width: 10vw;
+    width: 15vw;
     min-width: 160px;
     height: auto;
     opacity: 1;
@@ -335,14 +335,15 @@ md-content {
 }
 
 .video_player {
-    /*position: relative;*/
-    width: 100%;
     position: fixed;
+    /*top: 44vh;*/
+    height: 100%;
+    width: 100%;
+    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 
 .font-10 {
     font-size: 1em;
@@ -372,6 +373,7 @@ md-content {
     text-align: -webkit-center;
     color: white;
 }
+
 .msg_download label {
     color: #cddc39;
     font-size: 2em;
