@@ -39,7 +39,7 @@ angular.module('App')
                     videoFile.appendTo('#video_container')
                     let video = document.querySelector('video')
                     video.setAttribute('width', '100%')
-                    // video.setAttribute('height', 'auto')
+                    video.style.maxHeight = '100%'
                     if (torrent.progress === 1) video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
 
                     video.addEventListener('loadedmetadata', function() {

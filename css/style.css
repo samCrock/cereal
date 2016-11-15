@@ -332,6 +332,7 @@ md-content {
 
 .video_container {
     position: absolute;
+    max-height: 100vh;
 }
 
 .video_player {
