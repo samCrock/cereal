@@ -1,4 +1,4 @@
-angular.module('App')
+angular.module('app')
     .controller('libraryCtrl', ['$rootScope', '$scope', '$state', function($rootScope, $scope, $state) {
         console.log('Library')
         $rootScope.loading = false

@@ -1,4 +1,4 @@
-angular.module('App')
+angular.module('app')
     .controller('favouritesCtrl', ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval) {
         console.log('Favourites')
         let ioc = require('../../ioc')

@@ -1,4 +1,4 @@
-angular.module('App')
+angular.module('app')
     .controller('episodeCtrl', ['$rootScope', '$state', '$scope', '$interval', '$stateParams', function($rootScope, $state, $scope, $interval, $stateParams) {
         const supportedVideoExt = ['mkv', 'avi', 'mp4']
         console.log('Episode')

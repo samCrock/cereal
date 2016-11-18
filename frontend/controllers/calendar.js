@@ -1,19 +1,15 @@
-angular.module('App')
-    .controller('calendarCtrl', ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval) {
+(function() {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('calendarCtrl', calendarCtrl);
+
+    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService) {
         console.log('Calendar')
-        let ioc = require('../../ioc')
         let fsExtra = require('fs-extra')
 
-        let jsonService = ioc.create('services/json-service')
-        let posterService = ioc.create('services/poster-service')
-        let commonService = ioc.create('services/common-service')
-        let torrentService = ioc.create('services/torrent-service')
-
         $rootScope.loading = true
-            // $scope.streamEpisode = (show) => {
-            //     show.loading = true
-            //     torrentService.streamEpisode({ show: show.title, episode: show.episode })
-            // }
 
         $scope.posterOnly = (show) => {
             // return show.poster
@@ -115,4 +111,6 @@ angular.module('App')
             $rootScope.loading = false
         }
 
-    }])
+    }
+
+})();

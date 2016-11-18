@@ -1,18 +1,17 @@
-'use strict'
-angular.module('App')
-    .controller('mainCtrl', ['$scope', '$interval', '$state', '$rootScope', '$timeout', function($scope, $interval, $state, $rootScope, $timeout) {
-        let ioc = require('../../ioc')
+(function() {
+    'use strict';
 
-        let commonService = ioc.create('services/common-service')
-        let torrentService = ioc.create('services/torrent-service')
+    angular
+        .module('app')
+        .controller('mainCtrl', mainCtrl);
+
+    /* @ngInject */
+    function mainCtrl($scope, $interval, $state, $rootScope, $timeout, wtService, torrentService, jsonService, commonService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
         let logUpdate = require('log-update')
         let util = require('util')
-
-        let jsonService = ioc.create('services/json-service')
-        let wtService = ioc.create('services/wt-service')
 
         const wt_client = wtService.client()
 
@@ -86,4 +85,6 @@ angular.module('App')
 
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
-    }])
+    }
+
+})();
