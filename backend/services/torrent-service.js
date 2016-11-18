@@ -58,6 +58,8 @@ exports = module.exports = function() {
 
                     t.path = path + t.show + '/' + t.episode
 
+                    jsonService.updateShowEpisodes(t.show, episodes)
+
                     jsonService.getLocalTorrent(t.title).then((result) => {
                         if (result) {
                             $rootScope.locals.filter(function(obj) {
@@ -98,16 +100,16 @@ exports = module.exports = function() {
                         t.ready = true
                         delete t['download_info']
 
-                        jsonService.getShowEpisodes(t.show).then( (episodes) => {
-                                for ( ep in episodes ) {
-                                    if (t.episode === episode) { 
-                                        console.log('Episode found and updated!')
-                                        t.present = true
-                                        jsonService.updateShowEpisodes(t.show, episodes)
-                                        break;
-                                    }
-                                }  
-                            })
+                        // jsonService.getShowEpisodes(t.show).then( (episodes) => {
+                        //         for ( ep in episodes ) {
+                        //             if (t.episode === episode) { 
+                        //                 console.log('Episode found and updated!')
+                        //                 t.present = true
+                        //                 jsonService.updateShowEpisodes(t.show, episodes)
+                        //                 break;
+                        //             }
+                        //         }  
+                        //     })
 
                         jsonService.updateLibrary(t)
 

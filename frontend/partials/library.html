@@ -1,4 +1,37 @@
 <section>
+    <div>
+        <md-content layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 1vw;">
+        <md-card ng-repeat="current in $scope.currents" flex layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="width: 15vw;">
+                {{ current.dn }}
+                <md-card-content ng-if="current.poster" style="position: relative;">
+                    <img ng-src="{{ current.poster }}" class="poster_episode md-card-image poster">
+                    <div ng-current="!current.loading" class="poster_sub_container">
+                        <span ui-sref="app.episode( { current: current.title, episode: current.episode } )" class="poster_sub ep" aria-hidden="true">{{ current.episode }}</span>
+                        <i ui-sref="app.episode( { current: current.title, episode: current.episode } )" class="poster_sub play text_bg_lime fa fa-play" aria-hidden="true"></i>
+                        <i ng-click="downloadEpisode( { current: current.title, episode: current.episode } )" class="poster_sub download text_bg_lime fa fa-download" aria-hidden="true"></i>
+                        <i class="poster_sub fav text_bg_lime fa fa-heart" aria-hidden="true" style=""></i>
+                    </div>
+                </md-card-content>
+                <md-card-content ng-if="!current.poster" style="position: relative; height: auto; width: 20vw;">
+                    <md-card-title layout="column" class="calendar_title" style="height: 240px;">
+                        <label class="md-subhead" style="text-align: center;">{{ current.title }}</label>
+                        <label id="calendar_episode" class="md-subhead" style="text-align: center;">{{ current.episode }}</label>
+                    </md-card-title>
+                    <div ng-current="!current.loading" class="poster_sub_container" >
+                        <span ui-sref="app.episode( { current: current.title, episode: current.episode } )" class="poster_sub ep" aria-hidden="true">{{ current.episode }}</span>
+                        <i ui-sref="app.episode( { current: current.title, episode: current.episode } )" class="poster_sub play text_bg_lime fa fa-play" aria-hidden="true"></i>
+                        <i ng-click="downloadEpisode( { current: current.title, episode: current.episode } )" class="poster_sub download text_bg_lime fa fa-download" aria-hidden="true"></i>
+                        <i class="poster_sub fav text_bg_lime fa fa-heart" aria-hidden="true" style=""></i>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </div>
+</section>
+
+
+
+<!-- <section>
     <div ng-repeat="range in $root.ranges" flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
         <div ng-if="range.data.length > 0" style="padding-bottom: 0.4em; padding-top: 4em;">
             <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:3em;">{{ range.label }}</span>
@@ -16,7 +49,6 @@
                             <div layout-wrap flex="70">{{ show.download_info.remaining }}</div>
                         </div>
                     </div>
-                    <!-- <img ng-src="{{ show.poster }}" ng-click="watch(show)" class="md-card-image poster" ng-class="!show.download_info ? pulsating_poster : ''"> -->
                     <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster">
                     <div ng-show="!show.loading" class="poster_sub_container">
                         <i ng-click="watch(show)" class="poster_sub play_big text_bg_lime fa fa-play" aria-hidden="true"></i>
@@ -39,3 +71,4 @@
         </md-content>
     </div>
 </section>
+ -->

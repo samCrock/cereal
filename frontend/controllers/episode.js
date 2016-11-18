@@ -20,7 +20,7 @@ angular.module('App')
         let episode = $scope.episode = $stateParams.episode.trim()
         let searchObj = { show: title, episode: episode }
         let mode = 'stream'
-
+        let isPresent = false
         $scope.msg = {}
 
         let stream = function(torrent) {
@@ -29,18 +29,20 @@ angular.module('App')
                 let name = torrent.files[i].name
                 let ext = name.split('.')
                 ext = ext[ext.length - 1]
-                    // console.log('   n', i, '->', ext)
+
                 if (supportedVideoExt.indexOf(ext) > -1) {
                     console.log('Found video ->', name)
                     $rootScope.msg = title + ' ' + episode
                     let videoFile = torrent.files[i]
                     console.log('videoFile ->', videoFile)
 
+                    // if (videoFile.done) {}
                     videoFile.appendTo('#video_container')
                     let video = document.querySelector('video')
+                    video.setAttribute('autoplay', false)
                     video.setAttribute('width', '100%')
                     video.style.maxHeight = '100%'
-                    if (torrent.progress === 1) video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
+                    // if (torrent.progress === 1) video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
 
                     video.addEventListener('loadedmetadata', function() {
                         console.log('loadedmetadata')
@@ -80,9 +82,9 @@ angular.module('App')
                             console.log('backToCalendar catched', e)
                             $rootScope.msg = ''
                             delete $scope.msg
-                            torrent.destroy(() => {
-                                console.log('Torrent destroyed!')
-                            })
+                            // torrent.destroy(() => {
+                            //     console.log('Torrent destroyed!')
+                            // })
                         }) // console.log('video', video)
                     console.log('Current torrents ->', wt_client.torrents) // resolve()
                     break
@@ -102,17 +104,25 @@ angular.module('App')
                             $state.go('app.calendar')
                         }, 3000)
                     } else {
+                        console.log(wt_client.torrents)
+                        wt_client.torrents.forEach((current_torrent) => {
+                            if (current_torrent.magnetURI === t.magnet) {
+                                isPresent = true
+                            }
+                        })
                         subsService.search({ fileName: t.name, show: title, episode: episode })
                             .then((link) => {
                                 console.log('link', link)
-                                subsService.download(link).then((res) => {
-                                    var srtData = fsExtra.readFileSync(res)
-                                    srt2vtt(srtData, function(err, vttData) {
-                                        if (err) throw new Error(err)
-                                        $scope.subsPath = res.substring(0, res.length - 4) + '.vtt'
-                                        fsExtra.writeFileSync($scope.subsPath, vttData)
+                                if (link) {
+                                    subsService.download(link).then((res) => {
+                                        var srtData = fsExtra.readFileSync(res)
+                                        srt2vtt(srtData, function(err, vttData) {
+                                            if (err) throw new Error(err)
+                                            $scope.subsPath = res.substring(0, res.length - 4) + '.vtt'
+                                            fsExtra.writeFileSync($scope.subsPath, vttData)
+                                        })
                                     })
-                                })
+                                }
                             })
 
                         // Start
@@ -129,7 +139,7 @@ angular.module('App')
                                     }
                                     $rootScope.$apply()
                                 }, 1000)
-                                if (torrent.progress > 0.1) {
+                                if (torrent.progress > 0.01) {
                                     clearInterval(refreshIntervalId)
                                     stream(torrent)
                                 }

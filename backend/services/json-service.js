@@ -32,8 +32,8 @@ exports = module.exports = function(commonService) {
 
     json_module['getShowEpisodes'] = function getShowEpisodes(show) {
         return new Promise((resolve, reject) => {
+            console.log('Retrieving local episodes info..')
             show = commonService.spacedToDashed(show)
-
             fsExtra.readFile('./backend/json/' + show + '.json', (err, data) => {
                 if (data) {
                     data = JSON.parse(data)
@@ -45,6 +45,7 @@ exports = module.exports = function(commonService) {
 
     json_module['updateShowEpisodes'] = function updateShowEpisodes(show, episodes) {
         return new Promise((resolve, reject) => {
+            console.log('Retrieving remote episodes info..')
             show = commonService.spacedToDashed(show)
             fsExtra.writeFile('./backend/json/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
                 if (err) {
@@ -348,8 +349,10 @@ exports = module.exports = function(commonService) {
             request.get({ url: urlMain }, function(error, response, body) {
 
                 if (error || !response) return reject(error)
-
+                
                 console.log('Status', response.statusCode);
+                
+                if (response.statusCode === 404) return reject(response.statusCode)
 
                 if (!error && response.statusCode == 200) {
 

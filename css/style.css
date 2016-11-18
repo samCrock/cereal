@@ -47,10 +47,23 @@ body {
     }
 }
 
-md-card {
-    min-width: 160px;
-    min-height: 140px;
-    margin: 1vw;
+.card {
+    min-width: 15vw;
+    text-align: center;
+}
+
+.card_title {
+    position: absolute;
+    top: 0;
+    font-size: 1.4em;
+    width: 100%;
+    /*color: #f9fbe7;*/
+}
+
+.card_show_title {
+    font-size: 1.2em;
+    color: #2b282d;
+    width: 100%;
 }
 
 .poster {
@@ -65,6 +78,30 @@ md-card {
     transition: all linear 0.5s;
 }
 
+.poster_sub_container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 15vw;
+    opacity: 0;
+    background-color: rgba(47, 65, 73, 0.5);
+    transition: all .5s;
+}
+
+@media (max-width: 1200px) {
+    .card {
+        min-width: 200px;
+    }
+    .poster {
+        min-width: 200px;
+    }
+    .poster_sub_container {
+        min-width: 200px;
+    }
+}
+
+
 .poster:hover {
     opacity: 0.6;
 }
@@ -73,16 +110,6 @@ md-card {
     opacity: 0;
 }
 
-.poster_sub_container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    background-color: rgba(47, 65, 73, 0.5);
-    transition: all .5s;
-}
 
 .poster_sub_loading {
     position: absolute;
@@ -276,11 +303,6 @@ md-card {
     border-radius: 0.2em;
 }
 
-#calendar_title {
-    height: 100%;
-    font-size: 1em;
-}
-
 #calendar_episode {
     font-size: 1.4em;
 }
@@ -307,7 +329,6 @@ md-card md-card-content {
 
 md-content {
     width: 100%;
-    padding-top: 10%;
     /*background-color: #2b282d;*/
 }
 
@@ -340,7 +361,6 @@ md-content {
     /*top: 44vh;*/
     height: 100%;
     width: 100%;
-    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -378,4 +398,12 @@ md-content {
 .msg_download label {
     color: #cddc39;
     font-size: 2em;
+}
+
+.first_poster {
+    padding-left: 20vw;
+}
+
+.last_poster {
+    padding-right: 20vw;
 }
