@@ -27,11 +27,6 @@
                     torrentService.downloadTorrent(result, $rootScope)
                         .then((t) => {
                             console.log('downloadTorrent result', t)
-                            if (typeof t !== Object) {
-                                console.log('Unable to download', show, episode, '\nCode ->', t)
-                            } else {
-                                console.log(show, episode, 'finished downloading')
-                            }
                         })
                 })
         }
@@ -80,7 +75,6 @@
                                 }
                             })
                             $rootScope.reload = false
-
 
                             Promise.all(posters)
                                 .then((results) => {

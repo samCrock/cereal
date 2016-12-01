@@ -74,6 +74,10 @@
         // jsonService.getLibrary();
 
         $rootScope.locals = []
+        var locals = localStorage.getItem('locals')
+        if (!locals) {
+            localStorage.setItem('locals', JSON.stringify([]))
+        }
 
         jsonService.getLibrary().then((library) => {
             console.log('Library --->', library)
@@ -82,7 +86,6 @@
 
         $rootScope.reload = true
         localStorage.topper = 0
-
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
     }

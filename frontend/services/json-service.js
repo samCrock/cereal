@@ -168,6 +168,7 @@
             // Updates local_torrents given a torrent object
             json_module['updateLibrary'] = function updateLibrary(torrent_object) {
                 // return new Promise(function(resolve, reject) {
+                console.log('_____', torrent_object, '_____')
                 fsExtra.readFile('./backend/json/local_torrents.json', (err, data) => {
                     if (err) throw err
                     var json = []
@@ -239,7 +240,7 @@
                 return new Promise(function(resolve, reject) {
                     let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
                     console.log(sinceLastUpdate + ' days since last update')
-                    if (localStorage.lastUpdate && sinceLastUpdate < 2) {
+                    if (localStorage.lastUpdate && sinceLastUpdate < 1) {
                         fsExtra.readFile('./backend/json/monthly.json', (err, data) => {
                             console.log('Retrieved local calendar')
                             data = JSON.parse(data)
@@ -362,7 +363,19 @@
                         if (!error && response.statusCode == 200) {
 
                             let $ = cheerio.load(body)
-                            let seasons = $('#seasons')['0'].children[0].children[0].data
+                            let network
+
+                            if ($('.additional-stats')['0'].children[0].children[4]) {
+                                network = $('.additional-stats')['0'].children[0].children[4].data
+                                network = network.split(' on ')
+                                network = network[1]
+                            }
+
+                            console.log('##########################')
+                            console.log('network', network)
+                            console.log('##########################')
+
+                            let seasons = $('#seasons')['0'].children[0].children[0].children[0].data
                             console.log('seasons', seasons)
                             let currentSeason = seasons
                             let episodes = []
@@ -376,15 +389,17 @@
                                             // console.log('Titles', $('.titles'))
                                         for (var i = $('.titles').length - 1; i >= 0; i--) {
                                             if (i !== 1) {
-                                                if ($('.titles')[i].children.length == 2) {
+                                                if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
+                                                    // console.log('ep **********', $('.titles')[i].children[0].children[1])
                                                     let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
                                                     let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
-                                                    let title = $('.titles')[i].children[0].children[1].children[2].children[0] ? $('.titles')[i].children[0].children[1].children[2].children[0].data : ''
+                                                    let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
                                                     if (ep.length == 4) ep = '0' + ep
                                                     episodes.push({
                                                         episode: ep,
                                                         title: title,
-                                                        date: date
+                                                        date: date,
+                                                        network: network ? network : ''
                                                     })
                                                 } else if ($('.titles')[i].children.length == 6) {
                                                     let ep = $('.titles')[i].children[2].children[0].children[0].data
@@ -392,15 +407,11 @@
                                                     let date = $('.titles')[i].children[1].children[0].children[0].data
                                                     if (ep.length == 4) ep = '0' + ep
                                                     episodes.push({
-                                                            episode: ep,
-                                                            title: title,
-                                                            date: date
-                                                        })
-                                                        // console.log('Episode:', {
-                                                        //     episode: ep,
-                                                        //     title: title,
-                                                        //     date: date
-                                                        // })
+                                                        episode: ep,
+                                                        title: title,
+                                                        date: date,
+                                                        network: network
+                                                    })
                                                 }
                                             }
                                         }
@@ -408,7 +419,7 @@
                                             if (err) {
                                                 reject('Cannot write file :', err)
                                             } else {
-                                                console.log(show, 'episodes list written!')
+                                                console.log(show, ' episodes list updated!')
                                                 resolve(episodes)
 
                                             }
@@ -417,8 +428,6 @@
                                 })
                                 currentSeason--
                             }
-
-
                         } else resolve(response.statusCode)
                     })
                 })
