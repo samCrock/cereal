@@ -17,6 +17,7 @@
     require('./services/library-service.js')
     require('./services/json-service.js')
     require('./services/poster-service.js')
+    require('./services/subs-service.js')
 
     /* @ngInject */
     function moduleConfig($stateProvider, $urlRouterProvider, $mdThemingProvider) {
@@ -29,7 +30,7 @@
             })
             // If you specify less than all of the keys, it will inherit from the
             // default shades
-            .accentPalette('lime', {
+            .accentPalette('cereal_palette', {
                 'default': '200' // use shade 200 for default, and keep all other shades the same
             })
 

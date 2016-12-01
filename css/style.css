@@ -85,7 +85,7 @@ body {
     height: 100%;
     width: 15vw;
     opacity: 0;
-    background-color: rgba(47, 65, 73, 0.5);
+    background-color: rgba(43, 40, 45, 0.5);
     transition: all .5s;
 }
 
@@ -101,7 +101,6 @@ body {
     }
 }
 
-
 .poster:hover {
     opacity: 0.6;
 }
@@ -110,14 +109,13 @@ body {
     opacity: 0;
 }
 
-
 .poster_sub_loading {
     position: absolute;
     left: 0;
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(47, 65, 73, 0.5);
+    background-color: rgba(43, 40, 45, 0.5);
     transition: all .5s;
 }
 
@@ -351,9 +349,18 @@ md-content {
     text-align: center;
 }
 
-.video_container {
-    position: absolute;
-    max-height: 100vh;
+#video_container {
+    /*    position: absolute;
+    max-height: 100vh;*/
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background: transparent;
+    background-size: cover;
 }
 
 .video_player {
