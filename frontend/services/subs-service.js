@@ -10,7 +10,6 @@
 
         let request = require('request')
         let cheerio = require('cheerio')
-        let ioc = require('../ioc')
         let fsExtra = require('fs-extra')
         let magnet_uri = require('magnet-uri')
         let WebTorrent = require('webtorrent')
@@ -41,24 +40,26 @@
                         var json = []
                         var counter = 0
                         $('.a1').filter(function() {
-                                var data = $(this)
-                                var link = data['0'].children[1].attribs.href
-                                var lang = data['0'].children[1].children[1].children[0].data
-                                lang = lang.trim()
-                                var title = data['0'].children[1].children[3].children[0].data
-                                title = title.trim()
+                            var data = $(this)
+                            var link = data['0'].children[1].attribs.href
+                            var lang = data['0'].children[1].children[1].children[0].data
+                            lang = lang.trim()
+                            var title = data['0'].children[1].children[3].children[0].data
+                            title = title.trim()
 
-                                var spliced_title = title.split('-')
-                                spliced_title = spliced_title[0]
-                                var spliced_search = searchString.split('-')
-                                spliced_search = spliced_search[0]
+                            var spliced_title = title.split('-')
+                            spliced_title = spliced_title[0]
+                            var spliced_search = searchString.split('-')
+                            spliced_search = spliced_search[0]
 
-                                if (lang === 'English' && spliced_search === spliced_title) {
-                                    // resolve({ link: link, path: path + searchString })
-                                    resolve({ link: link, path: path + show + '/' + episode })
-                                }
-                            })
-                            // console.log('No suitable subs found')
+                            // spliced_title = spliced_title.replace(/[(.*?)]/, '')
+                            // console.log('spliced_title', spliced_title)
+                            if (lang === 'English' && spliced_search === spliced_title) {
+                                // resolve({ link: link, path: path + searchString })
+                                resolve({ link: link, path: path + show + '/' + episode })
+                            }
+                        })
+                        console.log('No suitable subs found')
                         resolve()
                     } else reject()
                 })
@@ -109,7 +110,7 @@
                         }
                     })
                 } else {
-                    reject()
+                    reject('No subs found')
                 }
 
             })

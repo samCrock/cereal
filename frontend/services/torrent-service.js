@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(wtService) {
+    function torrentService(wtService, commonService, jsonService, subsService) {
 
 
         const os = require('os')
@@ -58,21 +58,6 @@
 
                         t.path = path + t.show + '/' + t.episode
 
-                        jsonService.updateShowEpisodes(t.show, episodes)
-
-                        jsonService.getLocalTorrent(t.title).then((result) => {
-                            if (result) {
-                                $rootScope.locals.filter(function(obj) {
-                                    if (result.title === obj.title) {
-                                        console.log('Already here baby', result)
-                                        obj = result
-                                        resolve(result.name)
-                                        $rootScope.$apply()
-                                    }
-                                })
-                            } else { console.log('not found') }
-                        })
-
                         if (torrent.progress != 1) {
                             torrent.files.forEach(function(file) {
                                 console.log('Started downloading ' + file.name)
@@ -89,27 +74,63 @@
                             console.log(torrent, ' ready')
                             console.log()
 
-                            subService.search({
+                            let isNew = true
+                            let locals = localStorage.getItem('locals')
+                            locals = JSON.parse(locals)
+                            let local = {
+                                show: t.show,
+                                episode: t.episode,
+                                dn: torrent.dn,
+                                path: t.show + '/' + t.episode + '/' + torrent.dn + '/',
+                                progress: Math.floor(torrent.progress * 100),
+                                remaining: commonService.formatTime(torrent.timeRemaining),
+                                ready: torrent.progress === 1 ? true : false,
+                                speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
+                                downloaded: commonService.formatBytes(torrent.downloaded)
+                            }
+                            locals.filter((obj, i) => {
+                                if (obj.dn === torrent.dn) {
+                                    isNew = false
+                                    locals[i] = local
+                                }
+                            })
+                            if (isNew) {
+                                locals.push(local)
+                            }
+                            localStorage.setItem('locals', JSON.stringify(locals))
+
+                            fsExtra.readFile('./backend/json/episodes/' + t.show + '.json', (err, data) => {
+                                if (err) {
+                                    reject('Cannot read file :', err)
+                                } else {
+                                    for (var i = 0; i < data.length; i++) {
+                                        console.log(data[i].episode, t.episode)
+                                        if (data[i].episode === t.episode) {
+                                            data[i].completed = true
+                                            console.log('Updated episode -->', data[i])
+                                            fsExtra.writeFile('./backend/json/episodes/' + t.show + '.json', JSON.stringify(data, null, 4), function(err) {
+                                                if (err) {
+                                                    console.error('Cannot write file :', err)
+                                                } else {
+                                                    console.log(t.show, ' episodes list updated!')
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                            })
+
+                            subsService.search({
                                 fileName: torrent.dn,
                                 show: t.show,
                                 episode: t.episode
                             }).then((opts) => {
-                                subService.download(opts)
+                                subsService.download(opts)
                             })
 
                             t.ready = true
                             delete t['download_info']
 
-                            // jsonService.getShowEpisodes(t.show).then( (episodes) => {
-                            //         for ( ep in episodes ) {
-                            //             if (t.episode === episode) { 
-                            //                 console.log('Episode found and updated!')
-                            //                 t.present = true
-                            //                 jsonService.updateShowEpisodes(t.show, episodes)
-                            //                 break;
-                            //             }
-                            //         }  
-                            //     })
 
                             jsonService.updateLibrary(t)
 
@@ -132,19 +153,7 @@
                             logUpdate(output.join('\n'))
 
                             torrent.id = t.id
-
-                            $rootScope.locals.filter((obj) => {
-                                if (obj.id === torrent.id) {
-                                    obj.download_info = {
-                                        progress: Math.floor(torrent.progress * 100),
-                                        remaining: commonService.formatTime(torrent.timeRemaining),
-                                        ready: torrent.progress === 1 ? true : false,
-                                        speed: commonService.formatBytes(torrent.downloadSpeed) + '/s',
-                                        downloaded: commonService.formatBytes(torrent.downloaded)
-                                    }
-                                    $rootScope.$apply()
-                                }
-                            })
+                            $rootScope.$apply()
                         })
 
                     })
@@ -153,55 +162,107 @@
             })
         }
 
-
+        // KICKASS
         let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
-            return new Promise(function(resolve, reject) {
-                var show = searchObj.show
-                show = show.split('.').join('')
+                return new Promise(function(resolve, reject) {
+                    var row = searchObj.row ? searchObj.row : 0
+                    var show = searchObj.show
+                    show = show.split('.').join('')
 
-                var episode = searchObj.episode
-                var searchString = show + ' ' + episode
-                console.log('Searching PB for: ' + searchString)
-                console.log()
+                    console.log('row', row);
 
-                searchString = encodeURIComponent(searchString)
+                    var episode = searchObj.episode
+                    var searchString = show + ' ' + episode
+                    console.log('Searching Kickass for: ' + searchString)
+                    console.log()
 
-                // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
-                var url = 'https://pirateproxy.vip/search/' + searchString + '/0/99/0'
+                    searchString = encodeURIComponent(searchString)
 
-                request.get(url, function(error, response, body) {
+                    var url = 'https://kickass.unblocked.uno/search.php?q=' + searchString
 
-                    if (error || !response) return reject(error)
+                    request.get(url, function(error, response, body) {
 
-                    console.log('[', response.statusCode, ']')
+                        if (error || !response) return reject(error)
 
-                    if (!error && response.statusCode === 200) {
-                        var $ = cheerio.load(body)
-                        var data = $('#searchResult')
-                        var torrent = {}
+                        console.log('[', response.statusCode, ']')
+
+                        if (!error && response.statusCode === 200) {
+                            var $ = cheerio.load(body)
+                            var data = $('.odd')
+                            var torrent = {}
+
                             // console.log('*************************')
-                            // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
-                            // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
-                            // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
-                            // console.log('', data['0'].children[3])
+                            // console.log('NAME->', data['0'].children[1].children[3].children[5].children[1].children[0].data)
+                            // console.log('MAGNET', data['0'].children[1].children[1].children[5].attribs.href)
+                            // console.log('SEEDS->', data['0'].children[7].children[0].data)
                             // console.log('*************************')
-                        torrent.show = show
-                        torrent.episode = episode
 
-                        if (data['0']) {
-                            torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
-                            torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
-                            torrent.seeds = data['0'].children[3].children[5].children[0].data
-                            console.log('-------', torrent)
-                            resolve(torrent)
-                        } else {
-                            resolve(0)
-                        }
+                            torrent.show = show
+                            torrent.episode = episode
 
-                    } else resolve(parseInt(response.statusCode))
+                            if (data[row]) {
+                                torrent.name = data[row].children[1].children[3].children[5].children[1].children[0].data
+                                torrent.magnet = data[row].children[1].children[1].children[5].attribs.href
+                                torrent.seeds = data[row].children[7].children[0].data
+                                console.log('-------', torrent)
+                                resolve(torrent)
+                            } else {
+                                resolve(0)
+                            }
+
+                        } else resolve(parseInt(response.statusCode))
+                    })
                 })
-            })
-        }
+            }
+            // //PIRATEBAY
+            // let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
+            //     return new Promise(function(resolve, reject) {
+            //         var show = searchObj.show
+            //         show = show.split('.').join('')
+
+        //         var episode = searchObj.episode
+        //         var searchString = show + ' ' + episode
+        //         console.log('Searching PB for: ' + searchString)
+        //         console.log()
+
+        //         searchString = encodeURIComponent(searchString)
+
+        //         var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
+        //             // var url = 'https://pirateproxy.vip/search/' + searchString + '/0/99/0'
+
+        //         request.get(url, function(error, response, body) {
+
+        //             if (error || !response) return reject(error)
+
+        //             console.log('[', response.statusCode, ']')
+
+        //             if (!error && response.statusCode === 200) {
+        //                 var $ = cheerio.load(body)
+        //                 var data = $('#searchResult')
+        //                 var torrent = {}
+        //                     // console.log('*************************')
+        //                     // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
+        //                     // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
+        //                     // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
+        //                     // console.log('', data['0'].children[3])
+        //                     // console.log('*************************')
+        //                 torrent.show = show
+        //                 torrent.episode = episode
+
+        //                 if (data['0']) {
+        //                     torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
+        //                     torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
+        //                     torrent.seeds = data['0'].children[3].children[5].children[0].data
+        //                     console.log('-------', torrent)
+        //                     resolve(torrent)
+        //                 } else {
+        //                     resolve(0)
+        //                 }
+
+        //             } else resolve(parseInt(response.statusCode))
+        //         })
+        //     })
+        // }
 
         torrent_module['getLocalTorrents'] = function getLocalTorrents() {
             return new Promise(function(resolve, reject) {
