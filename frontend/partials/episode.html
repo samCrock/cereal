@@ -1,14 +1,15 @@
 <section layout="column" id="video_container" layout="column">
+    <md-button ng-if="!alt" aria-label="Alternate" class="md-fab" ng-click="alternate()" style="position: fixed; left: 2vw; top: 2vw;">ALT</md-button>
     <label id="root-msg" ng-show="$root.msg.length > 0" style="font-size: 1.6em;">{{ $root.msg }}</label>
-    <div ng-show="msg.download" layout="column" layout-align="center center" layout-wrap>
-        <div class="msg_download" ng-show="msg.download">
-            <label>{{ msg.download }}</label>
+    <div ng-show="torrent_msg.progress < 100" layout="column" layout-align="center center" layout-wrap>
+        <div class="msg_download" ng-show="torrent_msg.speed">
+            <label>{{ torrent_msg.speed }}</label>
         </div>
-        <div class="msg_download" ng-show="msg.remaining">
-            <label>{{ msg.remaining }}</label>
+        <div class="msg_download" ng-show="torrent_msg.remaining">
+            <label>{{ torrent_msg.remaining }}</label>
         </div>
-        <div class="msg_download" ng-show="msg.remaining">
-            <label>{{ msg.progress }}</label>
+        <div class="msg_download" ng-show="torrent_msg.progress">
+            <label>{{ torrent_msg.progress }}</label>
         </div>
     </div>
     <!-- <video id="player" autoplay controls preload="auto" width="100%" height="auto"></video> -->
