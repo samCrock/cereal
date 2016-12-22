@@ -56,13 +56,13 @@
                                 fsExtra.writeFile(posterPath, body, 'binary', (err) => {
                                     if (err) reject('Cannot write file :', err)
                                     console.log(dashedShowName, 'poster successfuly saved')
-                                    if (scope) {
-                                        scope.locals.filter((local) => {
-                                            if (local.show === showName) {
-                                                local.poster = posterPath
-                                            }
-                                        })
-                                    }
+                                    // if (scope) {
+                                    //     scope.locals.filter((local) => {
+                                    //         if (local.show === showName) {
+                                    //             local.poster = posterPath
+                                    //         }
+                                    //     })
+                                    // }
                                     resolve({ 'title': showName, 'poster': posterPath })
                                 })
 

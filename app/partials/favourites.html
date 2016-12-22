@@ -2,11 +2,6 @@
     <div flex layout="column" layout-align="center center">
         <md-content layout layout-wrap layout-align="center center" class="bg_default" style="margin-top: 60px; background-color: white; padding: 1vw;">
             <md-card class="borderless" ng-repeat="show in following | orderBy : '-title' : reverse = true" layout-align="center center" style="background-color: white;">
-                <!--         <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{ show.title }}</span>
-            </md-card-title-text>
-        </md-card-title> -->
                 <md-card-content>
                     <img ng-src="{{ show.poster }}" ng-click="" class="md-card-image poster">
                 </md-card-content>

@@ -14,7 +14,7 @@ angular.module('app')
         $scope.following = []
 
         $rootScope.msg = 'Retrieving favourites'
-        fsExtra.readFile('./backend/json/following.json', (err, data) => {
+        fsExtra.readFile('./data/json/following.json', (err, data) => {
             if (data) {
                 $rootScope.loading = false
                 data = JSON.parse(data)

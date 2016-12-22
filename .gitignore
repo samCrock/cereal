@@ -1,11 +1,10 @@
 # Dependency directories
 node_modules
-# Donloaded torrents
-download
+# Downloaded torrents
+library
 # json
-backend/json
+data/json
 # resources
 res
 
-*.map
 *.log

@@ -1,0 +1,34 @@
+<section>
+    <div>
+        <form ng-submit="search()">
+            <md-input-container class="search-input" md-no-float>
+                <input id="input-field" type="text" ng-model="show">
+                <!-- <md-button aria-label="Go" class="md-fab back" ng-click="go()">
+                <ng-md-icon icon="chevron_left"></ng-md-icon>
+            </md-button> -->
+            </md-input-container>
+        </form>
+        <!-- <md-card ng-repeat="show in shows" layout="row" layout-align="center center" class="card">
+            <md-card-content ng-if="show.poster">
+                <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
+                <div ng-show="!show.loading" class="poster_sub_container">
+                    <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
+                    <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+                    <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+                    <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
+                </div>
+            </md-card-content>
+        </md-card> -->
+
+        <div ng-if="shows" flex layout="column" layout-align="center center">
+            <md-content layout layout-wrap layout-align="center center" class="bg_default" style="margin-top: 60px; background-color: white; padding: 1vw;">
+                <md-card class="borderless" ng-repeat="show in shows | orderBy : '-title' : reverse = true" layout-align="center center" style="background-color: white;">
+                    <md-card-content>
+                        <img ng-src="{{ show.poster }}" ui-sref="app.show( { show: show.title} )" class="md-card-image poster">
+                    </md-card-content>
+                </md-card>
+            </md-content>
+        </div>
+
+    </div>
+</section>

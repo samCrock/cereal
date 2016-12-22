@@ -9,7 +9,10 @@
     require('./controllers/library.js')
     require('./controllers/favourites.js')
     require('./controllers/calendar.js')
+    require('./controllers/pending.js')
     require('./controllers/episode.js')
+    require('./controllers/show.js')
+    require('./controllers/search.js')
 
     require('./services/torrent-service.js')
     require('./services/wt-service.js')
@@ -18,6 +21,7 @@
     require('./services/json-service.js')
     require('./services/poster-service.js')
     require('./services/subs-service.js')
+    require('./services/search-service.js')
 
     /* @ngInject */
     function moduleConfig($stateProvider, $urlRouterProvider, $mdThemingProvider) {
@@ -36,19 +40,19 @@
 
         $mdThemingProvider.definePalette('cereal_palette', {
             '50': '#ffffff',
-            '100': '#fdfefe',
-            '200': '#d1f2ee',
-            '300': '#99e3d9',
-            '400': '#81ddd0',
-            '500': '#69d6c7',
-            '600': '#51cfbe',
-            '700': '#39c9b5',
-            '800': '#31b2a1',
-            '900': '#2a9a8b',
+            '100': '#f7fdfb',
+            '200': '#e4f7f2',
+            '300': '#d0f1e9',
+            '400': '#bdebe0',
+            '500': 'a9e5d7',
+            '600': '#95dfce',
+            '700': '#82d9c5',
+            '800': '#6ed3bc',
+            '900': '#5bcdb3',
             'A100': '#ffffff',
-            'A200': '#fdfefe',
-            'A400': '#81ddd0',
-            'A700': '#39c9b5',
+            'A200': '#ffffff',
+            'A400': '#ffffff',
+            'A700': '#47c7a9',
             'contrastDefaultColor': 'light',
             'contrastDarkColors': '50 100 200 300 400 500 600 700 800 A100 A200 A400 A700'
         })
@@ -62,7 +66,7 @@
                 views: {
                     'header@': {
                         controller: 'mainCtrl',
-                        templateUrl: './frontend/partials/navbar.html'
+                        templateUrl: './app/partials/navbar.html'
                     }
                 }
             })
@@ -71,7 +75,7 @@
                 views: {
                     '@': {
                         controller: 'favouritesCtrl',
-                        templateUrl: './frontend/partials/favourites.html'
+                        templateUrl: './app/partials/favourites.html'
                     }
                 }
             })
@@ -80,7 +84,7 @@
                 views: {
                     '@': {
                         controller: 'libraryCtrl',
-                        templateUrl: './frontend/partials/library.html'
+                        templateUrl: './app/partials/library.html'
                     }
                 }
             })
@@ -89,7 +93,38 @@
                 views: {
                     '@': {
                         controller: 'calendarCtrl',
-                        templateUrl: './frontend/partials/calendar.html'
+                        templateUrl: './app/partials/calendar.html'
+                    }
+                }
+            })
+            .state('app.pending', {
+                url: '/pending',
+                views: {
+                    '@': {
+                        controller: 'pendingCtrl',
+                        templateUrl: './app/partials/pending.html'
+                    }
+                }
+            })
+            .state('app.search', {
+                url: '/search',
+                views: {
+                    '@': {
+                        controller: 'searchCtrl',
+                        templateUrl: './app/partials/search.html'
+                    }
+                }
+            })
+            .state('app.show', {
+                url: '/show',
+                params: {
+                    show: '',
+                    episode: ''
+                },
+                views: {
+                    '@': {
+                        controller: 'showCtrl',
+                        templateUrl: './app/partials/show.html'
                     }
                 }
             })
@@ -102,7 +137,7 @@
                 views: {
                     '@': {
                         controller: 'episodeCtrl',
-                        templateUrl: './frontend/partials/episode.html'
+                        templateUrl: './app/partials/episode.html'
                     }
                 }
             })

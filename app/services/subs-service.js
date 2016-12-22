@@ -17,7 +17,7 @@
         let chokidar = require('chokidar')
 
         let subs_module = {}
-        let path = process.cwd() + '/download/'
+        let path = process.cwd() + '/library/'
 
         subs_module['search'] = function search(searchObj) {
             return new Promise(function(resolve, reject) {
@@ -66,7 +66,7 @@
             })
         }
 
-        subs_module['download'] = function download(opts) {
+        subs_module['library'] = function library(opts) {
             return new Promise(function(resolve, reject) {
                 if (opts) {
 
@@ -78,19 +78,19 @@
                         if (response.statusCode) console.log(response.statusCode)
                         if (!error && response.statusCode == 200) {
                             let $ = cheerio.load(body)
-                            let dButton = $('#downloadButton')
-                            let downloadUrl = 'http://subscene.com' + dButton['0'].attribs.href
+                            let dButton = $('#libraryButton')
+                            let libraryUrl = 'http://subscene.com' + dButton['0'].attribs.href
                             let zipTitle = ''
 
                             console.log()
-                            console.log('Download subs in:', path)
+                            console.log('library subs in:', path)
                             console.log()
 
                             $('.release').filter(function() {
                                 zipTitle = $(this)['0'].children[3].children[0].data.trim()
                             })
 
-                            request.get(downloadUrl)
+                            request.get(libraryUrl)
                                 .pipe(fsExtra.createWriteStream(path + '/' + zipTitle + '.zip'))
                                 .on('close', function() {
                                     fsExtra.readFile(path + '/' + zipTitle + '.zip', (err, data) => {
@@ -102,7 +102,7 @@
                                         fsExtra.writeFile(path + '/' + subName, subFile._data, function(err) {
                                             if (err) reject('Cannot write file :', err)
                                             fsExtra.unlinkSync(path + '/' + zipTitle + '.zip')
-                                            console.log('Subs for ' + zipTitle + ' downloaded')
+                                            console.log('Subs for ' + zipTitle + ' libraryed')
                                             resolve(path + '/' + subName, subFile._data)
                                         })
                                     })

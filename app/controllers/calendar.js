@@ -44,18 +44,16 @@
                 .then((local_posters) => {
                     $rootScope.msg = 'Retrieving this month data'
                     jsonService.month().then((data) => {
-                        // console.log('Month data:', data);
-                        // fsExtra.readFile('./backend/json/monthly.json', (err, data) => {
                         $rootScope.loading = false
                         $rootScope.msg = ''
 
                         let posterTitles = []
                         if (data) {
-                            // data = JSON.parse(data)
                             let posters = []
                             let showsToUpdate = []
                             data.filter((day) => {
-                                if (new Date(day.date) > _8daysago) {
+                                // LAST WEEK ONLY
+                                if (new Date(day.date) > _8daysago && new Date(day.date) < new Date()) {
                                     day.dateObj = commonService.getDayObject(day.date)
                                         // $rootScope.days.push(day)
                                     day.shows.filter((show) => {
@@ -74,6 +72,7 @@
                                     $scope.$apply()
                                 }
                             })
+                            console.log('Showing', $rootScope.days);
                             $rootScope.reload = false
 
                             Promise.all(posters)

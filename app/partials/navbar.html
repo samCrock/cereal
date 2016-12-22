@@ -1,12 +1,18 @@
 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" layout layout-align="center center" ng-if="!isBack">
-    <md-nav-item md-nav-sref="app.library" name="library">
+    <!-- <md-nav-item md-nav-sref="app.library" name="library">
         <i class="white fa fa-play" aria-hidden="true" aria-label="Library"></i>
     </md-nav-item>
     <md-nav-item md-nav-sref="app.favourites" name="favourites">
         <i class="white fa fa-heart" aria-hidden="true" aria-label="My shows"></i>
-    </md-nav-item>
+    </md-nav-item> -->
     <md-nav-item md-nav-sref="app.calendar" name="calendar">
         <i class="white fa fa-calendar-o" aria-hidden="true" aria-label="Calendar"></i>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="app.pending" name="pending">
+        <i class="white fa fa-download" aria-hidden="true" aria-label="Pending"></i>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="app.search" name="search">
+        <i class="white fa fa-search" aria-hidden="true" aria-label="Search"></i>
     </md-nav-item>
 </md-nav-bar>
 <!-- <md-nav-bar layout layout-align="center center" ng-if="isBack">
@@ -15,6 +21,6 @@
     </md-button>
 </md-nav-bar>
  -->
-<md-button aria-label="menu" class="md-fab back" ng-click="back()" ng-if="isBack" style="position: fixed; float: right;">
+<!-- <md-button aria-label="menu" class="md-fab" id="close_btn" ng-click="back()" ng-if="isBack" style="position: fixed; float: right;">
     <ng-md-icon icon="close"></ng-md-icon>
-</md-button>
+</md-button> -->

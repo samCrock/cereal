@@ -1,0 +1,37 @@
+<section>
+    <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" ng-class="$index == 5 ? '' : ''" layout-align="center center">
+        <div ng-style="{ 'color' : ($index == 5 ? '':'')}" style="padding-bottom: 0.4em; padding-top: 4em;">
+            <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:2.6em;">{{ day.dateObj.dotw }}</span>
+            <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2em; padding: 0.4em; opacity: 0.9;">
+                {{ day.dateObj.month }}</span>
+            <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 1.6em; opacity: 0.8;">{{ day.dateObj.dotm }}</span>
+        </div>
+        <md-content ng-class="$index == 5 ? '' : ''" layout="row" layout-align="start center" class="bg_default" style="background-color: white;">
+            <md-card ng-repeat="show in day.shows | filter:posterOnly" layout="row" layout-align="center center" class="card">
+                <md-card-content ng-if="show.poster">
+                    <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
+                    <div ng-show="!show.loading" class="poster_sub_container">
+                        <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
+            <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+            <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+            <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
+        </div>
+        </md-card-content>
+        <md-card-content ng-if="!show.poster" style="position: relative; height: auto;" layout-align="center center" class="card">
+            <img ng-src="res/default.png" class="poster_episode md-card-image poster card">
+            <md-card-title layout="column" class="card_title" class="card">
+                <label class="card_show_title">{{ show.title }}</label>
+                <label>{{ show.episode }}</label>
+            </md-card-title>
+            <div ng-show="!show.loading" class="poster_sub_container">
+                <span ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
+                <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+                <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+                <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
+            </div>
+        </md-card-content>
+        </md-card>
+        <div style="padding-right: 5px; height: 1px;"></div>
+        </md-content>
+    </div>
+</section>

@@ -1,0 +1,14 @@
+<section layout="column" layout="column">
+    <label id="root-msg" style="font-size: 3em;">{{ show }}</label>
+    <md-card ng-style="{ 'margin-top' : ( (episode.episode.indexOf('e01') == -1) && '0') || '100' }" class="borderless" ng-repeat="episode in $root.episodes | orderBy : '-episode' : reverse = true track by $index" layout-align="start" style="background-color: white;">
+        <md-card-content style="position: relative; height: auto;" layout-align="start center">
+            <md-card-title layout="column">
+                <label>{{ episode.episode }}</label>
+                <label style="font-size: 2em;">{{ episode.title }}</label>
+            </md-card-title>
+            <i ui-sref="app.episode( { show: show, episode: episode.episode } )" class="poster_sub play_show_section fa fa-play" aria-hidden="true" style="color: #2b282d"></i>
+            <i ng-if="!isDownloading(episode.episode)" ng-click="downloadEpisode( { show: show, episode: episode.episode } )" class="poster_sub download_show_section fa fa-download" aria-hidden="true" style="color: #2b282d"></i>
+            <!-- <i class="poster_sub download_show_section" aria-hidden="true" style="color: #2b282d">DOWNLOADING</i> -->
+        </md-card-content>
+    </md-card>
+</section>

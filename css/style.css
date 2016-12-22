@@ -8,6 +8,11 @@ body {
     /*background-color: #182927;*/
 }
 
+@font-face {
+    font-family: 'Fjalla One';
+    src: url('../res/fonts/FjallaOne-Regular.otf') format('opentype');
+}
+
 .spinner {
     z-index: 99999;
     color: white;
@@ -50,6 +55,10 @@ body {
 .card {
     min-width: 15vw;
     text-align: center;
+}
+
+.card md-card-content {
+    position: relative;
 }
 
 .card_title {
@@ -153,6 +162,10 @@ body {
     font-size: 2.6em;
 }
 
+.poster_sub.ep:active {
+    -webkit-filter: blur(0.1em);
+}
+
 .poster_sub.download {
     font-size: 2.4em;
     top: 45%;
@@ -160,8 +173,11 @@ body {
     transform: translate(-70%, -45%);
 }
 
+.poster_sub.download:hover {
+    font-size: 3em;
+}
+
 .poster_sub.download:active {
-    /*font-size: 3em;*/
     -webkit-filter: blur(0.1em);
 }
 
@@ -172,8 +188,41 @@ body {
     transform: translate(-30%, -45%);
 }
 
+.poster_sub.play:hover {
+    font-size: 3em;
+}
+
 .poster_sub.play:active {
-    /*font-size: 3em;*/
+    -webkit-filter: blur(0.1em);
+}
+
+.poster_sub.play_show_section {
+    font-size: 2.4em;
+    top: 50%;
+    left: 70%;
+    transform: translate(-70%, -50%);
+}
+
+.poster_sub.play_show_section:hover {
+    font-size: 3em;
+}
+
+.poster_sub.play_show_section:active {
+    -webkit-filter: blur(0.1em);
+}
+
+.poster_sub.download_show_section {
+    font-size: 2.4em;
+    top: 50%;
+    left: 80%;
+    transform: translate(-20%, -50%);
+}
+
+.poster_sub.download_show_section:hover {
+    font-size: 3em;
+}
+
+.poster_sub.download_show_section:active {
     -webkit-filter: blur(0.1em);
 }
 
@@ -183,58 +232,12 @@ body {
     transform: translate(-50%, -80%);
 }
 
+.poster_sub.fav:hover {
+    font-size: 3em;
+}
+
 .poster_sub.fav:active {
-    font-size: 2.4em;
-}
-
-.poster_sub.play_big {
-    font-size: 3em;
-    top: 40%;
-    left: 50%;
-    transform: translate(-45%, -45%);
-}
-
-.poster_sub.play_big:hover {
-    font-size: 5em;
-}
-
-.poster_sub.play_big:hover:active {
-    font-size: 6em;
-    opacity: 0.9;
     -webkit-filter: blur(0.1em);
-    transition: blur .1s;
-}
-
-.poster_sub.delete {
-    font-size: 2.2em;
-    top: 75%;
-    left: 50%;
-    transform: translate(-50%, -75%);
-}
-
-.poster_sub.delete:hover {
-    font-size: 3em;
-}
-
-.poster_sub.delete:hover:active {
-    font-size: 3.5em;
-    opacity: 0.9;
-    -webkit-filter: blur(0.1em);
-    transition: blur .1s;
-}
-
-.text_bg_lime:hover {
-    background: -webkit-linear-gradient(#cddc39, #f9fbe7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: all .2s;
-}
-
-.text_bg_red:hover {
-    background: -webkit-linear-gradient(#ff3030, #f45151);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: all .2s;
 }
 
 .poster:active {
@@ -283,12 +286,6 @@ body {
     background: linear-gradient(to top, #2b282d, transparent)
 }
 
-.back {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-}
-
 .bg_today {
     background: #2b282d;
     width: 95%;
@@ -297,7 +294,8 @@ body {
 
 .bg_default {
     background: #2b282d;
-    width: 95%;
+    /*width: 95%;*/
+    width: auto;
     border-radius: 0.2em;
 }
 
@@ -359,7 +357,7 @@ md-content {
     min-height: 100%;
     width: auto;
     height: auto;
-    background: transparent;
+    dd background: transparent;
     background-size: cover;
 }
 
@@ -404,7 +402,7 @@ md-content {
 
 .msg_download label {
     color: #cddc39;
-    font-size: 2em;
+    font-size: 1.4em;
 }
 
 .first_poster {
@@ -413,4 +411,59 @@ md-content {
 
 .last_poster {
     padding-right: 20vw;
+}
+
+#close_btn {
+    position: fixed;
+    left: calc(100% - 100px);
+    top: 20px;
+    height: 80px;
+    width: 80px;
+    line-height: 0;
+}
+
+#alt_btn {
+    position: fixed;
+    left: calc(100% - 80px);
+    top: 110px;
+    height: 60px;
+    width: 60px;
+    line-height: 0;
+}
+
+.idle {
+    opacity: 0;
+}
+
+.search-input {
+    width: 90%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+}
+
+.search-input input {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 3em;
+    height: 2em;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(48, 45, 50, 1);
+}
+
+md-progress-linear.md-default-theme .md-bar,
+md-progress-linear .md-bar {
+    background-color: rgb(109, 219, 120);
+}
+
+md-progress-linear {
+    height: 20px;
+}
+
+md-progress-linear .md-container {
+    height: 20px;
+}
+
+
+md-progress-linear .md-container .md-bar {
+    height: 20px;
 }

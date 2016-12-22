@@ -23,6 +23,16 @@
         })
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
+
+            sessionStorage.setItem('prev_state', JSON.stringify({
+                name: fromState.name,
+                params: fromParams
+            }))
+            sessionStorage.setItem('curr_state', JSON.stringify({
+                name: toState.name,
+                params: toParams
+            }))
+
             if (toState.name === 'app.episode') {
                 $scope.isBack = true
             } else $scope.isBack = false
@@ -30,7 +40,7 @@
                 if (localStorage.topper > 0) {
                     $timeout(() => { // wait for DOM, then restore scroll position
                         window.scrollTo(0, localStorage.topper)
-                    }, 0)
+                    }, 100)
                 }
             }
         })
@@ -39,55 +49,47 @@
         $scope.currentNavItem = 'calendar'
         $state.go('app.calendar')
 
-        $scope.back = () => {
-            if ($state.includes('app.episode')) {
-                let container = document.getElementById('video_container')
-                container.removeChild(container.childNodes[0])
-                $rootScope.$broadcast('backToCalendar')
-                $state.go('app.calendar')
-            }
-        }
-
-        $scope.search = () => {
-            $scope.search_loading = true;
-            if ($scope.search.season.length === 1) { $scope.search.season = '0' + $scope.search.season; }
-            if ($scope.search.episode.length === 1) { $scope.search.episode = '0' + $scope.search.episode; }
-            torrentService.searchTorrent({
-                show: $scope.search.show,
-                episode: 'S' + $scope.search.season + 'E' + $scope.search.episode
-            }).then((torrent) => {
-                console.log('Torrent found:', torrent)
-                torrent.show = commonService.getShowTitleFromTorrent(torrent)
-                $rootScope.locals.push(torrent)
-                $scope.search_loading = false
-                $scope.$apply()
-                torrentService.downloadTorrent(torrent, $scope).then(() => {
-                    console.log('Done')
-                })
-            })
-        }
-
 
         $scope.default_poster = './res/posters/default.jpg'
 
         // jsonService.updateFollowingEpisodes();
         // jsonService.getLibrary();
 
-        $rootScope.locals = []
-        var locals = localStorage.getItem('locals')
-        if (!locals) {
-            localStorage.setItem('locals', JSON.stringify([]))
+        $rootScope.library = []
+        $rootScope.pending = []
+        var library = localStorage.getItem('library')
+        if (!library) {
+            localStorage.setItem('library', JSON.stringify([]))
         }
 
-        jsonService.getLibrary().then((library) => {
-            console.log('Library --->', library)
-        })
+        if (localStorage.getItem('pending')) {
+            $rootScope.pending = JSON.parse(localStorage.getItem('pending'))
+            if ($rootScope.pending.length > 0) {
+                console.log('Restoring pending torrents..')
+                for (var i = 0; i < $rootScope.pending.length; i++) {
+                    console.log('    >', $rootScope.pending[i].name)
+                    torrentService.downloadTorrent($rootScope.pending[i])
+                }
+            }
+        }
+
+        // Update pending downloads
+        $interval(function() {
+            let temp = []
+            $rootScope.pending.filter( (pending, i) => {
+                temp.push(pending)
+                delete temp[i].speed
+                delete temp[i].eta
+            })
+            // console.log('- Refreshed -')
+            localStorage.setItem('pending', JSON.stringify(temp))
+        }, 10 * 1000)
+
 
 
         $rootScope.reload = true
         localStorage.topper = 0
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
-
     }
 
 })();
