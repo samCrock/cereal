@@ -36,10 +36,9 @@
 
                 // console.log('downloadTorrent', t)
 
-                // if (!t.show) {
-                //     console.log('---' + typeof t + '---')
-                //     resolve(parseInt(t))
-                // }
+                if (!t) {
+                    reject(404)
+                }
 
                 t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
 
@@ -73,8 +72,7 @@
                         }
                         // *********************** ON DONE ***********************
                         torrent.on('done', () => {
-                            console.log(torrent, ' ready')
-                            console.log()
+                            console.log(torrent, ' ready!')
 
                             // Add episode to local library
                             let isNew = true
@@ -83,47 +81,46 @@
                             let ep = {
                                 show: t.show,
                                 episode: t.episode,
-                                dn: torrent.dn,
-                                torrent: t
+                                name: t.name,
+                                magnet: t.magnet,
+                                path: t.path,
+                                poster: t.poster
                             }
                             library.filter((obj, i) => {
-                                if (obj.dn === torrent.dn) {
+                                if (obj.name === t.name) {
                                     isNew = false
                                     library[i] = ep
                                 }
                             })
+
                             if (isNew) {
                                 library.push(ep)
                             }
-
-                            // Remove episode from pending downloads
-                            for (var i = $rootScope.pending.length - 1; i >= 0; i--) {
-                                if ($rootScope.pending[i].name === torrent.name) {
-                                    $rootScope.pending.splice(i, 1)
-                                }
-                            }
-
                             localStorage.setItem('library', JSON.stringify(library))
 
+
+                            // Search for subs
                             subsService.search({
-                                fileName: torrent.dn,
-                                show: t.show,
-                                episode: t.episode
-                            }).then((opts) => {
-                                subsService.download(opts)
-                            })
+                                    fileName: torrent.dn,
+                                    show: t.show,
+                                    episode: t.episode
+                                })
+                                .then((opts) => {
+                                    subsService.download(opts)
+                                })
+                                .catch(() => {
+                                    console.log('No subs found')
+                                })
 
                             t.ready = true
                             delete t['download_info']
 
-
-                            // jsonService.updateLibrary(t)
-
                             resolve(torrent.name)
                             $rootScope.$apply()
 
+                            // // Update pending downloads
+                            $rootScope.$emit('completed', t)
                         })
-
 
                         // *********************** ON DOWNLOAD ***********************
                         let first = true
@@ -145,8 +142,9 @@
                             $rootScope.pending.filter((pending) => {
                                 if (pending.name === torrent.name) {
                                     first = false
-                                    pending.eta = commonService.formatTime(torrent.timeRemaining),
-                                    pending.progress = Math.floor(torrent.progress * 100)
+                                    pending.eta_label = commonService.formatTime(torrent.timeRemaining),
+                                        pending.eta = torrent.timeRemaining,
+                                        pending.progress = Math.floor(torrent.progress * 100)
                                     pending.speed = commonService.formatBytes(torrent.downloadSpeed) + '/s'
                                 }
                             })
@@ -295,52 +293,31 @@
                         var data = $('.forum_header_border')
 
                         data = data[3]
-                        console.log('data', data)
-                            // data.children.filter(function(element, i) {
-                            //     if (!element.data && element.attribs.class === 'forum_thread_post') {
-                            //         // console.log('element', i, element)
-                            //         torrent = {}
-                            //         torrent.show = show
-                            //         torrent.episode = episode
-                            //         if (i === 3) {
-                            //             torrent.name = element.children[1].children[0].data
-                            //         }
-                            //         if (i === 5) {
-                            //             torrent.magnet = element.children[1].attribs.href
-                            //         }
-                            //         if (i === 7) {
-                            //             torrent.size = element.children[0].data
-                            //         }
-                            //         if (i === 11) {
-                            //             torrent.seeds = element.children[0].children[0].data
-                            //         }
-                            //     }
-                            // })
+                            // console.log('data', data)
 
                         if (data.children) {
                             torrent = {}
-                            torrent.show = show
+                            torrent.show = commonService.capitalCase(show)
                             torrent.episode = episode
                             torrent.name = data.children[3].children[1].children[0].data
                             torrent.magnet = data.children[5].children[1].attribs.href
                             torrent.size = data.children[7].children[0].data
-                            torrent.seeds = data.children[11].children[0].children[0].data
+                            if (data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].data
+                            if (!data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].children[0].data
+
+                            if (commonService.areMatching(show, torrent.name)) {
+                                console.log('Search result ->', torrent)
+                                resolve(torrent)
+                            } else {
+                                console.log('No matching torrent found')
+                                resolve()
+                            }
+                        } else {
+                            console.log('No results')
+                            resolve()
                         }
 
-                        console.log('Search result ->', torrent)
-                        resolve(torrent)
-
                     } else resolve(parseInt(response.statusCode))
-                })
-            })
-        }
-
-        torrent_module['getLocalTorrents'] = function getLocalTorrents() {
-            return new Promise(function(resolve, reject) {
-                fsExtra.readFile('local_torrents.json', (err, data) => {
-                    if (data) { // Locals exists
-                        resolve(JSON.parse(data))
-                    }
                 })
             })
         }

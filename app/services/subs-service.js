@@ -52,39 +52,34 @@
                             var spliced_search = searchString.split('-')
                             spliced_search = spliced_search[0]
 
-                            // spliced_title = spliced_title.replace(/[(.*?)]/, '')
-                            // console.log('spliced_title', spliced_title)
                             if (lang === 'English' && spliced_search === spliced_title) {
-                                // resolve({ link: link, path: path + searchString })
+                                // console.log('spliced_title :', spliced_title)
+                                // console.log('spliced_search:', spliced_search)
+                                // console.log('')
                                 resolve({ link: link, path: path + show + '/' + episode })
                             }
                         })
-                        console.log('No suitable subs found')
-                        resolve()
+                        reject()
                     } else reject()
                 })
             })
         }
 
-        subs_module['library'] = function library(opts) {
+        subs_module['download'] = function download(opts) {
             return new Promise(function(resolve, reject) {
                 if (opts) {
-
                     let path = decodeURIComponent(opts.path)
                     let link = opts.link
                     let url = 'http://subscene.com' + link
                     request.get(url, function(error, response, body) {
                         if (error) reject(error)
-                        if (response.statusCode) console.log(response.statusCode)
                         if (!error && response.statusCode == 200) {
                             let $ = cheerio.load(body)
-                            let dButton = $('#libraryButton')
-                            let libraryUrl = 'http://subscene.com' + dButton['0'].attribs.href
+                            let dButton = $('.download')['0']
+
+                            let libraryUrl = 'http://subscene.com' + dButton.children[1].attribs.href
                             let zipTitle = ''
 
-                            console.log()
-                            console.log('library subs in:', path)
-                            console.log()
 
                             $('.release').filter(function() {
                                 zipTitle = $(this)['0'].children[3].children[0].data.trim()
@@ -102,7 +97,7 @@
                                         fsExtra.writeFile(path + '/' + subName, subFile._data, function(err) {
                                             if (err) reject('Cannot write file :', err)
                                             fsExtra.unlinkSync(path + '/' + zipTitle + '.zip')
-                                            console.log('Subs for ' + zipTitle + ' libraryed')
+                                            console.log('Subs downloaded in:', path)
                                             resolve(path + '/' + subName, subFile._data)
                                         })
                                     })
