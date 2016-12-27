@@ -9,12 +9,31 @@
     function commonService(wtService) {
 
         const os = require('os')
-        const { shell } = require('electron')
+        const {
+            shell
+        } = require('electron')
 
         let common_module = {};
 
+        common_module['areMatching'] = function areMatching(str1, str2) {
+            str1 = str1.toLowerCase()
+            str2 = str2.toLowerCase()
+            console.log(str1, ':', str2)
+            return str2.indexOf(str1) > -1
+        }
+
+
         common_module['replaceAll'] = function replaceAll(str, find, replace) {
             return str.replace(new RegExp(find, 'g'), replace);
+        }
+
+        common_module['capitalCase'] = function capitalCase(str) {
+            let array = str.split(' ')
+            let result = ''
+            for (var i = 0; i < array.length; i++) {
+                result = result + array[i].charAt(0).toUpperCase() + array[i].slice(1) + ' '
+            }
+            return result.trim()
         }
 
         common_module['openFile'] = function openFile(filePath) {
@@ -154,7 +173,7 @@
                 let niceAndSpaced = spaced.toLowerCase().split('.').join('')
                 return niceAndSpaced.split(' ').join('-')
             }
-            // Takes an array of downloaded torrents w/ dates and returns an array of 'ranged' group of torrents (e.g  last week) 
+            // Takes an array of downloaded torrents w/ dates and returns an array of 'ranged' group of torrents (e.g  last week)
         common_module['putInRange'] = function putInRange(completed) {
             let today = []
             let last_week = []
@@ -169,14 +188,44 @@
                 let diff = now.getTime() - t.getTime()
                 let days = Math.floor(diff / (1000 * 60 * 60 * 24))
                 console.log(torrent.title, days)
-                if (days == 1) { today.push(torrent) } else if (days > 1 && days < 8) { last_week.push(torrent) } else if (days >= 8 && days < 31) { last_month.push(torrent) } else if (days >= 31 && days < 365) { last_year.push(torrent) } else if (days >= 365) { older.push(torrent) } else { no_date.push(torrent) }
+                if (days == 1) {
+                    today.push(torrent)
+                } else if (days > 1 && days < 8) {
+                    last_week.push(torrent)
+                } else if (days >= 8 && days < 31) {
+                    last_month.push(torrent)
+                } else if (days >= 31 && days < 365) {
+                    last_year.push(torrent)
+                } else if (days >= 365) {
+                    older.push(torrent)
+                } else {
+                    no_date.push(torrent)
+                }
             })
-            ranges.today = { label: 'Today', data: today }
-            ranges.last_week = { label: 'Last Week', data: last_week }
-            ranges.last_month = { label: 'Last Month', data: last_month }
-            ranges.last_year = { label: 'Last Year', data: last_year }
-            ranges.older = { label: 'Older', data: older }
-            ranges.no_date = { label: 'No date', data: no_date }
+            ranges.today = {
+                label: 'Today',
+                data: today
+            }
+            ranges.last_week = {
+                label: 'Last Week',
+                data: last_week
+            }
+            ranges.last_month = {
+                label: 'Last Month',
+                data: last_month
+            }
+            ranges.last_year = {
+                label: 'Last Year',
+                data: last_year
+            }
+            ranges.older = {
+                label: 'Older',
+                data: older
+            }
+            ranges.no_date = {
+                label: 'No date',
+                data: no_date
+            }
             return ranges
         }
 
