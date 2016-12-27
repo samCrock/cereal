@@ -1,6 +1,6 @@
 <section layout="column" layout="column">
     <label id="root-msg" style="font-size: 3em;">{{ show }}</label>
-    <md-card ng-style="{ 'margin-top' : ( (episode.episode.indexOf('e01') == -1) && '0') || '100' }" class="borderless" ng-repeat="episode in $root.episodes | orderBy : '-episode' : reverse = true track by $index" layout-align="start" style="background-color: white;">
+    <md-card ng-style="{ 'margin-top' : ( (episode.episode.indexOf('e01') == -1) && '0') || '60' }" class="borderless" ng-repeat="episode in $root.episodes | orderBy : '-episode' : reverse = true track by $index" layout-align="start" style="background-color: white;">
         <md-card-content style="position: relative; height: auto;" layout-align="start center">
             <md-card-title layout="column">
                 <label>{{ episode.episode }}</label>
