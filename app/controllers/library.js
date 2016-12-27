@@ -5,30 +5,37 @@
         .module('app')
         .controller('libraryCtrl', libraryCtrl);
 
-    function libraryCtrl($rootScope, $state, $scope, commonService, torrentService){
+    function libraryCtrl($rootScope, $state, $scope, commonService, libraryService) {
 
         console.log('Library')
         $rootScope.loading = false
+        $scope.library = {}
 
-        // libraryService.getLibrary().then((library) => {
-        //     console.log('Library --->', library)
-        //         // let ranges = commonService.putInRange(library)
-        //         // $rootScope.ranges = ranges
-        //         // console.log('**********')
-        //         // console.log(ranges)
-        //         // console.log('**********')
-        //         // $rootScope.$apply()
-        // })
+        libraryService.getLibrary().then((library) => {
+            console.log('Library --->', library)
+            var isNew = true
+            for (var i = 0; i < library.length; i++) {
+                if (!$scope.library[library[i].show]) {
+                    $scope.library[library[i].show] = []
+                    $scope.library[library[i].show].push(library[i])
+                }else {
+                    $scope.library[library[i].show].push(library[i])
+                }
 
-        $scope.currents = torrentService.getCurrents()
-        console.log('currents ->', $scope.currents)
+            }
+            console.log('$scope.library --->', $scope.library)
+            $scope.$apply()
+        })
+
 
         $scope.watch = (show) => {
-            $state.go(app.episode({ show: show.title, episode: show.episode }))
+            $state.go(app.episode({
+                show: show.title,
+                episode: show.episode
+            }))
         }
 
 
     }
 
 })();
-
