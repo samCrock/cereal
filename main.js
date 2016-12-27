@@ -19,13 +19,14 @@ let mainWindow
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({
-        title: 'Cereal'
-    })
+    mainWindow = new BrowserWindow()
     mainWindow.maximize()
 
     // and load the index.html of the app.
     mainWindow.loadURL(`file://${__dirname}/index.html`)
+
+    mainWindow.setTitle(require('./package.json').name)
+    mainWindow.titleBarStyle = 'hidden'
 
     mainWindow.webContents.openDevTools()
 
