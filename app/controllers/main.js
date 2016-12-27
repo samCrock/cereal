@@ -73,17 +73,33 @@
             }
         }
 
-        // Update pending downloads
-        $interval(function() {
+
+        let save_pending = () => {
+            console.log('Saving pending downloads...')
             let temp = []
-            $rootScope.pending.filter( (pending, i) => {
+            $rootScope.pending.filter((pending, i) => {
                 temp.push(pending)
                 delete temp[i].speed
                 delete temp[i].eta
             })
-            // console.log('- Refreshed -')
             localStorage.setItem('pending', JSON.stringify(temp))
-        }, 10 * 1000)
+        }
+
+        // Update pending downloads every 30mins
+        $interval( save_pending(), 30 * 60 * 1000 )
+
+        // Catch exit vent
+        window.onbeforeunload = function(e) {
+            console.log('Saving pending downloads...')
+            let temp = []
+            $rootScope.pending.filter((pending, i) => {
+                temp.push(pending)
+                delete temp[i].speed
+                delete temp[i].eta
+            })
+            localStorage.setItem('pending', JSON.stringify(temp))
+                // return true
+        }
 
 
 
