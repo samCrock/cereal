@@ -1,13 +1,18 @@
 <section layout="column" layout="column" style="margin-top: 68px;">
     <label ng-if="$root.pending.length == 0" id="root-msg" style="font-size: 2em;">No pending downloads</label>
-    <md-card class="borderless" ng-repeat="torrent in $root.pending | orderBy : '-episode' : reverse = true track by $index" layout-align="start" style="background-color: white;">
+    <md-card class="borderless" ng-repeat="torrent in $root.pending | orderBy : '-eta' : reverse = true track by $index" layout-align="start" style="background-color: white;">
         <md-card-content style="position: relative; height: auto;" layout-align="start center">
           <md-progress-linear md-mode="determinate" value="{{ torrent.progress }}"></md-progress-linear>
-            <md-card-title layout="row" layout-margin>
-                <label style="font-size: 1.2em;">{{ torrent.show }}</label>
-                <label>{{ torrent.episode }}</label>
-                <label>{{ torrent.speed }}</label>
-                <label>{{ torrent.eta }}</label>
+            <md-card-title layout="row" layout-align="space-between center">
+                <div><label style="font-size: 1.2em;">{{ torrent.show }}</label></div>
+                <div><label>{{ torrent.episode }}</label></div>
+                <div><label>{{ torrent.speed }}</label></div>
+                <div><label>{{ torrent.eta_label }}</label></div>
+                <div>
+                <md-button aria-label="menu" class="md-fab md-mini md-accent" ng-click="remove(torrent)">
+                    <ng-md-icon icon="delete"></ng-md-icon>
+                </md-button>
+            </div>
                 <!-- <label style="font-size: 2em;">{{ torrent.title }}</label> -->
             </md-card-title>
         </md-card-content>
