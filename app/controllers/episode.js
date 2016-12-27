@@ -229,7 +229,7 @@
                         if ($scope.subsPath) track.src = $scope.subsPath
                         track.addEventListener('load', function() {
                             this.mode = 'showing'
-                                // videoElement.textTracks[0].mode = 'showing' // thanks Firefox 
+                                // videoElement.textTracks[0].mode = 'showing' // thanks Firefox
                         })
                         this.appendChild(track)
                     })
@@ -292,7 +292,7 @@
                                     }
                                 })
 
-                            let libraryTorrent = function(torrent) {
+                            let downloadTorrent = function(torrent) {
                                 // library episodes info
                                 jsonService.getEpisodeInfo(t).then((t) => {
                                     console.log('Updating library w\\ torrent:', t)
@@ -324,8 +324,8 @@
                             var skip = false
                             for (var i = 0; i < wt_client.torrents.length; i++) {
                                 if (wt_client.torrents[i].ready || wt_client.torrents[i].dn === t.name) {
-                                    console.log('Already librarying')
-                                    libraryTorrent(wt_client.torrents[i])
+                                    console.log('Already downloading', t.name)
+                                    downloadTorrent(wt_client.torrents[i])
                                     skip = true
                                     break
                                 }
@@ -333,7 +333,7 @@
                             if (!skip) {
                                 wt_client.add(t.magnet, {
                                     path: path + title + '/' + episode
-                                }, libraryTorrent)
+                                }, downloadTorrent)
                             }
                             //*************************************************************************
 
