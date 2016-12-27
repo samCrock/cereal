@@ -31,16 +31,16 @@
                     torrentService.downloadTorrent(result, $rootScope)
                         .then((t) => {
                             $scope.downloading.push(episode)
-                            console.log('$scope.downloading', $scope.downloading)
-                            console.log('downloadTorrent result', t)
+                            console.log('Download complete:', result.episode)
                         })
+                })
+                .catch((reason) => {
+                    console.log('No torrent was found')
                 })
         }
 
         $scope.isDownloading = (ep) => {
-            $scope.downloading.filter( (d) => {
-                console.log('ep', ep)
-                console.log('d', d)
+            $scope.downloading.filter((d) => {
                 if (d === ep) return true
             })
             return false
