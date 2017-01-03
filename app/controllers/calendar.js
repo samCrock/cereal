@@ -90,8 +90,6 @@
                                                 })
                                             })
                                         })
-                                        // Update Following w/ the new poster paths
-                                    jsonService.updateFollowing(showsToUpdate)
                                 })
                         } else {
                             $rootScope.loading = false
