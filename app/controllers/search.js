@@ -5,7 +5,7 @@
         .module('app')
         .controller('searchCtrl', searchCtrl);
 
-    function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService,commonService) {
+    function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService, commonService) {
 
         $rootScope.loading = false
         let input = document.getElementById('input-field')
@@ -16,11 +16,20 @@
         if (sessionStorage.getItem('search_string')) {
             $scope.show = sessionStorage.getItem('search_string')
         }
+
+        $scope.$watch('show', (show) => {
+            if(show) {
+                $scope.show = commonService.capitalCase(show)
+            }
+        })
+
+
         $scope.search = function() {
-            console.log('Searching for', $scope.show)
-            sessionStorage.setItem('search_string', $scope.show)
+            let searchString = $scope.show.toLowerCase()
+            console.log('Searching for', searchString)
+            sessionStorage.setItem('search_string', searchString)
             $scope.search_loading = true;
-            searchService.show($scope.show)
+            searchService.show(searchString)
                 .then( (results) => {
                     console.log('Shows found:', results)
                     $scope.search_loading = false
