@@ -1,14 +1,22 @@
 <section layout="column" layout="column">
     <label id="root-msg" style="font-size: 3em;">{{ show }}</label>
     <md-card ng-style="{ 'margin-top' : ( (episode.episode.indexOf('e01') == -1) && '0') || '60' }" class="borderless" ng-repeat="episode in $root.episodes | orderBy : '-episode' : reverse = true track by $index" layout-align="start" style="background-color: white;">
-        <md-card-content style="position: relative; height: auto;" layout-align="start center">
-            <md-card-title layout="column">
-                <label>{{ episode.episode }}</label>
-                <label style="font-size: 2em;">{{ episode.title }}</label>
+        <md-card-content style="position: relative; height: auto;" layout-align="start center" layout="row">
+            <md-card-title layout="row" flex="80">
+                <label style="font-size: 2em;">{{ episode.episode }}</label>
+                <!-- <div layout="row" layout-align"start center"> -->
+                    <!-- <label style="font-size: 1.2em; padding-left: 10px;">{{ episode.dotw }}</label>
+                    <label style="font-size: 1em; padding-left: 10px;">{{ episode.month }}</label>
+                    <label style="font-size: 1em; padding-left: 5px;">{{ episode.dotm }}</label> -->
+                    <label style="font-size: 1.4em; padding-left: 20px;">{{ episode.timePassed }}</label>
+                <!-- </div> -->
+                <label style="font-size: 2em; padding-left: 20px;">{{ episode.title }}</label>
             </md-card-title>
-            <i ui-sref="app.episode( { show: show, episode: episode.episode } )" class="poster_sub play_show_section fa fa-play" aria-hidden="true" style="color: #2b282d"></i>
-            <i ng-if="!isDownloading(episode.episode)" ng-click="downloadEpisode( { show: show, episode: episode.episode } )" class="poster_sub download_show_section fa fa-download" aria-hidden="true" style="color: #2b282d"></i>
-            <!-- <i class="poster_sub download_show_section" aria-hidden="true" style="color: #2b282d">DOWNLOADING</i> -->
+            <md-card-title layout="row" flex="20" style="min-width: 170px;">
+                <i ng-show="episode.downloaded" ui-sref="app.episode( { show: show, episode: episode.episode } )" class="poster_sub_show icon fa fa-play" aria-hidden="true" style="color: #2b282d"></i>
+                <i ng-show="!episode.downloaded && !episode.eta" ng-click="downloadEpisode( { show: show, episode: episode.episode } )" class="poster_sub_show icon fa fa-download" aria-hidden="true" style="color: #2b282d"></i>
+                <i ng-show="!episode.downloaded && episode.eta" class="poster_sub_show" aria-hidden="true" style="color: #2b282d; font-size: 1.5em;">{{ episode.eta }}</i>
+            </md-card-title>
         </md-card-content>
     </md-card>
 </section>
