@@ -38,25 +38,7 @@
         // Catch completed event from torrentService
         $rootScope.$on('completed', function ($event, torrent) {
             console.log('Completed event catched')
-            for (var i = 0; i < wtClient.torrents.length; i++) {
-                if (wtClient.torrents[i].magnet === torrent.magnet) {
-                    wt_client.remove(torrent.magnet, () => {
-                        console.log('Deleted')
-                        for (var j = 0; j < $rootScope.pending.length; j++) {
-                            if ($rootScope.pending[j].magnet === torrent.magnet) {
-                                $rootScope.pending.splice(j, 1)
-                            }
-                        }
-                        let local_pending = JSON.parse(localStorage.getItem('pending'))
-                        for (var k = 0; k < local_pending.length; k++) {
-                            if (local_pending[k].magnet === torrent.magnet) {
-                                local_pending.splice(k, 1)
-                            }
-                        }
-                        localStorage.setItem('pending', JSON.stringify(local_pending))
-                    })
-                }
-            }
+            // Remove downloaded torrent from $rootScope.pending
         })
 
 
