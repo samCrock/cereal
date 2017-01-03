@@ -22,6 +22,48 @@
             return str2.indexOf(str1) > -1
         }
 
+        // Compare strings similarity. Based on Levenshtein distance
+        common_module['calculateSimilarity'] = function calculateSimilarity(s1, s2) {
+            var longer = s1;
+            var shorter = s2;
+            if (s1.length < s2.length) {
+                longer = s2;
+                shorter = s1;
+            }
+            var longerLength = longer.length;
+            if (longerLength == 0) {
+                return 1.0;
+            }
+            return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+
+            function editDistance(s1, s2) {
+                s1 = s1.toLowerCase();
+                s2 = s2.toLowerCase();
+
+                var costs = new Array();
+                for (var i = 0; i <= s1.length; i++) {
+                    var lastValue = i;
+                    for (var j = 0; j <= s2.length; j++) {
+                        if (i == 0)
+                            costs[j] = j;
+                        else {
+                            if (j > 0) {
+                                var newValue = costs[j - 1];
+                                if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                                    newValue = Math.min(Math.min(newValue, lastValue),
+                                        costs[j]) + 1;
+                                costs[j - 1] = lastValue;
+                                lastValue = newValue;
+                            }
+                        }
+                    }
+                    if (i > 0)
+                        costs[s2.length] = lastValue;
+                }
+                return costs[s2.length];
+            }
+        }
+
 
         common_module['replaceAll'] = function replaceAll(str, find, replace) {
             return str.replace(new RegExp(find, 'g'), replace);
@@ -83,6 +125,30 @@
             let now = new Date()
             let dtn = new Date(d)
             return Math.round((now - dtn) / (1000 * 60 * 60 * 24))
+        }
+
+        common_module['timePassed'] = function timePassed(d) {
+
+            var date1 = new Date()
+            d = new Date(d)
+
+            var diff = Math.floor(date1.getTime() - d.getTime())
+            var day = 1000 * 60 * 60 * 24
+
+            var days = Math.floor(diff / day)
+            var months = Math.floor(days / 31)
+            var years = Math.floor(months / 12)
+            var message = ''
+
+            if (days !== 0) { message = days + " days ago" }
+            if (days == 1) { message = "Yesterday" }
+            if (months !== 0) { message = months + " months ago" }
+            if (months == 1) { message = months + " month ago" }
+            if (years !== 0) { message = years + " years ago" }
+            if (years == 1) { message = years + " year ago" }
+
+            if (years < 0 || months < 0 || days < 0) message = this.getDayObject(d).dotm + ' ' + this.getDayObject(d).month
+            return message
         }
 
         common_module['formatBytes'] = function formatBytes(bytes, decimals) {

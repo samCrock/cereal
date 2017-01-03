@@ -12,7 +12,7 @@
                     <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
                     <div ng-show="!show.loading" class="poster_sub_container">
                         <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-            <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+            <i ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
             <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
             <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
         </div>
@@ -24,8 +24,8 @@
                 <label>{{ show.episode }}</label>
             </md-card-title>
             <div ng-show="!show.loading" class="poster_sub_container">
-                <span ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-                <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+                <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
+                <i ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
                 <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
                 <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
             </div>

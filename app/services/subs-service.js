@@ -6,7 +6,7 @@
         .service('subsService', subsService);
 
     /* @ngInject */
-    function subsService($q, $http) {
+    function subsService($q, $http, commonService) {
 
         let request = require('request')
         let cheerio = require('cheerio')
@@ -15,6 +15,7 @@
         let WebTorrent = require('webtorrent')
         let logUpdate = require('log-update')
         let chokidar = require('chokidar')
+        let srt2vtt = require('srt2vtt')
 
         let subs_module = {}
         let path = process.cwd() + '/library/'
@@ -39,6 +40,10 @@
                         var $ = cheerio.load(body)
                         var json = []
                         var counter = 0
+                        var best_match = {
+                            similarity: 0,
+                            value: {}
+                        }
                         $('.a1').filter(function() {
                             var data = $(this)
                             var link = data['0'].children[1].attribs.href
@@ -52,15 +57,22 @@
                             var spliced_search = searchString.split('-')
                             spliced_search = spliced_search[0]
 
-                            if (lang === 'English' && spliced_search === spliced_title) {
-                                // console.log('spliced_title :', spliced_title)
-                                // console.log('spliced_search:', spliced_search)
-                                // console.log('')
-                                resolve({ link: link, path: path + show + '/' + episode })
+                            let similarity = commonService.calculateSimilarity(fileName, spliced_title)
+                            // console.log(fileName, '->', spliced_title)
+                            // console.log('Subs strings similarity ->', similarity)
+                            if (lang === 'English' && similarity > best_match.similarity) {
+                                best_match = {
+                                    similarity: similarity,
+                                    value: {
+                                        link: link,
+                                        path: path + show + '/' + episode
+                                    }
+                                }
+                                console.log('Found sub:', spliced_title)
                             }
                         })
-                        reject()
-                    } else reject()
+                        resolve(best_match.value)
+                    } else reject(error)
                 })
             })
         }
@@ -80,7 +92,6 @@
                             let libraryUrl = 'http://subscene.com' + dButton.children[1].attribs.href
                             let zipTitle = ''
 
-
                             $('.release').filter(function() {
                                 zipTitle = $(this)['0'].children[3].children[0].data.trim()
                             })
@@ -90,16 +101,26 @@
                                 .on('close', function() {
                                     fsExtra.readFile(path + '/' + zipTitle + '.zip', (err, data) => {
                                         if (err) throw err
-                                        let zip = new require('node-zip')(data, { base64: false, checkCRC32: true })
+                                        let zip = new require('node-zip')(data, {
+                                            base64: false,
+                                            checkCRC32: true
+                                        })
                                         let subFile = zip.files[Object.keys(zip.files)[0]]
                                         let subName = zip.files[Object.keys(zip.files)[0]].name
-                                        console.log()
+
                                         fsExtra.writeFile(path + '/' + subName, subFile._data, function(err) {
                                             if (err) reject('Cannot write file :', err)
                                             fsExtra.unlinkSync(path + '/' + zipTitle + '.zip')
                                             console.log('Subs downloaded in:', path)
-                                            resolve(path + '/' + subName, subFile._data)
+                                            var res = path + '/' + subName
+                                            var srtData = fsExtra.readFileSync(res)
+                                            srt2vtt(srtData, function(err, vttData) {
+                                                if (err) throw new Error('Error converting subs:', err)
+                                                fsExtra.writeFileSync(res.substring(0, res.length - 4) + '.vtt', vttData)
+                                                resolve(res)
+                                            })
                                         })
+
                                     })
                                 })
                         }

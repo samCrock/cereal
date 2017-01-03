@@ -368,7 +368,9 @@
 
                         let urlMain = 'https://trakt.tv/shows/' + show
 
-                        request.get({ url: urlMain }, function(error, response, body) {
+                        request.get({
+                            url: urlMain
+                        }, function(error, response, body) {
 
                             if (error || !response) return reject(error)
 
@@ -398,15 +400,17 @@
 
                                 while (currentSeason > 0) {
                                     let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
-                                    request.get({ url: urlSeasons }, function(error, response, body) {
+                                    request.get({
+                                        url: urlSeasons
+                                    }, function(error, response, body) {
                                         if (error || !response) return reject(error)
                                         if (!error && response.statusCode == 200) {
                                             let $ = cheerio.load(body)
-                                                // console.log('Titles', $('.titles'))
+                                            // console.log('Titles', $('.titles'))
                                             for (var i = $('.titles').length - 1; i >= 0; i--) {
                                                 if (i !== 1) {
                                                     if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
-                                                        // console.log('ep **********', $('.titles')[i].children[0].children[1])
+                                                        console.log('ep **********', $('.titles')[i].children[0].children[1])
                                                         let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
                                                         let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
                                                         let title = $('.titles')[i].children[0].children[1].children[2].children[0].data

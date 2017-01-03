@@ -1,40 +1,7 @@
-<!-- <section>
-    <div>
-        <md-content layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 1vw;">
-        <md-card ng-repeat="(key, value) in library" flex layout="row" layout-align="center center" ng-class="show.poster ? 'borderless' : 'calendar_card'" style="width: 15vw;">
-                {{ episode.name }}
-                <md-card-content ng-if="episode.poster" style="position: relative;">
-                    <img ng-src="{{ episode.poster }}" class="poster_episode md-card-image poster">
-                    <div ng-episode="!episode.loading" class="poster_sub_container">
-                        <span ui-sref="app.episode( { episode: episode.title, episode: episode.episode } )" class="poster_sub ep" aria-hidden="true">{{ episode.episode }}</span>
-                        <i ui-sref="app.episode( { episode: episode.title, episode: episode.episode } )" class="poster_sub play text_bg_lime fa fa-play" aria-hidden="true"></i>
-                        <i ng-click="downloadEpisode( { episode: episode.title, episode: episode.episode } )" class="poster_sub download text_bg_lime fa fa-download" aria-hidden="true"></i>
-                        <i class="poster_sub fav text_bg_lime fa fa-heart" aria-hidden="true" style=""></i>
-                    </div>
-                </md-card-content>
-                <md-card-content ng-if="!episode.poster" style="position: relative; height: auto; width: 20vw;">
-                    <md-card-title layout="column" class="calendar_title" style="height: 240px;">
-                        <label class="md-subhead" style="text-align: center;">{{ episode.title }}</label>
-                        <label id="calendar_episode" class="md-subhead" style="text-align: center;">{{ episode.episode }}</label>
-                    </md-card-title>
-                    <div ng-episode="!episode.loading" class="poster_sub_container" >
-                        <span ui-sref="app.episode( { episode: episode.title, episode: episode.episode } )" class="poster_sub ep" aria-hidden="true">{{ episode.episode }}</span>
-                        <i ui-sref="app.episode( { episode: episode.title, episode: episode.episode } )" class="poster_sub play text_bg_lime fa fa-play" aria-hidden="true"></i>
-                        <i ng-click="downloadEpisode( { episode: episode.title, episode: episode.episode } )" class="poster_sub download text_bg_lime fa fa-download" aria-hidden="true"></i>
-                        <i class="poster_sub fav text_bg_lime fa fa-heart" aria-hidden="true" style=""></i>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </md-content>
-    </div>
-</section> -->
-
-
-
 <section>
     <div flex layout="column" layout-align="center center">
         <md-content layout layout-wrap layout-align="center center" class="bg_default" style="margin-top: 60px; background-color: white; padding: 1vw;">
-            <md-card class="borderless" ng-repeat="(key, value) in library" layout-align="center center" style="background-color: white;">
+            <md-card class="borderless" ng-repeat="(key, value) in library" ui-sref="app.show( { show: key } )" layout-align="center center" style="background-color: white;">
                 <md-card-content>
                     <img ng-src="{{ value[0].poster }}" ng-click="" class="md-card-image poster">
                 </md-card-content>
