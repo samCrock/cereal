@@ -20,9 +20,9 @@
 
                 // let dashedShowName = commonService.spacedToDashed(searchString)
 
-                console.log('Searching trakt.tv for: ', searchString)
+                var url = 'https://trakt.tv/search/shows?query=' + encodeURIComponent(searchString)
 
-                var url = 'https://trakt.tv/search/shows?query=' + searchString
+                console.log(url)
 
                 request.get(url, function(error, response, body) {
 
@@ -44,7 +44,7 @@
                                 if (show_url) {
                                     title = show_url.split('/')
                                     title = title[title.length - 1]
-                                    title = title.replace('-', ' ')
+                                    title = title.replace(/-/g, ' ')
                                     let result_array = title.split(' ')
                                     let search_array = searchString.split(' ')
                                     let valid = true
