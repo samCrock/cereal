@@ -43,11 +43,23 @@
                     }, 100)
                 }
             }
+
+            var state = toState.name.split('.')
+            $rootScope.currentNavItem = state[1]
+        })
+
+        $rootScope.$on('backEvent', (e) => {
+            console.log('backEvent catched', e)
+            $rootScope.msg = ''
+            $scope.torrent_msg = {}
+            let prev_state = sessionStorage.getItem('prev_state')
+            prev_state = JSON.parse(prev_state)
+            $state.go(prev_state.name, prev_state.params)
         })
 
 
-        $scope.currentNavItem = 'calendar'
         $state.go('app.calendar')
+        $rootScope.currentNavItem = 'calendar'
 
 
         $scope.default_poster = './res/posters/default.jpg'
@@ -62,6 +74,7 @@
             localStorage.setItem('library', JSON.stringify([]))
         }
 
+        
         if (localStorage.getItem('pending')) {
             $rootScope.pending = JSON.parse(localStorage.getItem('pending'))
             if ($rootScope.pending.length > 0) {
@@ -71,6 +84,8 @@
                     torrentService.downloadTorrent($rootScope.pending[i])
                 }
             }
+        } else {
+            localStorage.setItem('pending', JSON.stringify([]))
         }
 
 
@@ -86,9 +101,9 @@
         }
 
         // Update pending downloads every 30mins
-        $interval( save_pending(), 30 * 60 * 1000 )
+        // $interval(save_pending(), 30 * 60 * 1000)
 
-        // Catch exit vent
+        // Catch exit event
         window.onbeforeunload = function(e) {
             console.log('Saving pending downloads...')
             let temp = []
@@ -101,7 +116,10 @@
                 // return true
         }
 
-
+        // INIT show page
+        if (sessionStorage.getItem('current_show')) {
+            $rootScope.current_show = sessionStorage.getItem('current_show')
+        }
 
         $rootScope.reload = true
         localStorage.topper = 0
