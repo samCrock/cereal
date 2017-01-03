@@ -29,6 +29,10 @@ body {
     width: 100%;
 }
 
+md-nav-bar .md-button._md-nav-button.md-unselected {
+    color: rgba(228, 247, 242, 0.54);
+}
+
 .white {
     color: white;
     font-size: 1.8em;
@@ -142,6 +146,28 @@ body {
     transition: all .1s;
 }
 
+.poster_sub_show {
+    cursor: pointer;
+    font-size: 3em;
+    color: white;
+    opacity: 0.95;
+    transition: all .1s;
+    padding-left: 20px;
+    font-style: normal;
+}
+
+.poster_sub_show:focus {
+    outline: transparent;
+}
+
+.poster_sub_show.icon:hover {
+    font-size: 3em;
+}
+
+.poster_sub_show.icon:active {
+    -webkit-filter: blur(0.1em);
+}
+
 .poster_sub:focus {
     outline: transparent;
 }
@@ -193,36 +219,6 @@ body {
 }
 
 .poster_sub.play:active {
-    -webkit-filter: blur(0.1em);
-}
-
-.poster_sub.play_show_section {
-    font-size: 2.4em;
-    top: 50%;
-    left: 70%;
-    transform: translate(-70%, -50%);
-}
-
-.poster_sub.play_show_section:hover {
-    font-size: 3em;
-}
-
-.poster_sub.play_show_section:active {
-    -webkit-filter: blur(0.1em);
-}
-
-.poster_sub.download_show_section {
-    font-size: 2.4em;
-    top: 50%;
-    left: 80%;
-    transform: translate(-20%, -50%);
-}
-
-.poster_sub.download_show_section:hover {
-    font-size: 3em;
-}
-
-.poster_sub.download_show_section:active {
     -webkit-filter: blur(0.1em);
 }
 
@@ -317,6 +313,10 @@ section {
 
 .material-icons.md-light.md-inactive {
     color: rgba(255, 255, 255, 0.3);
+}
+
+md-card {
+    margin: 4px;
 }
 
 md-card md-card-content {
@@ -452,7 +452,7 @@ md-content {
 
 md-progress-linear.md-default-theme .md-bar,
 md-progress-linear .md-bar {
-    background-color: rgba(208,227,222, 1);
+    background-color: rgba(208, 227, 222, 1);
 }
 
 md-progress-linear {
@@ -463,13 +463,12 @@ md-progress-linear .md-container {
     height: 20px;
 }
 
-
 md-progress-linear .md-container .md-bar {
     height: 20px;
 }
 
 .md-button.md-accent.md-fab {
-   background-color: rgba(208, 227, 222, 0.5);
+    background-color: rgba(208, 227, 222, 0.5);
 }
 
 .md-button.md-accent.md-fab:not([disabled]):hover {
