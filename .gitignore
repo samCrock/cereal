@@ -5,6 +5,6 @@ library
 # json
 data/json
 # resources
-res
+res/posters
 
 *.log
