@@ -12,26 +12,26 @@
                     <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
                     <div ng-show="!show.loading" class="poster_sub_container">
                         <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-            <i ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
-            <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
-            <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
-        </div>
-        </md-card-content>
-        <md-card-content ng-if="!show.poster" style="position: relative; height: auto;" layout-align="center center" class="card">
-            <img ng-src="res/default.png" class="poster_episode md-card-image poster card">
-            <md-card-title layout="column" class="card_title" class="card">
-                <label class="card_show_title">{{ show.title }}</label>
-                <label>{{ show.episode }}</label>
-            </md-card-title>
-            <div ng-show="!show.loading" class="poster_sub_container">
-                <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-                <i ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
-                <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
-                <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
-            </div>
-        </md-card-content>
-        </md-card>
-        <div style="padding-right: 5px; height: 1px;"></div>
+                        <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+                        <i ng-click="download( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+                        <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
+                    </div>
+                </md-card-content>
+                <md-card-content ng-if="!show.poster" style="position: relative; height: auto;" layout-align="center center" class="card">
+                    <img ng-src="res/default.png" class="poster_episode md-card-image poster card">
+                    <md-card-title layout="column" class="card_title" class="card">
+                        <label class="card_show_title">{{ show.title }}</label>
+                        <label>{{ show.episode }}</label>
+                    </md-card-title>
+                    <div ng-show="!show.loading" class="poster_sub_container">
+                        <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
+                        <i ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
+                        <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+                        <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <div style="padding-right: 5px; height: 1px;"></div>
         </md-content>
     </div>
 </section>

@@ -8,16 +8,17 @@
     <!-- <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet"> -->
     <!-- <link href="res/fonts/FjallaOne-Regular.otf" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/style.css">
+    <title>Cereal</title>
 </head>
 
 <body ng-app="app" ng-cloak>
     <div ui-view="header"></div>
-        <div ng-show="$root.loading" layout="column" layout-fill layout-align="center center">
-            <i class="spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-            <label id="root-msg">{{ $root.msg }}</label>
-        </div>  
+    <div ng-show="$root.loading" layout="column" layout-fill layout-align="center center">
+        <i class="spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        <label id="root-msg">{{ $root.msg }}</label>
+    </div>
     <ui-view ng-show="!$root.loading">
-<!--         <div layout="column" layout-fill layout-align="center center">
+        <!--         <div layout="column" layout-fill layout-align="center center">
             <i class="spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
         </div>   -->
     </ui-view>
@@ -30,11 +31,13 @@
     <script src="node_modules/angular-material/angular-material.min.js"></script>
     <script src="node_modules/angular-material-icons/angular-material-icons.min.js"></script>
     <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
     <!-- ngElectron  -->
     <script type="text/javascript">
     require('./app/app.module.js')
     require('./app/app.config.js')
     </script>
+    
 </body>
 
 </html>

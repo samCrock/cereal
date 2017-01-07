@@ -77,7 +77,7 @@
                         }
                         // *********************** ON DONE ***********************
                         torrent.on('done', () => {
-                            console.log(torrent, ' ready!')
+                            console.log(torrent.dn, ' ready!')
 
                             // Add episode to local library
                             let isNew = true
@@ -171,8 +171,26 @@
             })
         }
 
-        // // KICKASS
         let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
+            return new Promise(function(resolve, reject) {
+                searchTorrent_kickass(searchObj)
+                    .then((torrent) => {
+                        resolve(torrent)
+                    })
+                    .catch(() => {
+                        searchTorrent_eztv(searchObj)
+                            .then((torrent) => {
+                                resolve(torrent)
+                            })
+                            .catch(() => {
+                                reject()
+                            })
+                    })
+            })
+        }
+
+        // // KICKASS
+        let searchTorrent_kickass = torrent_module['searchTorrent_kickass'] = function searchTorrent_kickass(searchObj) {
             return new Promise(function(resolve, reject) {
                 var show = searchObj.show
                 show = show.split('.').join('')
@@ -200,7 +218,7 @@
                         var data = $('#torrent_latest_torrents')
 
                         // data = data[3]
-                        console.log('data', data)
+                        // console.log('data', data)
 
                         if (data.children) {
                             torrent = {}
@@ -209,24 +227,83 @@
 
                             data = data[0]
 
-                            if (data.children[1]) torrent.name = data.children[1].children[3].children[5].children[1].children[0].data
-                            if (data.children[3]) torrent.size = data.children[3].children[0].data
-                            if (data.children[1]) torrent.magnet = data.children[1].children[1].children[5].attribs.href
-                            if (data.children[7]) torrent.seeds = data.children[7].children[0].data
-                            
-                            // if (commonService.areMatching(show, torrent.name)) {
+                            if (data) {
+                                if (data.children[1]) torrent.name = data.children[1].children[3].children[5].children[1].children[0].data
+                                if (data.children[3]) torrent.size = data.children[3].children[0].data
+                                if (data.children[1]) torrent.magnet = data.children[1].children[1].children[5].attribs.href
+                                if (data.children[7]) torrent.seeds = data.children[7].children[0].data
                                 console.log('Search result ->', torrent)
                                 resolve(torrent)
-                            // } else {
-                            //     console.log('No matching torrent found')
-                            //     resolve()
-                            // }
+                            } else {
+                                console.log('No results')
+                                reject()
+                            }
                         } else {
                             console.log('No results')
-                            resolve()
+                            reject()
                         }
 
-                    } else resolve(parseInt(response.statusCode))
+                    } else {
+                        console.log('Kickass is offline')
+                        reject()
+                    }
+                })
+            })
+        }
+
+
+        //EZTV
+        let searchTorrent_eztv = torrent_module['searchTorrent_eztv'] = function searchTorrent_eztv(searchObj) {
+            return new Promise(function(resolve, reject) {
+                var show = searchObj.show
+                show = show.split('.').join('')
+
+                var episode = searchObj.episode
+                var searchString = show + ' ' + episode
+                console.log('Searching eztv for: ' + searchString)
+
+                searchString = encodeURIComponent(searchString)
+
+                var url = 'https://eztv.ag/search/' + searchString
+                console.log(url)
+
+                request.get(url, function(error, response, body) {
+
+                    if (error || !response) return reject(error)
+
+                    console.log('[', response.statusCode, ']')
+
+                    if (!error && response.statusCode === 200) {
+
+                        var torrent = 0
+
+                        var $ = cheerio.load(body)
+                        var data = $('.forum_header_border')
+
+                        data = data[3]
+                            // console.log('data', data)
+
+                        if (data.children) {
+                            torrent = {}
+                            torrent.show = commonService.capitalCase(show)
+                            torrent.episode = episode
+                            torrent.name = data.children[3].children[1].children[0].data
+                            torrent.magnet = data.children[5].children[1].attribs.href
+                            torrent.size = data.children[7].children[0].data
+                            if (data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].data
+                            if (!data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].children[0].data
+
+                            if (commonService.areMatching(show, torrent.name)) {
+                                console.log('Search result ->', torrent)
+                                resolve(torrent)
+                            } else {
+                                reject('No matching torrent found')
+                            }
+                        } else {
+                            reject('No results')
+                        }
+
+                    } else reject(parseInt(response.statusCode))
                 })
             })
         }
@@ -237,23 +314,23 @@
         //     return new Promise(function(resolve, reject) {
         //         var show = searchObj.show
         //         show = show.split('.').join('')
-        //
+
         //         var episode = searchObj.episode
         //         var searchString = show + ' ' + episode
         //         console.log('Searching PB for: ' + searchString)
-        //
+
         //         searchString = encodeURIComponent(searchString)
-        //
+
         //         // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
         //         var url = 'https://pirateproxy.vip/search/' + searchString + '/0/99/0'
         //         console.log(url)
-        //
+
         //         request.get(url, function(error, response, body) {
-        //
+
         //             if (error || !response) return reject(error)
-        //
+
         //             console.log('[', response.statusCode, ']')
-        //
+
         //             if (!error && response.statusCode === 200) {
         //                 var $ = cheerio.load(body)
         //                 var data = $('#searchResult')
@@ -266,7 +343,7 @@
         //                     // console.log('*************************')
         //                 torrent.show = show
         //                 torrent.episode = episode
-        //
+
         //                 if (data['0']) {
         //                     torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
         //                     torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
@@ -275,64 +352,6 @@
         //                     resolve(torrent)
         //                 } else {
         //                     resolve(0)
-        //                 }
-        //
-        //             } else resolve(parseInt(response.statusCode))
-        //         })
-        //     })
-        // }
-
-        //EZTV
-        // let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
-        //     return new Promise(function(resolve, reject) {
-        //         var show = searchObj.show
-        //         show = show.split('.').join('')
-
-        //         var episode = searchObj.episode
-        //         var searchString = show + ' ' + episode
-        //         console.log('Searching eztv for: ' + searchString)
-
-        //         searchString = encodeURIComponent(searchString)
-
-        //         var url = 'https://eztv.ag/search/' + searchString
-        //         console.log(url)
-
-        //         request.get(url, function(error, response, body) {
-
-        //             if (error || !response) return reject(error)
-
-        //             console.log('[', response.statusCode, ']')
-
-        //             if (!error && response.statusCode === 200) {
-
-        //                 var torrent = 0
-
-        //                 var $ = cheerio.load(body)
-        //                 var data = $('.forum_header_border')
-
-        //                 data = data[3]
-        //                     // console.log('data', data)
-
-        //                 if (data.children) {
-        //                     torrent = {}
-        //                     torrent.show = commonService.capitalCase(show)
-        //                     torrent.episode = episode
-        //                     torrent.name = data.children[3].children[1].children[0].data
-        //                     torrent.magnet = data.children[5].children[1].attribs.href
-        //                     torrent.size = data.children[7].children[0].data
-        //                     if (data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].data
-        //                     if (!data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].children[0].data
-
-        //                     if (commonService.areMatching(show, torrent.name)) {
-        //                         console.log('Search result ->', torrent)
-        //                         resolve(torrent)
-        //                     } else {
-        //                         console.log('No matching torrent found')
-        //                         resolve()
-        //                     }
-        //                 } else {
-        //                     console.log('No results')
-        //                     resolve()
         //                 }
 
         //             } else resolve(parseInt(response.statusCode))

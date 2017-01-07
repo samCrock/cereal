@@ -7,6 +7,9 @@ const BrowserWindow = electron.BrowserWindow
 
 const os = require('os')
 
+const fsExtra = require('fs-extra')
+
+
 const PATH_APP_NODE_MODULES = path.join(__dirname, '..', '..', 'app', 'node_modules');
 require('module').globalPaths.push(PATH_APP_NODE_MODULES);
 

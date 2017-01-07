@@ -1,6 +1,6 @@
 <section layout="column" id="video_container" layout="column">
-    <md-button ng-if="!alt" aria-label="Alternate" id="alt_btn" class="md-fab" ng-class="isIdle ? 'idle' : ''" ng-click="alternate()">ALT</md-button>
-    <md-button aria-label="menu" class="md-fab" ng-class="isIdle ? 'idle' : ''" id="close_btn" ng-click="back()" style="position: fixed; float: right;">
+    <md-button ng-if="!alt" aria-label="Open with VLC" id="alt_btn" class="md-fab" ng-class="isIdle ? 'idle' : ''" ng-click="vlc()">VLC</md-button>
+    <md-button aria-label="menu" class="md-fab" ng-class="isIdle ? 'idle' : ''" id="close_btn" ng-click="back()" style="position: fixed; float: left;">
         <ng-md-icon icon="close"></ng-md-icon>
     </md-button>
     <label id="root-msg" ng-show="$root.msg.length > 0" style="font-size: 1.6em;">{{ $root.msg }}</label>
@@ -15,5 +15,5 @@
             <label>{{ torrent_msg.progress }} %</label>
         </div>
     </div>
-    <video id="player" autoplay controls preload="auto" width="100%" height="auto"></video>
+    <video id="player" autoplay controls preload="auto"></video>
 </section>

@@ -16,8 +16,12 @@ body {
 .spinner {
     z-index: 99999;
     color: white;
-    /* display: block; */
     position: relative;
+}
+
+.spinner-dark {
+    color: #2b282d;
+    margin-left: 0.3em;
 }
 
 .md-nav-bar {
@@ -148,7 +152,7 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 
 .poster_sub_show {
     cursor: pointer;
-    font-size: 3em;
+    font-size: 2em;
     color: white;
     opacity: 0.95;
     transition: all .1s;
@@ -319,6 +323,16 @@ md-card {
     margin: 4px;
 }
 
+.show_episode {
+    background-color: #2b282d;
+    margin-top: 0px;
+    border: white;
+    border-width: 1px;
+    border-style: solid;
+    color: white;
+    opacity: 0.9;
+}
+
 md-card md-card-content {
     padding: 0;
 }
@@ -348,8 +362,6 @@ md-content {
 }
 
 #video_container {
-    /*    position: absolute;
-    max-height: 100vh;*/
     position: fixed;
     right: 0;
     bottom: 0;
@@ -357,18 +369,27 @@ md-content {
     min-height: 100%;
     width: auto;
     height: auto;
-    dd background: transparent;
+    background: transparent;
     background-size: cover;
 }
 
-.video_player {
-    position: fixed;
-    /*top: 44vh;*/
-    height: 100%;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#player {
+    background-color: transparent !important;
+    position: relative !important;
+    left: 0px !important;
+    top: 0px !important;
+    min-width: 0px !important;
+    max-width: none !important;
+    min-height: 0px !important;
+    max-height: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    transform: none !important;
+    margin: 0px !important;
+    flex: 1 1 0% !important;
+    "
+
 }
 
 .font-10 {
@@ -473,4 +494,60 @@ md-progress-linear .md-container .md-bar {
 
 .md-button.md-accent.md-fab:not([disabled]):hover {
     background-color: rgba(208, 227, 222, 1);
+}
+
+md-card md-card-title {
+    padding: 12px 16px 16px;
+}
+
+.show_card_content {
+    position: relative;
+    height: 10%;
+    min-height: 80px;
+    -webkit-transition: all 0.6s ease-in-out;
+}
+
+.show_card_content:hover {
+    height: 18%;
+    min-height: 140px;
+}
+
+.episode_title {
+    font-size: 1.4em;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: font-size 0.6s ease-in-out;
+}
+
+.show_card_content:hover .episode_title,
+.show_card_content.hover .episode_title {
+    font-size: 2em;
+}
+
+.episode_title:focus {
+    outline-color: transparent;
+    outline-style: auto;
+    outline-width: 0;
+}
+
+.show_card_content:hover .show_actions,
+.show_card_content.hover .show_actions {
+    visibility: visible;
+    opacity: 1;
+}
+
+.show_actions {
+    -webkit-transition: all 0.6s ease-in;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.ng-hide:not(.ng-hide-animate) {
+    display: none !important;
+    transition: all 0.5s linear;
+}
+
+.md-button {
+    margin: 0;
+    padding: 0;
 }

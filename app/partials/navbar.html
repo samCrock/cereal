@@ -1,18 +1,18 @@
 <md-nav-bar md-selected-nav-item="$root.currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" layout layout-align="center center" ng-if="!isBack">
-    <md-nav-item md-nav-sref="app.library" name="library">
-        <i class="white fa fa-play" aria-hidden="true" aria-label="Library"></i>
+    <md-nav-item md-nav-sref="app.library" name="library" aria-label="Library">
+        <i class="white fa fa-play" aria-hidden="true"></i>
     </md-nav-item>
     <!-- <md-nav-item md-nav-sref="app.favourites" name="favourites">
         <i class="white fa fa-heart" aria-hidden="true" aria-label="My shows"></i>
     </md-nav-item> -->
-    <md-nav-item md-nav-sref="app.calendar" name="calendar">
-        <i class="white fa fa-calendar-o" aria-hidden="true" aria-label="Calendar"></i>
+    <md-nav-item md-nav-sref="app.calendar" name="calendar" aria-label="Calendar">
+        <i class="white fa fa-calendar-o" aria-hidden="true"></i>
     </md-nav-item>
-    <md-nav-item ng-if="$root.pending.length > 0" md-nav-sref="app.pending" name="pending">
-        <i class="white fa fa-download" aria-hidden="true" aria-label="Pending"></i>
+    <md-nav-item md-nav-sref="app.pending" name="pending" aria-label="Pending">
+        <i class="white fa fa-download" aria-hidden="true"></i>
     </md-nav-item>
-    <md-nav-item md-nav-sref="app.search" name="search">
-        <i class="white fa fa-search" aria-hidden="true" aria-label="Search"></i>
+    <md-nav-item md-nav-sref="app.search" name="search" aria-label="Search">
+        <i class="white fa fa-search" aria-hidden="true"></i>
     </md-nav-item>
     <md-nav-item ng-if="$root.current_show" md-nav-sref="app.show( { show: $root.current_show} )" name="show">{{ current_show }}</md-nav-item>
 </md-nav-bar>

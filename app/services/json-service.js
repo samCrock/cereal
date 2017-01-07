@@ -257,7 +257,6 @@
                             month = '0' + month
                         }
 
-
                         var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
                         var promises = []
                         console.log(url + months[0])
@@ -357,7 +356,16 @@
                             resolve(json)
                         }
                         if (err) {
-                            retrieveRemote(show)
+                            commonService.findAlias(show)
+                            .then( (result) => {
+                                console.log('commonService.findAlias RESULT->', result)
+                                show = result
+                                retrieveRemote(show)
+                            })
+                            .catch( (err) => {                                
+                                console.log('commonService.findAlias REJECT->', show)
+                                retrieveRemote(show)
+                            })
                         }
                     })
 
@@ -410,7 +418,7 @@
                                             for (var i = $('.titles').length - 1; i >= 0; i--) {
                                                 if (i !== 1) {
                                                     if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
-                                                        console.log('ep **********', $('.titles')[i].children[0].children[1])
+                                                        // console.log('ep **********', $('.titles')[i].children[0].children[1])
                                                         let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
                                                         let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
                                                         let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
@@ -436,7 +444,7 @@
                                                             episode: ep,
                                                             title: title,
                                                             date: date,
-                                                            network: network
+                                                            network: network ? network : ''
                                                         })
                                                     }
                                                 }

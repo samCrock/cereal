@@ -11,7 +11,7 @@
         const wt_client = wtService.client()
 
         console.log('Episode')
-        $rootScope.loading = true
+        $rootScope.loading = false
         $rootScope.msg = ''
         $scope.torrent_msg = {}
 
@@ -29,273 +29,58 @@
             episode: episode
         }
 
-        $scope.alternate = function() {
-            $scope.alt = true
-            document.querySelector('video').remove()
-            searchObj.row = 1
-            start()
+        $scope.vlc = function() {
+            var filePath = path + searchObj.show + '/' + searchObj.episode
+            fsPath.find(filePath, (err, list) => {
+                list.files.forEach(file => {
+                    file = decodeURIComponent(file)
+                    let ext = file.split('.')
+                    ext = ext[ext.length - 1]
+                    if (supportedVideoExt.indexOf(ext) > -1) {
+                        console.log('Opening', file, ' in VLC')
+                        commonService.openFile(file)
+                    }
+                })
+            })
+            $rootScope.msg = 'Opening in VLC'
+            $rootScope.loading = false
+            // $rootScope.$applyAsync()
+            setTimeout(() => {
+                $scope.back()
+            }, 3000)
+
+            $scope.back()
         }
 
-        $scope.back = () => {
-            // Remove player
-            var player = document.getElementById("player");
-            player.parentNode.removeChild(player);
-            $rootScope.$broadcast('backEvent')
-        }
-
-
-        // let stream = function(torrent) {
-        //     // *********************** ON library ***********************
-        //     let first = true
-        //
-        //     // Refresh speed label
-        //     $interval(() => {
-        //         if (torrent.librarySpeed && commonService.formatBytes(torrent.librarySpeed)) {
-        //             $scope.torrent_msg.speed = commonService.formatBytes(torrent.librarySpeed) + '/s'
-        //             $scope.torrent_msg.remaining = commonService.formatTime(torrent.timeRemaining)
-        //             $scope.torrent_msg.progress = Math.round(torrent.progress * 100)
-        //         }
-        //     }, 1000)
-        //
-        //
-        //     torrent.on('done', () => {
-        //         console.log(torrent, ' ready')
-        //         console.log()
-        //             // Add episode to local library
-        //         let isNew = true
-        //         let library = localStorage.getItem('library')
-        //         library = JSON.parse(library)
-        //         let ep = {
-        //             show: t.show,
-        //             episode: t.episode,
-        //             dn: torrent.dn,
-        //             torrent: t
-        //         }
-        //         library.filter((obj, i) => {
-        //             if (obj.dn === torrent.dn) {
-        //                 isNew = false
-        //                 library[i] = ep
-        //             }
-        //         })
-        //         if (isNew) {
-        //             library.push(ep)
-        //         }
-        //         // Remove episode from pending
-        //         let pending = $rootScope.pending
-        //         for (var i = pending.length - 1; i >= 0; i--) {
-        //             if (pending[i].name === torrent.name) {
-        //                 pending.splice(i, 1)
-        //             }
-        //         }
-        //         localStorage.setItem('library', JSON.stringify(library))
-        //     })
-        //
-        //     torrent.on('download', (chunkSize) => {
-        //         var output = [
-        //             chalk.cyan(''),
-        //             chalk.cyan('=================='),
-        //             chalk.dim('              Name : ') + torrent.name,
-        //             chalk.dim('        Downloaded : ') + commonService.formatBytes(torrent.donwloaded),
-        //             chalk.dim('             Speed : ') + commonService.formatBytes(torrent.downloadSpeed) + '/s',
-        //             chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100),
-        //             chalk.dim('               ETA : ') + commonService.formatTime(torrent.timeRemaining),
-        //             chalk.cyan('==================')
-        //         ]
-        //         logUpdate(output.join('\n'))
-        //
-        //
-        //         // Update pending in rootScope
-        //         // console.log('$rootScope.pending', $rootScope.pending)
-        //         let pending = $rootScope.pending
-        //         for (var j = pending.length - 1; j >= 0; j--) {
-        //             // console.log(pending[j]nam.e, torrent.name)
-        //             if (pending[j].name === torrent.name) {
-        //                 first = false
-        //                 pending[j].progress = Math.floor(torrent.progress * 100)
-        //                 pending[j].speed = commonService.formatBytes(torrent.librarySpeed) + '/s'
-        //             }
-        //         }
-        //         if (first) {
-        //             $rootScope.pending.push({
-        //                 show: torrent.show,
-        //                 episode: torrent.episode,
-        //                 name: torrent.name,
-        //                 path: torrent.path,
-        //                 magnet: torrent.magnet,
-        //             })
-        //         }
-        //
-        //     })
-        //
-        //     console.log('Stream Torrent ->', torrent)
-        //     for (let i = torrent.files.length - 1; i >= 0; i--) {
-        //         let name = torrent.files[i].name
-        //         let ext = name.split('.')
-        //         ext = ext[ext.length - 1]
-        //
-        //         if (supportedVideoExt.indexOf(ext) > -1) {
-        //             console.log('FILE ->', torrent.path + '/' + torrent.name + '/' + name)
-        //
-        //             $rootScope.msg = title + ' ' + episode
-        //             let videoFile = torrent.files[i]
-        //
-        //             // console.log('videoFile ->', videoFile)
-        //
-        //             videoFile.appendTo('#video_container')
-        //
-        //             let video = document.querySelector('video')
-        //                 // video.setAttribute('autoplay', false)
-        //             video.setAttribute('width', '100%')
-        //             video.style.maxHeight = '100%'
-        //                 // video.webkitRequestFullscreen();
-        //
-        //             // if (videoFile.done) {
-        //             //     video.src = decodeURIComponent(torrent.path) + '/' + videoFile.path
-        //             // }
-        //
-        //             // ******* KEY BINDINGS & IDLE HANDLING *******
-        //             var keyPressed = {}
-        //             var time
-        //             document.onmousemove = resetTimer
-        //
-        //             function resetTimer() {
-        //                 video.style.cursor = 'default'
-        //                 $scope.isIdle = false
-        //                 clearTimeout(time)
-        //                 time = setTimeout(function() {
-        //                     $scope.isIdle = true
-        //                     video.style.cursor = 'none'
-        //                 }, 2500)
-        //             }
-        //
-        //             document.addEventListener('keydown', function(e) {
-        //                 keyPressed[e.keyCode] = true;
-        //             }, false)
-        //             document.addEventListener('keyup', function(e) {
-        //                 keyPressed[e.keyCode] = false;
-        //             }, false)
-        //
-        //             function loop() {
-        //                 if (keyPressed[13]) {
-        //                     toggleFullScreen()
-        //                 } // Enter
-        //                 if (keyPressed[27]) {
-        //                     video.webkitExitFullscreen();
-        //                 } // Esc
-        //                 if (keyPressed[32]) {
-        //                     togglePlay()
-        //                 } // Space
-        //                 if (keyPressed[17] && keyPressed[39]) {
-        //                     skip(60)
-        //                 } // ctrl + right = 1m >>
-        //                 if (keyPressed[17] && keyPressed[37]) {
-        //                     skip(-60)
-        //                 } // ctrl + left = 1m <<
-        //                 if (keyPressed[18] && keyPressed[39]) {
-        //                     skip(10)
-        //                 } // alt + right = 10s >>
-        //                 if (keyPressed[18] && keyPressed[37]) {
-        //                     skip(-10)
-        //                 } // alt + left = 10s <<
-        //                 if (keyPressed[16] && keyPressed[39]) {
-        //                     skip(1)
-        //                 } // shift + right = 1s >>
-        //                 if (keyPressed[16] && keyPressed[37]) {
-        //                     skip(-1)
-        //                 } // shift + left = 1s <<
-        //                 setTimeout(loop, 200)
-        //             }
-        //
-        //             video.addEventListener('dblclick', function() {
-        //                 toggleFullScreen()
-        //             })
-        //
-        //             function toggleFullScreen() {
-        //                 if (document.webkitFullscreenElement) {
-        //                     video.webkitExitFullscreen();
-        //                 } else {
-        //                     video.webkitRequestFullscreen();
-        //                 }
-        //             }
-        //
-        //             function togglePlay() {
-        //                 if (!video) return console.error('No video element')
-        //                 if (video.paused) {
-        //                     video.play()
-        //                 } else {
-        //                     video.pause()
-        //                 }
-        //             }
-        //
-        //             function skip(value) {
-        //                 video.currentTime = video.currentTime + value
-        //             }
-        //
-        //             loop()
-        //                 // ************** \BINDINGS **************
-        //
-        //             video.addEventListener('loadedmetadata', function() {
-        //                 console.log('loadedmetadata')
-        //                 $rootScope.msg = ''
-        //                 $scope.torrent_msg = {}
-        //                 $rootScope.$apply()
-        //
-        //                 let track = document.createElement('track')
-        //                 track.kind = 'subtitles'
-        //                 track.label = 'English'
-        //                 track.srclang = 'en'
-        //
-        //                 console.log('Subs path:', $scope.subsPath)
-        //                 if ($scope.subsPath) track.src = $scope.subsPath
-        //                 track.addEventListener('load', function() {
-        //                     this.mode = 'showing'
-        //                         // videoElement.textTracks[0].mode = 'showing' // thanks Firefox
-        //                 })
-        //                 this.appendChild(track)
-        //             })
-        //
-        //             $rootScope.loading = false
-        //             let refreshIntervalId = setInterval(() => {
-        //                 // Refresh speed label
-        //                 if (torrent.librarySpeed && commonService.formatBytes(torrent.librarySpeed)) {
-        //                     $scope.torrent_msg.speed = commonService.formatBytes(torrent.librarySpeed) + '/s'
-        //                     $scope.torrent_msg.remaining = commonService.formatTime(torrent.timeRemaining)
-        //                     $scope.torrent_msg.progress = Math.round(torrent.progress * 100)
-        //                 }
-        //                 $scope.$apply()
-        //             }, 1000)
-        //             break
-        //         }
-        //     }
+        // $scope.alternate = function() {
+        //     $scope.alt = true
+        //     document.querySelector('video').remove()
+        //     searchObj.row = 1
+        //     start()
         // }
 
+        $scope.back = () => {
+            $rootScope.$broadcast('backEvent')
+        }
 
         let watch = (library_element) => {
 
             let name = library_element.name
-
+            library_element.path = path + library_element.show + '/' + library_element.episode
             console.log(library_element)
 
-            fsExtra.readdir(library_element.path, (err, files) => {
-                files.forEach(file => {
+            fsPath.find(library_element.path, (err, list) => {
+                list.files.forEach(file => {
                     file = decodeURIComponent(file)
                     let ext = file.split('.')
                     ext = ext[ext.length - 1]
 
                     if (supportedVideoExt.indexOf(ext) > -1) {
-                        console.log('FILE ->', library_element.path + '/' + file)
-
+                        console.log('FILE ->', file)
                         $rootScope.msg = title + ' ' + episode
-                        let videoFile = library_element.path + '/' + file
 
-                        console.log('videoFile ->', videoFile)
-                            // videoFile.appendTo('#video_container')
-
+                        let videoFile = file
                         let video = document.querySelector('video')
-                            // video.setAttribute('autoplay', false)
-                            // video.setAttribute('width', '100%')
-                            // video.style.maxHeight = '100%'
-                            // video.webkitRequestFullscreen();
 
                         video.src = videoFile
 
@@ -316,21 +101,21 @@
 
                         document.addEventListener('keydown', function(e) {
                             keyPressed[e.keyCode] = true;
+                            if (keyPressed[32]) {
+                                togglePlay()
+                            } // Space
                         }, false)
                         document.addEventListener('keyup', function(e) {
                             keyPressed[e.keyCode] = false;
                         }, false)
 
-                        function loop() {
+                        function loop() { 
                             if (keyPressed[13]) {
                                 toggleFullScreen()
                             } // Enter
                             if (keyPressed[27]) {
                                 video.webkitExitFullscreen();
                             } // Esc
-                            if (keyPressed[32]) {
-                                togglePlay()
-                            } // Space
                             if (keyPressed[17] && keyPressed[39]) {
                                 skip(60)
                             } // ctrl + right = 1m >>
@@ -349,7 +134,7 @@
                             if (keyPressed[16] && keyPressed[37]) {
                                 skip(-1)
                             } // shift + left = 1s <<
-                            setTimeout(loop, 100)
+                            setTimeout(loop, 200)
                         }
 
                         video.addEventListener('dblclick', function() {
@@ -365,7 +150,8 @@
                         }
 
                         function togglePlay() {
-                            if (!video) return console.error('No video element')
+                            let video = document.querySelector('video')
+                            if (!video) return
                             if (video.paused) {
                                 video.play()
                             } else {
@@ -378,9 +164,11 @@
                         }
 
                         loop()
-                            // ************** \BINDINGS **************
+
+                        // ************** \BINDINGS **************
 
                         video.addEventListener('loadedmetadata', function() {
+
                             console.log('loadedmetadata')
                             $rootScope.msg = ''
                             $scope.torrent_msg = {}

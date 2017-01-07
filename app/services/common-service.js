@@ -12,13 +12,31 @@
         const {
             shell
         } = require('electron')
+        let fsExtra = require('fs-extra')
 
         let common_module = {};
+
+        common_module['findAlias'] = function findAlias(show) {
+            return new Promise((resolve, reject) => {
+                console.log('Checking for aliases', show)
+                fsExtra.readFile('data/aliases.json', 'utf-8', (err, data) => {
+                    if (err) reject('Cannot find aliases.json')
+                    console.log('data', data)
+                    let aliases = JSON.parse(data)
+                    for (var key in aliases) {
+                        console.log('key, aliases[key]', key, aliases[key])
+                        if (key === show) resolve(aliases[key])
+                    }
+                    resolve(show)
+                })
+            })
+        }
+
 
         common_module['areMatching'] = function areMatching(str1, str2) {
             str1 = str1.toLowerCase()
             str2 = str2.toLowerCase()
-            console.log(str1, ':', str2)
+                // console.log(str1, ':', str2)
             return str2.indexOf(str1) > -1
         }
 
@@ -84,14 +102,24 @@
             let platform = os.platform()
             switch (process.platform) {
                 case 'darwin':
-                    return exec('open ' + filePath)
+                    return exec('open "' + filePath + '"')
                 case 'win32':
-                    return shell.openExternal(filePath)
+                    return shell.openExternal('"' + filePath + '"')
                 case 'win64':
-                    return shell.openExternal(filePath)
+                    return shell.openExternal('"' + filePath + '"')
                 default:
-                    return exec('xdg-open ' + filePath)
+                    return exec('xdg-open ' + '"' + filePath + '"')
             }
+        }
+
+        common_module['stream'] = function stream(streamObj) {
+            let util = require('util');
+            let exec = require('child_process').exec;
+            let platform = os.platform()
+            let magnet = streamObj.magnet
+            let path = streamObj.path
+            console.log('webtorrent download --vlc ' + ' "' + magnet + '" ' + '--out' + ' "' + path + '"')
+            exec('webtorrent download --vlc ' + ' "' + magnet + '" ' + '--out' + ' "' + path + '"')
         }
 
         common_module['getDayObject'] = function getDayObject(date) {
@@ -232,7 +260,7 @@
             return dateObj
         }
 
-        common_module['dashedToSpaced'] = function dashedToSpace(dashed) {
+        common_module['dashedToSpaced'] = function dashedToSpaced(dashed) {
             return dashed.toLowerCase().split('-').join(' ')
         }
         common_module['spacedToDashed'] = function spacedToDashed(spaced) {

@@ -23,6 +23,13 @@
     require('./services/subs-service.js')
     require('./services/search-service.js')
 
+    var oldWarn = console.warn;
+    console.warn = function(arg1) {
+        if (arg1.startsWith('ARIA:')) return;
+        oldWarn.apply(console, arguments);
+    };
+    // console.warn('ARIA warnings disabled.');
+
     /* @ngInject */
     function moduleConfig($stateProvider, $urlRouterProvider, $mdThemingProvider) {
         $mdThemingProvider.theme('default')

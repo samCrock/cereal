@@ -16,7 +16,24 @@
             return show
         }
 
-        $scope.downloadEpisode = (showObj) => {
+        $scope.stream = function(episode) {
+            console.log('PLAY ->', episode)
+            torrentService.searchTorrent({
+                    show: episode.show,
+                    episode: episode.episode
+                })
+                .then((t) => {
+                    let streamObj = { magnet: t.magnet, path: process.cwd() + '/library/' + episode.show + '/' + episode.episode }
+                    console.log('streamObj', streamObj)
+                    commonService.stream(streamObj)
+                })
+                .catch( (reason) => {
+                    console.log(reason)
+                })
+        }
+
+
+        $scope.download = (showObj) => {
             let show = showObj.show
             let episode = showObj.episode
             torrentService.searchTorrent({
@@ -79,17 +96,17 @@
                                 .then((results) => {
                                     console.log('--- All posters found ---')
                                     $rootScope.days.filter((day, i) => {
-                                            day.shows.filter((show, j) => {
-                                                results.filter((poster) => {
-                                                    if (poster && poster.title.toLowerCase() === show.title.toLowerCase()) {
-                                                        showsToUpdate.push({ title: show.title.toLowerCase(), poster: poster.poster })
-                                                        $rootScope.days[i].shows[j].poster = poster.poster
-                                                        $scope.$apply()
-                                                            // next()
-                                                    }
-                                                })
+                                        day.shows.filter((show, j) => {
+                                            results.filter((poster) => {
+                                                if (poster && poster.title.toLowerCase() === show.title.toLowerCase()) {
+                                                    showsToUpdate.push({ title: show.title.toLowerCase(), poster: poster.poster })
+                                                    $rootScope.days[i].shows[j].poster = poster.poster
+                                                    $scope.$apply()
+                                                        // next()
+                                                }
                                             })
                                         })
+                                    })
                                 })
                         } else {
                             $rootScope.loading = false

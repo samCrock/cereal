@@ -11,7 +11,14 @@
         const wt_client = wtService.client()
 
         $interval(() => {
-            if(!$rootScope.$$phase) {
+            for (var i = 0; i < $rootScope.pending.length; i++) {
+                    if ($rootScope.pending[i].progress === 100) {
+                        console.log('Removing', $rootScope.pending[i].show, $rootScope.pending[i].episode, 'from pending downloads')
+                        $rootScope.pending.splice(i, 1)
+                    }
+                }
+            localStorage.setItem('pending', JSON.stringify($rootScope.pending))
+            if (!$rootScope.$$phase) {
                 $rootScope.$apply()
             }
         }, 1000)
@@ -34,14 +41,6 @@
                 localStorage.setItem('pending', JSON.stringify(local_pending))
             })
         }
-
-        // Catch completed event from torrentService
-        $rootScope.$on('completed', function ($event, torrent) {
-            console.log('Completed event catched')
-            // Remove downloaded torrent from $rootScope.pending
-        })
-
-
 
     }
 })();

@@ -74,7 +74,7 @@
             localStorage.setItem('library', JSON.stringify([]))
         }
 
-        
+
         if (localStorage.getItem('pending')) {
             $rootScope.pending = JSON.parse(localStorage.getItem('pending'))
             if ($rootScope.pending.length > 0) {
@@ -124,6 +124,34 @@
         $rootScope.reload = true
         localStorage.topper = 0
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
+
+        var library = []
+        var episodes = []
+        var shows = fsExtra.readdirSync(process.cwd() + '/library/')
+        var pending = JSON.parse(localStorage.getItem('pending'))
+        var isPending
+        console.log('Library', shows)
+        for (var i = 0; i < shows.length; i++) {
+            episodes = fsExtra.readdirSync(process.cwd() + '/library/' + shows[i])
+            for (var j = 0; j < episodes.length; j++) {
+                // console.log(shows[i], episodes[j])
+                isPending = false
+                for (var k = 0; k < pending.length; k++) {
+                    if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
+                        isPending = true
+                    }
+                }
+                if (!isPending) {
+                    library.push({
+                        show: shows[i],
+                        episode: episodes[j],
+                        poster: process.cwd() + '/res/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
+                    })
+                }
+            }
+        }
+        localStorage.setItem('library', JSON.stringify(library))
+        $rootScope.library = library
     }
 
 })();
