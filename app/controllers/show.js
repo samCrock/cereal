@@ -5,7 +5,7 @@
         .module('app')
         .controller('showCtrl', showCtrl);
 
-    function showCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, torrentService, subsService, commonService, wtService) {
+    function showCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, torrentService, subsService, commonService, wtService, messageService) {
 
         let fsExtra = require('fs-extra')
 
@@ -16,9 +16,14 @@
         console.log($scope.show)
 
         $rootScope.$on('completed', (showObj) => {
-            // console.log('downloading', showObj)
             start()
         })
+
+        $scope.dotClass = function(episode) {
+            if (episode.downloaded) return 'green'
+            if (episode.timePassed && episode.timePassed.indexOf('ago') === -1) return 'hidden'
+            return ''
+        }
 
         $scope.stream = function(episode) {
             console.log('PLAY ->', episode)
@@ -31,8 +36,9 @@
                     console.log('streamObj', streamObj)
                     commonService.stream(streamObj)
                 })
-                .catch( (reason) => {
+                .catch((reason) => {
                     console.log(reason)
+                    messageService.notify({ title: 'Sorry', content: 'I got no results' })
                 })
         }
 

@@ -3,8 +3,8 @@ node_modules
 # Downloaded torrents
 library
 # json
-data/json
+data/json/episodes/*
 # resources
-res/posters
+res/posters/*
 
 *.log

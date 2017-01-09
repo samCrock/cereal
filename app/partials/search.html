@@ -8,27 +8,14 @@
             </md-button> -->
             </md-input-container>
         </form>
-        <!-- <md-card ng-repeat="show in shows" layout="row" layout-align="center center" class="card">
-            <md-card-content ng-if="show.poster">
-                <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
-                <div ng-show="!show.loading" class="poster_sub_container">
-                    <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-                    <i ui-sref="app.episode( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
-                    <i ng-click="downloadEpisode( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
-                    <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
-                </div>
-            </md-card-content>
-        </md-card> -->
-
         <div ng-if="shows" flex layout="column" layout-align="center center">
-            <md-content layout layout-wrap layout-align="center center" class="bg_default" style="background-color: white; padding: 2px;">
-                <md-card class="borderless" ng-repeat="show in shows | orderBy : '-title' : reverse = true" layout-align="center center" style="background-color: white;">
+            <md-content layout layout-wrap layout-align="center center" class="bg_default" style="width: 100%;">
+                <md-card class="library_card" ng-repeat="show in shows | orderBy : '-title' : reverse = true" layout-align="center center">
                     <md-card-content>
-                        <img ng-src="{{ show.poster }}" ui-sref="app.show( { show: show.title} )" class="md-card-image poster">
+                        <img ng-src="{{ show.poster }}" ng-click="openShow(show)" class="poster_library">
                     </md-card-content>
                 </md-card>
             </md-content>
         </div>
-
     </div>
 </section>

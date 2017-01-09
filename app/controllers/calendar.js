@@ -12,7 +12,6 @@
         $rootScope.loading = true
 
         $scope.posterOnly = (show) => {
-            // return show.poster
             return show
         }
 
@@ -27,7 +26,7 @@
                     console.log('streamObj', streamObj)
                     commonService.stream(streamObj)
                 })
-                .catch( (reason) => {
+                .catch((reason) => {
                     console.log(reason)
                 })
         }
@@ -75,6 +74,7 @@
                                         // $rootScope.days.push(day)
                                     day.shows.filter((show) => {
                                         let dashedTitle = commonService.spacedToDashed(show.title)
+                                        dashedTitle = commonService.findAliasSync(dashedTitle)
                                         let index = local_posters.indexOf(dashedTitle)
                                         if (index >= 0) {
                                             let posterPath = './res/posters/' + local_posters[index] + '.jpg'
@@ -110,7 +110,6 @@
                                 })
                         } else {
                             $rootScope.loading = false
-
                         }
 
                     })

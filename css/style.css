@@ -1,10 +1,14 @@
+html {
+    background-color: rgba(43, 40, 45, 1);
+}
+
 body {
     font-family: 'Fjalla One', sans-serif;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #2b282d;
+    background-color: rgba(43, 40, 45, 1);
     /*background-color: #182927;*/
 }
 
@@ -19,15 +23,10 @@ body {
     position: relative;
 }
 
-.spinner-dark {
-    color: #2b282d;
-    margin-left: 0.3em;
-}
-
 .md-nav-bar {
     z-index: 9999;
     position: fixed;
-    background-color: #2b282d !important;
+    background-color: rgba(43, 40, 45, 1) !important;
     left: 0;
     top: 0;
     width: 100%;
@@ -40,12 +39,6 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 .white {
     color: white;
     font-size: 1.8em;
-}
-
-.pulsating_poster {
-    -webkit-animation: pulsate 2s ease-out;
-    -webkit-animation-iteration-count: infinite;
-    opacity: 0.0
 }
 
 @-webkit-keyframes pulsate {
@@ -61,7 +54,7 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 }
 
 .card {
-    min-width: 15vw;
+    /*margin: 0.1em;*/
     text-align: center;
 }
 
@@ -79,34 +72,93 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 
 .card_show_title {
     font-size: 1.2em;
-    color: #2b282d;
+    color: rgba(43, 40, 45, 1);
     width: 100%;
 }
 
 .poster {
+    width: 12em;
+    height: 17em;
     cursor: pointer;
     border-radius: 0.5em;
-    box-shadow: 3px 3px 6px #888888;
     outline: none;
-    width: 15vw;
-    min-width: 160px;
-    height: auto;
     opacity: 1;
-    transition: all linear 0.5s;
+    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+}
+
+.poster_library {
+    width: 12em;
+    height: 17em;
+    cursor: pointer;
+    border-radius: 0.5em;
+    outline: none;
+    opacity: 1;
+    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+}
+
+.poster:hover {
+    width: 16em;
+    height: 23em;
 }
 
 .poster_sub_container {
     position: absolute;
+    width: 12em;
+    height: 17em;
     left: 0;
     top: 0;
-    height: 100%;
-    width: 15vw;
     opacity: 0;
     background-color: rgba(43, 40, 45, 0.5);
     transition: all .5s;
 }
 
-@media (max-width: 1200px) {
+.poster_sub_container:hover {
+    position: absolute;
+    width: 16em;
+    height: 23em;
+    opacity: 1;
+    background-color: rgba(43, 40, 45, 0.5);
+}
+
+md-card {
+    background-color: transparent;
+    box-shadow: none;
+    margin: 0.1em;
+}
+
+md-card .md-card-image {
+    border-radius: 0.5em;
+}
+
+md-card md-card-content {
+    padding: 0;
+}
+
+md-content {
+    width: 100%;
+    background-color: transparent;
+}
+
+.library_card {
+    margin: 0.4em;
+    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+}
+
+.library_card:hover {
+    margin: 0;
+}
+
+.library_card:hover .poster_library,
+.library_card.hover .poster_library {
+    width: 12.8em;
+    height: 17.8em;
+}
+
+
+/*@media (max-width: 1200px) {
     .card {
         min-width: 200px;
     }
@@ -116,11 +168,14 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
     .poster_sub_container {
         min-width: 200px;
     }
-}
+}*/
 
-.poster:hover {
-    opacity: 0.6;
-}
+
+/*.poster:hover {
+    width: 18em;
+    height: 25em;
+    margin: 0;
+}*/
 
 .poster.ng-hide {
     opacity: 0;
@@ -156,7 +211,6 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
     color: white;
     opacity: 0.95;
     transition: all .1s;
-    padding-left: 20px;
     font-style: normal;
 }
 
@@ -240,22 +294,27 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
     -webkit-filter: blur(0.1em);
 }
 
-.poster:active {
-    border-radius: 0.5em;
-    box-shadow: 1px 1px 2px #888888;
-    color: #888888;
-}
-
 .calendar_card {
     cursor: pointer;
-    border-radius: 0.2em;
+    border-radius: 0.5em;
     box-shadow: 2px 2px 4px #888888;
     outline: none;
     transition: all linear 0.5s;
 }
 
+.calendar_content {
+    overflow-y: hidden;
+    height: 24em;
+    top: -5.5em;
+}
+
+.calendar_day {
+    position: static;
+    left: 50%;
+}
+
 .calendar_card:active {
-    border-radius: 0.2em;
+    border-radius: 0.5em;
     box-shadow: 1px 1px 2px #888888;
 }
 
@@ -275,7 +334,7 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 }
 
 .wp_gradient {
-    color: #2b282d;
+    color: rgba(43, 40, 45, 1);
     position: absolute;
     display: inline-block;
     left: 0;
@@ -283,20 +342,19 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
     width: 200%;
     height: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(to top, #2b282d, transparent)
+    background: linear-gradient(to top, rgba(43, 40, 45, 1), transparent)
 }
 
 .bg_today {
-    background: #2b282d;
+    background: rgba(43, 40, 45, 1);
     width: 95%;
-    border-radius: 0.2em;
+    border-radius: 0.5em;
 }
 
 .bg_default {
-    background: #2b282d;
-    /*width: 95%;*/
+    background-color: rgba(23, 20, 25, 0.9);
     width: auto;
-    border-radius: 0.2em;
+    border-radius: 0.5em;
 }
 
 #calendar_episode {
@@ -304,7 +362,7 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 }
 
 section {
-    background-color: #2b282d;
+    background-color: rgba(43, 40, 45, 1);
 }
 
 .icons {
@@ -319,27 +377,17 @@ section {
     color: rgba(255, 255, 255, 0.3);
 }
 
-md-card {
-    margin: 4px;
-}
-
 .show_episode {
-    background-color: #2b282d;
-    margin-top: 0px;
+    background-color: rgba(53, 50, 55, 0.9);
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 1em;
+    margin-bottom: 1em;
     border: white;
     border-width: 1px;
     border-style: solid;
     color: white;
-    opacity: 0.9;
-}
-
-md-card md-card-content {
-    padding: 0;
-}
-
-md-content {
-    width: 100%;
-    /*background-color: #2b282d;*/
+    opacity: 0.95;
 }
 
 .ep_number {
@@ -426,30 +474,54 @@ md-content {
     font-size: 1.4em;
 }
 
-.first_poster {
-    padding-left: 20vw;
+.first {
+    margin-left: 5em;
 }
 
-.last_poster {
-    padding-right: 20vw;
+.last {
+    padding-right: 5em;
+}
+
+#show_title {
+    position: fixed;
+    top: 1em;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+    line-height: 0;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.episode_btn {
+    position: fixed !important;
+    line-height: 0 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: rgba(48, 45, 50, 1);
+}
+
+.episode_btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
 }
 
 #close_btn {
     position: fixed;
-    left: calc(100% - 100px);
-    top: 20px;
-    height: 80px;
-    width: 80px;
-    line-height: 0;
+    top: 1em;
+    color: rgba(255, 135, 155, 0.6);
+    z-index: 1;
+    left: calc(100% - 4.3em);
+    font-size: 1.4em;
+    line-height: 2em;
 }
 
-#alt_btn {
+#vlc_btn {
     position: fixed;
-    left: calc(100% - 80px);
-    top: 110px;
-    height: 60px;
-    width: 60px;
-    line-height: 0;
+    top: 4em;
+    color: rgba(255, 255, 255, 0.9);
+    z-index: 1;
+    left: calc(100% - 5em);
+    font-size: 1.2em;
+    line-height: 2em;
 }
 
 .idle {
@@ -512,16 +584,21 @@ md-card md-card-title {
     min-height: 140px;
 }
 
+.show_card_content .hover {
+    height: 18%;
+    min-height: 140px;
+}
+
 .episode_title {
     font-size: 1.4em;
     text-align: center;
-    cursor: pointer;
+    /*cursor: pointer;*/
     -webkit-transition: font-size 0.6s ease-in-out;
 }
 
 .show_card_content:hover .episode_title,
 .show_card_content.hover .episode_title {
-    font-size: 2em;
+    font-size: 1.6em;
 }
 
 .episode_title:focus {
@@ -537,7 +614,7 @@ md-card md-card-title {
 }
 
 .show_actions {
-    -webkit-transition: all 0.6s ease-in;
+    -webkit-transition: all 0.6s cubic-bezier(0.2, 0, 1, 1);
     visibility: hidden;
     opacity: 0;
 }
@@ -550,4 +627,23 @@ md-card md-card-title {
 .md-button {
     margin: 0;
     padding: 0;
+}
+
+.md-button.md-default-theme.md-primary,
+.md-button.md-primary {
+    background-color: rgba(43, 40, 45, 1);
+}
+
+.md-button.md-default-theme.md-primary,
+.md-button.md-primary:hover {
+    background-color: transparent;
+    color: rgba(43, 40, 45, 1);
+}
+
+.green {
+    color: #47ed57;
+}
+
+.hidden {
+    visibility: hidden;
 }

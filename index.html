@@ -12,7 +12,7 @@
 </head>
 
 <body ng-app="app" ng-cloak>
-    <div ui-view="header"></div>
+    <div ui-view="header" id="popupContainer"></div>
     <div ng-show="$root.loading" layout="column" layout-fill layout-align="center center">
         <i class="spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
         <label id="root-msg">{{ $root.msg }}</label>

@@ -22,6 +22,7 @@
     require('./services/poster-service.js')
     require('./services/subs-service.js')
     require('./services/search-service.js')
+    require('./services/message-service.js')
 
     var oldWarn = console.warn;
     console.warn = function(arg1) {

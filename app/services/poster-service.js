@@ -6,7 +6,7 @@
         .service('posterService', posterService);
 
     /* @ngInject */
-    function posterService(wtService) {
+    function posterService(wtService, commonService) {
 
         let request = require('request')
         let cheerio = require('cheerio')
@@ -18,6 +18,20 @@
 
         let torrent_module = {}
 
+
+        torrent_module['downloadPosterFromUrl'] = function downloadPosterFromUrl(posterObj) {
+            request.get({ url: posterObj.url, encoding: 'binary' }, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log('posterObj.path', posterObj.path)
+                    fsExtra.writeFile(posterObj.path, body, 'binary', (err) => {
+                        if (err) reject('Cannot write file :', err)
+                    })
+                } else {
+                    console.error('Couldn\'t save this poster')
+                }
+            })
+        }
+
         // Downloads poster image then if fav is true, updates following.json w/ the relative path else updates monthly
         torrent_module['downloadPoster'] = function downloadPoster(showName, scope) {
 
@@ -28,8 +42,8 @@
                 dashedShowName = dashedShowName.split('?').join('')
                 dashedShowName = dashedShowName.split(' ').join('-')
 
-                // console.log('Searching trakt.tv for: ', dashedShowName)
-                // console.log()
+                // console.log('Searching trakt.tv for poster: ', dashedShowName)
+                    // console.log()
 
                 var url = 'https://trakt.tv/shows/' + dashedShowName
 
@@ -39,39 +53,38 @@
 
                     if (error || !response) return reject(error)
 
-                    // console.log(response.statusCode)
-
                     if (!error && response.statusCode == 200) {
                         let $ = cheerio.load(body)
                         let sidebar = $('.sidebar')
-                            // let posterSrc = sidebar['0'].children[0].children[1].attribs.src
                         let posterSrc = sidebar['0'].children[0].children[1].attribs['data-original']
-                            // console.log('->', sidebar['0'].children[0])
-                        if (dashedShowName.includes('walking')) {
-                            console.log('Poster found ->', sidebar['0'].children[0].children[1].attribs['data-original'])
-                        }
+
                         request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                             if (!error && response.statusCode == 200) {
                                 let posterPath = './res/posters/' + dashedShowName + '.jpg'
                                 fsExtra.writeFile(posterPath, body, 'binary', (err) => {
                                     if (err) reject('Cannot write file :', err)
                                     console.log(dashedShowName, 'poster successfuly saved')
-                                    // if (scope) {
-                                    //     scope.locals.filter((local) => {
-                                    //         if (local.show === showName) {
-                                    //             local.poster = posterPath
-                                    //         }
-                                    //     })
-                                    // }
                                     resolve({ 'title': showName, 'poster': posterPath })
                                 })
-
                             } else {
-                                // console.error('Couldn\'t save this poster')
-                                resolve()
+                                commonService.findAlias(dashedShowName)
+                                    .then((aliasShowName) => {
+                                        resolve(downloadPoster(aliasShowName))
+                                    })
+                                    .catch(() => {
+                                        resolve()
+                                    })
                             }
                         })
-                    } else resolve()
+                    } else {
+                        commonService.findAlias(dashedShowName)
+                            .then((aliasShowName) => {
+                                resolve(downloadPoster(aliasShowName))
+                            })
+                            .catch(() => {
+                                resolve()
+                            })
+                    }
                 });
             });
         }

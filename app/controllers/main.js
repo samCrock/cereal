@@ -16,10 +16,10 @@
         const wt_client = wtService.client()
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
-            $rootScope.loading = true
-            if (toState.name === 'app.episode') {
-                localStorage.topper = document.body.scrollTop
-            }
+            // $rootScope.loading = true
+            // if (toState.name === 'app.episode') {
+            //     localStorage.topper = document.body.scrollTop
+            // }
         })
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
@@ -37,11 +37,11 @@
                 $scope.isBack = true
             } else $scope.isBack = false
             if (toState.name === 'app.calendar') {
-                if (localStorage.topper > 0) {
-                    $timeout(() => { // wait for DOM, then restore scroll position
-                        window.scrollTo(0, localStorage.topper)
-                    }, 100)
-                }
+                // if (localStorage.topper > 0) {
+                //     $timeout(() => { // wait for DOM, then restore scroll position
+                //         window.scrollTo(0, localStorage.topper)
+                //     }, 100)
+                // }
             }
 
             var state = toState.name.split('.')
@@ -122,7 +122,7 @@
         }
 
         $rootScope.reload = true
-        localStorage.topper = 0
+        // localStorage.topper = 0
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
         var library = []

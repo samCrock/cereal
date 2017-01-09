@@ -23,6 +23,7 @@
 
         let mode = 'stream'
         let title = $scope.show = commonService.capitalCase($stateParams.show.trim())
+        $scope.show = $scope.show.toUpperCase()
         let episode = $scope.episode = $stateParams.episode.trim()
         let searchObj = {
             show: title,
@@ -39,17 +40,10 @@
                     if (supportedVideoExt.indexOf(ext) > -1) {
                         console.log('Opening', file, ' in VLC')
                         commonService.openFile(file)
+                        $scope.back()
                     }
                 })
             })
-            $rootScope.msg = 'Opening in VLC'
-            $rootScope.loading = false
-            // $rootScope.$applyAsync()
-            setTimeout(() => {
-                $scope.back()
-            }, 3000)
-
-            $scope.back()
         }
 
         // $scope.alternate = function() {
@@ -109,7 +103,7 @@
                             keyPressed[e.keyCode] = false;
                         }, false)
 
-                        function loop() { 
+                        function loop() {
                             if (keyPressed[13]) {
                                 toggleFullScreen()
                             } // Enter

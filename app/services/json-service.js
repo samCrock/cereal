@@ -200,6 +200,7 @@
             // Returns additional episode info (date + ep title) given a torrent objecct
             json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
                 return new Promise(function(resolve, reject) {
+
                     // console.log('-----getEpisodeInfo-----')
                     let dashedShowName = commonService.spacedToDashed(t.show)
                     let tSeason = t.episode.substr(1, 2)
@@ -238,105 +239,121 @@
             // Writes month.json and returns current month's shows calendar
             json_module['month'] = function month() {
                 return new Promise(function(resolve, reject) {
-                    let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
-                    console.log(sinceLastUpdate + ' days since last update')
-                    if (localStorage.lastUpdate && sinceLastUpdate < 1) {
-                        fsExtra.readFile('./data/json/monthly.json', (err, data) => {
-                            console.log('Retrieved local calendar')
-                            data = JSON.parse(data)
-                            resolve(data)
-                        })
-                    } else {
 
-                        const now = new Date()
-                        localStorage.lastUpdate = now
-                        var year = now.getFullYear()
-                        var month = now.getMonth()
-                        if (month < 10) {
-                            month = month.toString()
-                            month = '0' + month
-                        }
 
-                        var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
-                        var promises = []
-                        console.log(url + months[0])
+                    function update() {
 
-                        for (var i = months.length - 1; i >= 0; i--) {
-                            promises.push(new Promise(function(resolve, reject) {
-                                request(url + months[i], function(error, response, html) {
+                        return new Promise(function(resolve, reject) {
+                            const now = new Date()
+                            localStorage.lastUpdate = now
+                            var year = now.getFullYear()
+                            var month = now.getMonth()
+                            if (month < 10) {
+                                month = month.toString()
+                                month = '0' + month
+                            }
 
-                                    if (!error) {
-                                        console.log('Checking calendar')
+                            var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
+                            var promises = []
+                            console.log(url + months[0])
 
-                                        var $ = cheerio.load(html)
-                                        var json = []
+                            for (var i = months.length - 1; i >= 0; i--) {
+                                promises.push(new Promise(function(resolve, reject) {
+                                    request(url + months[i], function(error, response, html) {
 
-                                        $('.day, .today').filter(function() {
-                                            var date = this.attribs.id
-                                            date = date.split('_')
-                                            var date_d = date[1]
-                                            var date_m = date[2] - 1
-                                            var date_y = date[3]
-                                            var date_obj = new Date(date_y, date_m, date_d)
-                                            var date_label = date_obj.toDateString()
-                                            var day = {
-                                                date: date_obj,
-                                                date_label: date_label,
-                                                shows: []
-                                            }
-                                            for (var i = this.children.length - 1; i >= 0; i--) {
-                                                if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
-                                                    var d = this.children[i].children;
-                                                    for (var j = d.length - 1; j >= 0; j--) {
-                                                        if (d[j].name === 'span') {
-                                                            var children = d[j].children
-                                                            for (var k = children.length - 1; k >= 0; k--) {
-                                                                if (children[k].name === 'p') {
-                                                                    var title = children[k].children[0].children[0].data
-                                                                    var episode = children[k].children[0].next.next.children[0].data
-                                                                    day.shows.push({
-                                                                        title: title,
-                                                                        episode: episode
-                                                                    })
+                                        if (!error) {
+                                            console.log('Checking calendar')
+
+                                            var $ = cheerio.load(html)
+                                            var json = []
+
+                                            $('.day, .today').filter(function() {
+                                                var date = this.attribs.id
+                                                date = date.split('_')
+                                                var date_d = date[1]
+                                                var date_m = date[2] - 1
+                                                var date_y = date[3]
+                                                var date_obj = new Date(date_y, date_m, date_d)
+                                                var date_label = date_obj.toDateString()
+                                                var day = {
+                                                    date: date_obj,
+                                                    date_label: date_label,
+                                                    shows: []
+                                                }
+                                                for (var i = this.children.length - 1; i >= 0; i--) {
+                                                    if (this.children[i].name === 'div' && this.children[i].attribs.class.match('ep ')) {
+                                                        var d = this.children[i].children;
+                                                        for (var j = d.length - 1; j >= 0; j--) {
+                                                            if (d[j].name === 'span') {
+                                                                var children = d[j].children
+                                                                for (var k = children.length - 1; k >= 0; k--) {
+                                                                    if (children[k].name === 'p') {
+                                                                        var title = children[k].children[0].children[0].data
+                                                                        var episode = children[k].children[0].next.next.children[0].data
+                                                                        title = commonService.findAliasSync(title)
+                                                                        day.shows.push({
+                                                                            title: title,
+                                                                            episode: episode
+                                                                        })
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
-                                            }
-                                            json.push(day)
-                                        })
+                                                json.push(day)
+                                            })
 
-                                        resolve(json)
-                                            // // Write monthly.json with all the info regarding the shows
-                                            // fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
-                                            //     resolve(json)
-                                            // })
-                                    }
-                                })
-                            }))
-                        }
-
-                        Promise.all(promises).then((data) => {
-                            var days = []
-                            for (var i = data.length - 1; i >= 0; i--) {
-                                for (var j = data[i].length - 1; j >= 0; j--) {
-                                    days.push(data[i][j])
-                                }
+                                            resolve(json)
+                                                // // Write monthly.json with all the info regarding the shows
+                                                // fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
+                                                //     resolve(json)
+                                                // })
+                                        }
+                                    })
+                                }))
                             }
-                            days.sort((a, b) => {
-                                var c = new Date(a.date);
-                                var d = new Date(b.date);
-                                return c - d;
-                            });
-                            // console.log('days', days)
-                            // Write monthly.json with all the info regarding the shows
-                            fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
-                                resolve(days)
+
+
+                            Promise.all(promises).then((data) => {
+                                var days = []
+                                for (var i = data.length - 1; i >= 0; i--) {
+                                    for (var j = data[i].length - 1; j >= 0; j--) {
+                                        days.push(data[i][j])
+                                    }
+                                }
+                                days.sort((a, b) => {
+                                    var c = new Date(a.date);
+                                    var d = new Date(b.date);
+                                    return c - d;
+                                });
+                                // console.log('days', days)
+                                // Write monthly.json with all the info regarding the shows
+                                fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
+                                    resolve(days)
+                                })
                             })
                         })
                     }
+
+
+                    let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
+                    console.log(sinceLastUpdate + ' days since last update')
+                    if (localStorage.lastUpdate && sinceLastUpdate < 1) {
+                        fsExtra.readFile('./data/json/monthly.json', (err, data) => {
+                            if (err) {
+                                resolve(update())
+                            } else {
+                                console.log('Retrieved local calendar')
+                                data = JSON.parse(data)
+                                resolve(data)
+                            }
+                        })
+                    } else {
+                        resolve(update())
+                    }
                 })
+
 
             }
 
@@ -357,15 +374,15 @@
                         }
                         if (err) {
                             commonService.findAlias(show)
-                            .then( (result) => {
-                                console.log('commonService.findAlias RESULT->', result)
-                                show = result
-                                retrieveRemote(show)
-                            })
-                            .catch( (err) => {                                
-                                console.log('commonService.findAlias REJECT->', show)
-                                retrieveRemote(show)
-                            })
+                                .then((result) => {
+                                    // console.log('commonService.findAlias RESULT->', result)
+                                    show = result
+                                    retrieveRemote(show)
+                                })
+                                .catch((err) => {
+                                    // console.log('commonService.findAlias REJECT->', show)
+                                    retrieveRemote(show)
+                                })
                         }
                     })
 
@@ -413,8 +430,10 @@
                                     }, function(error, response, body) {
                                         if (error || !response) return reject(error)
                                         if (!error && response.statusCode == 200) {
+                                            console.log('Current season ->', urlSeasons)
+
                                             let $ = cheerio.load(body)
-                                            // console.log('Titles', $('.titles'))
+                                                // console.log('Titles', $('.titles'))
                                             for (var i = $('.titles').length - 1; i >= 0; i--) {
                                                 if (i !== 1) {
                                                     if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
@@ -458,7 +477,10 @@
                                                     $rootScope.$apply()
                                                 }
                                             })
-                                        } else resolve(response.statusCode)
+                                        } else {
+                                            console.log(response.statusCode)
+                                            resolve(response.statusCode)
+                                        }
                                     })
                                     currentSeason--
                                     // if (currentSeason < 1) resolve(episodes)

@@ -1,8 +1,10 @@
 <section layout="column" id="video_container" layout="column">
-    <md-button ng-if="!alt" aria-label="Open with VLC" id="alt_btn" class="md-fab" ng-class="isIdle ? 'idle' : ''" ng-click="vlc()">VLC</md-button>
-    <md-button aria-label="menu" class="md-fab" ng-class="isIdle ? 'idle' : ''" id="close_btn" ng-click="back()" style="position: fixed; float: left;">
-        <ng-md-icon icon="close"></ng-md-icon>
+    <md-button aria-label="Open with VLC" class="md-button" id="vlc_btn" ng-click="vlc()">VLC</md-button>
+    <md-button aria-label="Open with VLC" class="md-button" id="close_btn" ng-click="back()">
+        <i class="poster_sub_show icon fa fa-times" aria-hidden="true" style="color: white; font-size: 1.2em;"></i>
     </md-button>
+    <!-- <md-button aria-label="Back" class="md-button" id="close_btn" ng-click="back()">X</md-button> -->
+    <label id="show_title">{{ show }} {{ episode }}</label>
     <label id="root-msg" ng-show="$root.msg.length > 0" style="font-size: 1.6em;">{{ $root.msg }}</label>
     <div ng-show="torrent_msg.progress < 100" layout="column" layout-align="center center" layout-wrap>
         <div class="msg_download" ng-show="torrent_msg.speed">
