@@ -1,5 +1,6 @@
 html {
     background-color: rgba(43, 40, 45, 1);
+    /*font-size: 62.5%;*/
 }
 
 body {
@@ -8,8 +9,17 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: rgba(43, 40, 45, 1);
-    /*background-color: #182927;*/
+    background-color: rgba(23, 20, 25, 0.9);
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+:focus {
+    outline: 0;
+    /* or */
+    outline: none;
 }
 
 @font-face {
@@ -38,49 +48,27 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 
 .white {
     color: white;
-    font-size: 1.8em;
-}
-
-@-webkit-keyframes pulsate {
-    0% {
-        opacity: 0.6;
-    }
-    50% {
-        opacity: 0.9;
-    }
-    100% {
-        opacity: 0.6;
-    }
-}
-
-.card {
-    /*margin: 0.1em;*/
-    text-align: center;
-}
-
-.card md-card-content {
-    position: relative;
+    font-size: 1.2rem;
 }
 
 .card_title {
     position: absolute;
     top: 0;
-    font-size: 1.4em;
+    font-size: 1.4rem;
     width: 100%;
-    /*color: #f9fbe7;*/
 }
 
 .card_show_title {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     color: rgba(43, 40, 45, 1);
     width: 100%;
 }
 
 .poster {
-    width: 12em;
-    height: 17em;
+    width: 12rem;
+    height: 17rem;
     cursor: pointer;
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
     outline: none;
     opacity: 1;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
@@ -88,10 +76,10 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 }
 
 .poster_library {
-    width: 12em;
-    height: 17em;
+    width: 12rem;
+    height: 17rem;
     cursor: pointer;
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
     outline: none;
     opacity: 1;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
@@ -99,14 +87,14 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 }
 
 .poster:hover {
-    width: 16em;
-    height: 23em;
+    width: 16rem;
+    height: 23rem;
 }
 
 .poster_sub_container {
     position: absolute;
-    width: 12em;
-    height: 17em;
+    width: 12rem;
+    height: 17rem;
     left: 0;
     top: 0;
     opacity: 0;
@@ -116,8 +104,8 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 
 .poster_sub_container:hover {
     position: absolute;
-    width: 16em;
-    height: 23em;
+    width: 16rem;
+    height: 23rem;
     opacity: 1;
     background-color: rgba(43, 40, 45, 0.5);
 }
@@ -125,11 +113,7 @@ md-nav-bar .md-button._md-nav-button.md-unselected {
 md-card {
     background-color: transparent;
     box-shadow: none;
-    margin: 0.1em;
-}
-
-md-card .md-card-image {
-    border-radius: 0.5em;
+    margin: 0.1rem;
 }
 
 md-card md-card-content {
@@ -142,7 +126,7 @@ md-content {
 }
 
 .library_card {
-    margin: 0.4em;
+    margin: 0.4rem;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
     transition-delay: 0.3s;
 }
@@ -153,8 +137,8 @@ md-content {
 
 .library_card:hover .poster_library,
 .library_card.hover .poster_library {
-    width: 12.8em;
-    height: 17.8em;
+    width: 12.8rem;
+    height: 17.8rem;
 }
 
 
@@ -172,8 +156,8 @@ md-content {
 
 
 /*.poster:hover {
-    width: 18em;
-    height: 25em;
+    width: 18rem;
+    height: 25rem;
     margin: 0;
 }*/
 
@@ -198,7 +182,7 @@ md-content {
 .poster_sub {
     cursor: pointer;
     position: absolute;
-    font-size: 3em;
+    font-size: 3rem;
     left: 50%;
     color: white;
     opacity: 0.95;
@@ -207,7 +191,7 @@ md-content {
 
 .poster_sub_show {
     cursor: pointer;
-    font-size: 2em;
+    font-size: 2rem;
     color: white;
     opacity: 0.95;
     transition: all .1s;
@@ -219,11 +203,11 @@ md-content {
 }
 
 .poster_sub_show.icon:hover {
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .poster_sub_show.icon:active {
-    -webkit-filter: blur(0.1em);
+    -webkit-filter: blur(0.1rem);
 }
 
 .poster_sub:focus {
@@ -237,66 +221,66 @@ md-content {
 }
 
 .poster_sub.ep {
-    font-size: 2.4em;
+    font-size: 2.4rem;
     top: 10%;
     transform: translate(-50%, -10%);
 }
 
 .poster_sub.ep:hover {
-    font-size: 2.6em;
+    font-size: 2.6rem;
 }
 
 .poster_sub.ep:active {
-    -webkit-filter: blur(0.1em);
+    -webkit-filter: blur(0.1rem);
 }
 
 .poster_sub.download {
-    font-size: 2.4em;
+    font-size: 2.4rem;
     top: 45%;
     left: 70%;
     transform: translate(-70%, -45%);
 }
 
 .poster_sub.download:hover {
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .poster_sub.download:active {
-    -webkit-filter: blur(0.1em);
+    -webkit-filter: blur(0.1rem);
 }
 
 .poster_sub.play {
-    font-size: 2.4em;
+    font-size: 2.4rem;
     top: 45%;
     left: 30%;
     transform: translate(-30%, -45%);
 }
 
 .poster_sub.play:hover {
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .poster_sub.play:active {
-    -webkit-filter: blur(0.1em);
+    -webkit-filter: blur(0.1rem);
 }
 
 .poster_sub.fav {
-    font-size: 2em;
+    font-size: 2rem;
     top: 80%;
     transform: translate(-50%, -80%);
 }
 
 .poster_sub.fav:hover {
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .poster_sub.fav:active {
-    -webkit-filter: blur(0.1em);
+    -webkit-filter: blur(0.1rem);
 }
 
 .calendar_card {
     cursor: pointer;
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
     box-shadow: 2px 2px 4px #888888;
     outline: none;
     transition: all linear 0.5s;
@@ -304,8 +288,8 @@ md-content {
 
 .calendar_content {
     overflow-y: hidden;
-    height: 24em;
-    top: -5.5em;
+    height: 24rem;
+    top: -2.5rem;
 }
 
 .calendar_day {
@@ -314,7 +298,7 @@ md-content {
 }
 
 .calendar_card:active {
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
     box-shadow: 1px 1px 2px #888888;
 }
 
@@ -348,21 +332,21 @@ md-content {
 .bg_today {
     background: rgba(43, 40, 45, 1);
     width: 95%;
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
 }
 
 .bg_default {
     background-color: rgba(23, 20, 25, 0.9);
     width: auto;
-    border-radius: 0.5em;
+    border-radius: 0.2rem;
 }
 
 #calendar_episode {
-    font-size: 1.4em;
+    font-size: 1.4rem;
 }
 
 section {
-    background-color: rgba(43, 40, 45, 1);
+    background-color: rgba(23, 20, 25, 0.9);
 }
 
 .icons {
@@ -381,8 +365,8 @@ section {
     background-color: rgba(53, 50, 55, 0.9);
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     border: white;
     border-width: 1px;
     border-style: solid;
@@ -391,21 +375,21 @@ section {
 }
 
 .ep_number {
-    font-size: 3em;
+    font-size: 3rem;
     color: white;
     /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
 }
 
 .ep_show {
-    font-size: 5em;
+    font-size: 5rem;
     color: white;
     /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
 }
 
 #root-msg {
     color: white;
-    font-size: 2em;
-    padding-top: 1.5em;
+    font-size: 2rem;
+    padding-top: 1.5rem;
     text-align: center;
 }
 
@@ -441,23 +425,23 @@ section {
 }
 
 .font-10 {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 .font-15 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 .font-20 {
-    font-size: 2em;
+    font-size: 2rem;
 }
 
 .font-25 {
-    font-size: 2.5em;
+    font-size: 2.5rem;
 }
 
 .font-30 {
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 .align-center {
@@ -471,21 +455,21 @@ section {
 
 .msg_download label {
     color: #cddc39;
-    font-size: 1.4em;
+    font-size: 1.4rem;
 }
 
 .first {
-    margin-left: 5em;
+    margin-left: 5rem;
 }
 
 .last {
-    padding-right: 5em;
+    padding-right: 5rem;
 }
 
 #show_title {
     position: fixed;
-    top: 1em;
-    font-size: 2em;
+    top: 1rem;
+    font-size: 2rem;
     text-align: center;
     width: 100%;
     line-height: 0;
@@ -506,22 +490,26 @@ section {
 
 #close_btn {
     position: fixed;
-    top: 1em;
-    color: rgba(255, 135, 155, 0.6);
+    top: 1rem;
     z-index: 1;
-    left: calc(100% - 4.3em);
-    font-size: 1.4em;
-    line-height: 2em;
+    left: calc(100% - 4.3rem);
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+#close_btn i {
+    color: rgba(255, 135, 155, 0.6);
+    font-size: 1.2rem;
 }
 
 #vlc_btn {
     position: fixed;
-    top: 4em;
+    top: 4rem;
     color: rgba(255, 255, 255, 0.9);
     z-index: 1;
-    left: calc(100% - 5em);
-    font-size: 1.2em;
-    line-height: 2em;
+    left: calc(100% - 5rem);
+    font-size: 1.2rem;
+    line-height: 2rem;
 }
 
 .idle {
@@ -532,18 +520,19 @@ section {
     width: 90%;
     left: 50%;
     transform: translate(-50%, 20%);
+    margin-top: 4rem;
 }
 
 .search-input input {
     font-family: 'Fjalla One', sans-serif;
-    font-size: 3em;
-    height: 2em;
+    font-size: 2.6rem;
+    height: 4rem;
     text-align: center;
     color: rgba(255, 255, 255, 1);
     background-color: rgba(48, 45, 50, 1);
 }
 
-md-progress-linear.md-default-theme .md-bar,
+md-progress-linear.md-default-threme .md-bar,
 md-progress-linear .md-bar {
     background-color: rgba(208, 227, 222, 1);
 }
@@ -590,7 +579,7 @@ md-card md-card-title {
 }
 
 .episode_title {
-    font-size: 1.4em;
+    font-size: 1.4rem;
     text-align: center;
     /*cursor: pointer;*/
     -webkit-transition: font-size 0.6s ease-in-out;
@@ -598,7 +587,7 @@ md-card md-card-title {
 
 .show_card_content:hover .episode_title,
 .show_card_content.hover .episode_title {
-    font-size: 1.6em;
+    font-size: 1.6rem;
 }
 
 .episode_title:focus {
@@ -629,16 +618,17 @@ md-card md-card-title {
     padding: 0;
 }
 
-.md-button.md-default-theme.md-primary,
+.md-button.md-default-threme.md-primary,
 .md-button.md-primary {
     background-color: rgba(43, 40, 45, 1);
 }
 
-.md-button.md-default-theme.md-primary,
+
+/*.md-button.md-default-threme.md-primary,
 .md-button.md-primary:hover {
-    background-color: transparent;
+    background-color: rgba(228, 247, 242, 1);
     color: rgba(43, 40, 45, 1);
-}
+}*/
 
 .green {
     color: #47ed57;
@@ -646,4 +636,56 @@ md-card md-card-title {
 
 .hidden {
     visibility: hidden;
+}
+
+.day_container:hover .scroll_left,
+.day_container.hover .scroll_left {
+    left: 0rem;
+}
+
+.day_container:hover .scroll_right,
+.day_container.hover .scroll_right {
+    left: calc(100vw - 2.5rem);
+}
+
+.scroll_left {
+    position: absolute;
+    height: 23rem;
+    z-index: 1;
+    width: 2.5rem;
+    background: linear-gradient(rgba(43, 40, 45, 0), rgb(43, 40, 45) 60%, rgba(43, 40, 45, 0));
+    opacity: 0.7;
+    left: -2.5rem;
+    margin-top: -3.5rem;
+    cursor: pointer;
+    transition: all cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
+}
+
+.scroll_right {
+    position: absolute;
+    height: 23rem;
+    z-index: 1;
+    width: 2.5rem;
+    background: linear-gradient(rgba(43, 40, 45, 0), rgb(43, 40, 45) 60%, rgba(43, 40, 45, 0));
+    opacity: 0.7;
+    left: 100vw;
+    cursor: pointer;
+    margin-top: -3.5rem;
+    transition: all cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
+}
+
+.scroll_left i {
+    color: white;
+    font-size: 2rem;
+    top: 50%;
+    left: 25%;
+    position: absolute;
+}
+
+.scroll_right i {
+    color: white;
+    font-size: 2rem;
+    top: 50%;
+    left: 50%;
+    position: absolute;
 }
