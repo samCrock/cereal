@@ -1,15 +1,17 @@
 <section style="margin-top: 6em;">
-    <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" layout-align="center center">
+    <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" layout-align="center center" class="day_container">
+        <div ng-click="scrollLeft('content_' + $index)" class="scroll_left"><i class="icon fa fa-angle-left " aria-hidden="true"></i></div>
+        <div ng-click="scrollRight('content_' + $index)" class="scroll_right"><i class="icon fa fa-angle-right " aria-hidden="true"></i></div>
         <div class="calendar_day">
             <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:2.6em;">{{ day.dateObj.dotw }}</span>
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2em; padding: 0.4em; opacity: 0.9;">
                 {{ day.dateObj.month }}</span>
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 1.6em; opacity: 0.8;">{{ day.dateObj.dotm }}</span>
         </div>
-        <md-content class="calendar_content" layout="row" layout-align="start end">
-            <md-card ng-repeat="show in day.shows | filter:posterOnly" layout="row" layout-align="center center" class="card" ui-sref="app.show( { show: show.title, episode: show.episode } )">
+        <md-content class="calendar_content" layout="row" layout-align="" id="{{'content_' + $index}}">
+            <md-card ng-repeat="show in day.shows | filter:posterOnly" layout="row" layout-align="center center" ui-sref="app.show( { show: show.title, episode: show.episode } )">
                 <md-card-content ng-if="show.poster">
-                    <img ng-src="{{ show.poster }}" class="poster_episode md-card-image poster card">
+                    <img ng-src="{{ show.poster }}" class="poster">
                     <!-- <div ng-show="!show.loading" class="poster_sub_container">
                         <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
                         <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
@@ -18,7 +20,7 @@
                     </div> -->
                 </md-card-content>
                 <!--<md-card-content ng-if="!show.poster">
-                    <img ng-src="res/default.png" class="poster_episode md-card-image poster card">
+                    <img ng-src="res/default.png" class="poster">
                     <md-card-title layout="column" class="card_title" class="card">
                         <label class="card_show_title">{{ show.title }}</label>
                         <label>{{ show.episode }}</label>

@@ -14,6 +14,14 @@
         $scope.posterOnly = (show) => {
             return show
         }
+        $scope.scrollLeft = function(content_id) {
+            var content = document.getElementById(content_id)
+            content.scrollLeft -= 192 * 3 // scroll 3 shows (tmp)
+        }
+        $scope.scrollRight = function(content_id) {
+            var content = document.getElementById(content_id)
+            content.scrollLeft += 192 * 3 // scroll 3 shows (tmp)
+        }
 
         $scope.stream = function(episode) {
             console.log('PLAY ->', episode)
