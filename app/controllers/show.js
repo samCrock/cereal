@@ -55,10 +55,8 @@
                         }
                     }
                 }
-                // if (!$rootScope.$$phase) {
-                $rootScope.$applyAsync()
-                    // }
             }
+            $rootScope.$applyAsync()
         }, 1000)
 
         function start() {
