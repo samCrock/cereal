@@ -10,6 +10,7 @@
         let fsExtra = require('fs-extra')
 
         $rootScope.loading = true
+        console.log('$stateParams', $stateParams)
         $scope.show = commonService.capitalCase($stateParams.show.trim())
         $rootScope.current_show = $scope.show
         $scope.downloading = []
@@ -50,20 +51,24 @@
             if ($rootScope.pending && $rootScope.episodes) {
                 for (var i = 0; i < $rootScope.pending.length; i++) {
                     for (var j = 0; j < $rootScope.episodes.length; j++) {
+
                         if ($rootScope.pending[i].show === $rootScope.episodes[j].show && $rootScope.pending[i].episode === $rootScope.episodes[j].episode) {
                             $rootScope.episodes[j].eta = commonService.formatTime($rootScope.pending[i].eta)
                         }
                     }
                 }
             }
-            $rootScope.$applyAsync()
+            if (!$rootScope.$$phase) {
+                $rootScope.$apply()
+            }
         }, 1000)
 
         function start() {
-            jsonService.getEpisodes($scope.show)
+            jsonService.getEpisodes($scope.show, $stateParams.refresh)
                 .then((episodes) => {
                     var formatted_date = {}
                     for (var i = 0; i < episodes.length; i++) {
+                        // if (episode.episode.indexOf('e01') == -1)
                         formatted_date = commonService.getDayObject(episodes[i].date);
                         episodes[i].show = $scope.show;
                         episodes[i].dotw = formatted_date.dotw;
