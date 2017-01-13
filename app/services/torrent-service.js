@@ -171,19 +171,39 @@
             })
         }
 
+
+        // Search order:
+        // KICKASS
+        // PIRATEBAY
+        // EZTV
         let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
             return new Promise(function(resolve, reject) {
+                var show = searchObj.show
+                console.log(show)
+                // Clear search string from year
+                var match = show.match(/(200[0-9]|201[0-9])/)
+                if (match) {
+                    show = show.substring(0, match['index'])
+                    console.log('Cleared show string:', show)
+                    searchObj.clearedShow = show
+                }
                 searchTorrent_kickass(searchObj)
                     .then((torrent) => {
                         resolve(torrent)
                     })
                     .catch(() => {
-                        searchTorrent_eztv(searchObj)
+                        searchTorrent_pirateBay(searchObj)
                             .then((torrent) => {
                                 resolve(torrent)
                             })
                             .catch(() => {
-                                reject()
+                                searchTorrent_eztv(searchObj)
+                                    .then((torrent) => {
+                                        resolve(torrent)
+                                    })
+                                    .catch(() => {
+                                        reject()
+                                    })
                             })
                     })
             })
@@ -192,7 +212,13 @@
         // // KICKASS
         let searchTorrent_kickass = torrent_module['searchTorrent_kickass'] = function searchTorrent_kickass(searchObj) {
             return new Promise(function(resolve, reject) {
+
                 var show = searchObj.show
+                if (searchObj.clearedShow) {
+                    searchObj.clearedShow = searchObj.clearedShow.split('.').join('')
+                    show = searchObj.clearedShow
+                }
+
                 show = show.split('.').join('')
 
                 var episode = searchObj.episode
@@ -223,6 +249,7 @@
                         if (data.children) {
                             torrent = {}
                             torrent.show = commonService.capitalCase(show)
+                            if (searchObj.clearedShow) torrent.show = commonService.capitalCase(searchObj.show)
                             torrent.episode = episode
 
                             data = data[0]
@@ -310,54 +337,82 @@
 
 
         // //PIRATEBAY
-        // let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
-        //     return new Promise(function(resolve, reject) {
-        //         var show = searchObj.show
-        //         show = show.split('.').join('')
+        let searchTorrent_pirateBay = torrent_module['searchTorrent_pirateBay'] = function searchTorrent_pirateBay(searchObj) {
+            return new Promise(function(resolve, reject) {
+                var show = searchObj.show
+                show = show.split('.').join('')
 
-        //         var episode = searchObj.episode
-        //         var searchString = show + ' ' + episode
-        //         console.log('Searching PB for: ' + searchString)
+                var episode = searchObj.episode
+                var searchString = show + ' ' + episode
+                console.log('Searching PB for: ' + searchString)
 
-        //         searchString = encodeURIComponent(searchString)
+                searchString = encodeURIComponent(searchString)
 
-        //         // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
-        //         var url = 'https://pirateproxy.vip/search/' + searchString + '/0/99/0'
-        //         console.log(url)
+                // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
+                var url = 'https://fastpiratebay.co.uk/s/?q=' + searchString + '&page=0&orderby=99'
 
-        //         request.get(url, function(error, response, body) {
+                console.log(url)
 
-        //             if (error || !response) return reject(error)
+                request.get(url, function(error, response, body) {
 
-        //             console.log('[', response.statusCode, ']')
+                    if (error || !response) return reject(error)
 
-        //             if (!error && response.statusCode === 200) {
-        //                 var $ = cheerio.load(body)
-        //                 var data = $('#searchResult')
-        //                 var torrent = {}
-        //                     // console.log('*************************')
-        //                     // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
-        //                     // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
-        //                     // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
-        //                     // console.log('', data['0'].children[3])
-        //                     // console.log('*************************')
-        //                 torrent.show = show
-        //                 torrent.episode = episode
+                    console.log('[', response.statusCode, ']')
 
-        //                 if (data['0']) {
-        //                     torrent.name = data['0'].children[3].children[3].children[1].children[1].children[0].data
-        //                     torrent.magnet = data['0'].children[3].children[3].children[3].attribs.href
-        //                     torrent.seeds = data['0'].children[3].children[5].children[0].data
-        //                     console.log('Torrent found:', torrent.name)
-        //                     resolve(torrent)
-        //                 } else {
-        //                     resolve(0)
-        //                 }
+                    if (!error && response.statusCode === 200) {
+                        var $ = cheerio.load(body)
+                        var data = $('#searchResult')
+                            // console.log('*************************')
+                            // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
+                            // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
+                            // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
+                            // console.log('', data['0'].children[3])
+                            // console.log('*************************')
+                        var torrent = {}
 
-        //             } else resolve(parseInt(response.statusCode))
-        //         })
-        //     })
-        // }
+                        if (data['0']) {
+
+                            var magnetURL = 'https://fastpiratebay.co.uk' + data['0'].children[1].children[2].children[3].attribs.href
+                            torrent.show = commonService.capitalCase(show)
+                            torrent.episode = episode
+                            torrent.name = data['0'].children[1].children[2].children[1].children[1].children[0].data
+
+                            request.get(magnetURL, function(error, response, body) {
+
+                                if (error || !response) reject(error)
+                                console.log('[', response.statusCode, ']')
+
+                                if (!error && response.statusCode === 200) {
+                                    var $ = cheerio.load(body)
+
+                                    var magnet = $('.download')
+                                    var details = $('#details')
+
+                                    torrent.magnet = magnet['0'].children[1].attribs.href
+                                    var size = details['0'].children[1].children[10].children[0].data
+                                    size = size.split('(')
+                                    torrent.size = size[0].trim()
+                                    torrent.seeds = details['0'].children[2].children[10].children[0].data
+
+                                    console.log('torrent ->', torrent)
+
+                                    if (commonService.areMatching(show, torrent.name)) {
+                                        console.log('Search result ->', torrent)
+                                        resolve(torrent)
+                                    } else {
+                                        reject('No matching torrent found')
+                                    }
+                                } else {
+                                    reject('No results')
+                                }
+                            })
+                        } else {
+                            reject('No results')
+                        }
+                    } else resolve(parseInt(response.statusCode))
+                })
+            })
+        }
 
         torrent_module['streamEpisode'] = function streamEpisode(searchObj, $rootScope) {
             $rootScope.msg = 'Searching for' + ' ' + searchObj.show + ' ' + searchObj.episode
