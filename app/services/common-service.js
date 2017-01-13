@@ -48,11 +48,11 @@
         }
 
 
-        common_module['areMatching'] = function areMatching(str1, str2) {
-            str1 = str1.toLowerCase()
-            str2 = str2.toLowerCase()
-                // console.log(str1, ':', str2)
-            return str2.indexOf(str1) > -1
+        common_module['areMatching'] = function areMatching(target, matcher) {
+            target = target.toLowerCase()
+            matcher = matcher.toLowerCase().split('.').join(' ')
+                // console.log(target, ':', matcher)
+            return matcher.indexOf(target) > -1
         }
 
         // Compare strings similarity. Based on Levenshtein distance
