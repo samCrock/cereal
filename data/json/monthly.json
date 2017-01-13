@@ -42,6 +42,10 @@
                 "episode": "s20e01"
             },
             {
+                "title": "The Undateables",
+                "episode": "s06e01"
+            },
+            {
                 "title": "The Halcyon",
                 "episode": "s01e01"
             },
@@ -230,8 +234,8 @@
                 "episode": "s22e40"
             },
             {
-                "title": "Chicago Fire",
-                "episode": "s05e09"
+                "title": "Sweet/Vicious",
+                "episode": "s01e06"
             },
             {
                 "title": "Shooter",
@@ -248,6 +252,10 @@
             {
                 "title": "The Real ONeals",
                 "episode": "s02e09"
+            },
+            {
+                "title": "Chicago Fire",
+                "episode": "s05e09"
             },
             {
                 "title": "Teen Wolf",
@@ -350,6 +358,10 @@
             {
                 "title": "Chicago PD",
                 "episode": "s04e10"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e09"
             },
             {
                 "title": "Black-ish",
@@ -466,10 +478,6 @@
                 "episode": "s22e42"
             },
             {
-                "title": "Nashville",
-                "episode": "s05e02"
-            },
-            {
                 "title": "Portlandia",
                 "episode": "s07e01"
             },
@@ -488,6 +496,10 @@
             {
                 "title": "Life in Pieces",
                 "episode": "s02e09"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e02"
             },
             {
                 "title": "Hells Kitchen (US)",
@@ -568,8 +580,12 @@
                 "episode": "s07e11"
             },
             {
+                "title": "Emerald City",
+                "episode": "s01e02"
+            },
+            {
                 "title": "Gold Rush",
-                "episode": "s07e12"
+                "episode": "s07e13"
             },
             {
                 "title": "Shark Tank",
@@ -581,11 +597,15 @@
             },
             {
                 "title": "Emerald City",
-                "episode": "s01e02"
+                "episode": "s01e01"
             },
             {
                 "title": "Crazy Ex-Girlfriend",
                 "episode": "s02e09"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e01"
             },
             {
                 "title": "Dr. Ken",
@@ -596,16 +616,16 @@
                 "episode": "s03e19"
             },
             {
+                "title": "Gold Rush",
+                "episode": "s07e12"
+            },
+            {
                 "title": "Last Man Standing",
                 "episode": "s06e12"
             },
             {
                 "title": "Grimm",
                 "episode": "s06e01"
-            },
-            {
-                "title": "Emerald City",
-                "episode": "s01e01"
             },
             {
                 "title": "MacGyver",
@@ -618,10 +638,6 @@
             {
                 "title": "Rosewood",
                 "episode": "s02e10"
-            },
-            {
-                "title": "Sleepy Hollow",
-                "episode": "s04e01"
             }
         ]
     },
@@ -666,6 +682,10 @@
             {
                 "title": "Silent Witness",
                 "episode": "s20e03"
+            },
+            {
+                "title": "The Undateables",
+                "episode": "s06e02"
             },
             {
                 "title": "The Halcyon",
@@ -848,6 +868,10 @@
                 "episode": "s22e44"
             },
             {
+                "title": "Sweet/Vicious",
+                "episode": "s01e07"
+            },
+            {
                 "title": "Shooter",
                 "episode": "s01e09"
             },
@@ -894,10 +918,6 @@
             {
                 "title": "American Housewife",
                 "episode": "s01e11"
-            },
-            {
-                "title": "Americas Next Top Model",
-                "episode": "s23e06"
             },
             {
                 "title": "New Girl",
@@ -990,6 +1010,10 @@
                 "episode": "s04e11"
             },
             {
+                "title": "Wahlburgers",
+                "episode": "s07e10"
+            },
+            {
                 "title": "Black-ish",
                 "episode": "s03e12"
             },
@@ -1020,6 +1044,10 @@
             {
                 "title": "Criminal Minds",
                 "episode": "s12e10"
+            },
+            {
+                "title": "NOVA",
+                "episode": "s44e09"
             },
             {
                 "title": "X Company",
@@ -1140,8 +1168,12 @@
                 "episode": "s04e10"
             },
             {
-                "title": "Hells Kitchen (US)",
-                "episode": "s16e13"
+                "title": "Life in Pieces",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e03"
             },
             {
                 "title": "Chicago Med",
@@ -1164,6 +1196,10 @@
                 "episode": "s01e11"
             },
             {
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e13"
+            },
+            {
                 "title": "Superstore",
                 "episode": "s02e11"
             }
@@ -1173,6 +1209,14 @@
         "date": "2017-01-13T23:00:00.000Z",
         "date_label": "Sat Jan 14 2017",
         "shows": [
+            {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e02"
+            },
             {
                 "title": "One Day at a Time",
                 "episode": "s01e09"
@@ -1203,7 +1247,7 @@
             },
             {
                 "title": "Gold Rush",
-                "episode": "s07e13"
+                "episode": "s07e14"
             },
             {
                 "title": "Shark Tank",
@@ -1220,6 +1264,10 @@
             {
                 "title": "Crazy Ex-Girlfriend",
                 "episode": "s02e10"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e02"
             },
             {
                 "title": "Dr. Ken",
@@ -1248,10 +1296,6 @@
             {
                 "title": "Rosewood",
                 "episode": "s02e11"
-            },
-            {
-                "title": "Sleepy Hollow",
-                "episode": "s04e02"
             }
         ]
     },
@@ -1259,6 +1303,14 @@
         "date": "2017-01-14T23:00:00.000Z",
         "date_label": "Sun Jan 15 2017",
         "shows": [
+            {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e03"
+            },
             {
                 "title": "One Day at a Time",
                 "episode": "s01e10"
@@ -1298,12 +1350,24 @@
         "date_label": "Mon Jan 16 2017",
         "shows": [
             {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e04"
+            },
+            {
                 "title": "One Day at a Time",
                 "episode": "s01e11"
             },
             {
                 "title": "Silent Witness",
                 "episode": "s20e05"
+            },
+            {
+                "title": "The Undateables",
+                "episode": "s06e03"
             },
             {
                 "title": "The Halcyon",
@@ -1380,6 +1444,14 @@
         "date_label": "Tue Jan 17 2017",
         "shows": [
             {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e05"
+            },
+            {
                 "title": "One Day at a Time",
                 "episode": "s01e12"
             },
@@ -1432,6 +1504,10 @@
                 "episode": "s10e11"
             },
             {
+                "title": "Americas Next Top Model",
+                "episode": "s23e06"
+            },
+            {
                 "title": "Kevin Can Wait",
                 "episode": "s01e14"
             },
@@ -1462,6 +1538,14 @@
         "date_label": "Wed Jan 18 2017",
         "shows": [
             {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e06"
+            },
+            {
                 "title": "One Day at a Time",
                 "episode": "s01e13"
             },
@@ -1478,6 +1562,10 @@
                 "episode": "s02e03"
             },
             {
+                "title": "Holby City",
+                "episode": "s19e15"
+            },
+            {
                 "title": "Father Brown",
                 "episode": "s05e14"
             },
@@ -1488,6 +1576,10 @@
             {
                 "title": "Chicago Fire",
                 "episode": "s05e10"
+            },
+            {
+                "title": "Sweet/Vicious",
+                "episode": "s01e08"
             },
             {
                 "title": "Shooter",
@@ -1559,6 +1651,14 @@
         "date": "2017-01-18T23:00:00.000Z",
         "date_label": "Thu Jan 19 2017",
         "shows": [
+            {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e07"
+            },
             {
                 "title": "Death In Paradise",
                 "episode": "s06e03"
@@ -1652,6 +1752,10 @@
                 "episode": "s01e13"
             },
             {
+                "title": "Undercover Boss",
+                "episode": "s08e06"
+            },
+            {
                 "title": "Lethal Weapon",
                 "episode": "s01e12"
             },
@@ -1666,6 +1770,14 @@
         "date_label": "Fri Jan 20 2017",
         "shows": [
             {
+                "title": "A Series of Unfortunate Events",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e08"
+            },
+            {
                 "title": "The Grand Tour",
                 "episode": "s01e11"
             },
@@ -1674,8 +1786,16 @@
                 "episode": "s02e01"
             },
             {
+                "title": "The Graham Norton Show",
+                "episode": "s20e16"
+            },
+            {
                 "title": "QI",
                 "episode": "s14e13"
+            },
+            {
+                "title": "Not Going Out",
+                "episode": "s08e02"
             },
             {
                 "title": "Nowhere Boys",
@@ -1694,20 +1814,20 @@
                 "episode": "s02e01"
             },
             {
-                "title": "How To Get Away With Murder",
-                "episode": "s03e10"
+                "title": "Colony",
+                "episode": "s02e02"
             },
             {
                 "title": "The Blacklist",
                 "episode": "s04e11"
             },
             {
-                "title": "Scandal",
-                "episode": "s06e01"
+                "title": "Life in Pieces",
+                "episode": "s02e11"
             },
             {
-                "title": "Hells Kitchen (US)",
-                "episode": "s16e14"
+                "title": "Nashville",
+                "episode": "s05e04"
             },
             {
                 "title": "Chicago Med",
@@ -1718,6 +1838,14 @@
                 "episode": "s03e09"
             },
             {
+                "title": "Mom",
+                "episode": "s04e11"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e11"
+            },
+            {
                 "title": "The Good Place",
                 "episode": "s01e13"
             },
@@ -1726,8 +1854,8 @@
                 "episode": "s10e13"
             },
             {
-                "title": "Greys Anatomy",
-                "episode": "s13e10"
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e14"
             },
             {
                 "title": "The Good Place",
@@ -1739,6 +1867,10 @@
         "date": "2017-01-20T23:00:00.000Z",
         "date_label": "Sat Jan 21 2017",
         "shows": [
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e09"
+            },
             {
                 "title": "Taboo",
                 "episode": "s01e03"
@@ -1753,11 +1885,7 @@
             },
             {
                 "title": "Gold Rush",
-                "episode": "s07e14"
-            },
-            {
-                "title": "Shark Tank",
-                "episode": "s08e14"
+                "episode": "s07e15"
             },
             {
                 "title": "Hawaii Five-0",
@@ -1772,12 +1900,20 @@
                 "episode": "s02e11"
             },
             {
+                "title": "Sleepy Hollow",
+                "episode": "s04e03"
+            },
+            {
                 "title": "Dr. Ken",
                 "episode": "s02e14"
             },
             {
                 "title": "Girl Meets World",
                 "episode": "s03e21"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e14"
             },
             {
                 "title": "Grimm",
@@ -1788,16 +1924,8 @@
                 "episode": "s08e09"
             },
             {
-                "title": "MacGyver",
-                "episode": "s01e14"
-            },
-            {
                 "title": "Rosewood",
                 "episode": "s02e12"
-            },
-            {
-                "title": "Sleepy Hollow",
-                "episode": "s04e03"
             }
         ]
     },
@@ -1805,6 +1933,10 @@
         "date": "2017-01-21T23:00:00.000Z",
         "date_label": "Sun Jan 22 2017",
         "shows": [
+            {
+                "title": "Sneaky Pete",
+                "episode": "s01e10"
+            },
             {
                 "title": "Endeavour",
                 "episode": "s04e03"
@@ -1932,6 +2064,10 @@
                 "episode": "s05e11"
             },
             {
+                "title": "Sweet/Vicious",
+                "episode": "s01e09"
+            },
+            {
                 "title": "NCIS: New Orleans",
                 "episode": "s03e12"
             },
@@ -2010,6 +2146,10 @@
                 "episode": "s03e04"
             },
             {
+                "title": "Workaholics",
+                "episode": "s07e03"
+            },
+            {
                 "title": "Its Always Sunny in Philadelphia",
                 "episode": "s12e04"
             },
@@ -2024,6 +2164,10 @@
             {
                 "title": "Six",
                 "episode": "s01e02"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e14"
             },
             {
                 "title": "Vikings",
@@ -2058,6 +2202,10 @@
                 "episode": "s05e10"
             },
             {
+                "title": "Lethal Weapon",
+                "episode": "s01e13"
+            },
+            {
                 "title": "The Path",
                 "episode": "s02e01"
             }
@@ -2076,6 +2224,10 @@
                 "episode": "s11e01"
             },
             {
+                "title": "Not Going Out",
+                "episode": "s08e03"
+            },
+            {
                 "title": "Nowhere Boys",
                 "episode": "s03e13"
             },
@@ -2084,24 +2236,28 @@
                 "episode": "s07e04"
             },
             {
+                "title": "Pure Genius",
+                "episode": "s01e13"
+            },
+            {
                 "title": "Baskets",
                 "episode": "s02e02"
             },
             {
-                "title": "How To Get Away With Murder",
-                "episode": "s03e11"
+                "title": "Colony",
+                "episode": "s02e03"
             },
             {
-                "title": "The Blacklist",
-                "episode": "s04e12"
+                "title": "How To Get Away With Murder",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e05"
             },
             {
                 "title": "Scandal",
-                "episode": "s06e02"
-            },
-            {
-                "title": "Hells Kitchen (US)",
-                "episode": "s16e15"
+                "episode": "s06e01"
             },
             {
                 "title": "Riverdale",
@@ -2112,12 +2268,16 @@
                 "episode": "s03e10"
             },
             {
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e15"
+            },
+            {
                 "title": "Supernatural",
                 "episode": "s12e09"
             },
             {
                 "title": "Greys Anatomy",
-                "episode": "s13e11"
+                "episode": "s13e10"
             }
         ]
     },
@@ -2143,11 +2303,11 @@
             },
             {
                 "title": "Gold Rush",
-                "episode": "s07e15"
+                "episode": "s07e16"
             },
             {
                 "title": "Shark Tank",
-                "episode": "s08e15"
+                "episode": "s08e14"
             },
             {
                 "title": "Emerald City",
@@ -2158,6 +2318,10 @@
                 "episode": "s02e12"
             },
             {
+                "title": "Sleepy Hollow",
+                "episode": "s04e04"
+            },
+            {
                 "title": "Dr. Ken",
                 "episode": "s02e15"
             },
@@ -2166,8 +2330,12 @@
                 "episode": "s06e04"
             },
             {
-                "title": "Sleepy Hollow",
-                "episode": "s04e04"
+                "title": "The Vampire Diaries",
+                "episode": "s08e10"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e13"
             },
             {
                 "title": "Teen Titans Go!",
@@ -2242,6 +2410,10 @@
             {
                 "title": "Pawn Stars",
                 "episode": "s11e07"
+            },
+            {
+                "title": "Sweet/Vicious",
+                "episode": "s01e10"
             },
             {
                 "title": "Beyond",

@@ -1,6 +1,6 @@
 <section>
     <div flex layout="column" layout-align="center center">
-        <md-content layout layout-wrap layout-align="center center" class="bg_default" style="margin-top: 60px;">
+        <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container"  style="margin-top: 60px;">
             <md-card class="library_card" ng-repeat="(key, value) in library" ui-sref="app.show( { show: key } )" layout-align="center center">
                 <md-card-content>
                     <img ng-src="{{ value[0].poster }}" class="poster_library">

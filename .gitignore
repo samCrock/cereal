@@ -4,7 +4,7 @@ node_modules
 library
 # json
 data/json/episodes/*
-data/json/monthly.json
+data/json/*.json
 # resources
 res/posters/*
 

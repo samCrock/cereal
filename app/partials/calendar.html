@@ -11,7 +11,10 @@
         <md-content class="calendar_content" layout="row" layout-align="" id="{{'content_' + $index}}">
             <md-card ng-repeat="show in day.shows | filter:posterOnly" layout="row" layout-align="center center" ui-sref="app.show( { show: show.title, episode: show.episode } )">
                 <md-card-content ng-if="show.poster">
-                    <img ng-src="{{ show.poster }}" class="poster">
+                <div class="calendar_poster_container">
+                    <img ng-src="{{ show.poster }}" class="calendar_poster">
+                    
+                </div>
                     <!-- <div ng-show="!show.loading" class="poster_sub_container">
                         <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
                         <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>

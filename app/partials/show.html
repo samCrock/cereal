@@ -1,5 +1,5 @@
-<section layout="column" layout="column" style="min-height: 101%;">
-    <label id="root-msg" style="font-size: 3rem;">{{ show }}</label>
+<section layout="column" layout="column">
+    <label id="root-msg">{{ show }}</label>
     <md-card ng-style="{ 'margin-top' : ( (episode.episode.indexOf('e01') == -1) && '0') || '60' }" class="borderless show_episode" ng-repeat="episode in $root.episodes | orderBy : '-episode' : reverse = true track by $index" layout-align="start">
         <md-card-content class="show_card_content" ng-class="episode.eta ? 'hover' : ''" layout-align="center center" layout="row">
             <md-card-title layout="row" flex="80" layout-align="center center">
@@ -19,13 +19,15 @@
                     <!-- DOWNLOAD -->
                     <md-button aria-label="Stream" class="md-button" ng-show="!episode.loading && !episode.downloaded && !episode.eta" ng-click="downloadEpisode( { show: show, episode: episode.episode, index: $index } )">DOWNLOAD</md-button>
                     <!-- ETA -->
-                    <i ng-show="!episode.loading && !episode.downloaded && episode.eta && episode.eta.indexOf('NaN') == -1" class="poster_sub_show" aria-hidden="true" style="font-size: 1.5rem; text-align: center;">{{ episode.eta }}</i>
+                    <i ng-show="!episode.loading && !episode.downloaded && episode.eta && episode.eta.indexOf('NaN') == -1" class="poster_sub_show" aria-hidden="true" style="font-size: 1.2rem; text-align: center;">{{ episode.eta }}</i>
                     <!-- DELETE -->
                     <md-button aria-label="Stream" class="md-button" ng-show="!episode.loading && episode.downloaded" ng-click="deleteEpisode( { show: show, episode: episode.episode, index: $index } )">
                         <i class="poster_sub_show icon fa fa-trash" aria-hidden="true" style="color: white; font-size: 1.2rem;"></i>
                     </md-button>
                     <!-- LOADING -->
-                    <i ng-show="episode.loading" class="spinner fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="left: 1.4rem; top: 0.1rem;"></i>
+                    <md-button aria-label="Loading" class="md-button" ng-show="episode.loading">
+                        <i class="spinner fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="left: 1.4rem; top: 0.1rem;"></i>
+                    </md-button>
                 </div>
             </md-card-title>
         </md-card-content>
