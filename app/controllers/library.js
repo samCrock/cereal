@@ -18,12 +18,24 @@
                 if (!$scope.library[library[i].show]) {
                     $scope.library[library[i].show] = []
                     $scope.library[library[i].show].push(library[i])
-                }else {
+                } else {
                     $scope.library[library[i].show].push(library[i])
                 }
-
             }
             console.log('$scope.library --->', $scope.library)
+
+            // ---------------LAYOUT HANDLER-------------
+            var config = sessionStorage.getItem('LAYOUT_CONFIG')
+
+            var libraryLength = Object.keys($scope.library).length
+            var rows = Math.floor(libraryLength / config.columns) 
+            var libraryHeight = config.poster_h * rows + rows + config.rem * 5 // poster height, + margins + navbar top
+            var libraryWidth = config.poster_w * config.columns + config.columns // poster height, + margins + navbar top
+
+            var library_container = document.getElementById('library_container')
+            library_container.style.height = libraryHeight
+            // ------------------------------------------
+
             $scope.$apply()
         })
 
