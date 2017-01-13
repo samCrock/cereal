@@ -10,9 +10,9 @@
     "email": "samlombardi86@gmail.com"
   },
   "dependencies": {
-    "angular": "^1.5.7",
-    "angular-animate": "^1.5.6",
-    "angular-aria": "^1.5.6",
+    "angular": "=1.5.9",
+    "angular-animate": "latest",
+    "angular-aria": "latest",
     "angular-material": "latest",
     "angular-material-icons": "^0.7.0",
     "angular-messages": "^1.5.6",
@@ -41,13 +41,12 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
-    "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build"
   },
   "devDependencies": {
     "angular-translate": "^2.13.1",
-    "electron-prebuilt": "^1.1.2",
+    "electron": "latest",
     "video.js": "^5.12.6"
   },
   "build": {
