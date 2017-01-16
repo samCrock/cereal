@@ -3,6 +3,18 @@ html {
     font-size: 100%;
 }
 
+@media (max-width: 1400px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+@media (max-width: 1400px) {
+    html {
+        font-size: 100%;
+    }
+}
+
 @media (max-width: 1280px) {
     html {
         font-size: 90%;
@@ -42,6 +54,10 @@ section {
     margin-top: 48px;
 }
 
+md-tab-content {
+    background-color: rgba(23, 20, 25, 0.9);
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -55,10 +71,6 @@ section {
 @font-face {
     font-family: 'Fjalla One';
     src: url('../res/fonts/FjallaOne-Regular.otf') format('opentype');
-}
-
-.md-button {
-
 }
 
 .spinner {
@@ -78,6 +90,21 @@ section {
 
 md-nav-bar .md-button._md-nav-button.md-unselected {
     color: rgba(228, 247, 242, 0.54);
+}
+
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+    min-height: 100%;
+}
+
+md-tabs .md-tab {
+    color: rgba(255, 255, 255, 0.54);
+}
+
+.show_recap {
+    color: rgba(255, 255, 255, 0.9); 
+    text-align: center; 
+    font-size: 1.2rem;
+    width: 90%;
 }
 
 .white {

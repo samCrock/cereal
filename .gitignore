@@ -1,12 +1,8 @@
 # Dependency directories
 node_modules
-# Downloaded torrents
 library
-# json
-data/json/episodes/*
-data/json/*.json
-# resources
-res/posters/*
+data/shows
+data/monthly.json
+res/posters
 
 *.log
-i

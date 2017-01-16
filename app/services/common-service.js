@@ -103,7 +103,9 @@
         }
 
         common_module['capitalCase'] = function capitalCase(str) {
-            let array = str.split(' ')
+            let splitChar = ' '
+            if (str.indexOf('-') > -1) splitChar = '-'
+            let array = str.split(splitChar)
             let result = ''
             for (var i = 0; i < array.length; i++) {
                 result = result + array[i].charAt(0).toUpperCase() + array[i].slice(1) + ' '

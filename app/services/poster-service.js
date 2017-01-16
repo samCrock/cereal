@@ -23,7 +23,7 @@
             request.get({ url: posterObj.url, encoding: 'binary' }, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log('posterObj.path', posterObj.path)
-                    fsExtra.writeFile(posterObj.path, body, 'binary', (err) => {
+                    fsExtra.outputFile(posterObj.path, body, 'binary', (err) => {
                         if (err) reject('Cannot write file :', err)
                     })
                 } else {
@@ -61,7 +61,7 @@
                         request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                             if (!error && response.statusCode == 200) {
                                 let posterPath = './res/posters/' + dashedShowName + '.jpg'
-                                fsExtra.writeFile(posterPath, body, 'binary', (err) => {
+                                fsExtra.outputFile(posterPath, body, 'binary', (err) => {
                                     if (err) reject('Cannot write file :', err)
                                     console.log(dashedShowName, 'poster successfuly saved')
                                     resolve({ 'title': showName, 'poster': posterPath })

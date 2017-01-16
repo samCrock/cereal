@@ -42,10 +42,10 @@
 
                 t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
 
-                jsonService.getEpisodeInfo(t).then((t) => {
-                    console.log('Updating library w\\ torrent:', t)
-                    jsonService.updateLibrary(t)
-                })
+                // jsonService.getEpisodeInfo(t).then((t) => {
+                //     console.log('Updating library w\\ torrent:', t)
+                //     jsonService.updateLibrary(t)
+                // })
 
                 fsExtra.mkdirp(path, function(err) {
 
@@ -179,7 +179,8 @@
         let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
             return new Promise(function(resolve, reject) {
                 var show = searchObj.show
-                console.log(show)
+                var episode = searchObj.episode
+                console.log(show, episode)
                 // Clear search string from year
                 var match = show.match(/(200[0-9]|201[0-9])/)
                 if (match) {

@@ -39,7 +39,7 @@
                 return new Promise((resolve, reject) => {
                     console.log('Retrieving local episodes info..')
                     show = commonService.spacedToDashed(show)
-                    fsExtra.readFile('./data/json/episodes/' + show + '.json', (err, data) => {
+                    fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
                         if (err) reject(err)
                         if (data) {
                             data = JSON.parse(data)
@@ -54,7 +54,7 @@
                 return new Promise((resolve, reject) => {
                     console.log('Retrieving remote episodes info..')
                     show = commonService.spacedToDashed(show)
-                    fsExtra.writeFile('./data/json/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                    fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
                         if (err) {
                             reject('Cannot write file :', err)
                         } else {
@@ -64,36 +64,6 @@
                     })
                 })
             }
-
-
-
-            // Used to add poster location after download (from array)
-            json_module['updateFollowing'] = function updateFollowing(shows) {
-                return new Promise(function(resolve, reject) {
-                    let data = fsExtra.readFileSync('./data/json/following.json', 'utf8')
-                    if (data) { // Following exists
-                        let json = JSON.parse(data)
-                        json.filter((following, index) => {
-                                shows.filter((showObj, index) => {
-                                    // console.log(following.title.toLowerCase(), showObj.title.toLowerCase())
-                                    if (following.title.toLowerCase() === showObj.title.toLowerCase()) {
-                                        console.log('Updating', showObj.title)
-                                        following.poster = showObj.poster
-                                    }
-                                })
-                            })
-                            // json.push(showObj);
-                        fsExtra.writeFile('./data/json/following.json', JSON.stringify(json, null, 4), function(err) {
-                            if (err) reject('Cannot write file :', err)
-                            resolve(json)
-                        })
-                    } else {
-                        reject('Cannot find following.json')
-                    }
-
-                })
-            }
-
 
             // Returns poster path given the show name
             json_module['getPoster'] = function getPoster(showName) {
@@ -180,14 +150,14 @@
             //                 if (jsonObj.title === torrent_object.title) json.splice(i, 1)
             //             })
             //             json.push(torrent_object)
-            //             fsExtra.writeFile('./data/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
+            //             fsExtra.outputFile('./data/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
             //                 if (err) reject('Cannot write file :', err)
             //                     // console.log(torrent_object.title, 'added')
             //                 return json
             //             })
             //         } else { // first entry
             //             json.push(torrent_object)
-            //             fsExtra.writeFile('./data/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
+            //             fsExtra.outputFile('./data/json/local_torrents.json', JSON.stringify(json, null, 4), function(err) {
             //                 if (err) reject('Cannot write file :', err)
             //                 return json
             //             })
@@ -197,44 +167,44 @@
             //     // })
             // }
 
-            // Returns additional episode info (date + ep title) given a torrent objecct
-            json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
-                return new Promise(function(resolve, reject) {
+            // // Returns additional episode info (date + ep title) given a torrent objecct
+            // json_module['getEpisodeInfo'] = function getEpisodeInfo(t) {
+            //     return new Promise(function(resolve, reject) {
 
-                    // console.log('-----getEpisodeInfo-----')
-                    let dashedShowName = commonService.spacedToDashed(t.show)
-                    let tSeason = t.episode.substr(1, 2)
-                    let tEpisode = t.episode.substr(4, 5)
-                    fsExtra.readFile('./data/json/episodes/' + dashedShowName + '.json', (err, data) => {
-                        if (err) {
-                            console.log('Fetching show episodes', t.show)
-                            getEpisodes(t.show).then((episodes) => {
-                                getEpisodeInfo(t).then((info) => {
-                                    resolve(info)
-                                })
-                            })
-                        }
-                        if (data) {
-                            console.log('Updating show episode', t.show)
-                            getEpisodes(t.show).then((episodes) => {
-                                // console.log('episodes ->', episodes)
-                                episodes.filter((ep) => {
-                                    if (ep.season === tSeason && ep.episode === tEpisode) {
-                                        console.log('   Title ->', ep.title, ep.date)
-                                        t.date_label = ep.date
-                                        t.date = new Date(ep.date)
-                                        t.episode_title = ep.title
-                                        resolve(t)
-                                            // getEpisodeInfo(t)
-                                    }
+            //         // console.log('-----getEpisodeInfo-----')
+            //         let dashedShowName = commonService.spacedToDashed(t.show)
+            //         let tSeason = t.episode.substr(1, 2)
+            //         let tEpisode = t.episode.substr(4, 5)
+            //         fsExtra.readFile('./data/shows/' + dashedShowName + '.json', (err, data) => {
+            //             if (err) {
+            //                 console.log('Fetching show episodes', t.show)
+            //                 getShow(t.show).then((episodes) => {
+            //                     getEpisodeInfo(t).then((info) => {
+            //                         resolve(info)
+            //                     })
+            //                 })
+            //             }
+            //             if (data) {
+            //                 console.log('Updating show episode', t.show)
+            //                 getShow(t.show).then((episodes) => {
+            //                     // console.log('episodes ->', episodes)
+            //                     episodes.filter((ep) => {
+            //                         if (ep.season === tSeason && ep.episode === tEpisode) {
+            //                             console.log('   Title ->', ep.title, ep.date)
+            //                             t.date_label = ep.date
+            //                             t.date = new Date(ep.date)
+            //                             t.episode_title = ep.title
+            //                             resolve(t)
+            //                                 // getEpisodeInfo(t)
+            //                         }
 
-                                })
-                            })
-                        }
-                    })
+            //                     })
+            //                 })
+            //             }
+            //         })
 
-                })
-            }
+            //     })
+            // }
 
             // Writes month.json and returns current month's shows calendar
             json_module['month'] = function month() {
@@ -306,7 +276,7 @@
 
                                             resolve(json)
                                                 // // Write monthly.json with all the info regarding the shows
-                                                // fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
+                                                // fsExtra.outputFile('./data/json/monthly.json', JSON.stringify(json, null, 4), function(err) {
                                                 //     resolve(json)
                                                 // })
                                         }
@@ -329,7 +299,7 @@
                                 });
                                 // console.log('days', days)
                                 // Write monthly.json with all the info regarding the shows
-                                fsExtra.writeFile('./data/json/monthly.json', JSON.stringify(days, null, 4), function(err) {
+                                fsExtra.outputFile('./data/monthly.json', JSON.stringify(days, null, 4), function(err) {
                                     resolve(days)
                                 })
                             })
@@ -340,7 +310,7 @@
                     let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
                     console.log(sinceLastUpdate + ' days since last update')
                     if (localStorage.lastUpdate && sinceLastUpdate < 1) {
-                        fsExtra.readFile('./data/json/monthly.json', (err, data) => {
+                        fsExtra.readFile('./data/monthly.json', (err, data) => {
                             if (err) {
                                 resolve(update())
                             } else {
@@ -358,70 +328,104 @@
             }
 
             // Writes and returns target show episode list
-            let getEpisodes = json_module['getEpisodes'] = function getEpisodes(show) {
+            let getShow = json_module['getShow'] = function getShow(show) {
                 return new Promise(function(resolve, reject) {
 
                     show = commonService.spacedToDashed(show)
 
                     // Search for local episode file, if not found, retrieve from trakt
-                    fsExtra.readFile('./data/json/episodes/' + show + '.json', (err, data) => {
-                        // if (err) throw err
-                        if (data) { // Locals exists
-                            console.log('FOUND LOCAL DATA')
-                            let json = JSON.parse(data)
-                            let episodes = []
-                            resolve(json)
-                        }
-                        if (err) {
-                            commonService.findAlias(show)
-                                .then((result) => {
-                                    // console.log('commonService.findAlias RESULT->', result)
-                                    show = result
-                                    retrieveRemote(show)
-                                })
-                                .catch((err) => {
-                                    // console.log('commonService.findAlias REJECT->', show)
-                                    retrieveRemote(show)
-                                })
-                        }
+                    fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
+                        // if (data) { // Locals exists
+                        //     console.log('FOUND LOCAL DATA')
+                        //     let json = JSON.parse(data)
+                        //     let episodes = []
+                        //     resolve(json)
+                        // }
+                        // if (err) {
+                        commonService.findAlias(show)
+                            .then((result) => {
+                                // console.log('commonService.findAlias RESULT->', result)
+                                show = result
+                                retrieveRemote(show)
+                            })
+                            .catch((err) => {
+                                // console.log('commonService.findAlias REJECT->', show)
+                                retrieveRemote(show)
+                            })
+                            // }
                     })
 
                     function retrieveRemote(show) {
 
-                        console.log('Searching Trakt for: ' + show)
-                        console.log()
-
                         let urlMain = 'https://trakt.tv/shows/' + show
+
+                        console.log('https://trakt.tv/shows/' + show)
+                        console.log()
 
                         request.get({
                             url: urlMain
                         }, function(error, response, body) {
 
-                            if (error || !response) return reject(error)
+                            if (error || !response) reject(error)
 
                             console.log('Status', response.statusCode);
 
-                            if (response.statusCode === 404) return reject(response.statusCode)
+                            if (response.statusCode !== 200) reject(response.statusCode)
 
-                            if (!error && response.statusCode == 200) {
-
+                            if (!error && response.statusCode === 200) {
                                 let $ = cheerio.load(body)
-                                let network
+                                let showJson
+                                let seasons, network, premiered, runtime, genres, overview, trailer, title
+                                let genresArray = []
 
-                                if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0].children[4]) {
+                                if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
+                                    title = commonService.capitalCase(show)
+                                    seasons = $('.season-count')[1].attribs['data-all-count']
                                     network = $('.additional-stats')['0'].children[0].children[4].data
                                     network = network.split(' on ')
                                     network = network[1]
+                                    genres = $('#overview')['0'].children[2].children[0].children[0].children[6].children
+                                    premiered = $('#overview')['0'].children[2].children[0].children[0].children[1].children[2].attribs.content
+                                    overview = $('#overview')[1].children[0].data
+                                    trailer = $('.affiliate-links')['0'].children[0] ? $('.affiliate-links')['0'].children[0].children[1].attribs.href : ''
+                                    runtime = $('#overview')['0'].children[2].children[0].children[0].children[2].children[1].data
+                                    genres.filter((genre, i) => {
+                                        if (i % 2 && i !== 0) genresArray.push(genre.children[0].data)
+                                    })
                                     console.log('##########################')
-                                    console.log('network', network)
+                                    console.log('Title      :', title)
+                                    console.log('Seasons    :', seasons)
+                                    console.log('Network    :', network)
+                                    console.log('Premiered  :', premiered)
+                                    console.log('Runtime    :', runtime)
+                                    console.log('Genres     :', genresArray)
+                                    console.log('Overview   :', overview)
+                                    console.log('Trailer    :', trailer)
                                     console.log('##########################')
+                                    showJson = {
+                                        Title: title,
+                                        Network: network,
+                                        Premiered: premiered,
+                                        Runtime: runtime,
+                                        Genres: genresArray,
+                                        Overview: overview,
+                                        Trailer: trailer,
+                                        Seasons: {}
+                                    }
                                 }
 
-                                let seasons
-                                if ($('#seasons')['0']) seasons = $('#seasons')['0'].children[0].attribs['data-all-count']
-                                console.log('seasons', seasons)
+
+                                if (showJson) $rootScope.$broadcast('show_overview', { show: showJson })
+                                // fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
+                                //     if (err) {
+                                //         reject('Cannot write file :', err)
+                                //     } else {
+                                //         console.log('Show info written!')
+                                //         resolve(showJson)
+                                //     }
+                                // })
+
                                 let currentSeason = seasons
-                                let episodes = []
 
                                 while (currentSeason > 0) {
                                     let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
@@ -430,61 +434,65 @@
                                     }, function(error, response, body) {
                                         if (error || !response) return reject(error)
                                         if (!error && response.statusCode == 200) {
-                                            console.log('Current season ->', urlSeasons)
 
                                             let $ = cheerio.load(body)
-                                                // console.log('Titles', $('.titles'))
-                                            for (var i = $('.titles').length - 1; i >= 0; i--) {
-                                                if (i !== 1) {
-                                                    if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
-                                                        // console.log('ep **********', $('.titles')[i].children[0].children[1])
-                                                        let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
-                                                        let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
-                                                        let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
-                                                        if (ep.length == 4) ep = '0' + ep
-                                                        ep = ep.slice(0, 2) + ep.slice(3)
-                                                        ep = ep.slice(0, 2) + 'e' + ep.slice(2)
-                                                        ep = 's' + ep
-                                                        episodes.push({
-                                                            episode: ep,
-                                                            title: title,
-                                                            date: date,
-                                                            network: network ? network : ''
-                                                        })
-                                                    } else if ($('.titles')[i].children.length == 6) {
-                                                        let ep = $('.titles')[i].children[2].children[0].children[0].data
-                                                        let title = $('.titles')[i].children[2].children[2].children[0].data
-                                                        let date = $('.titles')[i].children[1].children[0].children[0].data
-                                                        if (ep.length == 4) ep = '0' + ep
-                                                        ep = ep.slice(0, 2) + ep.slice(3)
-                                                        ep = ep.slice(0, 2) + 'e' + ep.slice(2)
-                                                        ep = 's' + ep
-                                                        episodes.push({
-                                                            episode: ep,
-                                                            title: title,
-                                                            date: date,
-                                                            network: network ? network : ''
-                                                        })
+
+                                            currentSeason = $('.selected')[2].children[0].data
+                                            showJson.Seasons[currentSeason] = {}
+                                            let episode = 1
+
+                                            for (var i = 1; i < $('.titles').length; i++) {
+
+                                                if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
+                                                    let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
+                                                    if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                    let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
+                                                    let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                                    if (ep.length == 4) ep = '0' + ep
+                                                    ep = ep.slice(0, 2) + ep.slice(3)
+                                                    ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                    ep = 's' + ep
+
+                                                    showJson.Seasons[currentSeason][episode] = {
+                                                        episode: ep,
+                                                        title: title,
+                                                        date: date
                                                     }
+                                                    episode++
+                                                } else if ($('.titles')[i].children.length == 6) {
+                                                    let date = $('.titles')[i].children[1].children[0].children[0].data
+                                                    if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                    let ep = $('.titles')[i].children[2].children[0].children[0].data
+                                                    let title = $('.titles')[i].children[2].children[2].children[0].data
+                                                    if (ep.length == 4) ep = '0' + ep
+                                                    ep = ep.slice(0, 2) + ep.slice(3)
+                                                    ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                    ep = 's' + ep
+                                                    showJson.Seasons[currentSeason][episode] = {
+                                                        episode: ep,
+                                                        title: title,
+                                                        date: date
+                                                    }
+                                                    episode++
                                                 }
                                             }
-                                            fsExtra.writeFile('./data/json/episodes/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
+                                            // console.log(showJson)
+                                            // console.log('Season ', currentSeason, showJson.Seasons[currentSeason])
+
+                                            fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
                                                 if (err) {
                                                     reject('Cannot write file :', err)
                                                 } else {
-                                                    console.log(show, episodes.length, ' episodes added!')
-                                                    resolve(episodes)
-                                                    $rootScope.$apply()
+                                                    resolve(showJson)
                                                 }
                                             })
                                         } else {
-                                            console.log(response.statusCode)
                                             resolve(response.statusCode)
                                         }
                                     })
                                     currentSeason--
-                                    // if (currentSeason < 1) resolve(episodes)
                                 }
+
                             } else reject(response.statusCode)
                         })
                     }
@@ -503,7 +511,7 @@
                             let showEpisode = []
                             json.filter((following, index) => {
                                 console.log('Updating', following.title, 'episode list')
-                                showEpisode.push(getEpisodes(following.title))
+                                showEpisode.push(getShow(following.title))
                             })
                             Promise.all(showEpisode)
                                 .then((results) => {
@@ -522,17 +530,18 @@
             json_module['getLibrary'] = function getLibrary() {
                 return new Promise(function(resolve, reject) {
                     let library = []
-                    fsExtra.readdirSync('./data/json/episodes')
+                    fsExtra.readdirSync('./data/shows')
                         .filter((file) => {
                             let dashedShowName = file.split('.json')
                             dashedShowName = dashedShowName[0]
-                            let showName = dashedShowName.split(' ').join('-')
+                            // let showName = dashedShowName.split(' ').join('-')
+                            showName = commonService.capitalCase(showName)
                             let show = {
                                 title: showName,
                                 poster: './res/posters/' + dashedShowName + '.jpg',
                                 episodes: []
                             }
-                            fsExtra.readFile('./data/json/episodes/' + file, (err, showEpisodes) => {
+                            fsExtra.readFile('./data/shows/' + file, (err, showEpisodes) => {
                                 if (err) throw err
                                 if (showEpisodes) {
                                     let episodes = JSON.parse(showEpisodes)

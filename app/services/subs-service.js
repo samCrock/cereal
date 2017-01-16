@@ -108,7 +108,7 @@
                                         let subFile = zip.files[Object.keys(zip.files)[0]]
                                         let subName = zip.files[Object.keys(zip.files)[0]].name
 
-                                        fsExtra.writeFile(path + '/' + subName, subFile._data, function(err) {
+                                        fsExtra.outputFile(path + '/' + subName, subFile._data, function(err) {
                                             if (err) reject('Cannot write file :', err)
                                             fsExtra.unlinkSync(path + '/' + zipTitle + '.zip')
                                             console.log('Subs downloaded in:', path)
@@ -116,7 +116,7 @@
                                             var srtData = fsExtra.readFileSync(res)
                                             srt2vtt(srtData, function(err, vttData) {
                                                 if (err) throw new Error('Error converting subs:', err)
-                                                fsExtra.writeFileSync(res.substring(0, res.length - 4) + '.vtt', vttData)
+                                                fsExtra.outputFileSync(res.substring(0, res.length - 4) + '.vtt', vttData)
                                                 resolve(res)
                                             })
                                         })

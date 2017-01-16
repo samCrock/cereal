@@ -29,7 +29,7 @@
         // library_module['getLibrary'] = function getLibrary() {
         //     return new Promise(function(resolve, reject) {
         //         let library = []
-        //         fsExtra.readdirSync('./data/json/episodes')
+        //         fsExtra.readdirSync('./data/shows')
         //             .filter((file) => {
         //                 let dashedShowName = file.split('.json')
         //                 dashedShowName = dashedShowName[0]
@@ -39,7 +39,7 @@
         //                     poster: './res/posters/' + dashedShowName + '.jpg',
         //                     episodes: []
         //                 }
-        //                 fsExtra.readFile('./data/json/episodes/' + file, (err, showEpisodes) => {
+        //                 fsExtra.readFile('./data/shows/' + file, (err, showEpisodes) => {
         //                     if (err) throw err
         //                     if (showEpisodes) {
         //                         let episodes = JSON.parse(showEpisodes)
