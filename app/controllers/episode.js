@@ -36,8 +36,9 @@
                 list.files.forEach(file => {
                     file = decodeURIComponent(file)
                     let ext = file.split('.')
+                    let fileName = ext 
                     ext = ext[ext.length - 1]
-                    if (supportedVideoExt.indexOf(ext) > -1) {
+                    if (supportedVideoExt.indexOf(ext) > -1 && fileName.indexOf('Sample') === -1) {
                         console.log('Opening', file, ' in VLC')
                         commonService.openFile(file)
                         $scope.back()
