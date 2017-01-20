@@ -118,7 +118,10 @@
 
         // INIT show page
         if (sessionStorage.getItem('current_show')) {
-            $rootScope.current_show = sessionStorage.getItem('current_show')
+            $rootScope.current_show = JSON.parse(sessionStorage.getItem('current_show'))
+            console.log('current_show :', $rootScope.current_show.Title)
+        } else {
+            $rootScope.current_show = {}
         }
 
         $rootScope.reload = true
