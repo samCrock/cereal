@@ -8,7 +8,7 @@
     function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService, commonService, posterService) {
 
         $rootScope.loading = false
-        let input = document.getElementById('input-field')
+        let input = document.getElementById('search-input')
         $timeout(() => { input.focus() })
         if (sessionStorage.getItem('search_results')) {
             $scope.shows = JSON.parse(sessionStorage.getItem('search_results'))
