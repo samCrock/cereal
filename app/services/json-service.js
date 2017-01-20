@@ -335,24 +335,25 @@
 
                     // Search for local episode file, if not found, retrieve from trakt
                     fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
-                        // if (data) { // Locals exists
-                        //     console.log('FOUND LOCAL DATA')
-                        //     let json = JSON.parse(data)
-                        //     let episodes = []
-                        //     resolve(json)
-                        // }
-                        // if (err) {
-                        commonService.findAlias(show)
-                            .then((result) => {
-                                // console.log('commonService.findAlias RESULT->', result)
-                                show = result
+                        if (data) { // Locals exists
+                            let showJson = JSON.parse(data)
+                            if (commonService.daysToNow(showJson.Updated) < 1) {
+                                console.log('Local data is fresh!', showJson.Updated, commonService.daysToNow(showJson.Updated))
+                                resolve(showJson)
+                            } else {
                                 retrieveRemote(show)
-                            })
-                            .catch((err) => {
-                                // console.log('commonService.findAlias REJECT->', show)
-                                retrieveRemote(show)
-                            })
-                            // }
+                            }
+                        }
+                        if (err) {
+                            commonService.findAlias(show)
+                                .then((result) => {
+                                    show = result
+                                    retrieveRemote(show)
+                                })
+                                .catch((err) => {
+                                    retrieveRemote(show)
+                                })
+                        }
                     })
 
                     function retrieveRemote(show) {
@@ -366,7 +367,7 @@
                             url: urlMain
                         }, function(error, response, body) {
 
-                            if (error || !response) reject(error)
+                            if (error || !response || !response.satus) reject(error)
 
                             console.log('Status', response.statusCode);
 
@@ -377,7 +378,7 @@
                                 let showJson
                                 let seasons, network, premiered, runtime, genres, overview, trailer, title
                                 let genresArray = []
-
+                                console.log('.additional-stats', $('.additional-stats')['0'].children[0])
                                 if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
                                     title = commonService.capitalCase(show)
                                     seasons = $('.season-count')[1].attribs['data-all-count']
@@ -389,6 +390,7 @@
                                     overview = $('#overview')[1].children[0].data
                                     trailer = $('.affiliate-links')['0'].children[0] ? $('.affiliate-links')['0'].children[0].children[1].attribs.href : ''
                                     runtime = $('#overview')['0'].children[2].children[0].children[0].children[2].children[1].data
+                                    runtime = runtime.split(' mins').join('')
                                     genres.filter((genre, i) => {
                                         if (i % 2 && i !== 0) genresArray.push(genre.children[0].data)
                                     })
@@ -403,6 +405,7 @@
                                     console.log('Trailer    :', trailer)
                                     console.log('##########################')
                                     showJson = {
+                                        Updated: new Date,
                                         Title: title,
                                         Network: network,
                                         Premiered: premiered,
@@ -414,8 +417,10 @@
                                     }
                                 }
 
+                                console.log('show_overview')
+                                $rootScope.$broadcast('show_overview', { show: showJson })
 
-                                if (showJson) $rootScope.$broadcast('show_overview', { show: showJson })
+
                                 // fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
                                 //     if (err) {
                                 //         reject('Cannot write file :', err)
@@ -432,6 +437,7 @@
                                     request.get({
                                         url: urlSeasons
                                     }, function(error, response, body) {
+                                        // console.log(currentSeason)
                                         if (error || !response) return reject(error)
                                         if (!error && response.statusCode == 200) {
 
@@ -444,10 +450,13 @@
                                             for (var i = 1; i < $('.titles').length; i++) {
 
                                                 if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
+                                                    let title
                                                     let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
                                                     if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
                                                     let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
-                                                    let title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                                    if ($('.titles')[i].children[0].children[1].children[2].children[0]) {
+                                                        title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                                    }
                                                     if (ep.length == 4) ep = '0' + ep
                                                     ep = ep.slice(0, 2) + ep.slice(3)
                                                     ep = ep.slice(0, 2) + 'e' + ep.slice(2)
@@ -476,16 +485,28 @@
                                                     episode++
                                                 }
                                             }
+
                                             // console.log(showJson)
                                             // console.log('Season ', currentSeason, showJson.Seasons[currentSeason])
 
-                                            fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
-                                                if (err) {
-                                                    reject('Cannot write file :', err)
-                                                } else {
-                                                    resolve(showJson)
+                                                let valid = false
+                                                for (var ep in showJson.Seasons) {
+                                                    if (ep.hasOwnProperty(showJson.Seasons)) {
+                                                        console.log(ep + " -> " + showJson.Seasons[ep])
+
+                                                    }
                                                 }
-                                            })
+                                            console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
+                                            if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
+                                                fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
+                                                    $rootScope.$broadcast('show_ready', showJson)
+                                                    if (err) {
+                                                        reject('Cannot write file :', err)
+                                                    } else {
+                                                        resolve(showJson)
+                                                    }
+                                                })
+                                            }
                                         } else {
                                             resolve(response.statusCode)
                                         }
@@ -493,7 +514,7 @@
                                     currentSeason--
                                 }
 
-                            } else reject(response.statusCode)
+                            } else reject('Status:', response.statusCode)
                         })
                     }
                 })
@@ -534,7 +555,7 @@
                         .filter((file) => {
                             let dashedShowName = file.split('.json')
                             dashedShowName = dashedShowName[0]
-                            // let showName = dashedShowName.split(' ').join('-')
+                                // let showName = dashedShowName.split(' ').join('-')
                             showName = commonService.capitalCase(showName)
                             let show = {
                                 title: showName,
