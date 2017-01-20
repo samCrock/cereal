@@ -22,7 +22,7 @@
     require('./services/poster-service.js')
     require('./services/subs-service.js')
     require('./services/search-service.js')
-    require('./services/message-service.js')
+    require('./services/dialog-service.js')
 
     var oldWarn = console.warn;
     console.warn = function(arg1) {
@@ -32,7 +32,7 @@
     // console.warn('ARIA warnings disabled.');
 
     /* @ngInject */
-    function moduleConfig($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+    function moduleConfig($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdDialogProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('cereal_palette', {
                 'default': '200', // by default use shade 400 from the pink palette for primary intentions
@@ -45,6 +45,22 @@
             .accentPalette('cereal_palette', {
                 'default': '200' // use shade 200 for default, and keep all other shades the same
             })
+
+
+        // $mdDialogProvider.addPreset('episodePrompt', {
+        //     options: function() {
+        //         return {
+        //             template: '<md-dialog>' +
+        //                 'This is a custom preset' +
+        //                 '</md-dialog>',
+        //             controllerAs: 'dialog',
+        //             bindToController: true,
+        //             clickOutsideToClose: true,
+        //             escapeToClose: true
+        //         };
+        //     }
+        // });
+
 
         $mdThemingProvider.definePalette('cereal_palette', {
             '50': '#ffffff',
