@@ -14,7 +14,7 @@
     <md-nav-item md-nav-sref="app.search" name="search" aria-label="Search">
         <i class="white fa fa-search" aria-hidden="true"></i>
     </md-nav-item>
-    <md-nav-item ng-if="$root.current_show" md-nav-sref="app.show( { show: $root.current_show} )" name="show">{{ current_show }}</md-nav-item>
+    <md-nav-item ng-if="$root.current_show.Title" md-nav-sref="app.show( { show: $root.current_show.Title } )" name="show">{{ current_show.Title }}</md-nav-item>
 </md-nav-bar>
 <!-- <md-nav-bar layout layout-align="center center" ng-if="isBack">
     <md-button aria-label="menu" class="md-fab back" ng-click="back()">

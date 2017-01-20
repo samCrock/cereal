@@ -1,4 +1,4 @@
-<section style="margin-top: 6em;">
+<section style="margin-top: 3em;">
     <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" layout-align="center center" class="day_container">
         <div ng-click="scrollLeft('content_' + $index)" class="scroll_left"><i class="icon fa fa-angle-left " aria-hidden="true"></i></div>
         <div ng-click="scrollRight('content_' + $index)" class="scroll_right"><i class="icon fa fa-angle-right " aria-hidden="true"></i></div>
