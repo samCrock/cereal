@@ -47,11 +47,7 @@ body {
     user-select: none;
     background-color: rgba(23, 20, 25, 0.9);
     overflow-x: hidden;
-}
-
-section {
-    min-height: 101%;
-    margin-top: 48px;
+    max-height: calc(100% - 48px);
 }
 
 md-tab-content {
@@ -75,12 +71,13 @@ md-tab-content {
 
 .spinner {
     z-index: 99999;
-    color: white;
+    /*color: white;*/
+    color: rgba(227, 255, 30, 0.9);
     position: relative;
 }
 
 .md-nav-bar {
-    z-index: 9999;
+    z-index: 100;
     position: fixed;
     background-color: rgba(43, 40, 45, 1) !important;
     left: 0;
@@ -88,12 +85,34 @@ md-tab-content {
     width: 100%;
 }
 
+#header {
+    height: 48px;
+}
+
+.md-button._md-nav-button {
+    padding: 12px 8px;
+}
+
 md-nav-bar .md-button._md-nav-button.md-unselected {
     color: rgba(228, 247, 242, 0.54);
 }
 
+md-tabs md-ink-bar {
+    background: rgba(227, 255, 30, 0.9);
+}
+
+md-nav-bar md-nav-ink-bar {
+    background: rgba(227, 255, 30, 0.9);
+}
+
 md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-    min-height: 100%;
+    min-height: calc(100% - 10rem - 16px);
+    /*position: relative;*/
+}
+
+md-tab-content,
+md-tabs-content-wrapper {
+    position: absolute;
 }
 
 md-tabs .md-tab {
@@ -101,10 +120,45 @@ md-tabs .md-tab {
 }
 
 .show_recap {
-    color: rgba(255, 255, 255, 0.9); 
-    text-align: center; 
-    font-size: 1.2rem;
-    width: 90%;
+    height: 10rem;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(43, 40, 45, 1);
+}
+
+.show_recap .title {
+    font-size: 3rem;
+    margin: 0
+}
+
+.show_recap .genre {
+    /*position: absolute;*/
+    /*left: 100%;*/
+    /*transform: translate(calc(-100% - 1rem), 0);*/
+}
+
+.show_recap .genre label {
+    font-size: 1.4rem;
+    font-style: italic;
+    padding: 0.2rem;
+}
+
+.show_recap .trailer {
+    font-size: 1rem;
+    border: rgba(255, 255, 255, 0.9);
+    border-width: 1px;
+    border-style: solid;
+}
+
+.show_recap .runtime {
+    font-size: 1.8rem;
+}
+
+.show_recap .network {
+    font-size: 1.4rem;
+    text-transform: uppercase;
 }
 
 .white {
@@ -195,12 +249,12 @@ md-content {
     margin: 0.5rem;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
     transition-delay: 0.3s;
-    opacity: 1;
+    opacity: 0.95;
 }
 
 .library_card:hover {
     margin: 0;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .library_card:hover .poster_library,
@@ -456,7 +510,7 @@ section {
 
 #root-msg {
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
     margin-top: 4rem;
     text-align: center;
 }
@@ -559,6 +613,7 @@ section {
     position: fixed;
     z-index: 1;
     left: calc(100% - 88px);
+    top: 0;
     font-size: 1.4rem;
     line-height: 2rem;
 }
@@ -586,7 +641,6 @@ section {
     width: 90%;
     left: 50%;
     transform: translate(-50%, 20%);
-    margin-top: 4rem;
 }
 
 .search-input input {
@@ -600,19 +654,20 @@ section {
 
 md-progress-linear.md-default-threme .md-bar,
 md-progress-linear .md-bar {
-    background-color: rgba(208, 227, 222, 1);
+    background-color: rgba(227, 255, 30, 0.9);
 }
 
 md-progress-linear {
-    height: 20px;
+    height: 0.1rem;
 }
 
 md-progress-linear .md-container {
-    height: 20px;
+    height: 0.1rem;
+    background: transparent; 
 }
 
 md-progress-linear .md-container .md-bar {
-    height: 20px;
+    height: 0.1rem;
 }
 
 .md-button.md-accent.md-fab {
@@ -684,13 +739,94 @@ md-card md-card-title {
     padding: 0;
 }
 
-.md-button.md-default-threme.md-primary,
+md-dialog {
+    width: 100%
+}
+
+.dialog_show_input {
+    margin: 1rem 0;
+    color: white;
+    height: 4rem;
+    background: rgba(43, 40, 45, 0.8);
+}
+
+.md-select-menu-container.md-active md-select-menu>* {
+    background: rgba(43, 40, 45, 0.8);
+}
+
+md-option {
+    font-size: 2rem;
+}
+
+md-input-container>md-select {
+    margin: 1rem 0;
+    color: white;
+    height: 4rem;
+    background: rgba(43, 40, 45, 0.8);
+}
+.md-select-value>span:not(.md-select-icon) {
+    font-size: 2rem;
+    color: white;
+}
+
+.dialog_episode_button {}
+
+.episode_dialog {
+    color: rgba(43, 40, 45, 0.8);
+}
+
+.episode_dialog h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.episode_dialog h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+md-radio-button {
+    font-size: 2rem;
+}
+
+md-radio-button.md-checked .md-off {
+    color: rgba(43, 40, 45, 0.8);
+}
+
+md-input-container {
+    margin: 3rem 0;
+}
+
+md-input-container label {
+    font-size: 1.4rem;
+}
+
+md-input-container .md-input {
+    color: white;
+    font-family: inherit;
+    height: 4rem;
+    line-height: 3rem;
+    font-size: 2.5rem;
+}
+
+#search-input {
+    font-size: 4rem;
+    height: 6rem;
+    line-height: 4.5rem;
+}
+
+.md-button.md-default-theme.md-primary,
 .md-button.md-primary {
+    /*background: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(43, 40, 45, 1);
+    color: rgba(43, 40, 45, 1);*/
     background-color: rgba(43, 40, 45, 1);
 }
 
 
-/*.md-button.md-default-threme.md-primary,
+/*.md-button.md-default-theme.md-primary,
 .md-button.md-primary:hover {
     background-color: rgba(228, 247, 242, 1);
     color: rgba(43, 40, 45, 1);
