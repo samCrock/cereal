@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(wtService, commonService, jsonService, subsService, $rootScope) {
+    function torrentService(CONFIG, wtService, commonService, jsonService, subsService, $rootScope) {
 
 
         const os = require('os')
@@ -67,12 +67,12 @@
                         if (torrent.progress != 1) {
                             torrent.files.forEach(function(file) {
                                 console.log('Started downloading ' + file.name)
-                                file.getBuffer(function(err, buffer) {
-                                    if (err) {
-                                        console.error('Error downloading ' + file.name)
-                                        reject(err)
-                                    }
-                                })
+                                // file.getBuffer(function(err, buffer) {
+                                //     if (err) {
+                                //         console.error('Error downloading ' + file.name)
+                                //         reject(err)
+                                //     }
+                                // })
                             })
                         }
                         // *********************** ON DONE ***********************
@@ -88,11 +88,10 @@
                                 episode: t.episode,
                                 name: t.name,
                                 magnet: t.magnet,
-                                path: t.path,
-                                poster: t.poster
+                                path: t.path
                             }
                             library.filter((obj, i) => {
-                                if (obj.name === t.name) {
+                                if (obj.show === t.show && obj.episode === t.episode) {
                                     isNew = false
                                     library[i] = ep
                                 }
@@ -101,8 +100,8 @@
                             if (isNew) {
                                 library.push(ep)
                             }
-                            localStorage.setItem('library', JSON.stringify(library))
 
+                            localStorage.setItem('library', JSON.stringify(library))
 
                             // Search for subs
                             subsService.search({
@@ -137,7 +136,7 @@
                                 chalk.dim('        Downloaded : ') + commonService.formatBytes(torrent.downloaded),
                                 chalk.dim('             Speed : ') + commonService.formatBytes(torrent.downloadSpeed) + '/s',
                                 chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100),
-                                chalk.dim('         Eta       : ') + commonService.formatTime(torrent.timeRemaining),
+                                chalk.dim('               Eta : ') + commonService.formatTime(torrent.timeRemaining),
                                 chalk.cyan('==================')
                             ]
 
@@ -193,11 +192,13 @@
                         resolve(torrent)
                     })
                     .catch(() => {
+                        if (CONFIG.engines === 1)  reject()
                         searchTorrent_pirateBay(searchObj)
                             .then((torrent) => {
                                 resolve(torrent)
                             })
                             .catch(() => {
+                                if (CONFIG.engines === 2)  reject()
                                 searchTorrent_eztv(searchObj)
                                     .then((torrent) => {
                                         resolve(torrent)
