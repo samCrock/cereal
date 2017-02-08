@@ -11,17 +11,22 @@
         $rootScope.loading = false
         $scope.library = {}
 
+        $scope.getPoster = function(show) {
+            return('./res/posters/' + commonService.spacedToDashed(show)) + '.jpg'
+        }
+
         libraryService.getLibrary().then((library) => {
             console.log('Library --->', library)
-            var isNew = true
-            for (var i = 0; i < library.length; i++) {
-                if (!$scope.library[library[i].show]) {
-                    $scope.library[library[i].show] = []
-                    $scope.library[library[i].show].push(library[i])
-                } else {
-                    $scope.library[library[i].show].push(library[i])
-                }
-            }
+            // var isNew = true
+            // for (var i = 0; i < library.length; i++) {
+            //     if (!$scope.library[library[i].show]) {
+            //         $scope.library[library[i].show] = []
+            //         $scope.library[library[i].show].push(library[i])
+            //     } else {
+            //         $scope.library[library[i].show].push(library[i])
+            //     }
+            // }
+            $scope.library = library
             console.log('$scope.library --->', $scope.library)
 
             // ---------------LAYOUT HANDLER-------------
