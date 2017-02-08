@@ -25,14 +25,14 @@
             let src = $sce.trustAsResourceUrl(params.src.replace("watch?v=", "embed/"))
             let parentEl = angular.element(document.body)
             $mdDialog.show({
-                    controller: DialogController,
-                    parent: parentEl,
-                    clickOutsideToClose: true,
-                    templateUrl: 'app/partials/dialog/trailer_tmpl.html',
-                    locals: {
-                        src: src
-                    }
-                })
+                controller: DialogController,
+                parent: parentEl,
+                clickOutsideToClose: true,
+                templateUrl: 'app/partials/dialog/trailer_tmpl.html',
+                locals: {
+                    src: src
+                }
+            })
 
             function DialogController($scope, $mdDialog, src) {
                 $scope.src = src
@@ -58,14 +58,12 @@
                         }
                     })
                     .then(function(result) {
-                        // console.log('New search string: ', result)
                         resolve(result)
                     }, function() {
-                        // console.log('Dialog closed')
                         reject()
                     })
 
-                function DialogController($scope, $mdDialog, searchObj) {
+                function DialogController($scope, $mdDialog, $timeout, searchObj) {
                     $scope.searchObj = searchObj
                     $scope.show = searchObj.show
                     $scope.episodeOption = searchObj.episode
