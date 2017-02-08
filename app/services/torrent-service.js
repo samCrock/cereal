@@ -67,12 +67,12 @@
                         if (torrent.progress != 1) {
                             torrent.files.forEach(function(file) {
                                 console.log('Started downloading ' + file.name)
-                                // file.getBuffer(function(err, buffer) {
-                                //     if (err) {
-                                //         console.error('Error downloading ' + file.name)
-                                //         reject(err)
-                                //     }
-                                // })
+                                    // file.getBuffer(function(err, buffer) {
+                                    //     if (err) {
+                                    //         console.error('Error downloading ' + file.name)
+                                    //         reject(err)
+                                    //     }
+                                    // })
                             })
                         }
                         // *********************** ON DONE ***********************
@@ -179,8 +179,9 @@
             return new Promise(function(resolve, reject) {
                 var show = searchObj.show
                 var episode = searchObj.episode
+                if (searchObj.date) episode = searchObj.date.split('T')[0].replace(/-/g, '.')
                 console.log(show, episode)
-                // Clear search string from year
+                    // Clear search string from year
                 var match = show.match(/(200[0-9]|201[0-9])/)
                 if (match) {
                     show = show.substring(0, match['index'])
@@ -192,13 +193,13 @@
                         resolve(torrent)
                     })
                     .catch(() => {
-                        if (CONFIG.engines === 1)  reject()
+                        if (CONFIG.engines === 1) reject()
                         searchTorrent_pirateBay(searchObj)
                             .then((torrent) => {
                                 resolve(torrent)
                             })
                             .catch(() => {
-                                if (CONFIG.engines === 2)  reject()
+                                if (CONFIG.engines === 2) reject()
                                 searchTorrent_eztv(searchObj)
                                     .then((torrent) => {
                                         resolve(torrent)
