@@ -31,7 +31,7 @@
         }
 
         $scope.search = function() {
-            let searchString = $scope.show.toLowerCase()
+            let searchString = $scope.show ? $scope.show.toLowerCase() : ''
             console.log('Searching for', searchString)
             sessionStorage.setItem('search_string', searchString)
             $scope.search_loading = true;
@@ -45,5 +45,6 @@
                 })
         }
 
+        $scope.search()
     }
 })();
