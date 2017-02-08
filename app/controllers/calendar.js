@@ -5,7 +5,7 @@
         .module('app')
         .controller('calendarCtrl', calendarCtrl);
 
-    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService) {
+    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, CONFIG) {
         console.log('Calendar')
         let fsExtra = require('fs-extra')
 
@@ -91,6 +91,18 @@
                                         } else {
                                             // console.log('Poster to download:', show.title)
                                             posters.push(posterService.downloadPoster(show.title))
+                                        }
+                                        // If this show is in my library && autodownload is enabled, download this episode
+                                        let idx = $rootScope.shows.indexOf(show.title)
+                                        if (idx > -1 && CONFIG.auto_download) {
+                                            console.log('.......', $rootScope.shows[idx])
+                                            if ($rootScope.shows[idx].episode === show.episode) {
+                                                console.log('New episode found', show.title, show.episode)
+                                                $scope.download({
+                                                    show: show.title,
+                                                    episode: show.episode
+                                                })
+                                            }
                                         }
                                     })
                                     $rootScope.days.push(day)
