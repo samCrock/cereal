@@ -337,7 +337,7 @@
                     fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
                         if (data) { // Locals exists
                             let showJson = JSON.parse(data)
-                            if (commonService.daysToNow(showJson.Updated) < 1) {
+                            if (commonService.daysToNow(showJson.Updated) < 7) {
                                 console.log('Local data is fresh!', showJson.Updated, commonService.daysToNow(showJson.Updated))
                                 resolve(showJson)
                             } else {
@@ -382,17 +382,17 @@
                                 if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
                                     title = commonService.capitalCase(show)
                                     seasons = $('.season-count')[1].attribs['data-all-count']
-                                    network = $('.additional-stats')['0'].children[0].children[4].data
+                                    network = $('.additional-stats')['0'].children[0].children[4] ? $('.additional-stats')['0'].children[0].children[4].data : ''
                                     network = network.split(' on ')
                                     network = network[1]
                                     genres = $('#overview')['0'].children[2].children[0].children[0].children[6].children
-                                    premiered = $('#overview')['0'].children[2].children[0].children[0].children[1].children[2].attribs.content
+                                    premiered = $('#overview')['0'].children[2].children[0].children[0].children[1].children[2] ? $('#overview')['0'].children[2].children[0].children[0].children[1].children[2].attribs.content : ''
                                     overview = $('#overview')[1].children[0].data
                                     trailer = $('.affiliate-links')['0'].children[0] ? $('.affiliate-links')['0'].children[0].children[1].attribs.href : ''
                                     runtime = $('#overview')['0'].children[2].children[0].children[0].children[2].children[1].data
-                                    runtime = runtime.split(' mins').join('')
+                                    runtime = runtime ? runtime.split(' mins').join('') : ''
                                     genres.filter((genre, i) => {
-                                        if (i % 2 && i !== 0) genresArray.push(genre.children[0].data)
+                                        if (i % 2 && i !== 0 && genre.children) genresArray.push(genre.children[0].data)
                                     })
                                     console.log('##########################')
                                     console.log('Title      :', title)
@@ -417,7 +417,6 @@
                                     }
                                 }
 
-                                console.log('show_overview')
                                 $rootScope.$broadcast('show_overview', { show: showJson })
 
 
@@ -431,87 +430,93 @@
                                 // })
 
                                 let currentSeason = seasons
+                                let seasonPromises = []
 
                                 while (currentSeason > 0) {
                                     let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
                                     request.get({
                                         url: urlSeasons
                                     }, function(error, response, body) {
-                                        // console.log(currentSeason)
-                                        if (error || !response) return reject(error)
-                                        if (!error && response.statusCode == 200) {
-
-                                            let $ = cheerio.load(body)
-
-                                            currentSeason = $('.selected')[2].children[0].data
-                                            showJson.Seasons[currentSeason] = {}
-                                            let episode = 1
-
-                                            for (var i = 1; i < $('.titles').length; i++) {
-
-                                                if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
-                                                    let title
-                                                    let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
-                                                    if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
-                                                    let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
-                                                    if ($('.titles')[i].children[0].children[1].children[2].children[0]) {
-                                                        title = $('.titles')[i].children[0].children[1].children[2].children[0].data
-                                                    }
-                                                    if (ep.length == 4) ep = '0' + ep
-                                                    ep = ep.slice(0, 2) + ep.slice(3)
-                                                    ep = ep.slice(0, 2) + 'e' + ep.slice(2)
-                                                    ep = 's' + ep
-
-                                                    showJson.Seasons[currentSeason][episode] = {
-                                                        episode: ep,
-                                                        title: title,
-                                                        date: date
-                                                    }
-                                                    episode++
-                                                } else if ($('.titles')[i].children.length == 6) {
-                                                    let date = $('.titles')[i].children[1].children[0].children[0].data
-                                                    if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
-                                                    let ep = $('.titles')[i].children[2].children[0].children[0].data
-                                                    let title = $('.titles')[i].children[2].children[2].children[0].data
-                                                    if (ep.length == 4) ep = '0' + ep
-                                                    ep = ep.slice(0, 2) + ep.slice(3)
-                                                    ep = ep.slice(0, 2) + 'e' + ep.slice(2)
-                                                    ep = 's' + ep
-                                                    showJson.Seasons[currentSeason][episode] = {
-                                                        episode: ep,
-                                                        title: title,
-                                                        date: date
-                                                    }
-                                                    episode++
-                                                }
-                                            }
-
-                                            // console.log(showJson)
-                                            // console.log('Season ', currentSeason, showJson.Seasons[currentSeason])
-
-                                                let valid = false
-                                                for (var ep in showJson.Seasons) {
-                                                    if (ep.hasOwnProperty(showJson.Seasons)) {
-                                                        console.log(ep + " -> " + showJson.Seasons[ep])
-
-                                                    }
-                                                }
-                                            console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
-                                            if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
-                                                fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
-                                                    $rootScope.$broadcast('show_ready', showJson)
-                                                    if (err) {
-                                                        reject('Cannot write file :', err)
-                                                    } else {
-                                                        resolve(showJson)
-                                                    }
-                                                })
-                                            }
-                                        } else {
-                                            resolve(response.statusCode)
-                                        }
+                                        getSeason(error, response, body)
                                     })
                                     currentSeason--
+                                }
+
+                                function getSeason(error, response, body) {
+                                    // console.log(currentSeason)
+                                    if (error || !response) return reject(error)
+                                    if (!error && response.statusCode == 200) {
+
+                                        let $ = cheerio.load(body)
+
+                                        currentSeason = $('.selected')[2].children[0].data
+                                        showJson.Seasons[currentSeason] = {}
+                                        let episode = 1
+
+                                        for (var i = 1; i < $('.titles').length; i++) {
+
+                                            if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
+                                                let title
+                                                let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
+                                                if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
+                                                if ($('.titles')[i].children[0].children[1].children[2].children[0]) {
+                                                    title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                                }
+                                                if (ep.length == 4) ep = '0' + ep
+                                                ep = ep.slice(0, 2) + ep.slice(3)
+                                                ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                ep = 's' + ep
+
+                                                showJson.Seasons[currentSeason][episode] = {
+                                                    episode: ep,
+                                                    title: title,
+                                                    date: date
+                                                }
+                                                episode++
+                                            } else if ($('.titles')[i].children.length == 6) {
+                                                let date = $('.titles')[i].children[1].children[0].children[0].data
+                                                if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                let ep = $('.titles')[i].children[2].children[0].children[0].data
+                                                let title = $('.titles')[i].children[2].children[2].children[0].data
+                                                if (ep.length == 4) ep = '0' + ep
+                                                ep = ep.slice(0, 2) + ep.slice(3)
+                                                ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                ep = 's' + ep
+                                                showJson.Seasons[currentSeason][episode] = {
+                                                    episode: ep,
+                                                    title: title,
+                                                    date: date
+                                                }
+                                                episode++
+                                            }
+                                        }
+
+                                        // console.log(showJson)
+                                        // console.log('Season ', currentSeason, showJson.Seasons[currentSeason])
+
+                                        let valid = false
+                                        for (var ep in showJson.Seasons) {
+                                            if (ep.hasOwnProperty(showJson.Seasons)) {
+                                                console.log(ep + " -> " + showJson.Seasons[ep])
+
+                                            }
+                                        }
+
+                                        console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
+                                        if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
+                                            fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
+                                                $rootScope.$broadcast('show_ready', showJson)
+                                                if (err) {
+                                                    reject('Cannot write file :', err)
+                                                } else {
+                                                    resolve(showJson)
+                                                }
+                                            })
+                                        }
+                                    } else {
+                                        reject(response.statusCode)
+                                    }
                                 }
 
                             } else reject('Status:', response.statusCode)
