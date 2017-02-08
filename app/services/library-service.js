@@ -19,8 +19,18 @@
 
         library_module['getLibrary'] = function getLibrary() {
             return new Promise(function(resolve, reject) {
-                if (localStorage.getItem('library')){
-                    resolve(JSON.parse(localStorage.getItem('library')))
+                if (localStorage.getItem('library')) {
+                    let library = JSON.parse(localStorage.getItem('library'))
+                    let formattedLibrary = {}
+                    for (var i = 0; i < library.length; i++) {
+                        if (!formattedLibrary[library[i].show]) {
+                            formattedLibrary[library[i].show] = []
+                            formattedLibrary[library[i].show].push(library[i])
+                        } else {
+                            formattedLibrary[library[i].show].push(library[i])
+                        }
+                    }
+                    resolve(formattedLibrary)
                 }
             })
         }
