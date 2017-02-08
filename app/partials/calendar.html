@@ -9,17 +9,17 @@
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 1.6em; opacity: 0.8;">{{ day.dateObj.dotm }}</span>
         </div>
         <md-content class="calendar_content" layout="row" layout-align="" id="{{'content_' + $index}}">
-            <md-card ng-repeat="show in day.shows | filter:posterOnly" layout="row" layout-align="center center" ui-sref="app.show( { show: show.title, episode: show.episode } )">
+            <md-card ng-repeat="show in day.shows | filter:posterOnly" ui-sref="app.show( { show: show.title, episode: show.episode } )" layout="row" layout-align="center center">
                 <md-card-content ng-if="show.poster">
                 <div class="calendar_poster_container">
                     <img ng-src="{{ show.poster }}" class="calendar_poster">
-                </div>
-                    <!-- <div ng-show="!show.loading" class="poster_sub_container">
+                    <div ng-show="!show.loading" class="poster_sub_container">
                         <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
                         <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
                         <i ng-click="download( { show: show.title, episode: show.episode } )" class="poster_sub download fa fa-download" aria-hidden="true"></i>
                         <i class="poster_sub fav fa fa-heart" aria-hidden="true" style=""></i>
-                    </div> -->
+                    </div>
+                </div>
                 </md-card-content>
                 <!--<md-card-content ng-if="!show.poster">
                     <img ng-src="res/default.png" class="poster">
