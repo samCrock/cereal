@@ -6,7 +6,7 @@
         .controller('mainCtrl', mainCtrl);
 
     /* @ngInject */
-    function mainCtrl($scope, $interval, $state, $rootScope, $timeout, wtService, torrentService, jsonService, commonService) {
+    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -23,6 +23,9 @@
         })
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
+
+            $location.hash('bottom');
+            $anchorScroll();
 
             sessionStorage.setItem('prev_state', JSON.stringify({
                 name: fromState.name,
@@ -88,6 +91,20 @@
             localStorage.setItem('pending', JSON.stringify([]))
         }
 
+        // Remove from pending
+        $interval(() => {
+            for (var i = 0; i < $rootScope.pending.length; i++) {
+                if ($rootScope.pending[i].progress === 100) {
+                    console.log('Removing', $rootScope.pending[i].show, $rootScope.pending[i].episode, 'from pending downloads')
+                    $rootScope.pending.splice(i, 1)
+                }
+            }
+            localStorage.setItem('pending', JSON.stringify($rootScope.pending))
+            if (!$rootScope.$$phase) {
+                $rootScope.$apply()
+            }
+        }, 1000)
+
 
         let save_pending = () => {
             console.log('Saving pending downloads...')
@@ -125,7 +142,7 @@
         }
 
         $rootScope.reload = true
-        // localStorage.topper = 0
+            // localStorage.topper = 0
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
         var library = []
@@ -133,6 +150,7 @@
         var shows = fsExtra.readdirSync(process.cwd() + '/library/')
         var pending = JSON.parse(localStorage.getItem('pending'))
         var isPending
+        $rootScope.shows = shows
         console.log('Library', shows)
         for (var i = 0; i < shows.length; i++) {
             episodes = fsExtra.readdirSync(process.cwd() + '/library/' + shows[i])
