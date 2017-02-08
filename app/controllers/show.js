@@ -5,7 +5,7 @@
         .module('app')
         .controller('showCtrl', showCtrl);
 
-    function showCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, torrentService, subsService, commonService, wtService, dialogService) {
+    function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, torrentService, subsService, commonService, wtService, dialogService) {
 
         let fsExtra = require('fs-extra')
 
@@ -15,13 +15,10 @@
         $scope.selected_ep = $stateParams.episode
         $rootScope.current_show.Title = $scope.title
         $scope.downloading = []
-
-
-        // $rootScope.$on('completed', (showObj) => {
-        //     start()
-        // })
+        $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
 
         $rootScope.$on('show_ready', (e, showResult) => {
+            sessionStorage.removeItem('current_show')
             formatDataAndSave(showResult)
             $scope.showIsLoading = false
             console.log('Show is ready')
@@ -63,32 +60,33 @@
                             if ($rootScope.pending[i].show === $scope.show.Title &&
                                 $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
                                 $scope.show.Seasons[s][e].eta = commonService.formatTime($rootScope.pending[i].eta)
-                                $scope.$applyAsync()
                             }
                         }
                     }
                 }
             }
-
-            if (!$scope.$$phase) {
-                $scope.$apply()
-            }
+            $scope.$applyAsync()
+                // if (!$scope.$$phase) {
+                //     $scope.$apply()
+                // }
         }, 1000)
 
         function start() {
-            if (sessionStorage.getItem('current_show')) {
-                let tmp = JSON.parse(sessionStorage.getItem('current_show'))
-                if (tmp.Title === $scope.title) {
-                    console.log('Found', $scope.title, 'in memory')
-                    $scope.show = tmp
-                    $rootScope.loading = false
-                    return
-                }
-            }
+            // if (sessionStorage.getItem('current_show')) {
+            //     let tmp = JSON.parse(sessionStorage.getItem('current_show'))
+            //     if (tmp.Title === $scope.title) {
+            //         console.log('Found', $scope.title, 'in memory')
+            //         $scope.show = tmp
+            //         $rootScope.loading = false
+            //         return
+            //     }
+            // }
             jsonService.getShow($scope.title)
                 .then((showResult) => {
                     console.log('Found', $scope.title, 'in local json')
                     $scope.show = showResult
+                    $scope.show.safe_trailer_src = $sce.trustAsResourceUrl($scope.show.Trailer.replace("watch?v=", "embed/"))
+                        // if ($scope.show.Overview.length > 300) $scope.show.Overview = $scope.show.Overview.substring(0, 300) + '..'
                     formatDataAndSave(showResult)
                     $rootScope.loading = false
 
@@ -133,25 +131,26 @@
         })
 
         $scope.downloadEpisode = (episode) => {
-
             let show = $scope.show.Title
             let label = episode.label
             let s = episode.s
             let e = episode.e
+            let searchObject = {
+                show: show,
+                episode: label
+            }
+            if ($scope.show.Genres.indexOf('Talk Show') > -1) searchObject.date = episode.date
 
             console.log('Download episode:', episode)
 
             $scope.show.Seasons[s][e].loading = true
             $scope.$applyAsync()
 
-            torrentService.searchTorrent({
-                    show: show,
-                    episode: label
-                })
+            torrentService.searchTorrent(searchObject)
                 .then((result) => {
                     console.log(result.episode, 'is downloading')
                     $scope.show.Seasons[s][e].loading = false
-                    torrentService.downloadTorrent(result, $rootScope)
+                    torrentService.downloadTorrent(result)
                         .then((t) => {
                             delete $scope.show.Seasons[s][e].eta
                             $rootScope.current_show = $scope.show
@@ -168,8 +167,24 @@
                     console.log($scope.show, s, e)
                     $scope.show.Seasons[s][e].loading = false
                     dialogService.torrentForm({ show: $scope.show.Title, episode: $scope.show.Seasons[s][e].episode, date: $scope.show.Seasons[s][e].date })
-                        .then((result) => {
-                            console.log('Dialog result ->', result)
+                        .then((dialogResult) => {
+                            console.log('Dialog result ->', dialogResult)
+                            torrentService.searchTorrent(dialogResult)
+                                .then((result) => {
+                                    console.log(result.episode, 'is downloading')
+                                    $scope.show.Seasons[s][e].loading = false
+                                    torrentService.downloadTorrent(result)
+                                        .then((t) => {
+                                            delete $scope.show.Seasons[s][e].eta
+                                            $rootScope.current_show = $scope.show
+                                            sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+                                            $scope.show.Seasons[s][e].loading = false
+                                            $scope.show.Seasons[s][e].downloaded = true
+                                            console.log(result.episode, 'is ready')
+                                            $scope.showIsLoading = false
+                                            $scope.$applyAsync()
+                                        })
+                                })
                         })
                         .catch(() => {
                             console.log('Dialog closed')
@@ -203,5 +218,30 @@
         }
 
         start()
+
+        /////////// SEASONS TABS WRAPPER OFFSET HANDLER ///////////
+        var cumulativeOffset = function(element) {
+            var top = 0
+            do {
+                top += element.offsetTop || 0
+                element = element.offsetParent
+            } while (element);
+            return top
+        }
+        let tabsWrapper = document.getElementsByTagName('md-tabs-wrapper')[0]
+        let orginalOffset = cumulativeOffset(tabsWrapper)
+        window.addEventListener('scroll', (e) => {
+            window.requestAnimationFrame(() => {
+                let wrapperOffset = cumulativeOffset(tabsWrapper)
+                if (window.pageYOffset > orginalOffset - 48 && wrapperOffset) {
+                    tabsWrapper.classList.add('scrolled');
+                } else {
+                    tabsWrapper.classList.remove('scrolled');
+                }
+            })
+        })
+        //////////////////////
+
+
     }
 })();
