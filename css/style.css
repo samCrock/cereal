@@ -402,7 +402,7 @@ md-content {
 }
 
 .poster_sub.ep:hover {
-    font-size: 2.6rem;
+    /*font-size: 2.6rem;*/
 }
 
 .poster_sub.ep:active {
@@ -411,9 +411,9 @@ md-content {
 
 .poster_sub.download {
     font-size: 2.4rem;
-    top: 45%;
+    top: 50%;
     left: 70%;
-    transform: translate(-70%, -45%);
+    transform: translate(-70%, -50%);
 }
 
 .poster_sub.download:hover {
@@ -426,9 +426,9 @@ md-content {
 
 .poster_sub.play {
     font-size: 2.4rem;
-    top: 45%;
+    top: 50%;
     left: 30%;
-    transform: translate(-30%, -45%);
+    transform: translate(-30%, -50%);
 }
 
 .poster_sub.play:hover {
@@ -451,6 +451,14 @@ md-content {
 
 .poster_sub.fav:active {
     -webkit-filter: blur(0.1rem);
+}
+
+.pending_card {
+    background-color: rgba(43, 40, 45, 0.5);
+    margin-left: 2rem;
+    margin-right: 2rem;
+    color: white;
+    font-size: 1.2rem;
 }
 
 .calendar_card {
@@ -702,7 +710,7 @@ section {
     height: 4rem;
     text-align: center;
     color: rgba(255, 255, 255, 1);
-    background-color: rgba(48, 45, 50, 1);
+    background-color: rgba(48, 45, 50, 0.4);
 }
 
 md-progress-linear.md-default-threme .md-bar,
@@ -827,7 +835,7 @@ md-input-container>md-select {
     border-width: 1px;
     border-style: solid;
     border-color: white;
-    background: rgb(43, 40, 45);
+    background: rgba(43, 40, 45, 0.9);
 }
 
 .episode_dialog h2 {

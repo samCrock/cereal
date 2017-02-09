@@ -1,11 +1,11 @@
 <section layout="column" layout="column" style="margin-top: 68px;">
     <label ng-if="$root.pending.length == 0" id="root-msg" style="font-size: 2em;">No pending downloads</label>
-    <md-card class="borderless" ng-show="torrent.progress < 100" ng-repeat="torrent in $root.pending | orderBy : '-progress' : reverse = false track by $index" layout-align="start" style="background-color: white;">
-        <md-card-content style="position: relative; height: auto;" layout-align="start center">
+    <md-card class="pending_card" ng-show="torrent.progress < 100" ng-repeat="torrent in $root.pending | orderBy : '-progress' : reverse = false track by $index" layout-align="start">
+        <md-card-content layout-align="start center">
             <md-progress-linear md-mode="determinate" value="{{ torrent.progress }}"></md-progress-linear>
             <md-card-title layout="row" layout-align="space-between center">
                 <div flex="55">
-                    <label style="font-size: 1.2em;">{{ torrent.show }}</label>
+                    <label>{{ torrent.show }}</label>
                 </div>
                 <div flex="15">
                     <label>{{ torrent.episode }}</label>
