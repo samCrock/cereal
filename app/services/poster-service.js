@@ -60,7 +60,7 @@
 
                         request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
                             if (!error && response.statusCode == 200) {
-                                let posterPath = './res/posters/' + dashedShowName + '.jpg'
+                                let posterPath = './assets/posters/' + dashedShowName + '.jpg'
                                 fsExtra.outputFile(posterPath, body, 'binary', (err) => {
                                     if (err) reject('Cannot write file :', err)
                                     console.log(dashedShowName, 'poster successfuly saved')

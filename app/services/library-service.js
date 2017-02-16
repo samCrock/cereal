@@ -46,7 +46,7 @@
         //                 let showName = dashedShowName.split(' ').join('-')
         //                 let show = {
         //                     title: showName,
-        //                     poster: './res/posters/' + dashedShowName + '.jpg',
+        //                     poster: './assets/posters/' + dashedShowName + '.jpg',
         //                     episodes: []
         //                 }
         //                 fsExtra.readFile('./data/shows/' + file, (err, showEpisodes) => {

@@ -23,6 +23,7 @@ let mainWindow
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow()
+    
     mainWindow.maximize()
 
     // and load the index.html of the app.
@@ -32,6 +33,8 @@ function createWindow() {
     mainWindow.titleBarStyle = 'hidden'
 
     mainWindow.webContents.openDevTools()
+
+
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

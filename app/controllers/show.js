@@ -25,8 +25,10 @@
         })
 
         $scope.dotClass = function(episode) {
-            if (episode.downloaded) return 'green'
-            if (episode.timePassed && episode.timePassed.indexOf('ago') === -1 && episode.timePassed.indexOf('Today') === -1) return 'hidden'
+            if (episode) {
+                if (episode.downloaded) return 'green'
+                if (episode.timePassed && episode.timePassed.indexOf('ago') === -1 && episode.timePassed.indexOf('Today') === -1 || episode.timePassed && episode.timePassed.indexOf('Yesterday') !== -1) return 'hidden'
+            }
             return ''
         }
 
@@ -37,7 +39,7 @@
                     episode: episode.label
                 })
                 .then((t) => {
-                    let streamObj = { magnet: t.magnet, path: process.cwd() + '/library/' + $scope.title + '/' + episode.label }
+                    let streamObj = { magnet: t.magnet, path: __dirname + '/../../library/' + $scope.title + '/' + episode.label }
                     console.log('streamObj', streamObj)
                     commonService.stream(streamObj)
                 })
@@ -96,7 +98,7 @@
         }
 
         function formatDataAndSave(showResult) {
-            console.log('formatDataAndSave', showResult)
+            // console.log('formatDataAndSave', showResult)
             if (showResult) {
                 for (var season in showResult.Seasons) {
                     for (var episode in showResult.Seasons[season]) {
@@ -117,7 +119,7 @@
             $scope.show = showResult
             $rootScope.current_show = $scope.show
             sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-            $scope.selectedIndex = 1
+            $scope.selectedIndex = 0
             $scope.$applyAsync()
 
         }
@@ -146,21 +148,23 @@
             $scope.show.Seasons[s][e].loading = true
             $scope.$applyAsync()
 
+            $rootScope.$on('episode_downloaded', (event, result)=> {
+                delete $scope.show.Seasons[s][e].eta
+                $rootScope.current_show = $scope.show
+                sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+                $scope.show.Seasons[s][e].loading = false
+                $scope.show.Seasons[s][e].downloaded = true
+                $scope.showIsLoading = false
+                console.log(result.episode, 'is ready')
+                $scope.$applyAsync()
+
+            })
+
             torrentService.searchTorrent(searchObject)
                 .then((result) => {
                     console.log(result.episode, 'is downloading')
                     $scope.show.Seasons[s][e].loading = false
                     torrentService.downloadTorrent(result)
-                        .then((t) => {
-                            delete $scope.show.Seasons[s][e].eta
-                            $rootScope.current_show = $scope.show
-                            sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-                            $scope.show.Seasons[s][e].loading = false
-                            $scope.show.Seasons[s][e].downloaded = true
-                            console.log(result.episode, 'is ready')
-                            $scope.showIsLoading = false
-                            $scope.$applyAsync()
-                        })
                 })
                 .catch((reason) => {
                     console.log('No torrent was found')
@@ -204,7 +208,7 @@
             let show = $scope.title
             let episode = showObj.label
             console.log('Deleting actual folder')
-            fsExtra.removeSync(process.cwd() + '/library/' + show + '/' + episode);
+            fsExtra.removeSync(__dirname + '/../../library/' + show + '/' + episode);
             console.log('Deleting from library (rootscope)')
             for (var i = 0; i < $rootScope.library.length; i++) {
                 if ($rootScope.library[i].show === show && $rootScope.library[i].episode === episode) {

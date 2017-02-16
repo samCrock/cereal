@@ -19,7 +19,7 @@
         common_module['findAlias'] = function findAlias(show) {
             return new Promise((resolve, reject) => {
                 // console.log('Checking for aliases', show)
-                fsExtra.readFile('data/aliases.json', 'utf-8', (err, data) => {
+                fsExtra.readFile(__dirname + '/../../data/aliases.json', 'utf-8', (err, data) => {
                     if (err) reject('Cannot find aliases.json')
                         // console.log('data', data)
                     let aliases = JSON.parse(data)
@@ -36,7 +36,7 @@
 
         common_module['findAliasSync'] = function findAliasSync(show) {
             // console.log('Checking for aliases', show)
-            var data = fsExtra.readFileSync('data/aliases.json', 'utf-8')
+            var data = fsExtra.readFileSync(__dirname + '/../../data/aliases.json', 'utf-8')
             let aliases = JSON.parse(data)
             for (var key in aliases) {
                 if (key === show) {

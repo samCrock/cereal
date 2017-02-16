@@ -6,7 +6,7 @@
         .controller('mainCtrl', mainCtrl);
 
     /* @ngInject */
-    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService) {
+    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService, libraryService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -65,7 +65,7 @@
         $rootScope.currentNavItem = 'calendar'
 
 
-        $scope.default_poster = './res/posters/default.jpg'
+        $scope.default_poster = './assets/posters/default.jpg'
 
         // jsonService.updateFollowingEpisodes();
         // jsonService.getLibrary();
@@ -147,13 +147,17 @@
 
         var library = []
         var episodes = []
-        var shows = fsExtra.readdirSync(process.cwd() + '/library/')
+        var shows = fsExtra.readdirSync(__dirname + '/../../library')
         var pending = JSON.parse(localStorage.getItem('pending'))
         var isPending
-        $rootScope.shows = shows
-        console.log('Library', shows)
+
+        // libraryService.getLibrary().then((library) => {
+        //     $rootScope.library = library
+        //     console.log('Library', library)
+        // })
+
         for (var i = 0; i < shows.length; i++) {
-            episodes = fsExtra.readdirSync(process.cwd() + '/library/' + shows[i])
+            episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
             for (var j = 0; j < episodes.length; j++) {
                 // console.log(shows[i], episodes[j])
                 isPending = false
@@ -166,7 +170,7 @@
                     library.push({
                         show: shows[i],
                         episode: episodes[j],
-                        poster: process.cwd() + '/res/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
+                        poster: __dirname + '/../../assets/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
                     })
                 }
             }

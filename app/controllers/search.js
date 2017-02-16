@@ -24,7 +24,7 @@
         })
 
         $scope.openShow = function(show) {
-            let posterPath = './res/posters/' + commonService.spacedToDashed(show.title) + '.jpg'
+            let posterPath = './assets/posters/' + commonService.spacedToDashed(show.title) + '.jpg'
             posterService.downloadPosterFromUrl({ path: posterPath, url: show.poster })
             console.log('app.show->', show)
             $state.go('app.show', { show: show.title})

@@ -14,3 +14,9 @@ $ npm install
 ```
 $ npm run start
 ```
+
+## Build
+```
+$ electron-packager . --platform=[target] -prune --overwrite --ignore=/library
+```
+

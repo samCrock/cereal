@@ -19,7 +19,7 @@
         let logUpdate = require('log-update')
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
-        let path = process.cwd() + '/library/'
+        let path = __dirname + '/../../library/'
 
         let mode = 'stream'
         let title = $scope.show = commonService.capitalCase($stateParams.show.trim())

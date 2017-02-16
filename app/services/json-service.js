@@ -6,7 +6,7 @@
             .service('jsonService', jsonService);
 
         /* @ngInject */
-        function jsonService(commonService, $rootScope) {
+        function jsonService(commonService, $rootScope, $interval) {
 
             let request = require('request')
             let cheerio = require('cheerio')
@@ -125,7 +125,7 @@
             json_module['getLocalPosters'] = function getLocalPosters() {
                 return new Promise(function(resolve, reject) {
                     let local_posters = []
-                    fsExtra.readdirSync('./res/posters')
+                    fsExtra.readdirSync(__dirname + '/../../assets/posters')
                         .filter((file) => {
                             let dashedShowName = file.split('.jpg')
                             dashedShowName = dashedShowName[0]
@@ -334,7 +334,7 @@
                     show = commonService.spacedToDashed(show)
 
                     // Search for local episode file, if not found, retrieve from trakt
-                    fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
+                    fsExtra.readFile(__dirname + '/../../data/shows/' + show + '.json', (err, data) => {
                         if (data) { // Locals exists
                             let showJson = JSON.parse(data)
                             if (commonService.daysToNow(showJson.Updated) < 7) {
@@ -431,16 +431,29 @@
 
                                 let currentSeason = seasons
                                 let seasonPromises = []
-
-                                while (currentSeason > 0) {
-                                    let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
-                                    request.get({
-                                        url: urlSeasons
-                                    }, function(error, response, body) {
-                                        getSeason(error, response, body)
-                                    })
-                                    currentSeason--
-                                }
+                                let lastSeason
+                                $interval( ()=> {
+                                    if (currentSeason !== lastSeason && currentSeason !== 0) {
+                                        let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
+                                        request.get({
+                                            url: urlSeasons
+                                        }, function(error, response, body) {
+                                            getSeason(error, response, body)
+                                            lastSeason = currentSeason
+                                            currentSeason--
+                                        })                                    
+                                    }
+                                }, 200)
+                                        
+                                // while (currentSeason > 0) {
+                                    // let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
+                                    // request.get({
+                                    //     url: urlSeasons
+                                    // }, function(error, response, body) {
+                                    //     getSeason(error, response, body)
+                                    // })
+                                    // currentSeason--
+                                // }
 
                                 function getSeason(error, response, body) {
                                     // console.log(currentSeason)
@@ -499,13 +512,12 @@
                                         for (var ep in showJson.Seasons) {
                                             if (ep.hasOwnProperty(showJson.Seasons)) {
                                                 console.log(ep + " -> " + showJson.Seasons[ep])
-
                                             }
                                         }
 
                                         console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
                                         if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
-                                            fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
+                                            fsExtra.outputFile(__dirname + '/../../data/shows/' + show + '.json', JSON.stringify(showJson, null, 4), function(err) {
                                                 $rootScope.$broadcast('show_ready', showJson)
                                                 if (err) {
                                                     reject('Cannot write file :', err)
@@ -528,8 +540,7 @@
             // Get all shows from following.json and populates episode dir w/ episodes list
             json_module['updateFollowingEpisodes'] = function updateFollowingEpisodes() {
                 return new Promise(function(resolve, reject) {
-                    fsExtra.readFile('./data/json/following.json', (err, data) => {
-
+                    fsExtra.readFile(__dirname + '/../../data/json/following.json', (err, data) => {
                         if (err) throw err
                         if (data) { // Locals exists
 
@@ -556,7 +567,7 @@
             json_module['getLibrary'] = function getLibrary() {
                 return new Promise(function(resolve, reject) {
                     let library = []
-                    fsExtra.readdirSync('./data/shows')
+                    fsExtra.readdirSync(__dirname + '/../../data/shows')
                         .filter((file) => {
                             let dashedShowName = file.split('.json')
                             dashedShowName = dashedShowName[0]
@@ -564,10 +575,10 @@
                             showName = commonService.capitalCase(showName)
                             let show = {
                                 title: showName,
-                                poster: './res/posters/' + dashedShowName + '.jpg',
+                                poster: dashedShowName + '.jpg',
                                 episodes: []
                             }
-                            fsExtra.readFile('./data/shows/' + file, (err, showEpisodes) => {
+                            fsExtra.readFile(__dirname + '/../../data/shows/' + file, (err, showEpisodes) => {
                                 if (err) throw err
                                 if (showEpisodes) {
                                     let episodes = JSON.parse(showEpisodes)

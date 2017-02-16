@@ -18,7 +18,7 @@
         let srt2vtt = require('srt2vtt')
 
         let subs_module = {}
-        let path = process.cwd() + '/library/'
+        let path = __dirname + '/../../library/'
 
         subs_module['search'] = function search(searchObj) {
             return new Promise(function(resolve, reject) {

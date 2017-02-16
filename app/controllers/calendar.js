@@ -30,7 +30,7 @@
                     episode: episode.episode
                 })
                 .then((t) => {
-                    let streamObj = { magnet: t.magnet, path: process.cwd() + '/library/' + episode.show + '/' + episode.episode }
+                    let streamObj = { magnet: t.magnet, path: __dirname + '/../../library/' + episode.show + '/' + episode.episode }
                     console.log('streamObj', streamObj)
                     commonService.stream(streamObj)
                 })
@@ -48,7 +48,7 @@
                     episode: episode
                 })
                 .then((result) => {
-                    torrentService.downloadTorrent(result, $rootScope)
+                    torrentService.downloadTorrent(result)
                         .then((t) => {
                             console.log('downloadTorrent result', t)
                         })
@@ -85,7 +85,7 @@
                                         dashedTitle = commonService.findAliasSync(dashedTitle)
                                         let index = local_posters.indexOf(dashedTitle)
                                         if (index >= 0) {
-                                            let posterPath = './res/posters/' + local_posters[index] + '.jpg'
+                                            let posterPath = 'assets/posters/' + local_posters[index] + '.jpg'
                                                 // console.log('--poster found--')
                                             show.poster = posterPath
                                         } else {
@@ -93,15 +93,16 @@
                                             posters.push(posterService.downloadPoster(show.title))
                                         }
                                         // If this show is in my library && autodownload is enabled, download this episode
-                                        let idx = $rootScope.shows.indexOf(show.title)
-                                        if (idx > -1 && CONFIG.auto_download) {
-                                            console.log('.......', $rootScope.shows[idx])
-                                            if ($rootScope.shows[idx].episode === show.episode) {
-                                                console.log('New episode found', show.title, show.episode)
-                                                $scope.download({
-                                                    show: show.title,
-                                                    episode: show.episode
-                                                })
+                                        let episodes = $rootScope.library[show.title]
+                                        if (episodes && CONFIG.auto_download) {
+                                            for (var i = 0; i < episodes.length; i++) {
+                                                if (episodes[i].episode === show.episode) {
+                                                    console.log('New episode found', show.title, show.episode)
+                                                    $scope.download({
+                                                        show: show.title,
+                                                        episode: show.episode
+                                                    })
+                                                }
                                             }
                                         }
                                     })

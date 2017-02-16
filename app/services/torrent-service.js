@@ -23,7 +23,7 @@
         let magnetUri = require('magnet-uri')
 
         let torrent_module = {}
-        let path = process.cwd() + '/library/'
+        let path = __dirname + '/../../library/'
         let watcher = chokidar.watch(path)
         const wt_client = wtService.client()
 
@@ -40,7 +40,7 @@
                     reject(404)
                 }
 
-                t.poster = './res/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
+                t.poster = './assets/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
 
                 // jsonService.getEpisodeInfo(t).then((t) => {
                 //     console.log('Updating library w\\ torrent:', t)
@@ -81,8 +81,7 @@
 
                             // Add episode to local library
                             let isNew = true
-                            let library = localStorage.getItem('library')
-                            library = JSON.parse(library)
+                            let library = JSON.parse(localStorage.getItem('library'))
                             let ep = {
                                 show: t.show,
                                 episode: t.episode,
@@ -123,7 +122,7 @@
                             $rootScope.$apply()
 
                             // // Update pending downloads
-                            $rootScope.$emit('completed', t)
+                            $rootScope.$emit('episode_downloaded', t)
                         })
 
                         // *********************** ON DOWNLOAD ***********************
