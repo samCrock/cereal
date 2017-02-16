@@ -17,109 +17,94 @@
             let json
             let json_module = {}
 
-            json_module['getFollowing'] = function getFollowing() {
-                return new Promise((resolve, reject) => {
-                    let following = []
-                    fsExtra.readFile('./data/json/following.json', (err, data) => {
-                        if (data) {
-                            data = JSON.parse(data)
-                            data.filter((show) => {
-                                if (!show.poster) {
+            // json_module['getFollowing'] = function getFollowing() {
+            //     return new Promise((resolve, reject) => {
+            //         let following = []
+            //         fsExtra.readFile('./data/json/following.json', (err, data) => {
+            //             if (data) {
+            //                 data = JSON.parse(data)
+            //                 data.filter((show) => {
+            //                     if (!show.poster) {
 
-                                }
-                                following.push(show)
-                            })
-                            resolve(following)
-                        }
-                    })
-                })
-            }
+            //                     }
+            //                     following.push(show)
+            //                 })
+            //                 resolve(following)
+            //             }
+            //         })
+            //     })
+            // }
 
-            json_module['getShowEpisodes'] = function getShowEpisodes(show) {
-                return new Promise((resolve, reject) => {
-                    console.log('Retrieving local episodes info..')
-                    show = commonService.spacedToDashed(show)
-                    fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
-                        if (err) reject(err)
-                        if (data) {
-                            data = JSON.parse(data)
-                            console.log('Retrieved', data.length, 'episodes')
-                            resolve(data)
-                        }
-                    })
-                })
-            }
+            // json_module['getShowEpisodes'] = function getShowEpisodes(show) {
+            //     return new Promise((resolve, reject) => {
+            //         console.log('Retrieving local episodes info..')
+            //         show = commonService.spacedToDashed(show)
+            //         fsExtra.readFile('./data/shows/' + show + '.json', (err, data) => {
+            //             if (err) reject(err)
+            //             if (data) {
+            //                 data = JSON.parse(data)
+            //                 console.log('Retrieved', data.length, 'episodes')
+            //                 resolve(data)
+            //             }
+            //         })
+            //     })
+            // }
 
-            json_module['updateShowEpisodes'] = function updateShowEpisodes(show, episodes) {
-                return new Promise((resolve, reject) => {
-                    console.log('Retrieving remote episodes info..')
-                    show = commonService.spacedToDashed(show)
-                    fsExtra.outputFile('./data/shows/' + show + '.json', JSON.stringify(episodes, null, 4), function(err) {
-                        if (err) {
-                            reject('Cannot write file :', err)
-                        } else {
-                            console.log(show, 'episodes list updated!')
-                            resolve(episodes)
-                        }
-                    })
-                })
-            }
+            // // Returns poster path given the show name
+            // json_module['getPoster'] = function getPoster(showName) {
+            //     return new Promise(function(resolve, reject) {
+            //         // console.log('showName', showName)
+            //         fsExtra.readFile('./data/json/following.json', (err, data) => {
+            //             if (data) { // Locals exists
+            //                 let json = JSON.parse(data)
+            //                 for (var i = json.length - 1; i >= 0; i--) {
+            //                     if (json[i].title.toLowerCase() === showName.toLowerCase()) {
+            //                         resolve(json[i].poster)
+            //                     }
+            //                 }
+            //             }
+            //         })
 
-            // Returns poster path given the show name
-            json_module['getPoster'] = function getPoster(showName) {
-                return new Promise(function(resolve, reject) {
-                    // console.log('showName', showName)
-                    fsExtra.readFile('./data/json/following.json', (err, data) => {
-                        if (data) { // Locals exists
-                            let json = JSON.parse(data)
-                            for (var i = json.length - 1; i >= 0; i--) {
-                                if (json[i].title.toLowerCase() === showName.toLowerCase()) {
-                                    resolve(json[i].poster)
-                                }
-                            }
-                        }
-                    })
+            //     })
+            // }
 
-                })
-            }
+            // // Returns torrent object given the torrent title
+            // json_module['getLocalTorrent'] = function getLocalTorrent(title) {
+            //     return new Promise(function(resolve, reject) {
+            //         // console.log('local title', title)
+            //         fsExtra.readFile('./data/json/local_torrents.json', (err, data) => {
+            //             if (data) { // Locals exists
+            //                 let json = JSON.parse(data)
+            //                 json.filter((torrent) => {
+            //                     // console.log('torrent title', torrent.title)
+            //                     if (torrent.title === title) {
+            //                         // console.log('match:', torrent)
+            //                         resolve(torrent)
+            //                     }
+            //                 })
+            //                 reject()
+            //             }
+            //         })
+            //     })
+            // }
 
-            // Returns torrent object given the torrent title
-            json_module['getLocalTorrent'] = function getLocalTorrent(title) {
-                return new Promise(function(resolve, reject) {
-                    // console.log('local title', title)
-                    fsExtra.readFile('./data/json/local_torrents.json', (err, data) => {
-                        if (data) { // Locals exists
-                            let json = JSON.parse(data)
-                            json.filter((torrent) => {
-                                // console.log('torrent title', torrent.title)
-                                if (torrent.title === title) {
-                                    // console.log('match:', torrent)
-                                    resolve(torrent)
-                                }
-                            })
-                            reject()
-                        }
-                    })
-                })
-            }
-
-            // Returns all completed shows from local_torrents
-            json_module['getCompleted'] = function getCompleted() {
-                return new Promise(function(resolve, reject) {
-                    fsExtra.readFile('./data/json/local_torrents.json', (err, data) => {
-                        let completed = []
-                        if (data) {
-                            data = JSON.parse(data)
-                            data.filter((show) => {
-                                if (show.ready) {
-                                    completed.push(show)
-                                }
-                            })
-                            resolve(completed)
-                        } else reject()
-                    })
-                })
-            }
+            // // Returns all completed shows from local_torrents
+            // json_module['getCompleted'] = function getCompleted() {
+            //     return new Promise(function(resolve, reject) {
+            //         fsExtra.readFile('./data/json/local_torrents.json', (err, data) => {
+            //             let completed = []
+            //             if (data) {
+            //                 data = JSON.parse(data)
+            //                 data.filter((show) => {
+            //                     if (show.ready) {
+            //                         completed.push(show)
+            //                     }
+            //                 })
+            //                 resolve(completed)
+            //             } else reject()
+            //         })
+            //     })
+            // }
 
             // Returns all downloaded poster show names
             json_module['getLocalPosters'] = function getLocalPosters() {
@@ -534,32 +519,6 @@
                             } else reject('Status:', response.statusCode)
                         })
                     }
-                })
-            }
-
-            // Get all shows from following.json and populates episode dir w/ episodes list
-            json_module['updateFollowingEpisodes'] = function updateFollowingEpisodes() {
-                return new Promise(function(resolve, reject) {
-                    fsExtra.readFile(__dirname + '/../../data/json/following.json', (err, data) => {
-                        if (err) throw err
-                        if (data) { // Locals exists
-
-                            let json = JSON.parse(data)
-                            let showEpisode = []
-                            json.filter((following, index) => {
-                                console.log('Updating', following.title, 'episode list')
-                                showEpisode.push(getShow(following.title))
-                            })
-                            Promise.all(showEpisode)
-                                .then((results) => {
-                                    console.log('All episodes from followed shows has been saved:', results)
-                                    resolve()
-                                })
-                        } else {
-                            reject('Cannot find following.json')
-                        }
-                    })
-
                 })
             }
 

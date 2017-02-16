@@ -182,6 +182,10 @@ md-tabs .md-tab {
     padding: 10px;
 }
 
+.additional h3 {
+    margin: 0.2rem;
+}
+
 .genre {
     padding-right: 1rem;
 }
@@ -197,6 +201,7 @@ md-tabs .md-tab {
     border: rgba(255, 255, 255, 0.9);
     border-width: 1px;
     border-style: solid;
+    margin: 0.2rem;
 }
 
 .show_recap .runtime {
@@ -386,6 +391,7 @@ md-content {
 .poster_sub_show.eta {
     font-size: 1.2rem;
     transform: translateY(0.6rem);
+    text-transform: lowercase;
 }
 
 .poster_sub_show.stream-play {
@@ -764,11 +770,11 @@ md-progress-linear .md-container .md-bar {
 }
 
 .md-button.md-accent.md-fab {
-    background-color: rgba(208, 227, 222, 0.5);
+    background-color: rgba(48, 45, 50, 0.1);
 }
 
 .md-button.md-accent.md-fab:not([disabled]):hover {
-    background-color: rgba(208, 227, 222, 1);
+    background-color: rgba(48, 45, 50, 0.2);
 }
 
 md-card md-card-title {

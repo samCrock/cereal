@@ -9,11 +9,12 @@
 
         $rootScope.loading = false
         const wt_client = wtService.client()
+        let fsExtra = require('fs-extra')
 
         $scope.remove = (torrent) => {
             console.log(torrent);
             wt_client.remove(torrent.magnet, () => {
-                console.log('Deleted')
+                console.log('Deleted from client')
                 for (var i = 0; i < $rootScope.pending.length; i++) {
                     if ($rootScope.pending[i].magnet === torrent.magnet) {
                         $rootScope.pending.splice(i, 1)
@@ -27,6 +28,7 @@
                 }
                 localStorage.setItem('pending', JSON.stringify(local_pending))
             })
+
         }
 
     }

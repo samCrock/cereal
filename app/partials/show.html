@@ -2,22 +2,20 @@
     <md-content>
         <div class="show_recap" layout="column">
             <h1 class="title">{{ show.Title }}</h1>
-            <div layout="row">
-                <div layout="row">
+            <div layout="row" layout-align="space-between stretch">
                     <!--                 <div ng-if="!show.safe_trailer_src" class="show_poster_container">
                     <img ng-src="{{ poster }}" class="calendar_poster">
                 </div> -->
                     <!-- <iframe ng-if="show.safe_trailer_src" height="auto" src="{{ show.safe_trailer_src }}" frameborder="0" allowfullscreen flex="50"></iframe> -->
-                    <div class="additional" layout="row" layout-align="space-around start" layout-padding flex>
-                        <div layput="row" layout-align="start center">
+                        <div class="additional" layout="column" layout-align="center start">  
                             <span ng-if="show.Trailer">
                                 <md-button aria-label="Trailer" class="md-button trailer" ng-click="playTrailer()">Trailer</md-button>
                             </span>
                             <h3 class="network">{{ show.Network }}</h3>
                             <h3 class="runtime" ng-if="show.Runtime">{{ show.Runtime }}min</h3>
                         </div>
-                        <h2 class="overview">{{ show.Overview }}</h2>
-                    </div>
+                <div layout="row">
+                    <h2 class="overview">{{ show.Overview }}</h2>
                 </div>
                 <div class="genre" layout="column" layout-align="center end">
                     <h3 ng-repeat="genre in show.Genres">{{ genre }}</h3>

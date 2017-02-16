@@ -118,6 +118,8 @@
                             t.ready = true
                             delete t['download_info']
 
+                            wt_client.remove(t.magnet)
+
                             resolve(torrent.name)
                             $rootScope.$apply()
 

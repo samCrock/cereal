@@ -148,7 +148,7 @@
             $scope.show.Seasons[s][e].loading = true
             $scope.$applyAsync()
 
-            $rootScope.$on('episode_downloaded', (event, result)=> {
+            $rootScope.$on('episode_downloaded', (event, result) => {
                 delete $scope.show.Seasons[s][e].eta
                 $rootScope.current_show = $scope.show
                 sessionStorage.setItem('current_show', JSON.stringify($scope.show))
@@ -199,26 +199,32 @@
         $scope.playTrailer = () => {
             let trailer = $scope.show.Trailer
             console.log('Playing trailer:', trailer)
-
             dialogService.trailer({ src: $scope.show.Trailer })
-
         }
 
         $scope.deleteEpisode = (showObj) => {
             let show = $scope.title
             let episode = showObj.label
+            
+            let e = episode.split('e')
+            let s = e[0].split('s')
+            s = parseInt(s[1], 10)
+            e = parseInt(e[1], 10)
+            $scope.show.Seasons[s][e].downloaded = false
+            
             console.log('Deleting actual folder')
             fsExtra.removeSync(__dirname + '/../../library/' + show + '/' + episode);
             console.log('Deleting from library (rootscope)')
-            for (var i = 0; i < $rootScope.library.length; i++) {
-                if ($rootScope.library[i].show === show && $rootScope.library[i].episode === episode) {
-                    $rootScope.library.splice(i, 1)
+            let library = JSON.parse(localStorage.getItem('library'))
+            for (var i = 0; i < library.length; i++) {
+                if (library[i].show === show && library[i].episode === episode) {
+                    library.splice(i, 1)
                 }
             }
             console.log('Deleting from library (localStorage)')
-            localStorage.setItem('library', JSON.stringify($rootScope.library))
+            localStorage.setItem('library', JSON.stringify(library))
 
-            start()
+                // start()
         }
 
         start()
@@ -235,16 +241,16 @@
         let tabsWrapper = document.getElementsByTagName('md-tabs-wrapper')[0]
         let orginalOffset = cumulativeOffset(tabsWrapper)
         window.addEventListener('scroll', (e) => {
-            window.requestAnimationFrame(() => {
-                let wrapperOffset = cumulativeOffset(tabsWrapper)
-                if (window.pageYOffset > orginalOffset - 48 && wrapperOffset) {
-                    tabsWrapper.classList.add('scrolled');
-                } else {
-                    tabsWrapper.classList.remove('scrolled');
-                }
+                window.requestAnimationFrame(() => {
+                    let wrapperOffset = cumulativeOffset(tabsWrapper)
+                    if (window.pageYOffset > orginalOffset - 48 && wrapperOffset) {
+                        tabsWrapper.classList.add('scrolled');
+                    } else {
+                        tabsWrapper.classList.remove('scrolled');
+                    }
+                })
             })
-        })
-        //////////////////////
+            //////////////////////
 
 
     }
