@@ -147,7 +147,12 @@
 
         var library = []
         var episodes = []
+        
+        if (!fsExtra.existsSync(__dirname + '/../../library')){
+            fsExtra.mkdirSync(__dirname + '/../../library');
+        }
         var shows = fsExtra.readdirSync(__dirname + '/../../library')
+
         var pending = JSON.parse(localStorage.getItem('pending'))
         var isPending
 
