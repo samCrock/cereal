@@ -19,6 +19,7 @@ $ npm run start
 ```
 $ npm install -g electron-packager
 
+```
 
 ### Linux (Ubuntu
 ```
