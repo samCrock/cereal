@@ -4,5 +4,5 @@ library
 data/shows
 data/monthly.json
 res/posters
-
+release-builds
 *.log
