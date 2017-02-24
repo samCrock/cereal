@@ -1,4 +1,5 @@
-<html lang="en">
+<html lang="en" ng-app="app" class="desaturate" style="background: url({{ $root.wallpaper }}) no-repeat center center fixed; background-size: cover;">
+<!-- <html lang="en" ng-app="app"> -->
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,8 @@
     <title>Cereal</title>
 </head>
 
-<body ng-app="app" ng-cloak>
+<body  ng-cloak>
+<!-- <body ng-app="app" class="desaturate" style="background-image: url({{ $root.wallpaper }}) no-repeat center center fixed; background-size: cover;" ng-cloak> -->
     <div ui-view="header" id="header"></div>
     <div ng-show="$root.loading" layout="column" layout-fill layout-align="center center">
         <i class="spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
