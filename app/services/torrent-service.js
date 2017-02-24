@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(CONFIG, wtService, commonService, jsonService, subsService, $rootScope) {
+    function torrentService(wtService, commonService, jsonService, subsService, $rootScope) {
 
 
         const os = require('os')
@@ -89,18 +89,32 @@
                                 magnet: t.magnet,
                                 path: t.path
                             }
-                            library.filter((obj, i) => {
-                                if (obj.show === t.show && obj.episode === t.episode) {
-                                    isNew = false
-                                    library[i] = ep
+
+
+                            for (var prop in library) {
+                                if (library.hasOwnProperty(prop)) {
+                                    if (library[prop].show === t.show && library[prop].episode === t.episode) {
+                                        isNew = false
+                                        library[prop][i] = ep
+                                    }
                                 }
-                            })
+                            }
+                            // library.filter((obj, i) => {
+                            //     if (obj.show === t.show && obj.episode === t.episode) {
+                            //         isNew = false
+                            //         library[i] = ep
+                            //     }
+                            // })
+
+
 
                             if (isNew) {
-                                library.push(ep)
+                                console.log('adding ep to show --->', t.show)
+                                // library["'" + t.show + "'"].push(ep)
+                                // CONTINUE
                             }
 
-                            localStorage.setItem('library', JSON.stringify(library))
+                            // localStorage.setItem('library', JSON.stringify(library))
 
                             // Search for subs
                             subsService.search({
@@ -189,18 +203,18 @@
                     console.log('Cleared show string:', show)
                     searchObj.clearedShow = show
                 }
-                searchTorrent_kickass(searchObj)
+                searchTorrent_pirateBay(searchObj)
                     .then((torrent) => {
                         resolve(torrent)
                     })
                     .catch(() => {
-                        if (CONFIG.engines === 1) reject()
-                        searchTorrent_pirateBay(searchObj)
+                        if ($rootScope.CONFIG.engines === 1) reject()
+                        searchTorrent_kickass(searchObj)
                             .then((torrent) => {
                                 resolve(torrent)
                             })
                             .catch(() => {
-                                if (CONFIG.engines === 2) reject()
+                                if ($rootScope.CONFIG.engines === 2) reject()
                                 searchTorrent_eztv(searchObj)
                                     .then((torrent) => {
                                         resolve(torrent)
@@ -247,8 +261,9 @@
                         var $ = cheerio.load(body)
                         var data = $('#torrent_latest_torrents')
 
-                        // data = data[3]
-                        // console.log('data', data)
+                        if (!data) reject('Offline')
+                            // data = data[3]
+                            // console.log('data', data)
 
                         if (data.children) {
                             torrent = {}
@@ -263,7 +278,7 @@
                                 if (data.children[3]) torrent.size = data.children[3].children[0].data
                                 if (data.children[1]) torrent.magnet = data.children[1].children[1].children[5].attribs.href
                                 if (data.children[7]) torrent.seeds = data.children[7].children[0].data
-                                console.log('Search result ->', torrent)
+                                console.log('Kickass Search result ->', torrent)
                                 resolve(torrent)
                             } else {
                                 console.log('No results')
@@ -325,7 +340,7 @@
                             if (!data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].children[0].data
 
                             if (commonService.areMatching(show, torrent.name)) {
-                                console.log('Search result ->', torrent)
+                                console.log('EZTV Search result ->', torrent)
                                 resolve(torrent)
                             } else {
                                 reject('No matching torrent found')
@@ -374,6 +389,8 @@
                             // console.log('*************************')
                         var torrent = {}
 
+                        if (!data) reject('Offline')
+
                         if (data['0']) {
 
                             var magnetURL = 'https://fastpiratebay.co.uk' + data['0'].children[1].children[2].children[3].attribs.href
@@ -401,7 +418,7 @@
                                     console.log('torrent ->', torrent)
 
                                     if (commonService.areMatching(show, torrent.name)) {
-                                        console.log('Search result ->', torrent)
+                                        console.log('PB Search result ->', torrent)
                                         resolve(torrent)
                                     } else {
                                         reject('No matching torrent found')

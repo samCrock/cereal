@@ -1,6 +1,7 @@
 <section layout="column" layout-align="center center">
-    <md-content>
-        <div class="show_recap" layout="column">
+    <md-content class="desaturate">
+    <!-- <md-content class="desaturate" style="background: url({{ $root.wallpaper }}); background-size: cover;"> -->
+        <div  layout="column" class="show_recap">
             <h1 class="title">{{ show.Title }}</h1>
             <div layout="row" layout-align="space-between stretch">
                     <!--                 <div ng-if="!show.safe_trailer_src" class="show_poster_container">
@@ -24,15 +25,15 @@
         </div>
         <div>
             <md-progress-linear class="thin green" ng-show="showIsLoading" md-mode="indeterminate"></md-progress-linear>
-            <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);">
+            <md-tabs ng-show="!showIsLoading" md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);">
                 <md-tab ng-repeat="(season, episodes) in show.Seasons" label="Season {{ season }}">
-                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start">
-                        <!-- <md-progress-linear class="thin green" md-mode="determinate" ng-value="episode.watched ? episode.watched : 50"></md-progress-linear> -->
+                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">
+                        <md-progress-linear class="thin green" md-mode="determinate" ng-value="episode.progress"></md-progress-linear>
                         <md-card-content class="show_card_content" ng-class="episode.eta || episode.loading ? 'hover' : ''" layout-align="center center" layout="row">
                             <md-card-title layout="row" flex="80" layout-align="center center">
                                 <div flex="20" layout="column" style="min-width: 100px;">
                                     <label style="font-size: 1.8rem;">{{ episode.episode }}</label>
-                                    <label style="font-size: 1.2rem;">{{ episode.timePassed ? episode.timePassed : ''}}</label>
+                                    <label style="font-size: 1.2rem;" ng-show="timePassedCheck(episode.timePassed)">{{ episode.timePassed }}</label>
                                 </div>
                                 <label class="episode_title" flex="80">{{ episode.title }} </label>
                             </md-card-title>

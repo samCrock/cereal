@@ -191,6 +191,30 @@
             //     })
             // }
 
+            // Get youtube trailer from show title
+            json_module['getYTTrailer'] = function getYTTrailer(show) {
+                return new Promise(function(resolve, reject) {
+                    show = show.toLowerCase().split(' ').join('+')
+                    request('https://www.youtube.com/results?search_query=' + show + 'show+trailer', function(error, response, body) {
+                        if (!error) {
+                            console.log('YT url: ', 'https://www.youtube.com/results?search_query=' + show + '+trailer')
+                            console.log('Trailer candidates')
+                            let $ = cheerio.load(body)
+                            console.log('YouTube results ->', $('.item-section')['0'])
+                            let firstResultId = $('.item-section')['0'].children[1].children[0].attribs['data-context-item-id']
+                            if (!firstResultId) firstResultId = $('.item-section')['0'].children[3].children[0].attribs['data-context-item-id']
+                            console.log('YouTube first result id->', firstResultId)
+                            let url = 'https://www.youtube.com/watch?v=' + firstResultId
+                            console.log('Url ->', url)
+                            resolve(url)
+                        } else {
+                            reject()
+                        }
+                    })
+                })
+            }
+
+
             // Writes month.json and returns current month's shows calendar
             json_module['month'] = function month() {
                 return new Promise(function(resolve, reject) {
@@ -361,7 +385,7 @@
                             if (!error && response.statusCode === 200) {
                                 let $ = cheerio.load(body)
                                 let showJson
-                                let seasons, network, premiered, runtime, genres, overview, trailer, title
+                                let seasons, network, premiered, runtime, genres, overview, trailer, title, wallpaper
                                 let genresArray = []
                                 console.log('.additional-stats', $('.additional-stats')['0'].children[0])
                                 if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
@@ -379,6 +403,7 @@
                                     genres.filter((genre, i) => {
                                         if (i % 2 && i !== 0 && genre.children) genresArray.push(genre.children[0].data)
                                     })
+                                    wallpaper = $('#summary-wrapper')['0'].attribs['data-fanart']
                                     console.log('##########################')
                                     console.log('Title      :', title)
                                     console.log('Seasons    :', seasons)
@@ -388,6 +413,7 @@
                                     console.log('Genres     :', genresArray)
                                     console.log('Overview   :', overview)
                                     console.log('Trailer    :', trailer)
+                                    console.log('Wallpaper  :', wallpaper)
                                     console.log('##########################')
                                     showJson = {
                                         Updated: new Date,
@@ -398,6 +424,7 @@
                                         Genres: genresArray,
                                         Overview: overview,
                                         Trailer: trailer,
+                                        Wallpaper: wallpaper,
                                         Seasons: {}
                                     }
                                 }
@@ -417,7 +444,7 @@
                                 let currentSeason = seasons
                                 let seasonPromises = []
                                 let lastSeason
-                                $interval( ()=> {
+                                $interval(() => {
                                     if (currentSeason !== lastSeason && currentSeason !== 0) {
                                         let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
                                         request.get({
@@ -426,18 +453,18 @@
                                             getSeason(error, response, body)
                                             lastSeason = currentSeason
                                             currentSeason--
-                                        })                                    
+                                        })
                                     }
                                 }, 200)
-                                        
+
                                 // while (currentSeason > 0) {
-                                    // let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
-                                    // request.get({
-                                    //     url: urlSeasons
-                                    // }, function(error, response, body) {
-                                    //     getSeason(error, response, body)
-                                    // })
-                                    // currentSeason--
+                                // let urlSeasons = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
+                                // request.get({
+                                //     url: urlSeasons
+                                // }, function(error, response, body) {
+                                //     getSeason(error, response, body)
+                                // })
+                                // currentSeason--
                                 // }
 
                                 function getSeason(error, response, body) {

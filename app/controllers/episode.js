@@ -93,16 +93,18 @@
                                 video.style.cursor = 'none'
                             }, 2500)
                         }
-
-                        document.addEventListener('keydown', function(e) {
-                            keyPressed[e.keyCode] = true;
-                            if (keyPressed[32]) {
-                                togglePlay()
-                            } // Space
-                        }, false)
-                        document.addEventListener('keyup', function(e) {
-                            keyPressed[e.keyCode] = false;
-                        }, false)
+                        if ($rootScope.addListeners) {
+                            document.addEventListener('keydown', function(e) {
+                                keyPressed[e.keyCode] = true;
+                                if (keyPressed[32]) {
+                                    togglePlay()
+                                } // Space
+                            }, false)
+                            document.addEventListener('keyup', function(e) {
+                                keyPressed[e.keyCode] = false;
+                            }, false)
+                            $rootScope.addListeners = false;
+                        }
 
                         function loop() {
                             if (keyPressed[13]) {
@@ -129,7 +131,7 @@
                             if (keyPressed[16] && keyPressed[37]) {
                                 skip(-1)
                             } // shift + left = 1s <<
-                            setTimeout(loop, 200)
+                            setTimeout(loop, 50)
                         }
 
                         video.addEventListener('dblclick', function() {
@@ -155,12 +157,13 @@
                         }
 
                         function skip(value) {
+                            console.log('skip', value)
                             video.currentTime = video.currentTime + value
                         }
 
                         loop()
-
                         // ************** \BINDINGS **************
+
 
                         video.addEventListener('loadedmetadata', function() {
 
@@ -204,79 +207,10 @@
                         watch(library[i])
                     }
                 }
-                // torrentService.searchTorrent(searchObj)
-                //     .then(function(t) {
-                //         if (!t || !t.magnet) {
-                //             console.log('No torrent found!')
-                //             $rootScope.msg = 'No torrent found!'
-                //             $rootScope.loading = false
-                //             $rootScope.$apply()
-                //             setTimeout(() => {
-                //                 $scope.back()
-                //             }, 2000)
-                //         } else {
-                //
-                //             let downloadTorrent = function(torrent) {
-                //                 // library episodes info
-                //                 // jsonService.getEpisodeInfo(t).then((t) => {
-                //                 //     console.log('Updating library w\\ torrent:', t)
-                //                 //     jsonService.updateLibrary(t)
-                //                 // }).catch(function(e) {
-                //                 //     console.error('jsonService.getEpisodeInfo ->', e)
-                //                 // })
-                //
-                //                 let refreshIntervalId = setInterval(function() {
-                //                     // Refresh speed label
-                //                     $scope.torrent_msg = {}
-                //                     setInterval(() => {
-                //                         if (torrent && torrent.downloadSpeed && commonService.formatBytes(torrent.downloadSpeed)) {
-                //                             $scope.torrent_msg.speed = commonService.formatBytes(torrent.downloadSpeed) + '/s'
-                //                             $scope.torrent_msg.remaining = commonService.formatTime(torrent.timeRemaining)
-                //                             $scope.torrent_msg.progress = Math.round(torrent.progress * 100)
-                //                         }
-                //                         $rootScope.$apply()
-                //                     }, 1000)
-                //                     if (torrent.progress > 0.1) {
-                //                         clearInterval(refreshIntervalId)
-                //                         stream(torrent)
-                //                     }
-                //                     $scope.$apply()
-                //                 }, 1000)
-                //             }
-                //
-                //             //********************************* Start *********************************
-                //             var skip = false
-                //             for (var i = 0; i < $rootScope.pending.length; i++) {
-                //                 console.log($rootScope.pending[i].name, t.name)
-                //                 if ($rootScope.pending[i].name === t.name) {
-                //                     console.log('Already downloading', t.name)
-                //                     downloadTorrent(wt_client.torrents[i])
-                //                     skip = true
-                //                     break
-                //                 }
-                //             }
-                //             if (!skip) {
-                //                 wt_client.add(t.magnet, {
-                //                     path: path + title + '/' + episode
-                //                 }, downloadTorrent)
-                //             }
-                //             //*************************************************************************
-                //
-                //         }
-                //     })
-                //     .catch((e) => {
-                //         $rootScope.loading = false
-                //         $rootScope.msg = 'I got 99 problems and connection is one'
-                //         $rootScope.$apply()
-                //         setTimeout(() => {
-                //             $rootScope.msg = ''
-                //             $scope.back()
-                //         }, 3000)
-                //         reject(e)
-                //     })
             })
         }
 
+        // Init
         start()
     }
 })();

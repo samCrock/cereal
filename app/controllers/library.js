@@ -35,7 +35,6 @@
                 //     }
                 // }
             $scope.library = library
-            console.log('$scope.library --->', $scope.library)
 
             // ---------------LAYOUT HANDLER-------------
             var config = sessionStorage.getItem('LAYOUT_CONFIG')

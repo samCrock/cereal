@@ -21,15 +21,32 @@
             sessionStorage.removeItem('current_show')
             formatDataAndSave(showResult)
             $scope.showIsLoading = false
+            $rootScope.$applyAsync()
             console.log('Show is ready')
+        })
+
+        $scope.$watch('selectedIndex', (index) => {
+            console.log('selectedIndex', $scope.selectedIndex)
+                // save somewhere..
         })
 
         $scope.dotClass = function(episode) {
             if (episode) {
                 if (episode.downloaded) return 'green'
-                if (episode.timePassed && episode.timePassed.indexOf('ago') === -1 && episode.timePassed.indexOf('Today') === -1 || episode.timePassed && episode.timePassed.indexOf('Yesterday') !== -1) return 'hidden'
+                if (episode.timePassed &&
+                    episode.timePassed.indexOf('ago') === -1 &&
+                    episode.timePassed.indexOf('Today') === -1 &&
+                    episode.timePassed.indexOf('Yesterday') === -1 ||
+                    episode.timePassed && episode.timePassed.indexOf('NaN') !== -1)
+                    return 'hidden'
             }
             return ''
+        }
+
+        $scope.timePassedCheck = function(tp) {
+            var visible = true
+            if (tp && tp.indexOf('NaN') !== -1) visible = false
+            return visible
         }
 
         $scope.stream = function(episode) {
@@ -62,6 +79,7 @@
                             if ($rootScope.pending[i].show === $scope.show.Title &&
                                 $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
                                 $scope.show.Seasons[s][e].eta = commonService.formatTime($rootScope.pending[i].eta)
+                                $scope.show.Seasons[s][e].progress = $rootScope.pending[i].progress
                             }
                         }
                     }
@@ -85,7 +103,7 @@
             // }
             jsonService.getShow($scope.title)
                 .then((showResult) => {
-                    console.log('Found', $scope.title, 'in local json')
+                    console.log('Found', $scope.title)
                     $scope.show = showResult
                     $scope.show.safe_trailer_src = $sce.trustAsResourceUrl($scope.show.Trailer.replace("watch?v=", "embed/"))
                         // if ($scope.show.Overview.length > 300) $scope.show.Overview = $scope.show.Overview.substring(0, 300) + '..'
@@ -98,7 +116,7 @@
         }
 
         function formatDataAndSave(showResult) {
-            // console.log('formatDataAndSave', showResult)
+            console.log('formatDataAndSave', showResult)
             if (showResult) {
                 for (var season in showResult.Seasons) {
                     for (var episode in showResult.Seasons[season]) {
@@ -108,24 +126,28 @@
                         showResult.Seasons[season][episode].dotm = formatted_date.dotm
                         showResult.Seasons[season][episode].month = formatted_date.month
                         showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
-                        JSON.parse(localStorage.getItem('library')).filter((d) => {
-                            if (d.show === showResult.Title && d.episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
-                                showResult.Seasons[season][episode].downloaded = true
+                        
+                        for (var prop in $rootScope.library) {
+                            if ($rootScope.library.hasOwnProperty(prop)) {
+                                if (prop === showResult.Title && $rootScope.library[prop].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
+                                    showResult.Seasons[season][episode].downloaded = true
+                                }
                             }
-                        })
+                        }
                     }
                 }
             }
             $scope.show = showResult
             $rootScope.current_show = $scope.show
+            $rootScope.wallpaper = $scope.show.Wallpaper
             sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-            $scope.selectedIndex = 0
+            $scope.selectedIndex = $scope.selectedIndex ? $scope.selectedIndex : 0
             $scope.$applyAsync()
 
         }
 
         $scope.$on('show_overview', function(event, result) {
-            console.log('Overview ready!')
+            console.log('Overview ready')
             $scope.show = result.show
             $rootScope.loading = false
             $scope.showIsLoading = true
@@ -205,13 +227,13 @@
         $scope.deleteEpisode = (showObj) => {
             let show = $scope.title
             let episode = showObj.label
-            
+
             let e = episode.split('e')
             let s = e[0].split('s')
             s = parseInt(s[1], 10)
             e = parseInt(e[1], 10)
             $scope.show.Seasons[s][e].downloaded = false
-            
+
             console.log('Deleting actual folder')
             fsExtra.removeSync(__dirname + '/../../library/' + show + '/' + episode);
             console.log('Deleting from library (rootscope)')
@@ -222,9 +244,9 @@
                 }
             }
             console.log('Deleting from library (localStorage)')
-            localStorage.setItem('library', JSON.stringify(library))
+            // localStorage.setItem('library', JSON.stringify(library))
 
-                // start()
+            // start()
         }
 
         start()

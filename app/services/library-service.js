@@ -6,7 +6,7 @@
         .service('libraryService', libraryService);
 
     /* @ngInject */
-    function libraryService(wtService) {
+    function libraryService(wtService, commonService) {
 
         let request = require('request')
         let cheerio = require('cheerio')
@@ -19,50 +19,35 @@
 
         library_module['getLibrary'] = function getLibrary() {
             return new Promise(function(resolve, reject) {
-                if (localStorage.getItem('library')) {
-                    let library = JSON.parse(localStorage.getItem('library'))
-                    let formattedLibrary = {}
-                    for (var i = 0; i < library.length; i++) {
-                        if (!formattedLibrary[library[i].show]) {
-                            formattedLibrary[library[i].show] = []
-                            formattedLibrary[library[i].show].push(library[i])
-                        } else {
-                            formattedLibrary[library[i].show].push(library[i])
+
+                let pending = JSON.parse(localStorage.getItem('pending'))
+                let isPending
+                let library = {}
+                let episodes = []
+                let shows = fsExtra.readdirSync(__dirname + '/../../library/')
+
+                for (var i = 0; i < shows.length; i++) {
+                    library[shows[i]] = []
+                    episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
+                    for (var j = 0; j < episodes.length; j++) {
+                        // console.log(shows[i], episodes[j])
+                        isPending = false
+                        for (var k = 0; k < pending.length; k++) {
+                            if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
+                                isPending = true
+                            }
+                        }
+                        if (!isPending) {
+                            library[shows[i]].push({
+                                show: shows[i],
+                                episode: episodes[j]
+                            })
                         }
                     }
-                    resolve(formattedLibrary)
                 }
+                resolve(library)
             })
         }
-
-        // // Returns all shows w/ all episodes
-        // library_module['getLibrary'] = function getLibrary() {
-        //     return new Promise(function(resolve, reject) {
-        //         let library = []
-        //         fsExtra.readdirSync('./data/shows')
-        //             .filter((file) => {
-        //                 let dashedShowName = file.split('.json')
-        //                 dashedShowName = dashedShowName[0]
-        //                 let showName = dashedShowName.split(' ').join('-')
-        //                 let show = {
-        //                     title: showName,
-        //                     poster: './assets/posters/' + dashedShowName + '.jpg',
-        //                     episodes: []
-        //                 }
-        //                 fsExtra.readFile('./data/shows/' + file, (err, showEpisodes) => {
-        //                     if (err) throw err
-        //                     if (showEpisodes) {
-        //                         let episodes = JSON.parse(showEpisodes)
-        //                         show.episodes = episodes
-        //                     }
-        //                 })
-        //                 library.push(show)
-        //             })
-        //         resolve(library)
-        //
-        //     })
-        // }
-
 
         return library_module
     }

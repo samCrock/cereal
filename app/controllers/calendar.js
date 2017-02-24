@@ -5,7 +5,7 @@
         .module('app')
         .controller('calendarCtrl', calendarCtrl);
 
-    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, CONFIG) {
+    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService) {
         console.log('Calendar')
         let fsExtra = require('fs-extra')
 
@@ -37,6 +37,14 @@
                 .catch((reason) => {
                     console.log(reason)
                 })
+        }
+
+        $scope.playTrailer = function(show) {
+            console.log(show)
+            jsonService.getYTTrailer(show.show)
+            .then( (url) => {
+                dialogService.trailer({ src: url })
+            })
         }
 
 
@@ -94,7 +102,7 @@
                                         }
                                         // If this show is in my library && autodownload is enabled, download this episode
                                         let episodes = $rootScope.library[show.title]
-                                        if (episodes && CONFIG.auto_download) {
+                                        if (episodes && $rootScope.CONFIG.auto_download) {
                                             for (var i = 0; i < episodes.length; i++) {
                                                 if (episodes[i].episode === show.episode) {
                                                     console.log('New episode found', show.title, show.episode)
