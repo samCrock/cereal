@@ -187,6 +187,7 @@
 
             if (days !== 0) { message = days + " days ago" }
             if (days == 1) { message = "Yesterday" }
+            if (days == 0) { message = "Today" }
             if (months !== 0) { message = months + " months ago" }
             if (months == 1) { message = months + " month ago" }
             if (years !== 0) { message = years + " years ago" }
