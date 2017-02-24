@@ -8,9 +8,5 @@
                 .translations('en', { key: 'translated' })
                 .use('en');
         })
-        .constant('CONFIG' , {
-        	engines: 1, // Number of torrent engines to use before rejecting searchTorrent (3 == all)
-            auto_download : false
-        })
 
 })()

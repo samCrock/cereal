@@ -12,15 +12,22 @@
         let fsPath = require('fs-path')
         let logUpdate = require('log-update')
         let util = require('util')
-
         const wt_client = wtService.client()
 
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
-            // $rootScope.loading = true
-            // if (toState.name === 'app.episode') {
-            //     localStorage.topper = document.body.scrollTop
-            // }
+
+        // CONFIG SETUP
+        $rootScope.CONFIG = {
+            engines: 1, // Number of torrent engines to use before rejecting searchTorrent (3 == all)
+            auto_download: false
+        }
+        if (localStorage.getItem('CONFIG')) {
+            $rootScope.CONFIG = JSON.parse(localStorage.getItem('CONFIG'))
+        }
+        console.log('[ CONFIG ]', $rootScope.CONFIG)
+        $rootScope.$watch('CONFIG.auto_download', (newValue) => {
+            localStorage.setItem('CONFIG', JSON.stringify($rootScope.CONFIG))
         })
+
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
 
@@ -39,13 +46,6 @@
             if (toState.name === 'app.episode') {
                 $scope.isBack = true
             } else $scope.isBack = false
-            if (toState.name === 'app.calendar') {
-                // if (localStorage.topper > 0) {
-                //     $timeout(() => { // wait for DOM, then restore scroll position
-                //         window.scrollTo(0, localStorage.topper)
-                //     }, 100)
-                // }
-            }
 
             var state = toState.name.split('.')
             $rootScope.currentNavItem = state[1]
@@ -64,6 +64,7 @@
         $state.go('app.calendar')
         $rootScope.currentNavItem = 'calendar'
 
+        $rootScope.addListeners = true; // Related to player key events
 
         $scope.default_poster = './assets/posters/default.jpg'
 
@@ -74,7 +75,7 @@
         $rootScope.pending = []
         var library = localStorage.getItem('library')
         if (!library) {
-            localStorage.setItem('library', JSON.stringify([]))
+            // localStorage.setItem('library', JSON.stringify([]))
         }
 
 
@@ -145,43 +146,46 @@
             // localStorage.topper = 0
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
-        var library = []
-        var episodes = []
-        
-        if (!fsExtra.existsSync(__dirname + '/../../library')){
+        // var library = []
+        // var episodes = []
+
+        if (!fsExtra.existsSync(__dirname + '/../../library')) {
             fsExtra.mkdirSync(__dirname + '/../../library');
         }
         var shows = fsExtra.readdirSync(__dirname + '/../../library')
 
-        var pending = JSON.parse(localStorage.getItem('pending'))
-        var isPending
+        libraryService.getLibrary().then((library) => {
+            $rootScope.library = library
+            console.log('Library', library)
+        })
 
-        // libraryService.getLibrary().then((library) => {
-        //     $rootScope.library = library
-        //     console.log('Library', library)
-        // })
+        // var pending = JSON.parse(localStorage.getItem('pending'))
+        // var isPending
 
-        for (var i = 0; i < shows.length; i++) {
-            episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
-            for (var j = 0; j < episodes.length; j++) {
-                // console.log(shows[i], episodes[j])
-                isPending = false
-                for (var k = 0; k < pending.length; k++) {
-                    if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
-                        isPending = true
-                    }
-                }
-                if (!isPending) {
-                    library.push({
-                        show: shows[i],
-                        episode: episodes[j],
-                        poster: __dirname + '/../../assets/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
-                    })
-                }
-            }
-        }
+        // for (var i = 0; i < shows.length; i++) {
+        //     episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
+        //     for (var j = 0; j < episodes.length; j++) {
+        //         // console.log(shows[i], episodes[j])
+        //         isPending = false
+        //         for (var k = 0; k < pending.length; k++) {
+        //             if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
+        //                 isPending = true
+        //             }
+        //         }
+        //         if (!isPending) {
+        //             library.push({
+        //                 show: shows[i],
+        //                 episode: episodes[j],
+        //                 poster: __dirname + '/../../assets/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
+        //             })
+        //         }
+        //     }
+        // }
         localStorage.setItem('library', JSON.stringify(library))
         $rootScope.library = library
+
+
+        $rootScope.wallpaper = __dirname + '/../../assets/bkg/city.jpg'
     }
 
 })();

@@ -3,6 +3,7 @@ html {
     font-size: 100%;
     background: url(../assets/bkg/city.jpg) no-repeat center center fixed;
     background-size: cover;
+    background-color: rgba(43, 40, 45, 1);
 }
 
 @media (max-width: 1400px) {
@@ -52,6 +53,21 @@ body {
     background-color: transparent;
     overflow-x: hidden;
     /*max-height: calc(100% - 48px);*/
+}
+
+.desaturate {
+    /*background: url(../assets/bkg/city.jpg) no-repeat center center fixed;*/
+}
+
+.desaturate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, rgba(43, 40, 45, 1), transparent);
+    opacity: .6;
 }
 
 h1 {
@@ -173,7 +189,7 @@ md-tabs .md-tab {
     margin-bottom: 1rem;
     margin-left: 2rem;
     margin-right: 2rem;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.95);
     text-align: left;
     overflow: auto;
 }
@@ -202,6 +218,7 @@ md-tabs .md-tab {
     border-width: 1px;
     border-style: solid;
     margin: 0.2rem;
+    margin-bottom: 0.4rem;
 }
 
 .show_recap .runtime {
@@ -471,17 +488,17 @@ md-content {
     -webkit-filter: blur(0.1rem);
 }
 
-.poster_sub.fav {
-    font-size: 2rem;
+.poster_sub.trailer {
+    font-size: 2.4rem;
     top: 80%;
     transform: translate(-50%, -80%);
 }
 
-.poster_sub.fav:hover {
+.poster_sub.trailer:hover {
     font-size: 3rem;
 }
 
-.poster_sub.fav:active {
+.poster_sub.trailer:active {
     -webkit-filter: blur(0.1rem);
 }
 
@@ -960,14 +977,14 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
 
 .day_container:hover .scroll_right,
 .day_container.hover .scroll_right {
-    left: calc(100vw - 2.5rem);
+    left: calc(100vw - 4rem);
 }
 
 .scroll_left {
     position: absolute;
     height: 23rem;
     z-index: 1;
-    width: 2.5rem;
+    width: 4rem;
     background: linear-gradient(rgba(43, 40, 45, 0), rgb(43, 40, 45) 60%, rgba(43, 40, 45, 0));
     opacity: 0.7;
     left: -2.5rem;
@@ -980,7 +997,7 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
     position: absolute;
     height: 23rem;
     z-index: 1;
-    width: 2.5rem;
+    width: 4rem;
     background: linear-gradient(rgba(43, 40, 45, 0), rgb(43, 40, 45) 60%, rgba(43, 40, 45, 0));
     opacity: 0.7;
     left: 100vw;
@@ -1024,4 +1041,29 @@ md-icon path {
 .md-button:not([disabled]).md-icon-button:hover md-icon path,
 .md-button:not([disabled]).md-icon-button.hover md-icon path {
     fill: inherit;
+}
+
+#settings {
+    position: fixed;
+    right: 0;
+}
+#settings_button {
+    transform: translateX(8rem);
+    top: 4px;
+    background: rgba(43, 40, 45, 0.1);
+}
+.md-fab-action-item {
+    background-color: rgba(43, 40, 45, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+}
+
+md-fab-actions {
+    margin-top: 8px;
+    width: 20rem;
+}
+
+md-switch.md-checked .md-bar {
+    background-color: rgba(227, 255, 30, 0.9);
 }

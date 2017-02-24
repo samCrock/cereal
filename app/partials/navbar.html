@@ -15,13 +15,21 @@
         <i class="white fa fa-search" aria-hidden="true"></i>
     </md-nav-item>
     <md-nav-item ng-if="$root.current_show.Title" md-nav-sref="app.show( { show: $root.current_show.Title } )" name="show">{{ current_show.Title }}</md-nav-item>
+    <md-fab-speed-dial md-open="" md-direction="down" class="md-scale" id="settings">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-mini md-warn" id="settings_button">
+                <i class="white fa fa-cog" aria-hidden="true" md-menu-origin></i>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <div ng-click="$event.stopImmediatePropagation();" class="settings_row" layout="row" layout-align="space-around center">
+                <label>Automatic download</label>
+                <md-switch ng-model="$root.CONFIG.auto_download" aria-label="Automatically downloads new shows"></md-switch>
+            </div>
+<!--             <md-button aria-label="Select torrent search engines" class="md-raised md-mini settings_button">
+                Search Engines
+                <i class="white fa fa-cog" aria-hidden="true" md-menu-origin></i>
+            </md-button> -->
+        </md-fab-actions>
+    </md-fab-speed-dial>
 </md-nav-bar>
-<!-- <md-nav-bar layout layout-align="center center" ng-if="isBack">
-    <md-button aria-label="menu" class="md-fab back" ng-click="back()">
-        <ng-md-icon icon="chevron_left" ng-show="!search_loading"></ng-md-icon>
-    </md-button>
-</md-nav-bar>
- -->
-<!-- <md-button aria-label="menu" class="md-fab" id="close_btn" ng-click="back()" ng-if="isBack" style="position: fixed; float: right;">
-    <ng-md-icon icon="close"></ng-md-icon>
-</md-button> -->
