@@ -6,14 +6,13 @@
         .controller('mainCtrl', mainCtrl);
 
     /* @ngInject */
-    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService, libraryService) {
+    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService, libraryService, dbService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
         let logUpdate = require('log-update')
         let util = require('util')
         const wt_client = wtService.client()
-
 
         // CONFIG SETUP
         $rootScope.CONFIG = {
@@ -27,7 +26,6 @@
         $rootScope.$watch('CONFIG.auto_download', (newValue) => {
             localStorage.setItem('CONFIG', JSON.stringify($rootScope.CONFIG))
         })
-
 
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams, options) {
 
@@ -60,7 +58,6 @@
             $state.go(prev_state.name, prev_state.params)
         })
 
-
         $state.go('app.calendar')
         $rootScope.currentNavItem = 'calendar'
 
@@ -68,16 +65,8 @@
 
         $scope.default_poster = './assets/posters/default.jpg'
 
-        // jsonService.updateFollowingEpisodes();
-        // jsonService.getLibrary();
-
         $rootScope.library = []
         $rootScope.pending = []
-        var library = localStorage.getItem('library')
-        if (!library) {
-            // localStorage.setItem('library', JSON.stringify([]))
-        }
-
 
         if (localStorage.getItem('pending')) {
             $rootScope.pending = JSON.parse(localStorage.getItem('pending'))
@@ -118,9 +107,6 @@
             localStorage.setItem('pending', JSON.stringify(temp))
         }
 
-        // Update pending downloads every 30mins
-        // $interval(save_pending(), 30 * 60 * 1000)
-
         // Catch exit event
         window.onbeforeunload = function(e) {
             console.log('Saving pending downloads...')
@@ -131,7 +117,6 @@
                 delete temp[i].eta
             })
             localStorage.setItem('pending', JSON.stringify(temp))
-                // return true
         }
 
         // INIT show page
@@ -143,16 +128,12 @@
         }
 
         $rootScope.reload = true
-            // localStorage.topper = 0
-        if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
-        // var library = []
-        // var episodes = []
+        if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
         if (!fsExtra.existsSync(__dirname + '/../../library')) {
             fsExtra.mkdirSync(__dirname + '/../../library');
         }
-        var shows = fsExtra.readdirSync(__dirname + '/../../library')
 
         libraryService.getLibrary().then((library) => {
             $rootScope.library = library
@@ -161,29 +142,6 @@
 
         // var pending = JSON.parse(localStorage.getItem('pending'))
         // var isPending
-
-        // for (var i = 0; i < shows.length; i++) {
-        //     episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
-        //     for (var j = 0; j < episodes.length; j++) {
-        //         // console.log(shows[i], episodes[j])
-        //         isPending = false
-        //         for (var k = 0; k < pending.length; k++) {
-        //             if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
-        //                 isPending = true
-        //             }
-        //         }
-        //         if (!isPending) {
-        //             library.push({
-        //                 show: shows[i],
-        //                 episode: episodes[j],
-        //                 poster: __dirname + '/../../assets/posters/' + commonService.spacedToDashed(shows[i]) + '.jpg'
-        //             })
-        //         }
-        //     }
-        // }
-        localStorage.setItem('library', JSON.stringify(library))
-        $rootScope.library = library
-
 
         $rootScope.wallpaper = __dirname + '/../../assets/bkg/city.jpg'
     }

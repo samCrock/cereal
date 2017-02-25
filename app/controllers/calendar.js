@@ -5,7 +5,7 @@
         .module('app')
         .controller('calendarCtrl', calendarCtrl);
 
-    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService) {
+    function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService, dbService) {
         console.log('Calendar')
         let fsExtra = require('fs-extra')
 
@@ -75,7 +75,8 @@
             jsonService.getLocalPosters()
                 .then((local_posters) => {
                     $rootScope.msg = 'Retrieving this month data'
-                    jsonService.month().then((data) => {
+                    // jsonService.month().then((data) => {
+                    dbService.calendar().then((data) => {
                         $rootScope.loading = false
                         $rootScope.msg = ''
 

@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(wtService, commonService, jsonService, subsService, $rootScope) {
+    function torrentService(wtService, commonService, jsonService, subsService, libraryService, $rootScope) {
 
 
         const os = require('os')
@@ -34,18 +34,11 @@
         let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t) {
             return new Promise(function(resolve, reject) {
 
-                // console.log('downloadTorrent', t)
-
                 if (!t) {
                     reject(404)
                 }
 
                 t.poster = './assets/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
-
-                // jsonService.getEpisodeInfo(t).then((t) => {
-                //     console.log('Updating library w\\ torrent:', t)
-                //     jsonService.updateLibrary(t)
-                // })
 
                 fsExtra.mkdirp(path, function(err) {
 
@@ -67,52 +60,39 @@
                         if (torrent.progress != 1) {
                             torrent.files.forEach(function(file) {
                                 console.log('Started downloading ' + file.name)
-                                    // file.getBuffer(function(err, buffer) {
-                                    //     if (err) {
-                                    //         console.error('Error downloading ' + file.name)
-                                    //         reject(err)
-                                    //     }
-                                    // })
                             })
                         }
                         // *********************** ON DONE ***********************
                         torrent.on('done', () => {
                             console.log(torrent.dn, ' ready!')
 
-                            // Add episode to local library
-                            let isNew = true
-                            let library = JSON.parse(localStorage.getItem('library'))
-                            let ep = {
-                                show: t.show,
-                                episode: t.episode,
-                                name: t.name,
-                                magnet: t.magnet,
-                                path: t.path
-                            }
+
+                            // // Add episode to local library
+                            // let isNew = true
+                            // let library = JSON.parse(localStorage.getItem('library'))
+                            // let ep = {
+                            //     show: t.show,
+                            //     episode: t.episode,
+                            //     name: t.name,
+                            //     magnet: t.magnet,
+                            //     path: t.path
+                            // }
 
 
-                            for (var prop in library) {
-                                if (library.hasOwnProperty(prop)) {
-                                    if (library[prop].show === t.show && library[prop].episode === t.episode) {
-                                        isNew = false
-                                        library[prop][i] = ep
-                                    }
-                                }
-                            }
-                            // library.filter((obj, i) => {
-                            //     if (obj.show === t.show && obj.episode === t.episode) {
-                            //         isNew = false
-                            //         library[i] = ep
+                            // for (var prop in library) {
+                            //     if (library.hasOwnProperty(prop)) {
+                            //         if (library[prop].show === t.show && library[prop].episode === t.episode) {
+                            //             isNew = false
+                            //             library[prop][i] = ep
+                            //         }
                             //     }
-                            // })
+                            // }
 
-
-
-                            if (isNew) {
-                                console.log('adding ep to show --->', t.show)
-                                // library["'" + t.show + "'"].push(ep)
-                                // CONTINUE
-                            }
+                            // if (isNew) {
+                            //     console.log('adding ep to show --->', t.show)
+                            //     // library["'" + t.show + "'"].push(ep)
+                            //     // CONTINUE
+                            // }
 
                             // localStorage.setItem('library', JSON.stringify(library))
 
@@ -124,9 +104,15 @@
                                 })
                                 .then((opts) => {
                                     subsService.download(opts)
+                                        .then(() => {
+                                            libraryService.getLibrary().then((library) => {})
+                                            $rootScope.library = library
+                                        })
                                 })
                                 .catch(() => {
                                     console.log('No subs found')
+                                    libraryService.getLibrary().then((library) => {})
+                                    $rootScope.library = library
                                 })
 
                             t.ready = true

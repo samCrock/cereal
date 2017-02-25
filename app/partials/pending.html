@@ -1,4 +1,4 @@
-<section layout="column" layout="column" style="margin-top: 68px;">
+<section class="desaturate" layout="column" layout="column" style="margin-top: 68px;">
     <label ng-if="$root.pending.length == 0" id="root-msg" style="font-size: 2em;">No pending downloads</label>
     <md-card class="pending_card" ng-show="torrent.progress < 100" ng-repeat="torrent in $root.pending | orderBy : '-progress' : reverse = false track by $index" layout-align="start">
         <md-card-content layout-align="start center">

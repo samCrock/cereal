@@ -5,7 +5,7 @@
         .module('app')
         .controller('showCtrl', showCtrl);
 
-    function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, torrentService, subsService, commonService, wtService, dialogService) {
+    function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, libraryService, torrentService, subsService, commonService, wtService, dialogService, dbService) {
 
         let fsExtra = require('fs-extra')
 
@@ -17,7 +17,11 @@
         $scope.downloading = []
         $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
 
-        $rootScope.$on('show_ready', (e, showResult) => {
+        let destroyShowListener;
+        $scope.$on('$destroy', function() {
+            destroyShowListener()
+        })
+        destroyShowListener = $rootScope.$on('show_ready', (e, showResult) => {
             sessionStorage.removeItem('current_show')
             formatDataAndSave(showResult)
             $scope.showIsLoading = false
@@ -67,7 +71,6 @@
         }
 
         $scope.play = function(episode) {
-            console.log('play', episode.label)
             $state.go('app.episode', ({ show: $scope.title, episode: episode.label }))
         }
 
@@ -86,32 +89,22 @@
                 }
             }
             $scope.$applyAsync()
-                // if (!$scope.$$phase) {
-                //     $scope.$apply()
-                // }
         }, 1000)
 
         function start() {
-            // if (sessionStorage.getItem('current_show')) {
-            //     let tmp = JSON.parse(sessionStorage.getItem('current_show'))
-            //     if (tmp.Title === $scope.title) {
-            //         console.log('Found', $scope.title, 'in memory')
-            //         $scope.show = tmp
-            //         $rootScope.loading = false
-            //         return
-            //     }
-            // }
-            jsonService.getShow($scope.title)
-                .then((showResult) => {
-                    console.log('Found', $scope.title)
-                    $scope.show = showResult
-                    $scope.show.safe_trailer_src = $sce.trustAsResourceUrl($scope.show.Trailer.replace("watch?v=", "embed/"))
-                        // if ($scope.show.Overview.length > 300) $scope.show.Overview = $scope.show.Overview.substring(0, 300) + '..'
-                    formatDataAndSave(showResult)
-                    $rootScope.loading = false
-
-                }).catch((errorMsg) => {
-                    // console.error('Something went south..')
+            libraryService.getLibrary()
+                .then((library) => {
+                    $rootScope.library = library
+                    jsonService.getShow($scope.title)
+                        // dbService.getShow($scope.title)
+                        .then((showResult) => {
+                            console.log('Found', $scope.title)
+                            $scope.show = showResult
+                            $scope.show.safe_trailer_src = $sce.trustAsResourceUrl($scope.show.Trailer.replace("watch?v=", "embed/"))
+                                // if ($scope.show.Overview.length > 300) $scope.show.Overview = $scope.show.Overview.substring(0, 300) + '..'
+                            formatDataAndSave(showResult)
+                            $rootScope.loading = false
+                        })
                 })
         }
 
@@ -126,14 +119,20 @@
                         showResult.Seasons[season][episode].dotm = formatted_date.dotm
                         showResult.Seasons[season][episode].month = formatted_date.month
                         showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
-                        
-                        for (var prop in $rootScope.library) {
-                            if ($rootScope.library.hasOwnProperty(prop)) {
-                                if (prop === showResult.Title && $rootScope.library[prop].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
+
+                        if ($rootScope.library[showResult.Title]) {
+                            let episodes = $rootScope.library[showResult.Title]
+                            for (var i = 0; i < episodes.length; i++) {
+                                if (episodes[i].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
                                     showResult.Seasons[season][episode].downloaded = true
                                 }
                             }
                         }
+                        // for (var prop in $rootScope.library) {
+                        //     if (prop === showResult.Title && $rootScope.library[prop].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
+                        //         showResult.Seasons[season][episode].downloaded = true
+                        //     }
+                        // }
                     }
                 }
             }
@@ -244,7 +243,7 @@
                 }
             }
             console.log('Deleting from library (localStorage)')
-            // localStorage.setItem('library', JSON.stringify(library))
+                // localStorage.setItem('library', JSON.stringify(library))
 
             // start()
         }

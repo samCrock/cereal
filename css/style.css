@@ -104,7 +104,7 @@ h2 {
 
 .spinner {
     z-index: 99999;
-    /*color: white;*/
+    /*color: rgba(255, 255, 255, 0.95);*/
     color: rgba(227, 255, 30, 0.9);
     position: relative;
 }
@@ -210,6 +210,7 @@ md-tabs .md-tab {
     margin: 0.2rem;
     text-transform: uppercase;
     font-size: 1.2rem;
+    text-align: right;
 }
 
 .show_recap .trailer {
@@ -233,7 +234,7 @@ md-tabs .md-tab {
 }
 
 .white {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 20px;
 }
 
@@ -387,7 +388,7 @@ md-content {
     position: absolute;
     font-size: 3rem;
     left: 50%;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     opacity: 0.95;
     transition: all .1s;
 }
@@ -395,7 +396,7 @@ md-content {
 .poster_sub_show {
     cursor: pointer;
     font-size: 2rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     opacity: 0.95;
     transition: all .1s;
     font-style: normal;
@@ -412,14 +413,14 @@ md-content {
 }
 
 .poster_sub_show.stream-play {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 2rem;
     position: relative;
     left: 0.6rem;
 }
 
 .poster_sub_show.stream-magnet {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 1.2rem;
     position: relative;
     left: -0.4rem;
@@ -506,8 +507,9 @@ md-content {
     background-color: rgba(43, 40, 45, 0.5);
     margin-left: 2rem;
     margin-right: 2rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 1.2rem;
+    opacity: 0.95;
 }
 
 .calendar_card {
@@ -543,7 +545,7 @@ md-content {
     background-size: cover;
     transition: all .5s;
     width: 100%;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     position: relative;
     left: 0;
     top: 0;
@@ -602,24 +604,25 @@ section {
     border: white;
     border-width: 1px;
     border-style: solid;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     opacity: 0.95;
 }
 
 .ep_number {
     font-size: 3rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
 }
 
 .ep_show {
     font-size: 5rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     /*text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;*/
 }
 
 #root-msg {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
+    opacity: 0.9;
     font-size: 2rem;
     margin-top: 4rem;
     text-align: center;
@@ -682,7 +685,7 @@ section {
 
 .msg_download {
     text-align: -webkit-center;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .msg_download label {
@@ -857,7 +860,7 @@ md-dialog {
 
 .dialog_show_input {
     margin: 1rem 0;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     height: 4rem;
     background: rgba(43, 40, 45, 0.8);
 }
@@ -872,24 +875,24 @@ md-option {
 
 md-input-container>md-select {
     margin: 1rem 0;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     height: 4rem;
     background: rgba(43, 40, 45, 0.8);
 }
 
 .md-select-value>span:not(.md-select-icon) {
     font-size: 2rem;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .dialog_episode_button {}
 
 .episode_dialog {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     border-radius: 1rem;
     border-width: 1px;
     border-style: solid;
-    border-color: white;
+    border-color: rgba(255, 255, 255, 0.95);
     background: rgba(43, 40, 45, 0.9);
 }
 
@@ -934,7 +937,7 @@ md-input-container label {
 }
 
 md-input-container .md-input {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-family: inherit;
     height: 4rem;
     line-height: 3rem;
@@ -1007,7 +1010,7 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
 }
 
 .scroll_left i {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 2rem;
     top: 50%;
     left: 25%;
@@ -1015,7 +1018,7 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
 }
 
 .scroll_right i {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     font-size: 2rem;
     top: 50%;
     left: 50%;
@@ -1023,7 +1026,7 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
 }
 
 md-icon {
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 md-icon path {
@@ -1047,11 +1050,13 @@ md-icon path {
     position: fixed;
     right: 0;
 }
+
 #settings_button {
     transform: translateX(8rem);
     top: 4px;
     background: rgba(43, 40, 45, 0.1);
 }
+
 .md-fab-action-item {
     background-color: rgba(43, 40, 45, 0.8);
     color: rgba(255, 255, 255, 0.8);

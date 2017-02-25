@@ -23,6 +23,7 @@
     require('./services/subs-service.js')
     require('./services/search-service.js')
     require('./services/dialog-service.js')
+    require('./services/db-service.js')
 
     var oldWarn = console.warn;
     console.warn = function(arg1) {

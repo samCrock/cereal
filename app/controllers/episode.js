@@ -5,7 +5,7 @@
         .module('app')
         .controller('episodeCtrl', episodeCtrl);
 
-    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, torrentService, commonService, wtService) {
+    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, libraryService, torrentService, commonService, wtService) {
 
         const supportedVideoExt = ['mkv', 'avi', 'mp4']
         const wt_client = wtService.client()
@@ -30,13 +30,15 @@
             episode: episode
         }
 
+        console.log('Playing', searchObj.show, searchObj.episode)
+
         $scope.vlc = function() {
             var filePath = path + searchObj.show + '/' + searchObj.episode
             fsPath.find(filePath, (err, list) => {
                 list.files.forEach(file => {
                     file = decodeURIComponent(file)
                     let ext = file.split('.')
-                    let fileName = ext 
+                    let fileName = ext
                     ext = ext[ext.length - 1]
                     if (supportedVideoExt.indexOf(ext) > -1 && fileName.indexOf('Sample') === -1) {
                         console.log('Opening', file, ' in VLC')
@@ -47,20 +49,12 @@
             })
         }
 
-        // $scope.alternate = function() {
-        //     $scope.alt = true
-        //     document.querySelector('video').remove()
-        //     searchObj.row = 1
-        //     start()
-        // }
-
         $scope.back = () => {
             $rootScope.$broadcast('backEvent')
         }
 
         let watch = (library_element) => {
 
-            let name = library_element.name
             library_element.path = path + library_element.show + '/' + library_element.episode
             console.log(library_element)
 
@@ -162,7 +156,7 @@
                         }
 
                         loop()
-                        // ************** \BINDINGS **************
+                            // ************** \BINDINGS **************
 
 
                         video.addEventListener('loadedmetadata', function() {
@@ -201,12 +195,12 @@
         let start = function() {
             return new Promise(function(resolve, reject) {
                 $rootScope.msg = 'Searching for' + ' ' + title + ' ' + episode
-                let library = JSON.parse(localStorage.getItem('library'))
-                for (var i = 0; i < library.length; i++) {
-                    if (library[i].show === title && library[i].episode === episode) {
-                        watch(library[i])
-                    }
+                let libraryObj = {
+                    path: __dirname + '/../../library/' + title + '/' + episode + '/',
+                    show: title,
+                    episode: episode
                 }
+                watch(libraryObj)
             })
         }
 

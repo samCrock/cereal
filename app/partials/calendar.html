@@ -1,9 +1,9 @@
-<section style="margin-top: 3em;">
+<section class="desaturate" style="margin-top: 3em;">
     <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" layout-align="center center" class="day_container">
         <div ng-click="scrollLeft('content_' + $index)" class="scroll_left"><i class="icon fa fa-angle-left " aria-hidden="true"></i></div>
         <div ng-click="scrollRight('content_' + $index)" class="scroll_right"><i class="icon fa fa-angle-right " aria-hidden="true"></i></div>
         <div class="calendar_day">
-            <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; font-size:2.6em;">{{ day.dateObj.dotw }}</span>
+            <span class="md-content-1" style="text-align: center; margin-bottom: 0; color: white; opacity: 0.9; font-size:2.6em;">{{ day.dateObj.dotw }}</span>
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 2em; padding: 0.4em; opacity: 0.9;">
                 {{ day.dateObj.month }}</span>
             <span class="md-subhead" style="text-align: center; margin-top: 0; margin-bottom: 0; color: white; font-size: 1.6em; opacity: 0.8;">{{ day.dateObj.dotm }}</span>
