@@ -16,6 +16,10 @@
 
         let common_module = {};
 
+        common_module['mapRange'] = function mapRange(value, low1, high1, low2, high2) {
+            return Math.round(low2 + (high2 - low2) * (value - low1) / (high1 - low1))
+        }
+   
         common_module['findAlias'] = function findAlias(show) {
             return new Promise((resolve, reject) => {
                 // console.log('Checking for aliases', show)
