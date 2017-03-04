@@ -63,7 +63,7 @@
                             }
                         })
                         resolve(results)
-                    } else rejecct()
+                    } else reject()
                 });
             });
 
