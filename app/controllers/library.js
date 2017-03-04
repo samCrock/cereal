@@ -20,20 +20,11 @@
             let empty = true
             for (var prop in library) {
                 if (library.hasOwnProperty(prop)) {
-                    // handle prop as required
                     empty = false
                 }
             }
             $scope.emptyLibrary = empty
-                // var isNew = true
-                // for (var i = 0; i < library.length; i++) {
-                //     if (!$scope.library[library[i].show]) {
-                //         $scope.library[library[i].show] = []
-                //         $scope.library[library[i].show].push(library[i])
-                //     } else {
-                //         $scope.library[library[i].show].push(library[i])
-                //     }
-                // }
+
             $scope.library = library
 
             // ---------------LAYOUT HANDLER-------------
