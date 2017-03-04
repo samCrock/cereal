@@ -42,9 +42,9 @@
         $scope.playTrailer = function(show) {
             console.log(show)
             jsonService.getYTTrailer(show.show)
-            .then( (url) => {
-                dialogService.trailer({ src: url })
-            })
+                .then((url) => {
+                    dialogService.trailer({ src: url })
+                })
         }
 
 
@@ -64,18 +64,12 @@
         }
 
         if ($rootScope.reload) {
-
             $rootScope.days = []
-            let today = new Date()
-            let _8daysago = new Date()
-            today.setHours(0, 0, 0, 0)
-            _8daysago.setDate(today.getDate() - 8)
-
             $rootScope.msg = 'Retrieving posters'
             jsonService.getLocalPosters()
                 .then((local_posters) => {
                     $rootScope.msg = 'Retrieving this month data'
-                    // jsonService.month().then((data) => {
+                        // jsonService.month().then((data) => {
                     dbService.calendar().then((data) => {
                         $rootScope.loading = false
                         $rootScope.msg = ''
@@ -84,9 +78,20 @@
                         if (data) {
                             let posters = []
                             let showsToUpdate = []
+                            let d, now, timeDiff, diffDays
+                            console.log(data)
+
                             data.filter((day) => {
                                 // LAST WEEK ONLY
-                                if (new Date(day.date) > _8daysago && new Date(day.date) < new Date()) {
+
+                                d = new Date(day.date)
+                                now = new Date()
+                                timeDiff = now.getTime() - d.getTime()
+                                diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+
+                                // console.log(d, diffDays)
+
+                                if (diffDays < 8 && diffDays > 0) {
                                     day.dateObj = commonService.getDayObject(day.date)
                                         // $rootScope.days.push(day)
                                     day.shows.filter((show) => {
