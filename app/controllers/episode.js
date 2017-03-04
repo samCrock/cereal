@@ -20,20 +20,30 @@
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
         let path = __dirname + '/../../library/'
+        let PouchDB = require('pouchdb-browser')
+
+        let db = new PouchDB('cereal')
 
         let mode = 'stream'
         let title = $scope.show = commonService.capitalCase($stateParams.show.trim())
+        let dashedTitle = commonService.spacedToDashed($scope.show)
         $scope.show = $scope.show.toUpperCase()
         let episode = $scope.episode = $stateParams.episode.trim()
-        let searchObj = {
+
+        let epObj = {
             show: title,
             episode: episode
         }
+        let video
+        console.log('Playing', epObj.show, epObj.episode)
 
-        console.log('Playing', searchObj.show, searchObj.episode)
+        $scope.back = () => {
+            // console.log('video.currentTime', video.currentTime)
+            $rootScope.$broadcast('backEvent')
+        }
 
         $scope.vlc = function() {
-            var filePath = path + searchObj.show + '/' + searchObj.episode
+            var filePath = path + epObj.show + '/' + epObj.episode
             fsPath.find(filePath, (err, list) => {
                 list.files.forEach(file => {
                     file = decodeURIComponent(file)
@@ -49,9 +59,6 @@
             })
         }
 
-        $scope.back = () => {
-            $rootScope.$broadcast('backEvent')
-        }
 
         let watch = (library_element) => {
 
@@ -69,9 +76,9 @@
                         $rootScope.msg = title + ' ' + episode
 
                         let videoFile = file
-                        let video = document.querySelector('video')
-
+                        video = document.querySelector('video')
                         video.src = videoFile
+                        initProgress()
 
                         // ******* KEY BINDINGS & IDLE HANDLING *******
                         var keyPressed = {}
@@ -141,7 +148,7 @@
                         }
 
                         function togglePlay() {
-                            let video = document.querySelector('video')
+                            video = document.querySelector('video')
                             if (!video) return
                             if (video.paused) {
                                 video.play()
@@ -191,6 +198,37 @@
 
         }
 
+        
+        
+
+        // Save progress
+        let e = episode.split('e')
+        let s = e[0].split('s')
+        s = parseInt(s[1], 10)
+        e = parseInt(e[1], 10)
+        function initProgress() {
+            let interval = $interval(() => {
+                db.get(dashedTitle)
+                    .then((doc) => {
+                        doc.currentEpisode = {
+                            s: s,
+                            e: e,
+                            label: episode
+                        }
+                        doc.Seasons[s][e].currentTime = video.currentTime
+                        doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
+                        console.log(doc.Seasons[s][e])
+                        db.put(doc)
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }, 5000)
+            $scope.$on('$destroy', function() { $interval.cancel(interval) })
+        }
 
         let start = function() {
             return new Promise(function(resolve, reject) {
