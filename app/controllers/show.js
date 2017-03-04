@@ -8,6 +8,9 @@
     function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, libraryService, torrentService, subsService, commonService, wtService, dialogService, dbService) {
 
         let fsExtra = require('fs-extra')
+        let PouchDB = require('pouchdb-browser')
+
+        let db = new PouchDB('cereal')
 
         $rootScope.loading = true
         console.log('$stateParams', $stateParams)
@@ -27,11 +30,6 @@
             $scope.showIsLoading = false
             $rootScope.$applyAsync()
             console.log('Show is ready')
-        })
-
-        $scope.$watch('selectedIndex', (index) => {
-            console.log('selectedIndex', $scope.selectedIndex)
-                // save somewhere..
         })
 
         $scope.dotClass = function(episode) {
@@ -92,18 +90,14 @@
         }, 1000)
 
         function start() {
-            libraryService.getLibrary()
-                .then((library) => {
-                    $rootScope.library = library
+            db.get(commonService.spacedToDashed($scope.title))
+                .then((doc) => {
+                    formatDataAndSave(doc)
+                })
+                .catch(() => {
                     jsonService.getShow($scope.title)
-                        // dbService.getShow($scope.title)
                         .then((showResult) => {
-                            console.log('Found', $scope.title)
-                            $scope.show = showResult
-                            $scope.show.safe_trailer_src = $sce.trustAsResourceUrl($scope.show.Trailer.replace("watch?v=", "embed/"))
-                                // if ($scope.show.Overview.length > 300) $scope.show.Overview = $scope.show.Overview.substring(0, 300) + '..'
                             formatDataAndSave(showResult)
-                            $rootScope.loading = false
                         })
                 })
         }
@@ -119,20 +113,16 @@
                         showResult.Seasons[season][episode].dotm = formatted_date.dotm
                         showResult.Seasons[season][episode].month = formatted_date.month
                         showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
+                            // showResult.Seasons[season][epidsode].playProgress = 
 
                         if ($rootScope.library[showResult.Title]) {
                             let episodes = $rootScope.library[showResult.Title]
                             for (var i = 0; i < episodes.length; i++) {
-                                if (episodes[i].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
+                                if (episodes[i].episode === showResult.Seasons[season][episode].episode && showResult.Seasons[season][episode].progress === 100) {
                                     showResult.Seasons[season][episode].downloaded = true
                                 }
                             }
                         }
-                        // for (var prop in $rootScope.library) {
-                        //     if (prop === showResult.Title && $rootScope.library[prop].episode === showResult.Seasons[season][episode].episode && !showResult.Seasons[season][episode].eta) {
-                        //         showResult.Seasons[season][episode].downloaded = true
-                        //     }
-                        // }
                     }
                 }
             }
@@ -140,9 +130,18 @@
             $rootScope.current_show = $scope.show
             $rootScope.wallpaper = $scope.show.Wallpaper
             sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-            $scope.selectedIndex = $scope.selectedIndex ? $scope.selectedIndex : 0
+            db.get(commonService.spacedToDashed($scope.show.Title))
+                .then((doc) => {
+                    if (doc.currentEpisode) {
+                        console.log(doc.currentEpisode)
+                        $scope.selectedIndex = doc.currentEpisode.s - 1
+                    } else {}
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
             $scope.$applyAsync()
-
+            $rootScope.loading = false
         }
 
         $scope.$on('show_overview', function(event, result) {
@@ -170,14 +169,26 @@
             $scope.$applyAsync()
 
             $rootScope.$on('episode_downloaded', (event, result) => {
-                delete $scope.show.Seasons[s][e].eta
                 $rootScope.current_show = $scope.show
                 sessionStorage.setItem('current_show', JSON.stringify($scope.show))
                 $scope.show.Seasons[s][e].loading = false
                 $scope.show.Seasons[s][e].downloaded = true
                 $scope.showIsLoading = false
-                console.log(result.episode, 'is ready')
-                $scope.$applyAsync()
+
+                db.get(commonService.spacedToDashed($scope.title))
+                    .then((doc) => {
+                        $scope.show._id = commonService.spacedToDashed($scope.title)
+                        $scope.show._rev = doc._rev
+                        db.put($scope.show)
+                            .then(() => {
+                                console.log(result.episode, 'is ready')
+                                formatDataAndSave($scope.show)
+                            })
+                            .catch(() => {
+                                console.error('Error updating', $scope.title)
+                            })
+                    })
+
 
             })
 
@@ -243,9 +254,6 @@
                 }
             }
             console.log('Deleting from library (localStorage)')
-                // localStorage.setItem('library', JSON.stringify(library))
-
-            // start()
         }
 
         start()
@@ -264,7 +272,7 @@
         window.addEventListener('scroll', (e) => {
                 window.requestAnimationFrame(() => {
                     let wrapperOffset = cumulativeOffset(tabsWrapper)
-                    if (window.pageYOffset > orginalOffset - 48 && wrapperOffset) {
+                    if (window.pageYOffset > orginalOffset && wrapperOffset) {
                         tabsWrapper.classList.add('scrolled');
                     } else {
                         tabsWrapper.classList.remove('scrolled');

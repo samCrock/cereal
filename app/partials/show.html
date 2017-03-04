@@ -1,13 +1,8 @@
 <section class="desaturate" layout="column" layout-align="center center">
     <md-content>
-    <!-- <md-content class="desaturate" style="background: url({{ $root.wallpaper }}); background-size: cover;"> -->
         <div  layout="column" class="show_recap">
             <h1 class="title">{{ show.Title }}</h1>
             <div layout="row" layout-align="space-between stretch">
-                    <!--                 <div ng-if="!show.safe_trailer_src" class="show_poster_container">
-                    <img ng-src="{{ poster }}" class="calendar_poster">
-                </div> -->
-                    <!-- <iframe ng-if="show.safe_trailer_src" height="auto" src="{{ show.safe_trailer_src }}" frameborder="0" allowfullscreen flex="50"></iframe> -->
                         <div class="additional" layout="column" layout-align="center start">  
                             <span ng-if="show.Trailer">
                                 <md-button aria-label="Trailer" class="md-button trailer" ng-click="playTrailer()">Trailer</md-button>
@@ -24,11 +19,13 @@
             </div>
         </div>
         <div>
-            <md-progress-linear class="thin green" ng-show="showIsLoading" md-mode="indeterminate"></md-progress-linear>
+            <md-progress-linear ng-show="showIsLoading" md-mode="indeterminate"></md-progress-linear>
             <md-tabs ng-show="!showIsLoading" md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);">
                 <md-tab ng-repeat="(season, episodes) in show.Seasons" label="Season {{ season }}">
-                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">
-                        <md-progress-linear class="thin green" md-mode="determinate" ng-value="episode.progress"></md-progress-linear>
+                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">   
+                        <md-progress-linear ng-if="episode.progress && episode.progress != 100" class="thin green" md-mode="determinate" ng-value="episode.progress"></md-progress-linear>
+                        <!-- <md-progress-linear class="" md-mode="determinate" ng-value="episode.playProgress"></md-progress-linear> -->
+                        <progress-bar progress="episode.playProgress"></progress-bar>
                         <md-card-content class="show_card_content" ng-class="episode.eta || episode.loading ? 'hover' : ''" layout-align="center center" layout="row">
                             <md-card-title layout="row" flex="80" layout-align="center center">
                                 <div flex="20" layout="column" style="min-width: 100px;">
