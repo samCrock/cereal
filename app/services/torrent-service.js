@@ -106,13 +106,13 @@
                                     subsService.download(opts)
                                         .then(() => {
                                             libraryService.getLibrary().then((library) => {})
-                                            $rootScope.library = library
+                                                // $rootScope.library = library
                                         })
                                 })
                                 .catch(() => {
                                     console.log('No subs found')
                                     libraryService.getLibrary().then((library) => {})
-                                    $rootScope.library = library
+                                        // $rootScope.library = library
                                 })
 
                             t.ready = true
@@ -189,13 +189,13 @@
                     console.log('Cleared show string:', show)
                     searchObj.clearedShow = show
                 }
-                searchTorrent_pirateBay(searchObj)
+                searchTorrent_kickass(searchObj)
                     .then((torrent) => {
                         resolve(torrent)
                     })
                     .catch(() => {
                         if ($rootScope.CONFIG.engines === 1) reject()
-                        searchTorrent_kickass(searchObj)
+                        searchTorrent_pirateBay(searchObj)
                             .then((torrent) => {
                                 resolve(torrent)
                             })
@@ -367,6 +367,7 @@
                     if (!error && response.statusCode === 200) {
                         var $ = cheerio.load(body)
                         var data = $('#searchResult')
+                            // console.log(data[''0    ])
                             // console.log('*************************')
                             // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
                             // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
