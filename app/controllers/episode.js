@@ -35,10 +35,34 @@
             episode: episode
         }
         let video
+        let e = episode.split('e')
+        let s = e[0].split('s')
+        s = parseInt(s[1], 10)
+        e = parseInt(e[1], 10)
         console.log('Playing', epObj.show, epObj.episode)
 
         $scope.back = () => {
-            // console.log('video.currentTime', video.currentTime)
+
+            // Save progress
+            db.get(dashedTitle)
+                .then((doc) => {
+                    doc.currentEpisode = {
+                        s: s,
+                        e: e,
+                        label: episode
+                    }
+                    doc.Seasons[s][e].currentTime = video.currentTime
+                    doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
+                    video.currentTime = doc.Seasons[s][e].currentTime
+                    console.log(doc.Seasons[s][e])
+                    db.put(doc)
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
             $rootScope.$broadcast('backEvent')
         }
 
@@ -93,8 +117,6 @@
                             .catch((err) => {
                                 console.log(err)
                             })
-
-                        initProgress(video)
 
                         // ******* KEY BINDINGS & IDLE HANDLING *******
                         var keyPressed = {}
@@ -212,40 +234,6 @@
 
             })
 
-        }
-
-
-
-
-        // Save progress
-        let e = episode.split('e')
-        let s = e[0].split('s')
-        s = parseInt(s[1], 10)
-        e = parseInt(e[1], 10)
-
-        function initProgress(video) {
-            let interval = $interval(() => {
-                db.get(dashedTitle)
-                    .then((doc) => {
-                        doc.currentEpisode = {
-                            s: s,
-                            e: e,
-                            label: episode
-                        }
-                        doc.Seasons[s][e].currentTime = video.currentTime
-                        doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
-                        video.currentTime = doc.Seasons[s][e].currentTime
-                        console.log(doc.Seasons[s][e])
-                        db.put(doc)
-                            .catch((err) => {
-                                console.log(err)
-                            })
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
-            }, 5000)
-            $scope.$on('$destroy', function() { $interval.cancel(interval) })
         }
 
         let start = function() {
