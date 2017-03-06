@@ -12,6 +12,8 @@
             let cheerio = require('cheerio')
             let Promise = require('bluebird')
             let fsExtra = require('fs-extra')
+            let PouchDB = require('pouchdb-browser')
+
 
             let url = 'http://www.pogdesign.co.uk/cat/'
             let json
@@ -62,23 +64,26 @@
                     show = commonService.spacedToDashed(show)
 
                     // Search for local episode file, if not found, retrieve from trakt
-                    // fsExtra.readFile(__dirname + '/../../data/shows/' + show + '.json', (err, data) => {
                     dbService.get(show)
                         .then((showJson) => {
-                            if (commonService.daysToNow(showJson.Updated) < 7) {
-                                console.log('Local data is fresh!', showJson.Updated, commonService.daysToNow(showJson.Updated))
+                            if (commonService.daysToNow(showJson.Updated) === 0) {
+                                console.log('Local data is fresh!')
                                 resolve(showJson)
                             } else {
-                                retrieveRemote(show)
+                                console.log('Updating show latest info', showJson.Updated, commonService.daysToNow(showJson.Updated))
+                                resolve(showJson)
+                                updateRemote(show)
                             }
                         })
                         .catch(() => {
                             commonService.findAlias(show)
                                 .then((result) => {
                                     show = result
+                                    console.log('Adding new aliased show')
                                     retrieveRemote(show)
                                 })
                                 .catch(() => {
+                                    console.log('Adding new show')
                                     retrieveRemote(show)
                                 })
                         })
@@ -155,7 +160,7 @@
                                 let lastSeason
 
                                 $interval(() => {
-                                    if (lastSeason !== currentSeason  && currentSeason !== 0) {
+                                    if (lastSeason !== currentSeason && currentSeason !== 0) {
                                         lastSeason = currentSeason
                                         let urlSeason = 'https://trakt.tv/shows/' + show + '/seasons/' + currentSeason
                                         request.get({
@@ -218,9 +223,6 @@
                                             }
                                         }
 
-                                        // console.log(showJson)
-                                        // console.log('Season ', currentSeason, showJson.Seasons[currentSeason])
-
                                         let valid = false
                                         for (var ep in showJson.Seasons) {
                                             if (ep.hasOwnProperty(showJson.Seasons)) {
@@ -231,15 +233,15 @@
                                         console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
                                         $mdToast.show($mdToast.simple().textContent('Saved seasons: ' + Object.keys(showJson.Seasons).length + ' / ' + seasons))
                                         if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
-                                            
+
                                             dbService.put(show, showJson)
-                                            .then(()=>{
-                                                $rootScope.$broadcast('show_ready', showJson)
-                                            })
-                                            .catch((err)=>{
-                                                console.error(err)
-                                                reject(err)
-                                            })
+                                                .then(() => {
+                                                    $rootScope.$broadcast('show_ready', showJson)
+                                                })
+                                                .catch((err) => {
+                                                    console.error(err)
+                                                    reject(err)
+                                                })
                                         }
                                     } else {
                                         reject(response.statusCode)
@@ -252,34 +254,128 @@
                 })
             }
 
-            // // Returns all shows w/ all episodes
-            // json_module['getLibrary'] = function getLibrary() {
-            //     return new Promise(function(resolve, reject) {
-            //         let library = []
-            //         fsExtra.readdirSync(__dirname + '/../../data/shows')
-            //             .filter((file) => {
-            //                 let dashedShowName = file.split('.json')
-            //                 dashedShowName = dashedShowName[0]
-            //                     // let showName = dashedShowName.split(' ').join('-')
-            //                 showName = commonService.capitalCase(showName)
-            //                 let show = {
-            //                     title: showName,
-            //                     poster: dashedShowName + '.jpg',
-            //                     episodes: []
-            //                 }
-            //                 fsExtra.readFile(__dirname + '/../../data/shows/' + file, (err, showEpisodes) => {
-            //                     if (err) throw err
-            //                     if (showEpisodes) {
-            //                         let episodes = JSON.parse(showEpisodes)
-            //                         show.episodes = episodes
-            //                     }
-            //                 })
-            //                 library.push(show)
-            //             })
-            //         resolve(library)
 
-            //     })
-            // }
+            let updateRemote = function(show) {
+
+                dbService.get(show)
+                    .then((showJson) => {
+
+                        let urlMain = 'https://trakt.tv/shows/' + show
+
+                        console.log('https://trakt.tv/shows/' + show)
+
+                        request.get({
+                            url: urlMain
+                        }, function(error, response, body) {
+
+                            console.log('Status', response.statusCode);
+
+                            if (response.statusCode !== 200) reject(response.statusCode)
+
+                            if (!error && response.statusCode === 200) {
+                                let $ = cheerio.load(body)
+                                let seasons
+                                let lastSeason = {}
+                                console.log('.additional-stats', $('.additional-stats')['0'].children[0])
+                                if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
+                                    seasons = $('.season-count')[1].attribs['data-all-count']
+                                    console.log('##########################')
+                                    console.log('Last season    :', seasons)
+                                    console.log('##########################')
+                                }
+
+                                let urlSeason = 'https://trakt.tv/shows/' + show + '/seasons/' + seasons
+                                request.get({
+                                    url: urlSeason
+                                }, function(error, response, body) {
+                                    if (!error) {
+                                        getSeason(error, response, body)
+                                    }
+                                })
+
+                                function getSeason(error, response, body) {
+                                    if (error || !response) {
+                                        console.error(error)
+                                        return reject(error)
+                                    }
+                                    if (!error && response.statusCode == 200) {
+
+                                        let $ = cheerio.load(body)
+
+                                        let last = $('.selected')[2].children[0].data
+                                        console.log('last', last)
+                                        let episode = 1
+
+                                        for (var i = 1; i < $('.titles').length; i++) {
+
+                                            if ($('.titles')[i].children.length == 2 && $('.titles')[i].children[0].children[1]) {
+                                                let title
+                                                let date = $('.titles')[i].children[1].children[0].children[0].children[0].data
+                                                if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                let ep = $('.titles')[i].children[0].children[1].children[0].children[0].data
+                                                if ($('.titles')[i].children[0].children[1].children[2].children[0]) {
+                                                    title = $('.titles')[i].children[0].children[1].children[2].children[0].data
+                                                }
+                                                if (ep.length == 4) ep = '0' + ep
+                                                ep = ep.slice(0, 2) + ep.slice(3)
+                                                ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                ep = 's' + ep
+
+                                                lastSeason[episode] = {
+                                                    episode: ep,
+                                                    title: title,
+                                                    date: date
+                                                }
+                                                episode++
+                                            } else if ($('.titles')[i].children.length == 6) {
+                                                let date = $('.titles')[i].children[1].children[0].children[0].data
+                                                if ($('.titles')[i].children[1].children[0].children[0].name === 'h4') date = $('.titles')[i].children[1].children[0].children[0].next.next.children[0].data
+                                                let ep = $('.titles')[i].children[2].children[0].children[0].data
+                                                let title = $('.titles')[i].children[2].children[2].children[0].data
+                                                if (ep.length == 4) ep = '0' + ep
+                                                ep = ep.slice(0, 2) + ep.slice(3)
+                                                ep = ep.slice(0, 2) + 'e' + ep.slice(2)
+                                                ep = 's' + ep
+                                                lastSeason[episode] = {
+                                                    episode: ep,
+                                                    title: title,
+                                                    date: date
+                                                }
+                                                episode++
+                                            }
+                                        }
+
+                                        let valid = false
+                                        for (var ep in lastSeason) {
+                                            if (ep.hasOwnProperty(lastSeason)) {
+                                                console.log(ep + " -> " + lastSeason[ep])
+                                            }
+                                        }
+
+                                        console.log('lastSeason', lastSeason)
+
+                                        let db = new PouchDB('cereal')
+                                        db.get(show)
+                                            .then(function(doc) {
+                                                doc.Seasons[last] = lastSeason
+                                                db.put(doc)
+                                                    .then(() => {
+                                                        $mdToast.show($mdToast.simple().textContent('Updated ' + show + ' season ' + seasons))
+                                                        $rootScope.$broadcast('show_ready', doc)
+                                                    }).catch((reason) => {
+                                                        console.error(reason)
+                                                    })
+                                            })
+
+                                    } else {
+                                        reject(response.statusCode)
+                                    }
+                                }
+
+                            } else reject('Status:', response.statusCode)
+                        })
+                    })
+            }
 
 
             return json_module
