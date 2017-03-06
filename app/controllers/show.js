@@ -90,20 +90,20 @@
         }, 1000)
 
         function start() {
-            db.get(commonService.spacedToDashed($scope.title))
-                .then((doc) => {
-                    formatDataAndSave(doc)
-                })
-                .catch(() => {
+            // db.get(commonService.spacedToDashed($scope.title))
+                // .then((doc) => {
+                    // formatDataAndSave(doc)
+                // })
+                // .catch(() => {
                     jsonService.getShow($scope.title)
                         .then((showResult) => {
                             formatDataAndSave(showResult)
                         })
-                })
+                // })
         }
 
         function formatDataAndSave(showResult) {
-            console.log('formatDataAndSave', showResult)
+            // console.log('formatDataAndSave', showResult)
             if (showResult) {
                 for (var season in showResult.Seasons) {
                     for (var episode in showResult.Seasons[season]) {
@@ -260,7 +260,7 @@
 
         /////////// SEASONS TABS WRAPPER OFFSET HANDLER ///////////
         var cumulativeOffset = function(element) {
-            var top = 0
+            var top = 48
             do {
                 top += element.offsetTop || 0
                 element = element.offsetParent

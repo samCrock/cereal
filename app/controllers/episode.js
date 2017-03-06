@@ -78,7 +78,23 @@
                         let videoFile = file
                         video = document.querySelector('video')
                         video.src = videoFile
-                        initProgress()
+
+                        // RESUME
+                        db.get(dashedTitle)
+                            .then((doc) => {
+                                doc.currentEpisode = {
+                                    s: s,
+                                    e: e,
+                                    label: episode
+                                }
+                                video.currentTime = doc.Seasons[s][e].currentTime
+                                console.log('Resumed play @', doc.Seasons[s][e])
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+
+                        initProgress(video)
 
                         // ******* KEY BINDINGS & IDLE HANDLING *******
                         var keyPressed = {}
@@ -198,15 +214,16 @@
 
         }
 
-        
-        
+
+
 
         // Save progress
         let e = episode.split('e')
         let s = e[0].split('s')
         s = parseInt(s[1], 10)
         e = parseInt(e[1], 10)
-        function initProgress() {
+
+        function initProgress(video) {
             let interval = $interval(() => {
                 db.get(dashedTitle)
                     .then((doc) => {
@@ -217,6 +234,7 @@
                         }
                         doc.Seasons[s][e].currentTime = video.currentTime
                         doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
+                        video.currentTime = doc.Seasons[s][e].currentTime
                         console.log(doc.Seasons[s][e])
                         db.put(doc)
                             .catch((err) => {
