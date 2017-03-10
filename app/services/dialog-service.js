@@ -42,6 +42,40 @@
             }
         }
 
+        message_module['confirm'] = function confirm(params) {
+            return new Promise(function(resolve, reject) {
+                let data = params
+                let parentEl = angular.element(document.body)
+                console.log('data', data)
+                $mdDialog.show({
+                        controller: DialogController,
+                        parent: parentEl,
+                        clickOutsideToClose: true,
+                        templateUrl: 'app/partials/dialog/confirm_tmpl.html',
+                        locals: {
+                            data: data
+                        }
+                    })
+                    .then(function(result) {
+                        resolve(result)
+                    }, function() {
+                        reject()
+                    })
+
+                function DialogController($scope, $mdDialog, $timeout, data) {
+                    $scope.data = data
+                    $scope.show = data.show
+                    console.log('DialogController', data)
+                    $scope.confirm = function() {
+                        $mdDialog.hide()
+                    }
+                    $scope.close = function() {
+                        $mdDialog.cancel()
+                    }
+                }
+            })
+        }
+
         message_module['torrentForm'] = function torrentForm(searchObj) {
             return new Promise(function(resolve, reject) {
                 let formattedDate = searchObj.date.split('T')[0].replace(/-/g, '.')
