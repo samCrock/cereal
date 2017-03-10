@@ -251,22 +251,11 @@ md-tabs .md-tab {
     width: 100%;
 }
 
-.poster_library {
-    width: 12rem;
-    height: 17rem;
-    cursor: pointer;
-    border-radius: 0.2rem;
-    outline: none;
-    opacity: 1;
-    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
-    transition-delay: 0.3s;
-}
-
 .show_poster_container {
     width: 12rem;
     height: 17rem;
     cursor: pointer;
-    border-radius: 0.2rem;
+    border-radius: 3%;
     outline: none;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
     transition-delay: 0.3s;
@@ -276,7 +265,6 @@ md-tabs .md-tab {
     width: 12rem;
     height: 17rem;
     cursor: pointer;
-    border-radius: 0.2rem;
     outline: none;
     opacity: 1;
     transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
@@ -291,6 +279,7 @@ md-tabs .md-tab {
 .calendar_poster {
     width: inherit;
     height: inherit;
+    border-radius: 3%;
     -webkit-backface-visibility: hidden;
     -webkit-transform: translateZ(0) scale(1.0, 1.0);
 }
@@ -312,6 +301,64 @@ md-tabs .md-tab {
     background-color: rgba(43, 40, 45, 0.5);
 }
 
+#library_container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.poster_library {
+    width: 12rem;
+    height: 17rem;
+    cursor: pointer;
+    border-radius: 3%;
+    outline: none;
+    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+    opacity: 1;
+}
+
+.poster_library_sub {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    color: white;
+    text-align: center;
+    transition: background-color cubic-bezier(0.5, 0, 1, 1) 0.3s, opacity cubic-bezier(0.5, 0, 1, 1) 0.3s, top cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+    opacity: 0;
+}
+
+.poster_library_sub label {
+    position: inherit;
+    font-size: 1.8rem;
+    top: 10%;
+}
+
+.library_card {
+    margin: 0.5rem;
+    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
+    transition-delay: 0.3s;
+    opacity: 0.95;
+}
+
+.library_card:hover {
+    margin: 0;
+    opacity: 0.95;
+}
+
+.poster_library:hover {
+    width: 13rem;
+    height: 18rem;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.poster_library:hover .poster_library_sub,
+.poster_library.hover .poster_library_sub {
+    opacity: 1;
+    background: rgba(0,0,0,0.3)
+}
+
 md-card {
     background-color: transparent;
     box-shadow: none;
@@ -326,44 +373,6 @@ md-content {
     width: 100%;
     background-color: transparent;
 }
-
-.library_card {
-    margin: 0.5rem;
-    transition: all cubic-bezier(0.5, 0, 1, 1) 0.3s;
-    transition-delay: 0.3s;
-    opacity: 0.95;
-}
-
-.library_card:hover {
-    margin: 0;
-    opacity: 1;
-}
-
-.library_card:hover .poster_library,
-.library_card.hover .poster_library {
-    width: 12.8rem;
-    height: 17.8rem;
-}
-
-
-/*@media (max-width: 1200px) {
-    .card {
-        min-width: 200px;
-    }
-    .poster {
-        min-width: 200px;
-    }
-    .poster_sub_container {
-        min-width: 200px;
-    }
-}*/
-
-
-/*.poster:hover {
-    width: 18rem;
-    height: 25rem;
-    margin: 0;
-}*/
 
 .poster.ng-hide {
     opacity: 0;
@@ -514,7 +523,7 @@ md-content {
 
 .calendar_card {
     cursor: pointer;
-    border-radius: 0.2rem;
+    border-radius: 3%;
     box-shadow: 2px 2px 4px #888888;
     outline: none;
     transition: all linear 0.5s;
@@ -532,7 +541,7 @@ md-content {
 }
 
 .calendar_card:active {
-    border-radius: 0.2rem;
+    border-radius: 3%;
     box-shadow: 1px 1px 2px #888888;
 }
 
@@ -566,13 +575,13 @@ md-content {
 .bg_today {
     background: rgba(43, 40, 45, 1);
     width: 95%;
-    border-radius: 0.2rem;
+    border-radius: 3%;
 }
 
 .bg_default {
     /*background-color: rgba(23, 20, 25, 0.9);*/
     width: auto;
-    border-radius: 0.2rem;
+    border-radius: 3%;
 }
 
 #calendar_episode {
@@ -624,7 +633,7 @@ section {
     color: rgba(255, 255, 255, 0.95);
     opacity: 0.9;
     font-size: 2rem;
-    margin-top: 4rem;
+    margin-top: 1rem;
     text-align: center;
 }
 
@@ -1052,7 +1061,6 @@ md-icon path {
 }
 
 #settings_button {
-    transform: translateX(8rem);
     top: 4px;
     background: rgba(43, 40, 45, 0.1);
 }
@@ -1071,4 +1079,17 @@ md-fab-actions {
 
 md-switch.md-checked .md-bar {
     background-color: rgba(227, 255, 30, 0.9);
+}
+
+.show_delete_btn {
+    position: absolute;
+    transform: translateX(calc(100vw - 100% - 1rem)) translateY(1rem);
+}
+.show_delete_btn i {
+    color: rgba(255, 92, 92, 0.8);
+}
+
+md-backdrop.md-opaque {
+    opacity: 0.7;
+    background-color: black;
 }
