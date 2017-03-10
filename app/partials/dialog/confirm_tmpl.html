@@ -1,0 +1,11 @@
+<md-dialog class="episode_dialog">
+    <md-dialog-content layout-padding>
+        <div style="display: inline-flex;" layout-align="bottom center" layout-padding>
+            <h2>Delete <span style="color: rgba(227, 255, 30, 0.9);">{{ data.data }}</span>?</h2>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+            <h3>All episodes will be deleted from disk too</h3>
+        <md-button ng-click="confirm()" class="md-primary">Go for it</md-button>
+    </md-dialog-actions>
+</md-dialog>
