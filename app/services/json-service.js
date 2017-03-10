@@ -66,6 +66,7 @@
                     // Search for local episode file, if not found, retrieve from trakt
                     dbService.get(show)
                         .then((showJson) => {
+                            // console.log('From DB ->', showJson)
                             if (commonService.daysToNow(showJson.Updated) === 0) {
                                 console.log('Local data is fresh!')
                                 resolve(showJson)
@@ -276,7 +277,7 @@
                                 let $ = cheerio.load(body)
                                 let seasons
                                 let lastSeason = {}
-                                console.log('.additional-stats', $('.additional-stats')['0'].children[0])
+                                // console.log('.additional-stats', $('.additional-stats')['0'].children[0])
                                 if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
                                     seasons = $('.season-count')[1].attribs['data-all-count']
                                     console.log('##########################')
@@ -288,6 +289,7 @@
                                 request.get({
                                     url: urlSeason
                                 }, function(error, response, body) {
+                                    if (error) console.error(error)
                                     if (!error) {
                                         getSeason(error, response, body)
                                     }
@@ -295,7 +297,7 @@
 
                                 function getSeason(error, response, body) {
                                     if (error || !response) {
-                                        console.error(error)
+                                        // console.error(error)
                                         return reject(error)
                                     }
                                     if (!error && response.statusCode == 200) {
@@ -303,7 +305,6 @@
                                         let $ = cheerio.load(body)
 
                                         let last = $('.selected')[2].children[0].data
-                                        console.log('last', last)
                                         let episode = 1
 
                                         for (var i = 1; i < $('.titles').length; i++) {
@@ -357,10 +358,26 @@
                                         let db = new PouchDB('cereal')
                                         db.get(show)
                                             .then(function(doc) {
-                                                doc.Seasons[last] = lastSeason
+                                                doc.Updated = new Date()
+                                                if (!doc.Seasons[last]) doc.Seasons.push(lastSeason)
+                                                if (doc.Seasons[last]) {
+                                                    for (var i = 0; i < doc.Seasons[last].length; i++) {
+                                                        for (var j = 0; j < lastSeason.length; j++) {
+                                                            doc.Seasons[last][i].episode = lastSeason.episode
+                                                            doc.Seasons[last][i].title = lastSeason.title
+                                                            doc.Seasons[last][i].date = lastSeason.date
+                                                        }
+                                                    }
+                                                    if (doc.Seasons[last].length > lastSeason.length) {
+                                                        for (var k = lastSeason.length - doc.Seasons[last].length; k < lastSeason.length; k++) {
+                                                            doc.Seasons[last].push(lastSeason[k])
+                                                        }
+                                                        console.log('Added' + (lastSeason.length - doc.Seasons[last].length) + 'episodes to season' + last);
+                                                    }
+                                                }
                                                 db.put(doc)
                                                     .then(() => {
-                                                        $mdToast.show($mdToast.simple().textContent('Updated ' + show + ' season ' + seasons))
+                                                        $mdToast.show($mdToast.simple().textContent('Synced \'' + commonService.dashedToSpaced(show) + '\' season ' + seasons))
                                                         $rootScope.$broadcast('show_ready', doc)
                                                     }).catch((reason) => {
                                                         console.error(reason)
