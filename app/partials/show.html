@@ -1,15 +1,18 @@
 <section class="desaturate" layout="column" layout-align="center center">
     <md-content>
-        <div  layout="column" class="show_recap">
+        <div layout="column" class="show_recap">
             <h1 class="title">{{ show.Title }}</h1>
+            <md-button aria-label="Delete" class="md-button small_btn show_delete_btn" ng-click="deleteShow()">
+                <i class="poster_sub_show icon fa fa-trash fa-2x" aria-hidden="true"></i>
+            </md-button>
             <div layout="row" layout-align="space-between stretch">
-                        <div class="additional" layout="column" layout-align="center start">  
-                            <span ng-if="show.Trailer">
+                <div class="additional" layout="column" layout-align="center start">
+                    <span ng-if="show.Trailer">
                                 <md-button aria-label="Trailer" class="md-button trailer" ng-click="playTrailer()">Trailer</md-button>
                             </span>
-                            <h3 class="network">{{ show.Network }}</h3>
-                            <h3 class="runtime" ng-if="show.Runtime">{{ show.Runtime }}min</h3>
-                        </div>
+                    <h3 class="network">{{ show.Network }}</h3>
+                    <h3 class="runtime" ng-if="show.Runtime">{{ show.Runtime }}min</h3>
+                </div>
                 <div layout="row">
                     <h2 class="overview">{{ show.Overview }}</h2>
                 </div>
@@ -22,12 +25,11 @@
             <md-progress-linear ng-show="showIsLoading" md-mode="indeterminate"></md-progress-linear>
             <md-tabs ng-show="!showIsLoading" md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);">
                 <md-tab ng-repeat="(season, episodes) in show.Seasons" label="Season {{ season }}">
-                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">   
-                        <md-progress-linear ng-if="episode.progress && episode.progress != 100" class="thin green" md-mode="determinate" ng-value="episode.progress"></md-progress-linear>
-                        <!-- <md-progress-linear class="" md-mode="determinate" ng-value="episode.playProgress"></md-progress-linear> -->
+                    <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">
+                        <md-progress-linear ng-if="episode.progress && !episode.downloaded" class="thin" md-mode="determinate" ng-value="episode.progress"></md-progress-linear>
                         <progress-bar progress="episode.playProgress"></progress-bar>
                         <md-card-content class="show_card_content" ng-class="episode.eta || episode.loading ? 'hover' : ''" layout-align="center center" layout="row">
-                            <md-card-title layout="row" flex="80" layout-align="center center">
+                            <md-card-title layout="row" flex="70" layout-align="center center">
                                 <div flex="20" layout="column" style="min-width: 100px;">
                                     <label style="font-size: 1.8rem;">{{ episode.episode }}</label>
                                     <label style="font-size: 1.2rem;" ng-show="timePassedCheck(episode.timePassed)">{{ episode.timePassed }}</label>
@@ -35,14 +37,18 @@
                                 <label class="episode_title" flex="80">{{ episode.title }} </label>
                             </md-card-title>
                             <label ng-class="dotClass(episode)" flex="2">&#9679</label>
-                            <md-card-title layout="column" class="show_actions" flex="18" layout-align="center center" style="min-width: 100px;">
-                                <!-- PLAY -->
+                            <md-card-title layout="column" class="show_actions" flex="28" layout-align="center center" style="min-width: 200px;">
                                 <div ng-if="dotClass(episode) != 'hidden'" layout="row">
-                                    <md-button ng-if="!episode.loading && episode.downloaded" aria-label="Play" class="md-button small_btn" ng-click="play({ label: episode.episode, s: season, e: episodeN})">
+                                    <!-- ETA -->
+                                    <md-button class="md-button small_btn" ng-disabled="true" style="width: 8rem; cursor: pointer;">
+                                        <i class="poster_sub_show eta" aria-hidden="true">{{ episode.eta }}</i>
+                                    </md-button>
+                                    <!-- PLAY -->
+                                    <md-button ng-if="episode.downloaded" aria-label="Play" class="md-button small_btn" ng-click="play({ label: episode.episode, s: season, e: episodeN})">
                                         <i class="poster_sub_show icon fa fa-play fa-2x" aria-hidden="true"></i>
                                     </md-button>
                                     <!-- STREAM -->
-                                    <md-button aria-label="Stream" class="md-button small_btn" ng-if="!episode.loading && !episode.downloaded" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
+                                    <md-button aria-label="Stream" class="md-button small_btn" ng-if="(!episode.downloaded && !episode.loading) || episode.eta" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
                                         <i class="poster_sub_show icon fa fa-play fa-2x stream-play" aria-hidden="true"></i>
                                         <i class="poster_sub_show icon fa fa-magnet stream-magnet" aria-hidden="true"></i>
                                     </md-button>
@@ -50,18 +56,12 @@
                                     <md-button aria-label="Download" class="md-button small_btn" ng-if="!episode.loading && !episode.downloaded && !episode.eta" ng-click="downloadEpisode({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
                                         <i class="poster_sub_show icon fa fa-download fa-2x" aria-hidden="true"></i>
                                     </md-button>
-                                    <!-- ETA -->
-                                    <md-button class="md-button small_btn" ng-disabled="true" ng-if="!episode.loading && !episode.downloaded && episode.eta && episode.eta.indexOf('NaN') == -1">
-                                        <i class="poster_sub_show eta" aria-hidden="true">{{ episode.eta }}</i>
-                                    </md-button>
                                     <!-- DELETE -->
-                                    <md-button aria-label="Delete" class="md-button small_btn" ng-if="!episode.loading && episode.downloaded" ng-click="deleteEpisode({ label: episode.episode, s: season, e: episodeN})">
+                                    <md-button aria-label="Delete" class="md-button small_btn" ng-if="episode.downloaded || episode.eta" ng-click="deleteEpisode({ episode: episode, s: season, e: episodeN})">
                                         <i class="poster_sub_show icon fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </md-button>
                                     <!-- LOADING -->
-                                    <md-button aria-label="Loading" class="md-button small_btn" ng-if="episode.loading">
-                                        <i class="spinner fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="top: 0.1rem;"></i>
-                                    </md-button>
+                                    <cereal-loader ng-if="episode.loading && !episode.eta && !episode.downloaded" type="1"></cereal-loader>
                                 </div>
                             </md-card-title>
                         </md-card-content>

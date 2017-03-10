@@ -1,13 +1,16 @@
 <section class="desaturate">
     <div flex layout="column" layout-align="center center">
-        <div ng-if="emptyLibrary" style="max-width: 90%;">
+        <div ng-if="isEmpty" style="max-width: 90%;">
             <h1>This is your library</h1>
             <h2>Search for a show or check out the calendar to start downloading or streaming</h2>
         </div>
-        <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container" style="margin-top: 2rem; margin-bottom: 2rem;">
+        <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container">
             <md-card class="library_card" ng-repeat="(key, value) in library" ui-sref="app.show( { show: key } )" layout-align="center center">
-                <md-card-content>
-                    <img ng-src="{{ getPoster(key) }}" class="poster_library">
+                <md-card-content class="poster_library" style="background: url({{ getPoster(key) }}) no-repeat center center; background-size: cover;">
+                    <div class="poster_library_sub">
+                        <label>{{ key }}</label>
+                        <!-- <md-progress-linear class="thin" md-mode="determinate" ng-value="value."></md-progress-linear>  -->
+                    </div>
                 </md-card-content>
             </md-card>
         </md-content>

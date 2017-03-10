@@ -23,7 +23,7 @@
                     empty = false
                 }
             }
-            $scope.emptyLibrary = empty
+            $scope.isEmpty = empty
 
             $scope.library = library
 

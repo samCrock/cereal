@@ -42,7 +42,6 @@
         console.log('Playing', epObj.show, epObj.episode)
 
         $scope.back = () => {
-
             // Save progress
             db.get(dashedTitle)
                 .then((doc) => {
@@ -54,16 +53,19 @@
                     doc.Seasons[s][e].currentTime = video.currentTime
                     doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
                     video.currentTime = doc.Seasons[s][e].currentTime
-                    console.log(doc.Seasons[s][e])
                     db.put(doc)
+                        .then(() => {
+                            console.log('Saved playProgress to', doc.Seasons[s][e].playProgress + '%')
+                            $rootScope.$broadcast('backEvent')
+                        })
                         .catch((err) => {
                             console.log(err)
+                            $rootScope.$broadcast('backEvent')
                         })
                 })
                 .catch((err) => {
                     console.log(err)
                 })
-            $rootScope.$broadcast('backEvent')
         }
 
         $scope.vlc = function() {
