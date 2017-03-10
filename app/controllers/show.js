@@ -9,6 +9,8 @@
 
         let fsExtra = require('fs-extra')
         let PouchDB = require('pouchdb-browser')
+        const wt_client = wtService.client()
+
 
         let db = new PouchDB('cereal')
 
@@ -16,7 +18,7 @@
         console.log('$stateParams', $stateParams)
         $scope.title = $stateParams.show ? commonService.capitalCase($stateParams.show.trim()) : $rootScope.current_show.Title
         $scope.selected_ep = $stateParams.episode
-        $rootScope.current_show.Title = $scope.title
+        if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
         $scope.downloading = []
         $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
 
@@ -77,10 +79,11 @@
                 for (var i = 0; i < $rootScope.pending.length; i++) {
                     for (var s in $scope.show.Seasons) {
                         for (var e in $scope.show.Seasons[s]) {
-                            if ($rootScope.pending[i].show === $scope.show.Title &&
-                                $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
+                            if ($rootScope.pending[i].show === $scope.show.Title && $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
                                 $scope.show.Seasons[s][e].eta = commonService.formatTime($rootScope.pending[i].eta)
+                                if ($scope.show.Seasons[s][e].eta.indexOf('NaN') !== -1) $scope.show.Seasons[s][e].eta = ''
                                 $scope.show.Seasons[s][e].progress = $rootScope.pending[i].progress
+                                $scope.show.Seasons[s][e].magnet = $rootScope.pending[i].magnet
                             }
                         }
                     }
@@ -90,20 +93,14 @@
         }, 1000)
 
         function start() {
-            // db.get(commonService.spacedToDashed($scope.title))
-                // .then((doc) => {
-                    // formatDataAndSave(doc)
-                // })
-                // .catch(() => {
-                    jsonService.getShow($scope.title)
-                        .then((showResult) => {
-                            formatDataAndSave(showResult)
-                        })
-                // })
+            jsonService.getShow($scope.title)
+                .then((showResult) => {
+                    formatDataAndSave(showResult)
+                })
         }
 
         function formatDataAndSave(showResult) {
-            // console.log('formatDataAndSave', showResult)
+            console.log('formatDataAndSave', showResult)
             if (showResult) {
                 for (var season in showResult.Seasons) {
                     for (var episode in showResult.Seasons[season]) {
@@ -113,7 +110,6 @@
                         showResult.Seasons[season][episode].dotm = formatted_date.dotm
                         showResult.Seasons[season][episode].month = formatted_date.month
                         showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
-                            // showResult.Seasons[season][epidsode].playProgress = 
 
                         if ($rootScope.library[showResult.Title]) {
                             let episodes = $rootScope.library[showResult.Title]
@@ -128,14 +124,25 @@
             }
             $scope.show = showResult
             $rootScope.current_show = $scope.show
-            $rootScope.wallpaper = $scope.show.Wallpaper
             sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+            $rootScope.wallpaper = $scope.show.Wallpaper
             db.get(commonService.spacedToDashed($scope.show.Title))
                 .then((doc) => {
                     if (doc.currentEpisode) {
                         console.log(doc.currentEpisode)
                         $scope.selectedIndex = doc.currentEpisode.s - 1
-                    } else {}
+                    }
+                    $scope.show._id = doc._id
+                    $scope.show._rev = doc._rev
+                    db.put($scope.show)
+                        .then(() => {
+                            console.log($scope.show.Title, 'synced')
+                        })
+                        .catch((err) => {
+                            console.error('Error updating', $scope.title, err)
+                        })
+
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -150,6 +157,7 @@
             $rootScope.loading = false
             $scope.showIsLoading = true
             $scope.$applyAsync()
+            formatDataAndSave($scope.show)
         })
 
         $scope.downloadEpisode = (episode) => {
@@ -169,33 +177,31 @@
             $scope.$applyAsync()
 
             $rootScope.$on('episode_downloaded', (event, result) => {
-                $rootScope.current_show = $scope.show
-                sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-                $scope.show.Seasons[s][e].loading = false
                 $scope.show.Seasons[s][e].downloaded = true
-                $scope.showIsLoading = false
-
-                db.get(commonService.spacedToDashed($scope.title))
+                console.log(show, result.episode, 'completed downloading')
+                $scope.$applyAsync()
+                db.get(commonService.spacedToDashed($scope.show.Title))
                     .then((doc) => {
-                        $scope.show._id = commonService.spacedToDashed($scope.title)
+                        $scope.show._id = doc._id
                         $scope.show._rev = doc._rev
+                        $scope.show.last_update = new Date()
                         db.put($scope.show)
                             .then(() => {
-                                console.log(result.episode, 'is ready')
-                                formatDataAndSave($scope.show)
+                                console.log($scope.show.Title, 'synced')
                             })
-                            .catch(() => {
-                                console.error('Error updating', $scope.title)
+                            .catch((err) => {
+                                console.error('Error updating', $scope.title, err)
                             })
+
+
                     })
-
-
+                    // formatDataAndSave($scope.show)
             })
 
             torrentService.searchTorrent(searchObject)
                 .then((result) => {
                     console.log(result.episode, 'is downloading')
-                    $scope.show.Seasons[s][e].loading = false
+                        // $scope.show.Seasons[s][e].loading = false
                     torrentService.downloadTorrent(result)
                 })
                 .catch((reason) => {
@@ -208,7 +214,7 @@
                             torrentService.searchTorrent(dialogResult)
                                 .then((result) => {
                                     console.log(result.episode, 'is downloading')
-                                    $scope.show.Seasons[s][e].loading = false
+                                        // $scope.show.Seasons[s][e].loading = false
                                     torrentService.downloadTorrent(result)
                                         .then((t) => {
                                             delete $scope.show.Seasons[s][e].eta
@@ -236,50 +242,105 @@
 
         $scope.deleteEpisode = (showObj) => {
             let show = $scope.title
-            let episode = showObj.label
-
+            let episode = showObj.episode.episode
+            let magnet = showObj.episode.magnet
             let e = episode.split('e')
             let s = e[0].split('s')
             s = parseInt(s[1], 10)
             e = parseInt(e[1], 10)
-            $scope.show.Seasons[s][e].downloaded = false
+            $timeout(() => {
+                $scope.show.Seasons[s][e].downloaded = false
+                $scope.show.Seasons[s][e].loading = false
+                delete $scope.show.Seasons[s][e].eta
+                delete $scope.show.Seasons[s][e].progress
+            }, 1000)
+            if (magnet) {
+                try {
+                    wt_client.remove(magnet, () => {
+                        console.log('Deleted from client')
+                        for (var i = 0; i < $rootScope.pending.length; i++) {
+                            if ($rootScope.pending[i].magnet === magnet) {
+                                $rootScope.pending.splice(i, 1)
+                            }
+                        }
+                        let local_pending = JSON.parse(localStorage.getItem('pending'))
+                        for (var i = 0; i < local_pending.length; i++) {
+                            if (local_pending[i].magnet === magnet) {
+                                local_pending.splice(i, 1)
+                            }
+                        }
+                        localStorage.setItem('pending', JSON.stringify(local_pending))
+                        console.log('Deleted from pending')
+                    })
+                } catch (err) {
 
-            console.log('Deleting actual folder')
-            fsExtra.removeSync(__dirname + '/../../library/' + show + '/' + episode);
-            console.log('Deleting from library (rootscope)')
-            let library = JSON.parse(localStorage.getItem('library'))
-            for (var i = 0; i < library.length; i++) {
-                if (library[i].show === show && library[i].episode === episode) {
-                    library.splice(i, 1)
                 }
             }
-            console.log('Deleting from library (localStorage)')
+            db.get(commonService.spacedToDashed($scope.show.Title))
+                .then((doc) => {
+                    doc.Seasons[s][e].downloaded = false
+                    delete doc.Seasons[s][e].eta
+                    delete doc.Seasons[s][e].progress
+                    db.put(doc)
+                        .then(() => {
+                            console.log('Deleted from db')
+                        })
+                        .catch((err) => {
+                            console.error('Error writing db', err)
+                        })
+                })
+            $rootScope.$applyAsync()
+            fsExtra.removeSync(__dirname + '/../../library/' + show + '/' + episode);
+            console.log('Deleted from actual folder')
         }
 
+        $scope.deleteShow = () => {
+            dialogService.confirm({ data: $scope.show.Title })
+                .then(() => {
+                    $rootScope.loading = true
+                    let show = $scope.title
+                    db.get(commonService.spacedToDashed($scope.show.Title))
+                        .then(function(doc) {
+                            return db.remove(doc)
+                        }).then(function(result) {
+                            console.log('Deleted from db')
+                        }).catch(function(err) {
+                            console.log(err)
+                        })
+                        // $rootScope.$applyAsync()
+                    delete $rootScope.current_show
+                    fsExtra.removeSync(__dirname + '/../../library/' + show)
+                    console.log('Deleted from actual folder')
+                    $state.go('app.library')
+                })
+
+        }
+
+        // INIT
         start()
 
         /////////// SEASONS TABS WRAPPER OFFSET HANDLER ///////////
-        var cumulativeOffset = function(element) {
-            var top = 48
-            do {
-                top += element.offsetTop || 0
-                element = element.offsetParent
-            } while (element);
-            return top
-        }
-        let tabsWrapper = document.getElementsByTagName('md-tabs-wrapper')[0]
-        let orginalOffset = cumulativeOffset(tabsWrapper)
-        window.addEventListener('scroll', (e) => {
-                window.requestAnimationFrame(() => {
-                    let wrapperOffset = cumulativeOffset(tabsWrapper)
-                    if (window.pageYOffset > orginalOffset && wrapperOffset) {
-                        tabsWrapper.classList.add('scrolled');
-                    } else {
-                        tabsWrapper.classList.remove('scrolled');
-                    }
-                })
-            })
-            //////////////////////
+        // var cumulativeOffset = function(element) {
+        //     var top = 0
+        //     do {
+        //         top += element.offsetTop || 0
+        //         element = element.offsetParent
+        //     } while (element);
+        //     return top
+        // }
+        // let tabsWrapper = document.getElementsByTagName('md-tabs-wrapper')[0]
+        // let orginalOffset = cumulativeOffset(tabsWrapper)
+        // window.addEventListener('scroll', (e) => {
+        //         window.requestAnimationFrame(() => {
+        //             let wrapperOffset = cumulativeOffset(tabsWrapper)
+        //             if (window.pageYOffset > orginalOffset && wrapperOffset) {
+        //                 tabsWrapper.classList.add('scrolled');
+        //             } else {
+        //                 tabsWrapper.classList.remove('scrolled');
+        //             }
+        //         })
+        //     })
+        //////////////////////
 
 
     }
