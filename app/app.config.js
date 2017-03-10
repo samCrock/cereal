@@ -15,6 +15,7 @@
     require('./controllers/search.js')
 
     require('./directives/progressBar.js')
+    require('./directives/cerealLoader.js')
 
     require('./services/torrent-service.js')
     require('./services/wt-service.js')
