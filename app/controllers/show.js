@@ -9,16 +9,15 @@
 
         let fsExtra = require('fs-extra')
         let PouchDB = require('pouchdb-browser')
+        let db = new PouchDB('cereal')
         const wt_client = wtService.client()
 
-
-        let db = new PouchDB('cereal')
 
         $rootScope.loading = true
         console.log('$stateParams', $stateParams)
         $scope.title = $stateParams.show ? commonService.capitalCase($stateParams.show.trim()) : $rootScope.current_show.Title
         $scope.selected_ep = $stateParams.episode
-        if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
+        // if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
         $scope.downloading = []
         $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
 
@@ -178,6 +177,9 @@
 
             $rootScope.$on('episode_downloaded', (event, result) => {
                 $scope.show.Seasons[s][e].downloaded = true
+                $scope.show.Seasons[s][e].loading = false
+                delete $scope.show.Seasons[s][e].eta
+                delete $scope.show.Seasons[s][e].progress
                 console.log(show, result.episode, 'completed downloading')
                 $scope.$applyAsync()
                 db.get(commonService.spacedToDashed($scope.show.Title))

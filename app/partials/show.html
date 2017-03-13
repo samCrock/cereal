@@ -37,10 +37,10 @@
                                 <label class="episode_title" flex="80">{{ episode.title }} </label>
                             </md-card-title>
                             <label ng-class="dotClass(episode)" flex="2">&#9679</label>
-                            <md-card-title layout="column" class="show_actions" flex="28" layout-align="center center" style="min-width: 200px;">
+                            <md-card-title layout="column" class="show_actions" flex="28" layout-align="center end" style="min-width: 200px;">
                                 <div ng-if="dotClass(episode) != 'hidden'" layout="row">
                                     <!-- ETA -->
-                                    <md-button class="md-button small_btn" ng-disabled="true" style="width: 8rem; cursor: pointer;">
+                                    <md-button ng-if="!episode.downloaded" class="md-button small_btn" ng-disabled="true" style="width: 8rem; cursor: pointer;">
                                         <i class="poster_sub_show eta" aria-hidden="true">{{ episode.eta }}</i>
                                     </md-button>
                                     <!-- PLAY -->
@@ -48,7 +48,7 @@
                                         <i class="poster_sub_show icon fa fa-play fa-2x" aria-hidden="true"></i>
                                     </md-button>
                                     <!-- STREAM -->
-                                    <md-button aria-label="Stream" class="md-button small_btn" ng-if="(!episode.downloaded && !episode.loading) || episode.eta" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
+                                    <md-button aria-label="Stream" class="md-button small_btn" ng-if="!episode.downloaded && !episode.loading" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
                                         <i class="poster_sub_show icon fa fa-play fa-2x stream-play" aria-hidden="true"></i>
                                         <i class="poster_sub_show icon fa fa-magnet stream-magnet" aria-hidden="true"></i>
                                     </md-button>
