@@ -978,7 +978,7 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
 }
 
 .day_container {
-    background: linear-gradient(rgba(43, 40, 45, 0), rgba(43, 40, 45, 0.8) 20%, rgba(43, 40, 45, 0.8) 80%, rgba(43, 40, 45, 0));
+    background: linear-gradient(rgba(43, 40, 45, 0), rgba(43, 40, 45, 0.4) 20%, rgba(43, 40, 45, 0.4) 80%, rgba(43, 40, 45, 0));
     margin-bottom: 1rem;
 }
 
