@@ -6,7 +6,7 @@
         .service('libraryService', libraryService);
 
     /* @ngInject */
-    function libraryService(wtService, commonService) {
+    function libraryService(wtService, commonService, dbService) {
 
         let request = require('request')
         let cheerio = require('cheerio')
@@ -25,27 +25,37 @@
                 let library = {}
                 let episodes = []
                 let shows = fsExtra.readdirSync(__dirname + '/../../library/')
+                let shows_db = []
 
-                for (var i = 0; i < shows.length; i++) {
-                    library[shows[i]] = []
-                    episodes = fsExtra.readdirSync(__dirname + '/../../library/' + shows[i])
-                    for (var j = 0; j < episodes.length; j++) {
-                        // console.log(shows[i], episodes[j])
-                        isPending = false
-                        for (var k = 0; k < pending.length; k++) {
-                            if (pending[k].show === shows[i] && pending[k].episode === episodes[j]) {
-                                isPending = true
-                            }
-                        }
-                        if (!isPending) {
-                            library[shows[i]].push({
-                                show: shows[i],
-                                episode: episodes[j]
-                            })
-                        }
-                    }
-                }
-                resolve(library)
+                // THIS VERSION RETURNS DOWNLOADED SHOWS ONLY
+                // for (var i = 0; i < shows.length; i++) {
+                //     shows_db.push(dbService.get(commonService.spacedToDashed(shows[i])))
+                // }
+
+                // Promise.all(shows_db)
+                //     .then((show_docs) => {
+                //         for (var i = 0; i < show_docs.length; i++) {
+                //             if (!show_docs[i].status) {
+                //                 // console.log('show_docs', i, show_docs[i])
+                //                 library[show_docs[i].Title] = show_docs[i]
+
+                //             }
+                //         }
+                //         resolve(library)
+                //     })
+                //     .catch((err) => {
+                //         console.error(err)
+                //     })
+
+
+                // THIS RETURNS DB SHOWS AS THEY ARE
+                dbService.fetchShows()
+                .then((docs)=> {
+                    resolve(docs)
+                })
+
+
+
             })
         }
 
