@@ -6,53 +6,71 @@ html {
     background-color: rgba(43, 40, 45, 1);
 }
 
-@media (max-width: 1400px) {
-    html {
-        font-size: 100%;
-    }
-}
-
-@media (max-width: 1400px) {
-    html {
-        font-size: 100%;
-    }
-}
-
-@media (max-width: 1280px) {
-    html {
-        font-size: 90%;
-    }
-}
-
-@media (max-width: 980px) {
-    html {
-        font-size: 80%;
-    }
-}
-
-@media (max-width: 640px) {
-    html {
-        font-size: 65%;
-    }
-}
-
-@media (max-width: 480px) {
-    html {
-        font-size: 60%;
-    }
-}
-
 body {
-    font-family: 'Fjalla One', sans-serif;
+    /*font-family: 'Fjalla One', sans-serif;*/
+    font-family: 'Regular', sans-serif;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     height: auto;
-    /*background: inherit;*/
     background-color: transparent;
     overflow-x: hidden;
-    /*max-height: calc(100% - 48px);*/
+}
+
+@font-face {
+    font-family: 'Fjalla One';
+    src: url('../assets/fonts/FjallaOne-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Regular';
+    src: url('../assets/fonts/Oswald-Regular.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Light';
+    src: url('../assets/fonts/Oswald-Light.ttf') format('opentype');
+}
+
+.light {
+    font-family: 'Light';
+}
+
+@font-face {
+    font-family: 'ExtraLight';
+    src: url('../assets/fonts/Oswald-ExtraLight.ttf') format('opentype');
+}
+
+.extraLight {
+    font-family: 'ExtraLight';
+}
+
+@font-face {
+    font-family: 'Medium';
+    src: url('../assets/fonts/Oswald-Medium.ttf') format('opentype');
+}
+
+.medium {
+    font-family: 'Medium';
+}
+
+@font-face {
+    font-family: 'SemiBold';
+    src: url('../assets/fonts/Oswald-SemiBold.ttf') format('opentype');
+}
+
+.semiBold {
+    font-family: 'SemiBold';
+}
+
+@font-face {
+    font-family: 'Bold';
+    src: url('../assets/fonts/Oswald-Bold.ttf') format('opentype');
+}
+
+.bold {
+    font-family: 'Bold';
 }
 
 .desaturate {
@@ -66,7 +84,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(to bottom right, rgba(43, 40, 45, 1), transparent);
+    background-image: linear-gradient(to bottom right, rgba(43, 40, 45, 0.5), transparent);
     opacity: .6;
 }
 
@@ -95,11 +113,6 @@ h2 {
     outline: 0;
     /* or */
     outline: none;
-}
-
-@font-face {
-    font-family: 'Fjalla One';
-    src: url('../assets/fonts/FjallaOne-Regular.otf') format('opentype');
 }
 
 .spinner {
@@ -178,20 +191,30 @@ md-tabs .md-tab {
 }
 
 .show_recap .title {
-    font-size: 3rem;
-    margin: 1rem;
+    font-size: 5rem;
+    line-height: 4.8rem;
+    margin: 0.6rem;
     text-align: left;
+    font-weight: 500;
 }
 
 .show_recap .overview {
-    font-size: 1.2rem;
+font-size: 1.6rem;
+    line-height: 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     margin-left: 2rem;
     margin-right: 2rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.9);
     text-align: left;
     overflow: auto;
+    /* text-align: justify; */
+    /* letter-spacing: 0.1rem; */
+    font-weight: 200;
+    max-height: 15rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1%;
+    padding: 1rem;
 }
 
 .show_recap .additional {
@@ -331,6 +354,7 @@ md-tabs .md-tab {
 .poster_library_sub label {
     position: inherit;
     font-size: 1.8rem;
+    line-height: 1.8rem;
     top: 10%;
 }
 
@@ -350,13 +374,12 @@ md-tabs .md-tab {
     width: 13rem;
     height: 18rem;
     background-color: rgba(0, 0, 0, 0.5);
-
 }
 
 .poster_library:hover .poster_library_sub,
 .poster_library.hover .poster_library_sub {
     opacity: 1;
-    background: rgba(0,0,0,0.3)
+    background: rgba(0, 0, 0, 0.3)
 }
 
 md-card {
@@ -419,6 +442,7 @@ md-content {
     font-size: 1.2rem;
     transform: translateY(0.6rem);
     text-transform: lowercase;
+    color: rgba(227, 255, 30, 0.9);
 }
 
 .poster_sub_show.stream-play {
@@ -605,16 +629,17 @@ section {
 }
 
 .show_episode {
+    max-width: 900px;
+    margin: auto;
     background-color: rgba(53, 50, 55, 0.9);
-    margin-left: 2%;
-    margin-right: 2%;
     margin-top: 0.4rem;
     margin-bottom: 0.4rem;
-    border: white;
+    border: rgba(255, 255, 255, 0.8);
     border-width: 1px;
     border-style: solid;
     color: rgba(255, 255, 255, 0.95);
     opacity: 0.95;
+    -webkit-transition: font-size 0.4s ease-in-out;
 }
 
 .ep_number {
@@ -664,8 +689,25 @@ section {
     transform: none !important;
     margin: 0px !important;
     flex: 1 1 0% !important;
-    "
+}
 
+#player_show_title {
+    position: fixed;
+    top: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    width: calc(100% - 90px);
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Regular';
+    transform: translateX(44px);
+}
+
+#player_episode_label {
+    color: rgba(227, 255, 30, 0.6);
+    font-family: 'Medium';
+    text-transform: uppercase;
+    font-size: 1.8rem;
 }
 
 .font-10 {
@@ -708,17 +750,6 @@ section {
 
 .last {
     padding-right: 5rem;
-}
-
-#show_title {
-    position: fixed;
-    top: 2rem;
-    font-size: 2rem;
-    text-align: center;
-    width: calc(100% - 90px);
-    z-index: 1;
-    color: rgba(255, 255, 255, 0.9);
-    transform: translateX(44px);
 }
 
 .episode_btn {
@@ -767,13 +798,20 @@ section {
 }
 
 .search-input input {
-    font-family: 'Fjalla One', sans-serif;
     font-size: 2.6rem;
     height: 4rem;
     text-align: center;
     color: rgba(255, 255, 255, 1);
     background-color: rgba(48, 45, 50, 0.4);
 }
+
+#search-input {
+    font-family: 'Light';
+    font-size: 4rem;
+    height: 6rem;
+    line-height: 4.5rem;
+}
+
 
 md-progress-linear.md-default-threme .md-bar,
 md-progress-linear .md-bar {
@@ -817,23 +855,68 @@ md-card md-card-title {
     -webkit-transition: all 0.6s ease-in-out;
 }
 
-.episode_title {
+.ep_title {
     font-size: 1.4rem;
-    text-align: center;
-    /*cursor: pointer;*/
-    -webkit-transition: font-size 0.6s ease-in-out;
+    text-align: right;
+    opacity: 0.9;
+    -webkit-transition: font-size 0.4s ease-in-out;
 }
 
-.show_card_content:hover .episode_title,
-.show_card_content.hover .episode_title {
-    font-size: 1.6rem;
-}
-
-.episode_title:focus {
+.ep_title:focus {
     outline-color: transparent;
     outline-style: auto;
     outline-width: 0;
 }
+
+.ep_label {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    text-transform: uppercase;
+    -webkit-transition: font-size 0.4s ease-in-out;
+}
+
+.ep_time_passed {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    -webkit-transition: font-size 0.4s ease-in-out;
+}
+
+.show_card_content:hover .ep_title,
+.show_card_content.hover .ep_title {
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    opacity: 1;
+}
+
+.show_episode:hover,
+.show_episode.hover {
+    border: rgba(255, 255, 255, 1);
+    border-width: 1px;
+    border-style: solid;
+    transform: scale(120%);
+}
+
+.show_card_content:hover .zoom-action,
+.show_card_content.hover .zoom-action {
+    font-size: 2.5rem;
+}
+
+.zoom-action {
+    -webkit-transition: font-size 0.4s ease-in-out;
+}
+
+.show_card_content:hover .ep_label,
+.show_card_content.hover .ep_label {
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+}
+
+
+/*.show_card_content:hover .ep_time_passed,
+.show_card_content.hover .ep_time_passed {
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+}*/
 
 .show_card_content:hover .show_actions,
 .show_card_content.hover .show_actions {
@@ -843,10 +926,10 @@ md-card md-card-title {
 
 .show_actions {
     -webkit-transition: all 0.6s cubic-bezier(0.2, 0, 1, 1);
-    /*   visibility: hidden;
-    opacity: 0;*/
     visibility: visible;
     opacity: 1;
+    min-width: 200px;
+    max-width: 12rem;
 }
 
 .ng-hide:not(.ng-hide-animate) {
@@ -956,12 +1039,6 @@ md-input-container .md-input {
 md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label,
 md-input-container:not(.md-input-invalid).md-input-has-value label {
     color: rgba(255, 255, 255, 0.8);
-}
-
-#search-input {
-    font-size: 4rem;
-    height: 6rem;
-    line-height: 4.5rem;
 }
 
 .md-button.md-default-theme.md-primary,
@@ -1085,6 +1162,7 @@ md-switch.md-checked .md-bar {
     position: absolute;
     transform: translateX(calc(100vw - 100% - 1rem)) translateY(1rem);
 }
+
 .show_delete_btn i {
     color: rgba(255, 92, 92, 0.8);
 }
@@ -1092,4 +1170,71 @@ md-switch.md-checked .md-bar {
 md-backdrop.md-opaque {
     opacity: 0.7;
     background-color: black;
+}
+
+.calendar_dotw {
+    text-align: center;
+    margin-bottom: 0;
+    color: white;
+    opacity: 0.9;
+    font-size: 3rem;
+}
+
+.calendar_month {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: white;
+    font-size: 2rem;
+    padding-left: 0.6em;
+    opacity: 0.9;
+}
+
+.calendar_dotm {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: white;
+    font-size: 1.8rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 1400px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+@media (max-width: 1400px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+@media (max-width: 1280px) {
+    html {
+        font-size: 90%;
+    }
+}
+
+@media (max-width: 980px) {
+    html {
+        font-size: 80%;
+    }
+    .show_episode {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    html {
+        font-size: 65%;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 60%;
+    }
 }
