@@ -6,7 +6,7 @@
         .controller('mainCtrl', mainCtrl);
 
     /* @ngInject */
-    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, wtService, torrentService, jsonService, commonService, libraryService, dbService) {
+    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, $mdToast, wtService, torrentService, jsonService, commonService, libraryService, dbService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -56,6 +56,11 @@
             let prev_state = sessionStorage.getItem('prev_state')
             prev_state = JSON.parse(prev_state)
             $state.go(prev_state.name, prev_state.params)
+        })
+
+        $rootScope.$on('downloading', (e) => {
+            console.log(e)
+            $mdToast.show($mdToast.simple().textContent('Downloading '))
         })
 
         $state.go('app.calendar')
@@ -143,7 +148,7 @@
         // var pending = JSON.parse(localStorage.getItem('pending'))
         // var isPending
 
-        $rootScope.wallpaper = __dirname + '/../../assets/bkg/city.jpg'
+        $rootScope.wallpaper = __dirname + '/../../assets/bkg/cereal.jpg'
     }
 
 })();
