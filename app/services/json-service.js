@@ -71,9 +71,15 @@
                                 console.log('Local data is fresh!')
                                 resolve(showJson)
                             } else {
-                                console.log('Updating show latest info', showJson.Updated, commonService.daysToNow(showJson.Updated))
-                                resolve(showJson)
-                                updateRemote(show)
+                                if (showJson.Updated) {
+                                    console.log('Updating show latest info', showJson.Updated, commonService.daysToNow(showJson.Updated))
+                                    resolve(showJson)
+                                    updateRemote(show)
+                                } else {
+                                    console.log('Adding new show')
+                                    retrieveRemote(show)
+                                }
+
                             }
                         })
                         .catch(() => {
@@ -277,7 +283,7 @@
                                 let $ = cheerio.load(body)
                                 let seasons
                                 let lastSeason = {}
-                                // console.log('.additional-stats', $('.additional-stats')['0'].children[0])
+                                    // console.log('.additional-stats', $('.additional-stats')['0'].children[0])
                                 if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
                                     seasons = $('.season-count')[1].attribs['data-all-count']
                                     console.log('##########################')
