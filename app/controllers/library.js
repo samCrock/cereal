@@ -36,7 +36,7 @@
             var libraryWidth = config.poster_w * config.columns + config.columns // poster height, + margins + navbar top
 
             var library_container = document.getElementById('library_container')
-            library_container.style.height = libraryHeight
+            if (library_container) library_container.style.height = libraryHeight
                 // ------------------------------------------
 
             $scope.$apply()
