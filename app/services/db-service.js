@@ -56,7 +56,27 @@
                         resolve(doc)
                     })
                     .catch((reason) => {
-                        reject(reason)
+                        resolve(reason)
+                    })
+            })
+        }
+
+        db_module['fetchShows'] = function get() {
+            return new Promise((resolve, reject) => {
+                let library = {}
+                db.allDocs({
+                    include_docs: true
+                })
+                    .then(function(doc) {
+                        for (var i = 0; i < doc.rows.length; i++) {
+                            if (doc.rows[i].id !== 'calendar') {
+                                library[doc.rows[i].doc.Title] = (doc.rows[i].doc)
+                            }
+                        }
+                        resolve(library)
+                    })
+                    .catch((reason) => {
+                        resolve(reason)
                     })
             })
         }
@@ -160,12 +180,12 @@
                                 .catch(function(err) {
                                     console.log('No calendar in db', err)
                                     db.put({
-                                        _id: 'calendar',
-                                        days: days
-                                    })
-                                    .then(()=> {
-                                    	resolve(days)
-                                    })
+                                            _id: 'calendar',
+                                            days: days
+                                        })
+                                        .then(() => {
+                                            resolve(days)
+                                        })
                                 })
 
                         })
