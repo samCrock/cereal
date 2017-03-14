@@ -17,7 +17,7 @@
         console.log('$stateParams', $stateParams)
         $scope.title = $stateParams.show ? commonService.capitalCase($stateParams.show.trim()) : $rootScope.current_show.Title
         $scope.selected_ep = $stateParams.episode
-        // if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
+            // if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
         $scope.downloading = []
         $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
 
@@ -159,6 +159,34 @@
             formatDataAndSave($scope.show)
         })
 
+        $rootScope.$on('episode_downloaded', (event, result) => {
+            console.log('ep completed result', result)
+            let e = result.episode.split('e')
+            let s = e[0].split('s')
+            s = parseInt(s[1], 10)
+            e = parseInt(e[1], 10)
+            $scope.show.Seasons[s][e].downloaded = true
+            $scope.show.Seasons[s][e].loading = false
+            delete $scope.show.Seasons[s][e].eta
+            delete $scope.show.Seasons[s][e].progress
+            console.log($scope.show, result.episode, 'completed downloading')
+            $scope.$applyAsync()
+            db.get(commonService.spacedToDashed($scope.show.Title))
+                .then((doc) => {
+                    $scope.show._id = doc._id
+                    $scope.show._rev = doc._rev
+                    $scope.show.last_update = new Date()
+                    db.put($scope.show)
+                        .then(() => {
+                            console.log($scope.show.Title, 'synced')
+                        })
+                        .catch((err) => {
+                            console.error('Error updating', $scope.title, err)
+                        })
+                })
+                // formatDataAndSave($scope.show)
+        })
+
         $scope.downloadEpisode = (episode) => {
             let show = $scope.show.Title
             let label = episode.label
@@ -174,31 +202,6 @@
 
             $scope.show.Seasons[s][e].loading = true
             $scope.$applyAsync()
-
-            $rootScope.$on('episode_downloaded', (event, result) => {
-                $scope.show.Seasons[s][e].downloaded = true
-                $scope.show.Seasons[s][e].loading = false
-                delete $scope.show.Seasons[s][e].eta
-                delete $scope.show.Seasons[s][e].progress
-                console.log(show, result.episode, 'completed downloading')
-                $scope.$applyAsync()
-                db.get(commonService.spacedToDashed($scope.show.Title))
-                    .then((doc) => {
-                        $scope.show._id = doc._id
-                        $scope.show._rev = doc._rev
-                        $scope.show.last_update = new Date()
-                        db.put($scope.show)
-                            .then(() => {
-                                console.log($scope.show.Title, 'synced')
-                            })
-                            .catch((err) => {
-                                console.error('Error updating', $scope.title, err)
-                            })
-
-
-                    })
-                    // formatDataAndSave($scope.show)
-            })
 
             torrentService.searchTorrent(searchObject)
                 .then((result) => {
@@ -313,7 +316,7 @@
                     delete $rootScope.current_show
                     fsExtra.removeSync(__dirname + '/../../library/' + show)
                     console.log('Deleted from actual folder')
-                    $state.go('app.library')
+                    $state.go('app.library', {}, { reload: true })
                 })
 
         }
