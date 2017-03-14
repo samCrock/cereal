@@ -5,7 +5,7 @@
         .module('app')
         .controller('episodeCtrl', episodeCtrl);
 
-    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, jsonService, libraryService, torrentService, commonService, wtService) {
+    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, $mdToast, jsonService, libraryService, torrentService, commonService, wtService) {
 
         const supportedVideoExt = ['mkv', 'avi', 'mp4']
         const wt_client = wtService.client()
@@ -79,12 +79,12 @@
                     if (supportedVideoExt.indexOf(ext) > -1 && fileName.indexOf('Sample') === -1) {
                         console.log('Opening', file, ' in VLC')
                         commonService.openFile(file)
-                        $scope.back()
+                        // $scope.back()
+                        $mdToast.show($mdToast.simple().textContent('Opening ' + fileName))
                     }
                 })
             })
         }
-
 
         let watch = (library_element) => {
 
