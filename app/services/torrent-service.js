@@ -66,36 +66,6 @@
                         torrent.on('done', () => {
                             console.log(torrent.dn, ' ready!')
 
-
-                            // // Add episode to local library
-                            // let isNew = true
-                            // let library = JSON.parse(localStorage.getItem('library'))
-                            // let ep = {
-                            //     show: t.show,
-                            //     episode: t.episode,
-                            //     name: t.name,
-                            //     magnet: t.magnet,
-                            //     path: t.path
-                            // }
-
-
-                            // for (var prop in library) {
-                            //     if (library.hasOwnProperty(prop)) {
-                            //         if (library[prop].show === t.show && library[prop].episode === t.episode) {
-                            //             isNew = false
-                            //             library[prop][i] = ep
-                            //         }
-                            //     }
-                            // }
-
-                            // if (isNew) {
-                            //     console.log('adding ep to show --->', t.show)
-                            //     // library["'" + t.show + "'"].push(ep)
-                            //     // CONTINUE
-                            // }
-
-                            // localStorage.setItem('library', JSON.stringify(library))
-
                             // Search for subs
                             subsService.search({
                                     fileName: torrent.dn,
