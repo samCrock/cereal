@@ -1,7 +1,7 @@
 <section class="desaturate" layout="column" layout-align="center center">
     <md-content>
         <div layout="column" class="show_recap">
-            <h1 class="title">{{ show.Title }}</h1>
+            <h1 class="title extraLight">{{ show.Title }}</h1>
             <md-button aria-label="Delete" class="md-button small_btn show_delete_btn" ng-click="deleteShow()">
                 <i class="poster_sub_show icon fa fa-trash fa-2x" aria-hidden="true"></i>
             </md-button>
@@ -17,7 +17,7 @@
                     <h2 class="overview">{{ show.Overview }}</h2>
                 </div>
                 <div class="genre" layout="column" layout-align="center end">
-                    <h3 ng-repeat="genre in show.Genres">{{ genre }}</h3>
+                    <h3 ng-repeat="genre in show.Genres" class="medium">{{ genre }}</h3>
                 </div>
             </div>
         </div>
@@ -31,13 +31,13 @@
                         <md-card-content class="show_card_content" ng-class="episode.eta || episode.loading ? 'hover' : ''" layout-align="center center" layout="row">
                             <md-card-title layout="row" flex="70" layout-align="center center">
                                 <div flex="20" layout="column" style="min-width: 100px;">
-                                    <label style="font-size: 1.8rem;">{{ episode.episode }}</label>
-                                    <label style="font-size: 1.2rem;" ng-show="timePassedCheck(episode.timePassed)">{{ episode.timePassed }}</label>
+                                    <label class="ep_label semiBold">{{ episode.episode }}</label>
+                                    <label class="ep_time_passed light" ng-show="timePassedCheck(episode.timePassed)">{{ episode.timePassed }}</label>
                                 </div>
-                                <label class="episode_title" flex="80">{{ episode.title }} </label>
+                                <label class="ep_title" flex="80">{{ episode.title }} </label>
                             </md-card-title>
                             <label ng-class="dotClass(episode)" flex="2">&#9679</label>
-                            <md-card-title layout="column" class="show_actions" flex="28" layout-align="center end" style="min-width: 200px;">
+                            <md-card-title layout="column" class="show_actions" flex="28" layout-align="center end">
                                 <div ng-if="dotClass(episode) != 'hidden'" layout="row">
                                     <!-- ETA -->
                                     <md-button ng-if="!episode.downloaded" class="md-button small_btn" ng-disabled="true" style="width: 8rem; cursor: pointer;">
@@ -45,7 +45,7 @@
                                     </md-button>
                                     <!-- PLAY -->
                                     <md-button ng-if="episode.downloaded" aria-label="Play" class="md-button small_btn" ng-click="play({ label: episode.episode, s: season, e: episodeN})">
-                                        <i class="poster_sub_show icon fa fa-play fa-2x" aria-hidden="true"></i>
+                                        <i class="poster_sub_show icon fa fa-play zoom-action fa-2x" aria-hidden="true"></i>
                                     </md-button>
                                     <!-- STREAM -->
                                     <md-button aria-label="Stream" class="md-button small_btn" ng-if="!episode.downloaded && !episode.loading" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
@@ -54,7 +54,7 @@
                                     </md-button>
                                     <!-- DOWNLOAD -->
                                     <md-button aria-label="Download" class="md-button small_btn" ng-if="!episode.loading && !episode.downloaded && !episode.eta" ng-click="downloadEpisode({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
-                                        <i class="poster_sub_show icon fa fa-download fa-2x" aria-hidden="true"></i>
+                                        <i class="poster_sub_show icon fa fa-download zoom-action fa-2x" aria-hidden="true"></i>
                                     </md-button>
                                     <!-- DELETE -->
                                     <md-button aria-label="Delete" class="md-button small_btn" ng-if="episode.downloaded || episode.eta" ng-click="deleteEpisode({ episode: episode, s: season, e: episodeN})">

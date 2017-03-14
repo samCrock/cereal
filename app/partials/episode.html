@@ -4,7 +4,7 @@
         <i class="icon fa fa-times" aria-hidden="true"></i>
     </md-button>
     <!-- <md-button aria-label="Back" class="md-button" id="close_btn" ng-click="back()">X</md-button> -->
-    <label id="show_title">{{ show }} {{ episode }}</label>
+    <label id="player_show_title">{{ show }} <span id="player_episode_label">{{ episode }}</span></label>
     <label id="root-msg" ng-show="$root.msg.length > 0" style="font-size: 1.6em;">{{ $root.msg }}</label>
     <div ng-show="torrent_msg.progress < 100" layout="column" layout-align="center center" layout-wrap>
         <div class="msg_download" ng-show="torrent_msg.speed">
