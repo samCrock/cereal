@@ -140,11 +140,16 @@
                         .catch((err) => {
                             console.error('Error updating', $scope.title, err)
                         })
-
-
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
+                    db.put($scope.show)
+                        .then(() => {
+                            console.log($scope.show.Title, 'synced')
+                        })
+                        .catch((err) => {
+                            console.error('Error updating', $scope.title, err)
+                        })
                 })
             $scope.$applyAsync()
             $rootScope.loading = false
