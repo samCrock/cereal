@@ -199,7 +199,7 @@ md-tabs .md-tab {
 }
 
 .show_recap .overview {
-font-size: 1.6rem;
+    font-size: 1.6rem;
     line-height: 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -694,18 +694,18 @@ section {
 #player_show_title {
     position: fixed;
     top: 2rem;
-    font-size: 2rem;
+    font-size: 3rem;
     text-align: center;
     width: calc(100% - 90px);
     z-index: 1;
-    color: rgba(255, 255, 255, 0.6);
-    font-family: 'Regular';
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Light';
     transform: translateX(44px);
 }
 
 #player_episode_label {
-    color: rgba(227, 255, 30, 0.6);
-    font-family: 'Medium';
+    color: rgba(227, 255, 30, 0.8);
+    font-family: 'Regular';
     text-transform: uppercase;
     font-size: 1.8rem;
 }
@@ -812,7 +812,6 @@ section {
     line-height: 4.5rem;
 }
 
-
 md-progress-linear.md-default-threme .md-bar,
 md-progress-linear .md-bar {
     background-color: rgba(227, 255, 30, 0.9);
@@ -870,14 +869,14 @@ md-card md-card-title {
 
 .ep_label {
     font-size: 1.4rem;
-    line-height: 1.4rem;
+    line-height: 1.6rem;
     text-transform: uppercase;
     -webkit-transition: font-size 0.4s ease-in-out;
 }
 
 .ep_time_passed {
     font-size: 1.4rem;
-    line-height: 1.4rem;
+    line-height: 1.6rem;
     -webkit-transition: font-size 0.4s ease-in-out;
 }
 
@@ -1224,6 +1223,9 @@ md-backdrop.md-opaque {
     .show_episode {
         margin-left: 1rem;
         margin-right: 1rem;
+    }
+    #progress_bar {
+        max-width: 100%;
     }
 }
 
