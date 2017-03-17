@@ -27,7 +27,7 @@
         let mode = 'stream'
         let title = $scope.show = commonService.capitalCase($stateParams.show.trim())
         let dashedTitle = commonService.spacedToDashed($scope.show)
-        $scope.show = $scope.show.toUpperCase()
+        // $scope.show = $scope.show.toUpperCase()
         let episode = $scope.episode = $stateParams.episode.trim()
 
         let epObj = {
