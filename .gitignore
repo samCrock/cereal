@@ -3,6 +3,6 @@ node_modules
 library
 data/monthly.json
 assets/posters
-#release-builds
+release-builds
 dist
 *.log
