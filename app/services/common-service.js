@@ -217,6 +217,7 @@
             var hours = date.getUTCHours();
             var minutes = date.getUTCMinutes();
             var seconds = date.getUTCSeconds();
+
             if (days != 0) str += days + 'd ';
             if (hours != 0) str += hours + 'h ';
             if (minutes != 0) str += minutes + 'm ';
