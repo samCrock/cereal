@@ -14,9 +14,10 @@
                 <div class="calendar_poster_container">
                     <img ng-src="{{ show.poster }}" class="calendar_poster">
                     <div ng-show="!show.loading" class="poster_sub_container">
-                        <span ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub ep" aria-hidden="true">{{ show.episode }}</span>
-                        <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i>
-                        <i ng-click="download( { show: show.title, episode: show.episode } ); $event.stopPropagation();" class="poster_sub download fa fa-download" aria-hidden="true"></i>
+                        <div ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub show" aria-hidden="true">{{ show.title }}</div>
+                        <div ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub seasons" aria-hidden="true">{{ show.episode }}</div>
+                        <!-- <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i> -->
+                        <!-- <i ng-click="download( { show: show.title, episode: show.episode } ); $event.stopPropagation();" class="poster_sub download fa fa-download" aria-hidden="true"></i> -->
                         <i ng-click="playTrailer( { show: show.title }, $event ); $event.stopPropagation();" class="poster_sub trailer fa fa-youtube" aria-hidden="true"></i>
                     </div>
                 </div>
