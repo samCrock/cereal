@@ -107,7 +107,7 @@
                             url: urlMain
                         }, function(error, response, body) {
 
-                            if (error || !response || !response.satus) reject(error)
+                            if (error || !response || !response.statusCode) return(error)
 
                             console.log('Status', response.statusCode);
 
