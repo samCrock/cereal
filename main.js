@@ -1,12 +1,14 @@
 const electron = require('electron')
 const path = require('path')
-    // Module to control application life.
+const https = require('https');
+
+const localAppVersion = require('./package.json').version;
+// Module to control application life.
 const app = electron.app
     // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
 const os = require('os')
-
 const fsExtra = require('fs-extra')
 
 
@@ -21,9 +23,26 @@ console.log('Current OS platform:', os.platform())
 let mainWindow
 
 function createWindow() {
+
+    /////////////
+    https.get('https://raw.githubusercontent.com/samCrock/cereal/master/package.json', (res) => {
+        res.on('data', (d) => {
+            var packageContent = JSON.parse(d);
+            process.stdout.write('Remote version -> ' + packageContent.version);
+            if (packageContent.version !== localAppVersion) {
+                process.stdout.write('Need an update pal?');
+                app.update = true;
+            }
+        });
+    }).on('error', (e) => {
+        console.error(e);
+    });
+    ///////////////
+
+    console.log('localAppVersion', localAppVersion);
     // Create the browser window.
     mainWindow = new BrowserWindow()
-    
+
     mainWindow.maximize()
 
     // and load the index.html of the app.
