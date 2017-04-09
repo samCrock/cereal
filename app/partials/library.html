@@ -1,15 +1,17 @@
 <section class="desaturate">
     <div flex layout="column" layout-align="center center">
-        <div ng-if="isEmpty" style="max-width: 90%;">
-            <h1>This is your library</h1>
-            <h2>Search for a show or check out the calendar to start downloading or streaming</h2>
-        </div>
         <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container">
+            <div ng-if="isEmpty" style="max-width: 90%;">
+                <h1 class="lime weight-100">This is your library</h1>
+                <h2 class="weight-300">Search for a show or check out the calendar to start downloading or streaming</h2>
+            </div>
             <md-card class="library_card" ng-repeat="(key, value) in library" ui-sref="app.show( { show: key } )" layout-align="center center">
                 <md-card-content class="poster_library" style="background: url({{ getPoster(key) }}) no-repeat center center; background-size: cover;">
                     <div class="poster_library_sub">
-                        <label>{{ key }}</label>
-                        <!-- <md-progress-linear class="thin" md-mode="determinate" ng-value="value."></md-progress-linear>  -->
+                        <div class="poster_sub show">{{ key }}</div>
+                        <div ng-if="value.SeasonsCount > 1" class="poster_sub seasons"><span>{{ value.SeasonsCount }}</span> Seasons</div>
+                        <div ng-if="value.SeasonsCount == 1" class="poster_sub seasons"><span>{{ value.SeasonsCount }}</span> Season</div>
+                        <!-- <md-progress-linear class="thin" md-mode="determinate" ng-value="34"></md-progress-linear>  -->
                     </div>
                 </md-card-content>
             </md-card>
