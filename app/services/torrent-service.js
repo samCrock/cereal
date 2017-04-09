@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(wtService, commonService, jsonService, subsService, libraryService, $rootScope) {
+    function torrentService(wtService, commonService, jsonService, subsService, libraryService, $rootScope, $timeout) {
 
 
         const os = require('os')
@@ -349,14 +349,15 @@
                         if (!data) reject('Offline')
 
                         if (data['0']) {
-
                             var magnetURL = 'https://fastpiratebay.co.uk' + data['0'].children[1].children[2].children[3].attribs.href
                             torrent.show = commonService.capitalCase(show)
                             torrent.episode = episode
                             torrent.name = data['0'].children[1].children[2].children[1].children[1].children[0].data
 
+                            console.log(magnetURL);
                             request.get(magnetURL, function(error, response, body) {
 
+                                console.log('   response', response)
                                 if (error || !response) reject(error)
                                 console.log('[', response.statusCode, ']')
 
@@ -366,6 +367,7 @@
                                     var magnet = $('.download')
                                     var details = $('#details')
 
+                                    
                                     torrent.magnet = magnet['0'].children[1].attribs.href
                                     var size = details['0'].children[1].children[10].children[0].data
                                     size = size.split('(')
