@@ -84,7 +84,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(to bottom right, rgba(43, 40, 45, 0.5), transparent);
+    background-image: linear-gradient(to bottom, rgba(43, 40, 45, 0.6), transparent);
     opacity: .6;
 }
 
@@ -100,24 +100,17 @@ h2 {
     text-align: -webkit-center;
 }
 
-
-/*md-tab-content {
-    background-color: rgba(23, 20, 25, 0.9);
-}*/
-
 ::-webkit-scrollbar {
     display: none;
 }
 
 :focus {
     outline: 0;
-    /* or */
     outline: none;
 }
 
 .spinner {
     z-index: 99999;
-    /*color: rgba(255, 255, 255, 0.95);*/
     color: rgba(227, 255, 30, 0.9);
     position: relative;
 }
@@ -233,7 +226,9 @@ md-tabs .md-tab {
     margin: 0.2rem;
     text-transform: uppercase;
     font-size: 1.2rem;
+    line-height: 1.2rem;
     text-align: right;
+    padding-bottom: .4rem;
 }
 
 .show_recap .trailer {
@@ -478,14 +473,44 @@ md-content {
     transform: translate(-50%, -50%);
 }
 
-.poster_sub.ep {
+.poster_sub.show {
     font-size: 2.4rem;
-    top: 10%;
+    line-height: 2.4rem;
+    text-align: center;
+    position: relative;
+    top: 20%;
     transform: translate(-50%, -10%);
+}
+
+.poster_sub.ep,
+.poster_sub.seasons {
+    font-family: 'Light';
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    position: relative;
+    top: 40%;
+    left: 0;
+    width: 100%;
+}
+
+.poster_sub.ep,
+.poster_sub.seasons span {
+    font-size: 2rem;
+    color: rgba(227, 255, 30, 1);
+}
+
+.poster_library_sub .poster_sub.seasons {
+    font-size: 1.6rem;
+    font-family: 'Medium';
 }
 
 .poster_sub.ep:hover {
     /*font-size: 2.6rem;*/
+}
+
+.poster_sub.show:active {
+    -webkit-filter: blur(0.1rem);
 }
 
 .poster_sub.ep:active {
@@ -698,13 +723,13 @@ section {
     text-align: center;
     width: calc(100% - 90px);
     z-index: 1;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     font-family: 'Light';
     transform: translateX(44px);
 }
 
 #player_episode_label {
-    color: rgba(227, 255, 30, 0.8);
+    color: rgba(227, 255, 30, 0.9);
     font-family: 'Regular';
     text-transform: uppercase;
     font-size: 1.8rem;
@@ -1049,6 +1074,10 @@ md-input-container:not(.md-input-invalid).md-input-has-value label {
     color: rgba(71, 237, 87, 1);
 }
 
+.lime {
+    color: rgba(227, 255, 30, 0.9);
+}
+
 .hidden {
     visibility: hidden;
 }
@@ -1196,6 +1225,25 @@ md-backdrop.md-opaque {
     color: white;
     font-size: 1.8rem;
     opacity: 0.9;
+}
+
+.weight-100 {
+    font-weight: 100;
+}
+.weight-200 {
+    font-weight: 200;
+}
+.weight-300 {
+    font-weight: 300;
+}
+.weight-400 {
+    font-weight: 400;
+}
+.weight-600 {
+    font-weight: 600;
+}
+.weight-800 {
+    font-weight: 800;
 }
 
 @media (max-width: 1400px) {
