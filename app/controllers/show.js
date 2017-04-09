@@ -143,6 +143,7 @@
                 })
                 .catch((err) => {
                     // console.log(err)
+                    $scope.show._id = commonService.spacedToDashed($scope.show.Title)
                     db.put($scope.show)
                         .then(() => {
                             console.log($scope.show.Title, 'synced')
@@ -317,8 +318,9 @@
                         }).catch(function(err) {
                             console.log(err)
                         })
-                        // $rootScope.$applyAsync()
                     delete $rootScope.current_show
+                    sessionStorage.removeItem('current_show')
+                    $rootScope.$applyAsync()
                     fsExtra.removeSync(__dirname + '/../../library/' + show)
                     console.log('Deleted from actual folder')
                     $state.go('app.library', {}, { reload: true })
