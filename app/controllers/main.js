@@ -16,7 +16,7 @@
 
         // CONFIG SETUP
         $rootScope.CONFIG = {
-            engines: 1, // Number of torrent engines to use before rejecting searchTorrent (3 == all)
+            engines: 2, // Number of torrent engines to use before rejecting searchTorrent (3 == all)
             auto_download: false
         }
         if (localStorage.getItem('CONFIG')) {
@@ -149,6 +149,9 @@
         // var isPending
 
         $rootScope.wallpaper = __dirname + '/../../assets/bkg/cereal.jpg'
+
+
+        console.log('app?', angular.module('app'));
     }
 
 })();
