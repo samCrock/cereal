@@ -1,0 +1,30 @@
+<md-dialog class="episode_dialog">
+    <md-dialog-content layout-padding>
+        <div style="display: inline-flex;" layout-align="bottom center" layout-padding>
+            <h2>No results</h2>
+            <h3>Try different search options</h3>
+        </div>
+        <form ng-submit="search({ show: show, episode: episodeOption})" layout="column" flex layout-padding>
+            <md-input-container class="dialog_show_input" md-no-float>
+                <label>Show</label>
+                <input type="text" ng-model="show" md-autofocus>
+            </md-input-container>
+            <md-radio-group ng-model="episodeOption" layout="row" layout-align="space-around center">
+                <div>
+                    <label>Option 1</label>
+                    <md-radio-button ng-value="searchObj.episode">{{ searchObj.episode }}</md-radio-button>
+                </div>
+                <div>
+                    <label>Option 2 ( mostly Talk shows )</label>
+                    <md-radio-button ng-value="searchObj.episodeAlias">{{ searchObj.episodeAlias }}</md-radio-button>
+                </div>
+            </md-radio-group>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="search({ show: show, episode: episodeOption })" class="md-primary">Search</md-button>
+        <!-- <md-button aria-label="Back" class="md-button" id="close_btn" ng-click="close()"> -->
+        <!-- </md-button> -->
+        <!-- <md-button ng-click="close()" class="md-primary">Close</md-button> -->
+    </md-dialog-actions>
+</md-dialog>

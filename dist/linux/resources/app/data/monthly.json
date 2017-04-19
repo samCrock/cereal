@@ -1,0 +1,5908 @@
+[
+    {
+        "date": "2017-01-31T23:00:00.000Z",
+        "date_label": "Wed Feb 01 2017",
+        "shows": [
+            {
+                "title": "Voltron: Legendary Defender",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Scot Squad",
+                "episode": "s03e05"
+            },
+            {
+                "title": "8 Out of 10 Cats",
+                "episode": "s20e12"
+            },
+            {
+                "title": "No Offence",
+                "episode": "s02e05"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e163"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e14"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e17"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e85"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e16"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e39"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e57"
+            },
+            {
+                "title": "Teachers (2016)",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Being Mary Jane",
+                "episode": "s04e03"
+            },
+            {
+                "title": "Agents of SHIELD",
+                "episode": "s04e12"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e12"
+            },
+            {
+                "title": "Face Off",
+                "episode": "s11e02"
+            },
+            {
+                "title": "Switched at Birth",
+                "episode": "s05e01"
+            },
+            {
+                "title": "Teen Wolf",
+                "episode": "s06e10"
+            },
+            {
+                "title": "Outsiders",
+                "episode": "s02e02"
+            },
+            {
+                "title": " Legends of Tomorrow",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Schitts Creek",
+                "episode": "s03e04"
+            },
+            {
+                "title": "Bones",
+                "episode": "s12e05"
+            },
+            {
+                "title": "The Mick",
+                "episode": "s01e07"
+            },
+            {
+                "title": "The Fosters",
+                "episode": "s04e11"
+            },
+            {
+                "title": "The Flash",
+                "episode": "s03e11"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e10"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e09"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-01T23:00:00.000Z",
+        "date_label": "Thu Feb 02 2017",
+        "shows": [
+            {
+                "title": "Death In Paradise",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Unforgotten",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Fortitude",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Urban Myths",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e164"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e18"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e86"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e17"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e40"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e58"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s01e38"
+            },
+            {
+                "title": "Man Seeking Woman",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Workaholics",
+                "episode": "s07e04"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e09"
+            },
+            {
+                "title": "Suits",
+                "episode": "s06e12"
+            },
+            {
+                "title": "Its Always Sunny in Philadelphia",
+                "episode": "s12e05"
+            },
+            {
+                "title": "Cardinal",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Too Close to Home",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Six",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Expanse",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e15"
+            },
+            {
+                "title": "Girlfriends Guide to Divorce",
+                "episode": "s03e04"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e20"
+            },
+            {
+                "title": "Mary Kills People",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Star",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Magicians",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Bering Sea Gold",
+                "episode": "s08e01"
+            },
+            {
+                "title": "The Expanse",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e11"
+            },
+            {
+                "title": "NOVA",
+                "episode": "s44e10"
+            },
+            {
+                "title": "X Company",
+                "episode": "s03e04"
+            },
+            {
+                "title": "The 100",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e11"
+            },
+            {
+                "title": "Hunted (US)",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Path",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e12"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e11"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e13"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-02T23:00:00.000Z",
+        "date_label": "Fri Feb 03 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e01"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e13"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e18"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e15"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s11e02"
+            },
+            {
+                "title": "Not Going Out",
+                "episode": "s08e03"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e28"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e16"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e19"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e87"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e18"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e41"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e59"
+            },
+            {
+                "title": "Portlandia",
+                "episode": "s07e05"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e10"
+            },
+            {
+                "title": "Training Day",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Baskets",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Colony",
+                "episode": "s02e04"
+            },
+            {
+                "title": "How To Get Away With Murder",
+                "episode": "s03e11"
+            },
+            {
+                "title": "The Blacklist",
+                "episode": "s04e12"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e06"
+            },
+            {
+                "title": "Scandal",
+                "episode": "s06e02"
+            },
+            {
+                "title": "Riverdale",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Chicago Med",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "s03e11"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e12"
+            },
+            {
+                "title": "Superior Donuts",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Powerless",
+                "episode": "s01e01"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e14"
+            },
+            {
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e16"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e10"
+            },
+            {
+                "title": "Greys Anatomy",
+                "episode": "s13e11"
+            },
+            {
+                "title": "Superstore",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e14"
+            },
+            {
+                "title": "Adventure Time",
+                "episode": "s08e13"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e14"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-03T23:00:00.000Z",
+        "date_label": "Sat Feb 04 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Taboo",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e21"
+            },
+            {
+                "title": "The Voice (UK)",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e88"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e19"
+            },
+            {
+                "title": "Blue Bloods",
+                "episode": "s07e14"
+            },
+            {
+                "title": "Real Time with Bill Maher",
+                "episode": "s15e03"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e17"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e15"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e15"
+            },
+            {
+                "title": "Emerald City",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Crazy Ex-Girlfriend",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e05"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e16"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e16"
+            },
+            {
+                "title": "Grimm",
+                "episode": "s06e05"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e11"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e14"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e10"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-04T23:00:00.000Z",
+        "date_label": "Sun Feb 05 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Apple Tree Yard",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Call The Midwife",
+                "episode": "s06e03"
+            },
+            {
+                "title": "Teenage Mutant Ninja Turtles",
+                "episode": "s04e23"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Saturday Night Live",
+                "episode": "s42e13"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e18"
+            },
+            {
+                "title": "Ransom",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e17"
+            },
+            {
+                "title": "Cops",
+                "episode": "s29e28"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-05T23:00:00.000Z",
+        "date_label": "Mon Feb 06 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Apple Tree Yard",
+                "episode": "s01e04"
+            },
+            {
+                "title": "The Halcyon",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Z: The Beginning of Everything",
+                "episode": "s01e10"
+            },
+            {
+                "title": "24: Legacy",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Mercy Street",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Black Sails",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Heartland",
+                "episode": "s10e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-06T23:00:00.000Z",
+        "date_label": "Tue Feb 07 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e18"
+            },
+            {
+                "title": "800 Words",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e17"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e20"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e89"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e20"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e42"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e60"
+            },
+            {
+                "title": "StarTalk with Neil deGrasse Tyson",
+                "episode": "s03e20"
+            },
+            {
+                "title": "Pawn Stars",
+                "episode": "s11e09"
+            },
+            {
+                "title": "Timeless",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Quantico",
+                "episode": "s02e11"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e15"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e15"
+            },
+            {
+                "title": "Superior Donuts",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Pure",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Beyond",
+                "episode": "s01e07"
+            },
+            {
+                "title": "APB",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Fast N Loud",
+                "episode": "s10e04"
+            },
+            {
+                "title": "Jane the Virgin",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e12"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e28"
+            },
+            {
+                "title": "Murdoch Mysteries",
+                "episode": "s10e13"
+            },
+            {
+                "title": "The Bachelor",
+                "episode": "s21e06"
+            },
+            {
+                "title": "24: Legacy",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Kevin Can Wait",
+                "episode": "s01e16"
+            },
+            {
+                "title": "Shadowhunters",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Supergirl",
+                "episode": "s02e11"
+            },
+            {
+                "title": "The Apprentice (US)",
+                "episode": "s15e07"
+            },
+            {
+                "title": "We Bare Bears",
+                "episode": "s02e23"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-07T23:00:00.000Z",
+        "date_label": "Wed Feb 08 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e06"
+            },
+            {
+                "title": "No Offence",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e18"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e21"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e90"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e21"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e43"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e61"
+            },
+            {
+                "title": "Teachers (2016)",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Chicago Fire",
+                "episode": "s05e12"
+            },
+            {
+                "title": "Tosh.0",
+                "episode": "s09e01"
+            },
+            {
+                "title": "Imposters",
+                "episode": "s01e01"
+            },
+            {
+                "title": "NCIS: New Orleans",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Being Mary Jane",
+                "episode": "s04e04"
+            },
+            {
+                "title": "Agents of SHIELD",
+                "episode": "s04e13"
+            },
+            {
+                "title": "The Real ONeals",
+                "episode": "s02e11"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e13"
+            },
+            {
+                "title": "Face Off",
+                "episode": "s11e03"
+            },
+            {
+                "title": "Switched at Birth",
+                "episode": "s05e02"
+            },
+            {
+                "title": "Bull",
+                "episode": "s01e13"
+            },
+            {
+                "title": "This Is Us",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Outsiders",
+                "episode": "s02e03"
+            },
+            {
+                "title": " Legends of Tomorrow",
+                "episode": "s02e11"
+            },
+            {
+                "title": "Schitts Creek",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Fresh Off the Boat",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Bones",
+                "episode": "s12e06"
+            },
+            {
+                "title": "The Mick",
+                "episode": "s01e08"
+            },
+            {
+                "title": "American Housewife",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e29"
+            },
+            {
+                "title": "The Fosters",
+                "episode": "s04e12"
+            },
+            {
+                "title": "New Girl",
+                "episode": "s06e15"
+            },
+            {
+                "title": "The Middle",
+                "episode": "s08e13"
+            },
+            {
+                "title": "NCIS",
+                "episode": "s14e14"
+            },
+            {
+                "title": "The Flash",
+                "episode": "s03e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-08T23:00:00.000Z",
+        "date_label": "Thu Feb 09 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Death In Paradise",
+                "episode": "s06e06"
+            },
+            {
+                "title": "Unforgotten",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Fortitude",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Urban Myths",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Newtons Law",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e19"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e22"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e91"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e22"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e44"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e62"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s01e39"
+            },
+            {
+                "title": "Man Seeking Woman",
+                "episode": "s03e06"
+            },
+            {
+                "title": "Workaholics",
+                "episode": "s07e05"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e10"
+            },
+            {
+                "title": "Suits",
+                "episode": "s06e13"
+            },
+            {
+                "title": "Its Always Sunny in Philadelphia",
+                "episode": "s12e06"
+            },
+            {
+                "title": "Cardinal",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Legion",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Too Close to Home",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Six",
+                "episode": "s01e04"
+            },
+            {
+                "title": "The Expanse",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e16"
+            },
+            {
+                "title": "Girlfriends Guide to Divorce",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Chicago PD",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Modern Family",
+                "episode": "s08e12"
+            },
+            {
+                "title": "Law & Order: SVU",
+                "episode": "s18e10"
+            },
+            {
+                "title": "Mary Kills People",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Star",
+                "episode": "s01e07"
+            },
+            {
+                "title": "The Magicians",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Bering Sea Gold",
+                "episode": "s08e02"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e12"
+            },
+            {
+                "title": "NOVA",
+                "episode": "s44e11"
+            },
+            {
+                "title": "X Company",
+                "episode": "s03e05"
+            },
+            {
+                "title": "The 100",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e30"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e12"
+            },
+            {
+                "title": "Hunted (US)",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Lethal Weapon",
+                "episode": "s01e14"
+            },
+            {
+                "title": "The Path",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Blindspot",
+                "episode": "s02e13"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e13"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-09T23:00:00.000Z",
+        "date_label": "Fri Feb 10 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e19"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e16"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s11e03"
+            },
+            {
+                "title": "Not Going Out",
+                "episode": "s08e04"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e29"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e20"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e23"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e92"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e23"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e45"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e63"
+            },
+            {
+                "title": "Portlandia",
+                "episode": "s07e06"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e11"
+            },
+            {
+                "title": "Training Day",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Baskets",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Colony",
+                "episode": "s02e05"
+            },
+            {
+                "title": "How To Get Away With Murder",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Impractical Jokers",
+                "episode": "s06e01"
+            },
+            {
+                "title": "The Blacklist",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e07"
+            },
+            {
+                "title": "Scandal",
+                "episode": "s06e03"
+            },
+            {
+                "title": "Riverdale",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Chicago Med",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Powerless",
+                "episode": "s01e02"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e12"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e31"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e15"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e11"
+            },
+            {
+                "title": "Greys Anatomy",
+                "episode": "s13e12"
+            },
+            {
+                "title": "Superstore",
+                "episode": "s02e13"
+            },
+            {
+                "title": "MasterChef Junior",
+                "episode": "s05e01"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-10T23:00:00.000Z",
+        "date_label": "Sat Feb 11 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Taboo",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e22"
+            },
+            {
+                "title": "The Voice (UK)",
+                "episode": "s06e06"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e93"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e24"
+            },
+            {
+                "title": "Blue Bloods",
+                "episode": "s07e15"
+            },
+            {
+                "title": "Real Time with Bill Maher",
+                "episode": "s15e04"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e18"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e16"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e16"
+            },
+            {
+                "title": "Emerald City",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e06"
+            },
+            {
+                "title": "Reign",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Grimm",
+                "episode": "s06e06"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e12"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e15"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e15"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e11"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-11T23:00:00.000Z",
+        "date_label": "Sun Feb 12 2017",
+        "shows": [
+            {
+                "title": "Santa Clarita Diet",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Call The Midwife",
+                "episode": "s06e04"
+            },
+            {
+                "title": "Teenage Mutant Ninja Turtles",
+                "episode": "s04e24"
+            },
+            {
+                "title": "Saturday Night Live",
+                "episode": "s42e14"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e20"
+            },
+            {
+                "title": "Ransom",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e19"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-12T23:00:00.000Z",
+        "date_label": "Mon Feb 13 2017",
+        "shows": [
+            {
+                "title": "The Halcyon",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Last Week Tonight",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Mercy Street",
+                "episode": "s02e04"
+            },
+            {
+                "title": "The Royals",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Talking Dead",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Girls",
+                "episode": "s06e01"
+            },
+            {
+                "title": "Homeland",
+                "episode": "s06e04"
+            },
+            {
+                "title": "The Walking Dead",
+                "episode": "s07e09"
+            },
+            {
+                "title": "Family Guy",
+                "episode": "s15e12"
+            },
+            {
+                "title": "Black Sails",
+                "episode": "s04e03"
+            },
+            {
+                "title": "Son of Zorn",
+                "episode": "s01e12"
+            },
+            {
+                "title": "The Simpsons",
+                "episode": "s28e14"
+            },
+            {
+                "title": "Bobs Burgers",
+                "episode": "s07e09"
+            },
+            {
+                "title": "Heartland",
+                "episode": "s10e13"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-13T23:00:00.000Z",
+        "date_label": "Tue Feb 14 2017",
+        "shows": [
+            {
+                "title": "Holby City",
+                "episode": "s19e19"
+            },
+            {
+                "title": "800 Words",
+                "episode": "s02e11"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e165"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e21"
+            },
+            {
+                "title": "Comic Book Men",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e24"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e94"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e25"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e46"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e64"
+            },
+            {
+                "title": "Timeless",
+                "episode": "s01e15"
+            },
+            {
+                "title": "Quantico",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e16"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e16"
+            },
+            {
+                "title": "Superior Donuts",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Pure",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Beyond",
+                "episode": "s01e08"
+            },
+            {
+                "title": "APB",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Fast N Loud",
+                "episode": "s10e05"
+            },
+            {
+                "title": "Jane the Virgin",
+                "episode": "s03e11"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e32"
+            },
+            {
+                "title": "Murdoch Mysteries",
+                "episode": "s10e14"
+            },
+            {
+                "title": "The Bachelor",
+                "episode": "s21e07"
+            },
+            {
+                "title": "24: Legacy",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Kevin Can Wait",
+                "episode": "s01e17"
+            },
+            {
+                "title": "Shadowhunters",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Supergirl",
+                "episode": "s02e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-14T23:00:00.000Z",
+        "date_label": "Wed Feb 15 2017",
+        "shows": [
+            {
+                "title": "No Offence",
+                "episode": "s02e07"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e166"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e22"
+            },
+            {
+                "title": "The Mindy Project",
+                "episode": "s05e08"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e25"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e95"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e26"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e47"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e65"
+            },
+            {
+                "title": "Teachers (2016)",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Chicago Fire",
+                "episode": "s05e13"
+            },
+            {
+                "title": "Tosh.0",
+                "episode": "s09e02"
+            },
+            {
+                "title": "Imposters",
+                "episode": "s01e02"
+            },
+            {
+                "title": "NCIS: New Orleans",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Being Mary Jane",
+                "episode": "s04e05"
+            },
+            {
+                "title": "Agents of SHIELD",
+                "episode": "s04e14"
+            },
+            {
+                "title": "The Real ONeals",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e14"
+            },
+            {
+                "title": "Face Off",
+                "episode": "s11e04"
+            },
+            {
+                "title": "Switched at Birth",
+                "episode": "s05e03"
+            },
+            {
+                "title": "Bull",
+                "episode": "s01e14"
+            },
+            {
+                "title": "This Is Us",
+                "episode": "s01e15"
+            },
+            {
+                "title": "You Me Her",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Outsiders",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Schitts Creek",
+                "episode": "s03e06"
+            },
+            {
+                "title": "Fresh Off the Boat",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Bones",
+                "episode": "s12e07"
+            },
+            {
+                "title": "The Mick",
+                "episode": "s01e09"
+            },
+            {
+                "title": "American Housewife",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e33"
+            },
+            {
+                "title": "The Fosters",
+                "episode": "s04e13"
+            },
+            {
+                "title": "New Girl",
+                "episode": "s06e16"
+            },
+            {
+                "title": "The Middle",
+                "episode": "s08e14"
+            },
+            {
+                "title": "NCIS",
+                "episode": "s14e15"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-15T23:00:00.000Z",
+        "date_label": "Thu Feb 16 2017",
+        "shows": [
+            {
+                "title": "Death In Paradise",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Fortitude",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Urban Myths",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Newtons Law",
+                "episode": "s01e02"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e167"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e23"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e26"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e96"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e27"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e48"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e66"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Man Seeking Woman",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Workaholics",
+                "episode": "s07e06"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e11"
+            },
+            {
+                "title": "Suits",
+                "episode": "s06e14"
+            },
+            {
+                "title": "Its Always Sunny in Philadelphia",
+                "episode": "s12e07"
+            },
+            {
+                "title": "Cardinal",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Doubt",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Legion",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Too Close to Home",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Six",
+                "episode": "s01e05"
+            },
+            {
+                "title": "The Expanse",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Girlfriends Guide to Divorce",
+                "episode": "s03e06"
+            },
+            {
+                "title": "Chicago PD",
+                "episode": "s04e14"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e15"
+            },
+            {
+                "title": "Modern Family",
+                "episode": "s08e13"
+            },
+            {
+                "title": "Law & Order: SVU",
+                "episode": "s18e11"
+            },
+            {
+                "title": "Mary Kills People",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Star",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Magicians",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Bering Sea Gold",
+                "episode": "s08e03"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e13"
+            },
+            {
+                "title": "NOVA",
+                "episode": "s44e12"
+            },
+            {
+                "title": "X Company",
+                "episode": "s03e06"
+            },
+            {
+                "title": "The 100",
+                "episode": "s04e03"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e15"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e34"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e13"
+            },
+            {
+                "title": "Hunted (US)",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Lethal Weapon",
+                "episode": "s01e15"
+            },
+            {
+                "title": "The Path",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Blindspot",
+                "episode": "s02e14"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e14"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-16T23:00:00.000Z",
+        "date_label": "Fri Feb 17 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e01"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e20"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e17"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s11e04"
+            },
+            {
+                "title": "Not Going Out",
+                "episode": "s08e05"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e30"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e168"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e24"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s05e27"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e97"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e28"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e67"
+            },
+            {
+                "title": "Portlandia",
+                "episode": "s07e07"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e12"
+            },
+            {
+                "title": "Training Day",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Baskets",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Colony",
+                "episode": "s02e06"
+            },
+            {
+                "title": "How To Get Away With Murder",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Impractical Jokers",
+                "episode": "s06e02"
+            },
+            {
+                "title": "The Blacklist",
+                "episode": "s04e14"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e14"
+            },
+            {
+                "title": "Swamp People",
+                "episode": "s08e02"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e08"
+            },
+            {
+                "title": "Scandal",
+                "episode": "s06e04"
+            },
+            {
+                "title": "Riverdale",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Chicago Med",
+                "episode": "s02e14"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e14"
+            },
+            {
+                "title": "Powerless",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e35"
+            },
+            {
+                "title": "Swamp People",
+                "episode": "s08e01"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e16"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e12"
+            },
+            {
+                "title": "Greys Anatomy",
+                "episode": "s13e13"
+            },
+            {
+                "title": "Superstore",
+                "episode": "s02e14"
+            },
+            {
+                "title": "MasterChef Junior",
+                "episode": "s05e02"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-17T23:00:00.000Z",
+        "date_label": "Sat Feb 18 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e02"
+            },
+            {
+                "title": "Taboo",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e23"
+            },
+            {
+                "title": "The Voice (UK)",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e98"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e29"
+            },
+            {
+                "title": "Blue Bloods",
+                "episode": "s07e16"
+            },
+            {
+                "title": "Real Time with Bill Maher",
+                "episode": "s15e05"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e19"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e17"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e17"
+            },
+            {
+                "title": "Emerald City",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e07"
+            },
+            {
+                "title": "Reign",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e17"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e17"
+            },
+            {
+                "title": "Grimm",
+                "episode": "s06e07"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e13"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e16"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e16"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e16"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-18T23:00:00.000Z",
+        "date_label": "Sun Feb 19 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e03"
+            },
+            {
+                "title": "SS-GB",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Call The Midwife",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Teenage Mutant Ninja Turtles",
+                "episode": "s04e25"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e22"
+            },
+            {
+                "title": "Ransom",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e21"
+            },
+            {
+                "title": "Star Wars Rebels",
+                "episode": "s03e15"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-19T23:00:00.000Z",
+        "date_label": "Mon Feb 20 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e04"
+            },
+            {
+                "title": "The Halcyon",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Versailles (2015)",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Last Week Tonight",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Crashing (US)",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Elementary",
+                "episode": "s05e14"
+            },
+            {
+                "title": "Billions",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Mercy Street",
+                "episode": "s02e05"
+            },
+            {
+                "title": "The Royals",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Bar Rescue",
+                "episode": "s05e14"
+            },
+            {
+                "title": "Talking Dead",
+                "episode": "s06e10"
+            },
+            {
+                "title": "Girls",
+                "episode": "s06e02"
+            },
+            {
+                "title": "Homeland",
+                "episode": "s06e05"
+            },
+            {
+                "title": "The Walking Dead",
+                "episode": "s07e10"
+            },
+            {
+                "title": "The Good Fight",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Big Little Lies",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Family Guy",
+                "episode": "s15e13"
+            },
+            {
+                "title": "When Calls the Heart",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Black Sails",
+                "episode": "s04e04"
+            },
+            {
+                "title": "Son of Zorn",
+                "episode": "s01e13"
+            },
+            {
+                "title": "NCIS: Los Angeles",
+                "episode": "s08e15"
+            },
+            {
+                "title": "The Simpsons",
+                "episode": "s28e15"
+            },
+            {
+                "title": "The Good Fight",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Bobs Burgers",
+                "episode": "s07e10"
+            },
+            {
+                "title": "Heartland",
+                "episode": "s10e14"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-20T23:00:00.000Z",
+        "date_label": "Tue Feb 21 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Inside No. 9",
+                "episode": "s03e01"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e20"
+            },
+            {
+                "title": "800 Words",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e25"
+            },
+            {
+                "title": "Comic Book Men",
+                "episode": "s06e10"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e99"
+            },
+            {
+                "title": "Timeless",
+                "episode": "s01e16"
+            },
+            {
+                "title": "Quantico",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e17"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e17"
+            },
+            {
+                "title": "Bates Motel",
+                "episode": "s05e01"
+            },
+            {
+                "title": "The Breaks",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Bellevue",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Superior Donuts",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Beyond",
+                "episode": "s01e09"
+            },
+            {
+                "title": "APB",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Fast N Loud",
+                "episode": "s10e06"
+            },
+            {
+                "title": "Jane the Virgin",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e36"
+            },
+            {
+                "title": "Murdoch Mysteries",
+                "episode": "s10e15"
+            },
+            {
+                "title": "The Bachelor",
+                "episode": "s21e08"
+            },
+            {
+                "title": "24: Legacy",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Kevin Can Wait",
+                "episode": "s01e18"
+            },
+            {
+                "title": "Shadowhunters",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Supergirl",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-21T23:00:00.000Z",
+        "date_label": "Wed Feb 22 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e06"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e169"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e26"
+            },
+            {
+                "title": "The Mindy Project",
+                "episode": "s05e09"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e100"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e30"
+            },
+            {
+                "title": "The Detour",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Teachers (2016)",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Chicago Fire",
+                "episode": "s05e14"
+            },
+            {
+                "title": "Tosh.0",
+                "episode": "s09e03"
+            },
+            {
+                "title": "Imposters",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Detour",
+                "episode": "s02e01"
+            },
+            {
+                "title": "NCIS: New Orleans",
+                "episode": "s03e15"
+            },
+            {
+                "title": "Being Mary Jane",
+                "episode": "s04e06"
+            },
+            {
+                "title": "Agents of SHIELD",
+                "episode": "s04e15"
+            },
+            {
+                "title": "The Real ONeals",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Face Off",
+                "episode": "s11e05"
+            },
+            {
+                "title": "Switched at Birth",
+                "episode": "s05e04"
+            },
+            {
+                "title": "Bull",
+                "episode": "s01e15"
+            },
+            {
+                "title": "This Is Us",
+                "episode": "s01e16"
+            },
+            {
+                "title": "You Me Her",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Outsiders",
+                "episode": "s02e05"
+            },
+            {
+                "title": " Legends of Tomorrow",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Schitts Creek",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Fresh Off the Boat",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Bones",
+                "episode": "s12e08"
+            },
+            {
+                "title": "The Mick",
+                "episode": "s01e10"
+            },
+            {
+                "title": "American Housewife",
+                "episode": "s01e15"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e37"
+            },
+            {
+                "title": "The Fosters",
+                "episode": "s04e14"
+            },
+            {
+                "title": "New Girl",
+                "episode": "s06e17"
+            },
+            {
+                "title": "The Middle",
+                "episode": "s08e15"
+            },
+            {
+                "title": "NCIS",
+                "episode": "s14e16"
+            },
+            {
+                "title": "The Flash",
+                "episode": "s03e13"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-22T23:00:00.000Z",
+        "date_label": "Thu Feb 23 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Death In Paradise",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Gap Year",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Fortitude",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Urban Myths",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Newtons Law",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e170"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e27"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e101"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e31"
+            },
+            {
+                "title": "Man Seeking Woman",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Workaholics",
+                "episode": "s07e07"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e12"
+            },
+            {
+                "title": "Suits",
+                "episode": "s06e15"
+            },
+            {
+                "title": "Its Always Sunny in Philadelphia",
+                "episode": "s12e08"
+            },
+            {
+                "title": "Mary Kills People",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Cardinal",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Doubt",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Legion",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Too Close to Home",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Six",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Expanse",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Girlfriends Guide to Divorce",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Chicago PD",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e16"
+            },
+            {
+                "title": "Major Crimes",
+                "episode": "s05e14"
+            },
+            {
+                "title": "Modern Family",
+                "episode": "s08e14"
+            },
+            {
+                "title": "Law & Order: SVU",
+                "episode": "s18e12"
+            },
+            {
+                "title": "Mary Kills People",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Star",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Magicians",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Bering Sea Gold",
+                "episode": "s08e04"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e14"
+            },
+            {
+                "title": "NOVA",
+                "episode": "s44e13"
+            },
+            {
+                "title": "X Company",
+                "episode": "s03e07"
+            },
+            {
+                "title": "The 100",
+                "episode": "s04e04"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e16"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e38"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e14"
+            },
+            {
+                "title": "Hunted (US)",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Lethal Weapon",
+                "episode": "s01e16"
+            },
+            {
+                "title": "The Path",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Blindspot",
+                "episode": "s02e15"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e15"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-23T23:00:00.000Z",
+        "date_label": "Fri Feb 24 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Patriot",
+                "episode": "s01e01"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e21"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e18"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s11e05"
+            },
+            {
+                "title": "Not Going Out",
+                "episode": "s08e06"
+            },
+            {
+                "title": "Lucky Man",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e31"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e171"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s04e28"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e102"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e32"
+            },
+            {
+                "title": "Portlandia",
+                "episode": "s07e08"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e13"
+            },
+            {
+                "title": "The Blacklist: Redemption",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Training Day",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Baskets",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Colony",
+                "episode": "s02e07"
+            },
+            {
+                "title": "How To Get Away With Murder",
+                "episode": "s03e15"
+            },
+            {
+                "title": "Impractical Jokers",
+                "episode": "s06e03"
+            },
+            {
+                "title": "The Blacklist",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e15"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e09"
+            },
+            {
+                "title": "Riverdale",
+                "episode": "s01e05"
+            },
+            {
+                "title": "How To Get Away With Murder",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Powerless",
+                "episode": "s01e04"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e39"
+            },
+            {
+                "title": "Swamp People",
+                "episode": "s08e03"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e17"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e13"
+            },
+            {
+                "title": "Greys Anatomy",
+                "episode": "s13e14"
+            },
+            {
+                "title": "Superstore",
+                "episode": "s02e15"
+            },
+            {
+                "title": "MasterChef Junior",
+                "episode": "s05e03"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-24T23:00:00.000Z",
+        "date_label": "Sat Feb 25 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Patriot",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Taboo",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e24"
+            },
+            {
+                "title": "The Voice (UK)",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Elena of Avalor",
+                "episode": "s01e12"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e103"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s04e33"
+            },
+            {
+                "title": "Vice",
+                "episode": "s05e01"
+            },
+            {
+                "title": "Real Time with Bill Maher",
+                "episode": "s15e06"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e20"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e18"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e18"
+            },
+            {
+                "title": "Emerald City",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Sleepy Hollow",
+                "episode": "s04e08"
+            },
+            {
+                "title": "Reign",
+                "episode": "s04e03"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e18"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e18"
+            },
+            {
+                "title": "Grimm",
+                "episode": "s06e08"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e14"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e17"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e17"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e17"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-25T23:00:00.000Z",
+        "date_label": "Sun Feb 26 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e10"
+            },
+            {
+                "title": "Patriot",
+                "episode": "s01e03"
+            },
+            {
+                "title": "SS-GB",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Call The Midwife",
+                "episode": "s06e06"
+            },
+            {
+                "title": "The Voice (UK)",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Teenage Mutant Ninja Turtles",
+                "episode": "s04e26"
+            },
+            {
+                "title": "Ransom",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Counting Cars",
+                "episode": "s06e23"
+            },
+            {
+                "title": "Star Wars Rebels",
+                "episode": "s03e16"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-26T23:00:00.000Z",
+        "date_label": "Mon Feb 27 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e11"
+            },
+            {
+                "title": "Patriot",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Broadchurch",
+                "episode": "s03e01"
+            },
+            {
+                "title": "Last Week Tonight",
+                "episode": "s04e03"
+            },
+            {
+                "title": "Crashing (US)",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Billions",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Bar Rescue",
+                "episode": "s05e15"
+            },
+            {
+                "title": "Talking Dead",
+                "episode": "s06e11"
+            },
+            {
+                "title": "Girls",
+                "episode": "s06e03"
+            },
+            {
+                "title": "Homeland",
+                "episode": "s06e06"
+            },
+            {
+                "title": "The Walking Dead",
+                "episode": "s07e11"
+            },
+            {
+                "title": "Big Little Lies",
+                "episode": "s01e02"
+            },
+            {
+                "title": "When Calls the Heart",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Black Sails",
+                "episode": "s04e05"
+            },
+            {
+                "title": "The Good Fight",
+                "episode": "s01e03"
+            }
+        ]
+    },
+    {
+        "date": "2017-02-27T23:00:00.000Z",
+        "date_label": "Tue Feb 28 2017",
+        "shows": [
+            {
+                "title": "Dragons: Riders of Berk",
+                "episode": "s06e12"
+            },
+            {
+                "title": "Patriot",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Inside No. 9",
+                "episode": "s03e02"
+            },
+            {
+                "title": "800 Words",
+                "episode": "s02e13"
+            },
+            {
+                "title": "Comic Book Men",
+                "episode": "s06e11"
+            },
+            {
+                "title": "When We Rise",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Taken",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e18"
+            },
+            {
+                "title": "Being Mary Jane",
+                "episode": "s04e07"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e18"
+            },
+            {
+                "title": "Bates Motel",
+                "episode": "s05e02"
+            },
+            {
+                "title": "When We Rise",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Superior Donuts",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Beyond",
+                "episode": "s01e10"
+            },
+            {
+                "title": "APB",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Jane the Virgin",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e15"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e41"
+            },
+            {
+                "title": "Murdoch Mysteries",
+                "episode": "s10e16"
+            },
+            {
+                "title": "The Voice (US)",
+                "episode": "s12e01"
+            },
+            {
+                "title": "24: Legacy",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Shadowhunters",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Supergirl",
+                "episode": "s02e14"
+            },
+            {
+                "title": "Star vs. the Forces of Evil",
+                "episode": "s02e40"
+            }
+        ]
+    },
+    {
+        "date": "2017-11-30T23:00:00.000Z",
+        "date_label": "Fri Dec 01 2017",
+        "shows": [
+            {
+                "title": "3%",
+                "episode": "s01e07"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e09"
+            },
+            {
+                "title": "Close to the Enemy",
+                "episode": "s01e04"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e142"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e152"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e52"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e190"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e13"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e30"
+            },
+            {
+                "title": "Impastor",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Rectify",
+                "episode": "s04e06"
+            },
+            {
+                "title": "The Real World",
+                "episode": "s32e08"
+            },
+            {
+                "title": "South Park",
+                "episode": "s20e09"
+            },
+            {
+                "title": "Incorporated",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Queen Sugar",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Designated Survivor",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Younger",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e04"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e11"
+            },
+            {
+                "title": "Duck Dynasty",
+                "episode": "s11e03"
+            },
+            {
+                "title": "Modern Family",
+                "episode": "s08e08"
+            },
+            {
+                "title": "Ultimate Fighter",
+                "episode": "s24e12"
+            },
+            {
+                "title": "Chance",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Frequency",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Romeo Section",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e07"
+            },
+            {
+                "title": "Empire",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Salem",
+                "episode": "s03e04"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e08"
+            },
+            {
+                "title": "Survivor",
+                "episode": "s33e12"
+            },
+            {
+                "title": "Lethal Weapon",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e08"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-01T23:00:00.000Z",
+        "date_label": "Sat Dec 02 2017",
+        "shows": [
+            {
+                "title": "3%",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e03"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e09"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e06"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s10e08"
+            },
+            {
+                "title": "Have I Got News for You",
+                "episode": "s52e08"
+            },
+            {
+                "title": "Citizen Khan",
+                "episode": "s05e04"
+            },
+            {
+                "title": "Nowhere Boys",
+                "episode": "s03e05"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e143"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e153"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e53"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e191"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e14"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e31"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e01"
+            },
+            {
+                "title": "Falling Water",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Pure Genius",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Project Runway",
+                "episode": "s15e11"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e07"
+            },
+            {
+                "title": "Pitch",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e06"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e10"
+            },
+            {
+                "title": " Legends of Tomorrow",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Rosewood",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Regular Show",
+                "episode": "s08e23"
+            },
+            {
+                "title": "Steven Universe",
+                "episode": "s04e09"
+            },
+            {
+                "title": "We Bare Bears",
+                "episode": "s02e22"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e06"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-02T23:00:00.000Z",
+        "date_label": "Sun Dec 03 2017",
+        "shows": [
+            {
+                "title": "Casualty",
+                "episode": "s31e14"
+            },
+            {
+                "title": "The X Factor (UK)",
+                "episode": "s13e29"
+            },
+            {
+                "title": "Strictly Come Dancing",
+                "episode": "s14e22"
+            },
+            {
+                "title": "Pokemon",
+                "episode": "s19e41"
+            },
+            {
+                "title": "Class",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Thunderbirds Are Go!",
+                "episode": "s02e08"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e54"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e192"
+            },
+            {
+                "title": "Comedy Bang! Bang!",
+                "episode": "s05e20"
+            },
+            {
+                "title": "Comedy Bang! Bang!",
+                "episode": "s05e19"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e08"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e10"
+            },
+            {
+                "title": "Crazy Ex-Girlfriend",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Z Nation",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Girl Meets World",
+                "episode": "s03e18"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e09"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e06"
+            },
+            {
+                "title": "Van Helsing",
+                "episode": "s01e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-03T23:00:00.000Z",
+        "date_label": "Mon Dec 04 2017",
+        "shows": [
+            {
+                "title": "Hinterland",
+                "episode": "s03e06"
+            },
+            {
+                "title": "Humans",
+                "episode": "s02e06"
+            },
+            {
+                "title": "The X Factor (UK)",
+                "episode": "s13e30"
+            },
+            {
+                "title": "Yonderland",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Strictly Come Dancing",
+                "episode": "s14e23"
+            },
+            {
+                "title": "Saturday Night Live",
+                "episode": "s42e08"
+            },
+            {
+                "title": "Ultimate Fighter",
+                "episode": "s24e13"
+            },
+            {
+                "title": "Dirk Gentlys Holistic Detective Agency",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Star Wars Rebels",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Cops",
+                "episode": "s29e22"
+            },
+            {
+                "title": "Teen Titans Go!",
+                "episode": "s04e07"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-04T23:00:00.000Z",
+        "date_label": "Tue Dec 05 2017",
+        "shows": [
+            {
+                "title": "Two Doors Down",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e21"
+            },
+            {
+                "title": "Trollied",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Comic Book Men",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e03"
+            },
+            {
+                "title": "Eyewitness",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Divorce",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Graves",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Royals",
+                "episode": "s03e01"
+            },
+            {
+                "title": "Secrets & Lies",
+                "episode": "s02e10"
+            },
+            {
+                "title": "The Affair",
+                "episode": "s03e03"
+            },
+            {
+                "title": "Talking Dead",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e02"
+            },
+            {
+                "title": "The Last Man On Earth",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Parts Unknown",
+                "episode": "s08e09"
+            },
+            {
+                "title": "Shameless (US)",
+                "episode": "s07e10"
+            },
+            {
+                "title": "The Walking Dead",
+                "episode": "s07e07"
+            },
+            {
+                "title": "Frontier",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Berlin Station",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Westworld",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Family Guy",
+                "episode": "s15e08"
+            },
+            {
+                "title": "Ash vs. Evil Dead",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Secrets & Lies",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Son of Zorn",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Blunt Talk",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Once Upon a Time",
+                "episode": "s06e10"
+            },
+            {
+                "title": "The Simpsons",
+                "episode": "s28e09"
+            },
+            {
+                "title": "The Librarians",
+                "episode": "s03e03"
+            },
+            {
+                "title": "Heartland",
+                "episode": "s10e09"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-05T23:00:00.000Z",
+        "date_label": "Wed Dec 06 2017",
+        "shows": [
+            {
+                "title": "8 Out of 10 Cats",
+                "episode": "s20e05"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e09"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e144"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e152"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e154"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e55"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e193"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e15"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e32"
+            },
+            {
+                "title": "StarTalk with Neil deGrasse Tyson",
+                "episode": "s03e11"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s01e32"
+            },
+            {
+                "title": "Pawn Stars",
+                "episode": "s10e44"
+            },
+            {
+                "title": "Conviction",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Timeless",
+                "episode": "s01e09"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Mars",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Travelers",
+                "episode": "s01e08"
+            },
+            {
+                "title": "People of Earth",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Shoot the Messenger",
+                "episode": "s01e08"
+            },
+            {
+                "title": "American Pickers",
+                "episode": "s09e31"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e06"
+            },
+            {
+                "title": "American Dad!",
+                "episode": "s13e05"
+            },
+            {
+                "title": "Murdoch Mysteries",
+                "episode": "s10e09"
+            },
+            {
+                "title": "The Voice (US)",
+                "episode": "s11e22"
+            },
+            {
+                "title": "Kevin Can Wait",
+                "episode": "s01e11"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-06T23:00:00.000Z",
+        "date_label": "Thu Dec 07 2017",
+        "shows": [
+            {
+                "title": "Please Like Me",
+                "episode": "s04e05"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e145"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e153"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e155"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e56"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e194"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e16"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e33"
+            },
+            {
+                "title": "Drunk History",
+                "episode": "s04e11"
+            },
+            {
+                "title": "Chicago Fire",
+                "episode": "s05e08"
+            },
+            {
+                "title": "Sweet/Vicious",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Aftermath",
+                "episode": "s01e11"
+            },
+            {
+                "title": "Adam Ruins Everything",
+                "episode": "s01e23"
+            },
+            {
+                "title": "Shooter",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Ink Master",
+                "episode": "s08e16"
+            },
+            {
+                "title": "NCIS: New Orleans",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Agents of SHIELD",
+                "episode": "s04e08"
+            },
+            {
+                "title": "Mr. D",
+                "episode": "s06e07"
+            },
+            {
+                "title": "The Real ONeals",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e04"
+            },
+            {
+                "title": "Teen Wolf",
+                "episode": "s06e04"
+            },
+            {
+                "title": "Kims Convenience",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Good Behavior",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Bull",
+                "episode": "s01e08"
+            },
+            {
+                "title": "This Is Us",
+                "episode": "s01e10"
+            },
+            {
+                "title": "No Tomorrow",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Scream Queens",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Fresh Off the Boat",
+                "episode": "s03e07"
+            },
+            {
+                "title": "New Girl",
+                "episode": "s06e09"
+            },
+            {
+                "title": "American Housewife",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Voice (US)",
+                "episode": "s11e23"
+            },
+            {
+                "title": "The Middle",
+                "episode": "s08e08"
+            },
+            {
+                "title": "NCIS",
+                "episode": "s14e09"
+            },
+            {
+                "title": "The Flash",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Brooklyn Nine-Nine",
+                "episode": "s04e09"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-07T23:00:00.000Z",
+        "date_label": "Fri Dec 08 2017",
+        "shows": [
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e01"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e10"
+            },
+            {
+                "title": "Close to the Enemy",
+                "episode": "s01e05"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e146"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e154"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e156"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e57"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e195"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e18"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e34"
+            },
+            {
+                "title": "Impastor",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Rectify",
+                "episode": "s04e07"
+            },
+            {
+                "title": "The Real World",
+                "episode": "s32e09"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e17"
+            },
+            {
+                "title": "South Park",
+                "episode": "s20e10"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Incorporated",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Designated Survivor",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Younger",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e05"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e12"
+            },
+            {
+                "title": "Duck Dynasty",
+                "episode": "s11e04"
+            },
+            {
+                "title": "Chance",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Frequency",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Romeo Section",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Criminal Minds",
+                "episode": "s12e08"
+            },
+            {
+                "title": "Empire",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Salem",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Arrow",
+                "episode": "s05e09"
+            },
+            {
+                "title": "Survivor",
+                "episode": "s33e13"
+            },
+            {
+                "title": "Lethal Weapon",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e09"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-08T23:00:00.000Z",
+        "date_label": "Sat Dec 09 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e01"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e02"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e10"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e07"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s10e09"
+            },
+            {
+                "title": "Have I Got News for You",
+                "episode": "s52e09"
+            },
+            {
+                "title": "Citizen Khan",
+                "episode": "s05e05"
+            },
+            {
+                "title": "Nowhere Boys",
+                "episode": "s03e06"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e147"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e155"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e157"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e58"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e196"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e19"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e35"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e02"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Falling Water",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Pure Genius",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Project Runway",
+                "episode": "s15e12"
+            },
+            {
+                "title": "Supernatural",
+                "episode": "s12e08"
+            },
+            {
+                "title": "Pitch",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Notorious",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Fast N Loud",
+                "episode": "s09e08"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e07"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e07"
+            },
+            {
+                "title": " Legends of Tomorrow",
+                "episode": "s02e08"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-09T23:00:00.000Z",
+        "date_label": "Sun Dec 10 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e03"
+            },
+            {
+                "title": "The Jonathan Ross Show",
+                "episode": "s11e11"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e15"
+            },
+            {
+                "title": "The X Factor (UK)",
+                "episode": "s13e31"
+            },
+            {
+                "title": "Strictly Come Dancing",
+                "episode": "s14e24"
+            },
+            {
+                "title": "Pokemon",
+                "episode": "s19e42"
+            },
+            {
+                "title": "Thunderbirds Are Go!",
+                "episode": "s02e09"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e59"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e197"
+            },
+            {
+                "title": "Blue Bloods",
+                "episode": "s07e10"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e09"
+            },
+            {
+                "title": "Shark Tank",
+                "episode": "s08e11"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e10"
+            },
+            {
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e09"
+            },
+            {
+                "title": "The Exorcist",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Crazy Ex-Girlfriend",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Z Nation",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e10"
+            },
+            {
+                "title": "The Vampire Diaries",
+                "episode": "s08e07"
+            },
+            {
+                "title": "Van Helsing",
+                "episode": "s01e13"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Elena of Avalor",
+                "episode": "s01e11"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-10T23:00:00.000Z",
+        "date_label": "Mon Dec 11 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e04"
+            },
+            {
+                "title": "Hinterland",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Humans",
+                "episode": "s02e07"
+            },
+            {
+                "title": "The X Factor (UK)",
+                "episode": "s13e32"
+            },
+            {
+                "title": "Strictly Come Dancing",
+                "episode": "s14e25"
+            },
+            {
+                "title": "Saturday Night Live",
+                "episode": "s42e09"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Dirk Gentlys Holistic Detective Agency",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Star Wars Rebels",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Cops",
+                "episode": "s29e23"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-11T23:00:00.000Z",
+        "date_label": "Tue Dec 12 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Two Doors Down",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e22"
+            },
+            {
+                "title": "Trollied",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Trollied",
+                "episode": "s06e06"
+            },
+            {
+                "title": "Comic Book Men",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e05"
+            },
+            {
+                "title": "Elementary",
+                "episode": "s05e09"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Eyewitness",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Divorce",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Graves",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Royals",
+                "episode": "s03e02"
+            },
+            {
+                "title": "The Affair",
+                "episode": "s03e04"
+            },
+            {
+                "title": "Talking Dead",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e04"
+            },
+            {
+                "title": "The Last Man On Earth",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Shameless (US)",
+                "episode": "s07e11"
+            },
+            {
+                "title": "The Walking Dead",
+                "episode": "s07e08"
+            },
+            {
+                "title": "Frontier",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Berlin Station",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Family Guy",
+                "episode": "s15e09"
+            },
+            {
+                "title": "Ash vs. Evil Dead",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Madam Secretary",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Son of Zorn",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Blunt Talk",
+                "episode": "s02e10"
+            },
+            {
+                "title": "The Simpsons",
+                "episode": "s28e10"
+            },
+            {
+                "title": "The Librarians",
+                "episode": "s03e04"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-12T23:00:00.000Z",
+        "date_label": "Wed Dec 13 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e06"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e11"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e10"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e148"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e156"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e158"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e60"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e198"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e36"
+            },
+            {
+                "title": "StarTalk with Neil deGrasse Tyson",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s01e33"
+            },
+            {
+                "title": "Pawn Stars",
+                "episode": "s10e45"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Timeless",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e10"
+            },
+            {
+                "title": "The Odd Couple",
+                "episode": "s03e08"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e10"
+            },
+            {
+                "title": "Mars",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Travelers",
+                "episode": "s01e09"
+            },
+            {
+                "title": "People of Earth",
+                "episode": "s01e08"
+            },
+            {
+                "title": "American Pickers",
+                "episode": "s09e32"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e07"
+            },
+            {
+                "title": "American Dad!",
+                "episode": "s13e06"
+            },
+            {
+                "title": "The Voice (US)",
+                "episode": "s11e24"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e01"
+            },
+            {
+                "title": "Kevin Can Wait",
+                "episode": "s01e12"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-13T23:00:00.000Z",
+        "date_label": "Thu Dec 14 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Mock The Week",
+                "episode": "s15e13"
+            },
+            {
+                "title": "Please Like Me",
+                "episode": "s04e06"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e149"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e157"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e159"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e61"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e199"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e20"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e37"
+            },
+            {
+                "title": "Sweet/Vicious",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Aftermath",
+                "episode": "s01e12"
+            },
+            {
+                "title": "Adam Ruins Everything",
+                "episode": "s01e24"
+            },
+            {
+                "title": "Shooter",
+                "episode": "s01e05"
+            },
+            {
+                "title": "NCIS: New Orleans",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Mr. D",
+                "episode": "s06e08"
+            },
+            {
+                "title": "The Real ONeals",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Teen Wolf",
+                "episode": "s06e05"
+            },
+            {
+                "title": "Kims Convenience",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Bull",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Scream Queens",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Fresh Off the Boat",
+                "episode": "s03e08"
+            },
+            {
+                "title": "New Girl",
+                "episode": "s06e10"
+            },
+            {
+                "title": "American Housewife",
+                "episode": "s01e09"
+            },
+            {
+                "title": "The Voice (US)",
+                "episode": "s11e25"
+            },
+            {
+                "title": "The Middle",
+                "episode": "s08e09"
+            },
+            {
+                "title": "NCIS",
+                "episode": "s14e10"
+            },
+            {
+                "title": "Brooklyn Nine-Nine",
+                "episode": "s04e10"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-14T23:00:00.000Z",
+        "date_label": "Fri Dec 15 2017",
+        "shows": [
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e08"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e12"
+            },
+            {
+                "title": "Close to the Enemy",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e150"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e158"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e160"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e62"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e200"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e21"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e38"
+            },
+            {
+                "title": "Younger",
+                "episode": "s03e12"
+            },
+            {
+                "title": "Rectify",
+                "episode": "s04e08"
+            },
+            {
+                "title": "The Real World",
+                "episode": "s32e10"
+            },
+            {
+                "title": "Survivor",
+                "episode": "s33e15"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Incorporated",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Designated Survivor",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Younger",
+                "episode": "s03e11"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e06"
+            },
+            {
+                "title": "Black-ish",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Duck Dynasty",
+                "episode": "s11e05"
+            },
+            {
+                "title": "Modern Family",
+                "episode": "s08e09"
+            },
+            {
+                "title": "Star",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Chance",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Good Behavior",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Empire",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Salem",
+                "episode": "s03e06"
+            },
+            {
+                "title": "Speechless",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Survivor",
+                "episode": "s33e14"
+            },
+            {
+                "title": "The Goldbergs",
+                "episode": "s04e10"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-15T23:00:00.000Z",
+        "date_label": "Sat Dec 16 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e01"
+            },
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e08"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e01"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e09"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e11"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e08"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s10e10"
+            },
+            {
+                "title": "8 Out of 10 Cats",
+                "episode": "s20e06"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e13"
+            },
+            {
+                "title": "Have I Got News for You",
+                "episode": "s52e10"
+            },
+            {
+                "title": "Citizen Khan",
+                "episode": "s05e06"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e02"
+            },
+            {
+                "title": "Justice League Action",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Nowhere Boys",
+                "episode": "s03e07"
+            },
+            {
+                "title": "The Late Late Show [Corden]",
+                "episode": "s02e151"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e159"
+            },
+            {
+                "title": "Midnight",
+                "episode": "s04e161"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e63"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e201"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e22"
+            },
+            {
+                "title": "The Daily Show",
+                "episode": "s22e39"
+            },
+            {
+                "title": "Nashville",
+                "episode": "s05e01"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e03"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Falling Water",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Pure Genius",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Life in Pieces",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Project Runway",
+                "episode": "s15e13"
+            },
+            {
+                "title": "Mom",
+                "episode": "s04e08"
+            },
+            {
+                "title": "The Great Indoors",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Big Bang Theory",
+                "episode": "s10e11"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-16T23:00:00.000Z",
+        "date_label": "Sun Dec 17 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e02"
+            },
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e09"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e02"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Mozart in the Jungle",
+                "episode": "s03e10"
+            },
+            {
+                "title": "Strictly Come Dancing",
+                "episode": "s14e26"
+            },
+            {
+                "title": "Ultimate Spider-Man",
+                "episode": "s04e24"
+            },
+            {
+                "title": " Guardians of the Galaxy",
+                "episode": "s01e26"
+            },
+            {
+                "title": "Pokemon",
+                "episode": "s19e43"
+            },
+            {
+                "title": "Thunderbirds Are Go!",
+                "episode": "s02e10"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e64"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e202"
+            },
+            {
+                "title": "Shut Eye",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e10"
+            },
+            {
+                "title": "Hawaii Five-0",
+                "episode": "s07e11"
+            },
+            {
+                "title": "Hells Kitchen (US)",
+                "episode": "s16e10"
+            },
+            {
+                "title": "The Exorcist",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Z Nation",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Dr. Ken",
+                "episode": "s02e11"
+            },
+            {
+                "title": "Last Man Standing",
+                "episode": "s06e11"
+            },
+            {
+                "title": "MacGyver",
+                "episode": "s01e11"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-17T23:00:00.000Z",
+        "date_label": "Mon Dec 18 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e03"
+            },
+            {
+                "title": "White Rabbit Project",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e10"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e03"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e03"
+            },
+            {
+                "title": "The Apprentice (UK)",
+                "episode": "s12e14"
+            },
+            {
+                "title": "Midsomer Murders",
+                "episode": "s19e01"
+            },
+            {
+                "title": "Hinterland",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Humans",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Saturday Night Live",
+                "episode": "s42e10"
+            },
+            {
+                "title": "Cops",
+                "episode": "s29e24"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-18T23:00:00.000Z",
+        "date_label": "Tue Dec 19 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e11"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e04"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e04"
+            },
+            {
+                "title": "Two Doors Down",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Two Doors Down",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Last Tango In Halifax",
+                "episode": "s04e01"
+            },
+            {
+                "title": "Only Connect",
+                "episode": "s12e23"
+            },
+            {
+                "title": "Would I Lie to You?",
+                "episode": "s10e00"
+            },
+            {
+                "title": "Trollied",
+                "episode": "s06e08"
+            },
+            {
+                "title": "Elementary",
+                "episode": "s05e10"
+            },
+            {
+                "title": "Eyewitness",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Graves",
+                "episode": "s01e10"
+            },
+            {
+                "title": "The Royals",
+                "episode": "s03e03"
+            },
+            {
+                "title": "The Affair",
+                "episode": "s03e05"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e06"
+            },
+            {
+                "title": "Shameless (US)",
+                "episode": "s07e12"
+            },
+            {
+                "title": "Berlin Station",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Madam Secretary",
+                "episode": "s03e10"
+            },
+            {
+                "title": "NCIS: Los Angeles",
+                "episode": "s08e11"
+            },
+            {
+                "title": "The Librarians",
+                "episode": "s03e05"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-19T23:00:00.000Z",
+        "date_label": "Wed Dec 20 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e12"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e05"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e05"
+            },
+            {
+                "title": "Last Tango In Halifax",
+                "episode": "s04e02"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e11"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e160"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e65"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e203"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e23"
+            },
+            {
+                "title": "StarTalk with Neil deGrasse Tyson",
+                "episode": "s03e13"
+            },
+            {
+                "title": "Full Frontal",
+                "episode": "s01e34"
+            },
+            {
+                "title": "Scorpion",
+                "episode": "s03e11"
+            },
+            {
+                "title": "People of Earth",
+                "episode": "s01e10"
+            },
+            {
+                "title": "2 Broke Girls",
+                "episode": "s06e11"
+            },
+            {
+                "title": "Mars",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Travelers",
+                "episode": "s01e10"
+            },
+            {
+                "title": "People of Earth",
+                "episode": "s01e09"
+            },
+            {
+                "title": "American Pickers",
+                "episode": "s09e33"
+            },
+            {
+                "title": "Man with a Plan",
+                "episode": "s01e08"
+            },
+            {
+                "title": "American Dad!",
+                "episode": "s13e07"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e02"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-20T23:00:00.000Z",
+        "date_label": "Thu Dec 21 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Fuller House",
+                "episode": "s02e13"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e06"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e06"
+            },
+            {
+                "title": "8 Out of 10 Cats",
+                "episode": "s20e07"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e161"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e66"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e204"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e24"
+            },
+            {
+                "title": "Aftermath",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Adam Ruins Everything",
+                "episode": "s01e25"
+            },
+            {
+                "title": "Shooter",
+                "episode": "s01e06"
+            },
+            {
+                "title": "Mr. D",
+                "episode": "s06e09"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e06"
+            },
+            {
+                "title": "Kims Convenience",
+                "episode": "s01e11"
+            },
+            {
+                "title": "Good Behavior",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Scream Queens",
+                "episode": "s02e10"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-21T23:00:00.000Z",
+        "date_label": "Fri Dec 22 2017",
+        "shows": [
+            {
+                "title": "The OA",
+                "episode": "s01e07"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e07"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e07"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e09"
+            },
+            {
+                "title": "Close to the Enemy",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e162"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e67"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e205"
+            },
+            {
+                "title": "Conan",
+                "episode": "s07e25"
+            },
+            {
+                "title": "Incorporated",
+                "episode": "s01e04"
+            },
+            {
+                "title": "Code Black",
+                "episode": "s02e11"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e07"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e14"
+            },
+            {
+                "title": "Duck Dynasty",
+                "episode": "s11e06"
+            },
+            {
+                "title": "Undercover Boss",
+                "episode": "s08e02"
+            },
+            {
+                "title": "Lip Sync Battle",
+                "episode": "s03e07"
+            },
+            {
+                "title": "Undercover Boss",
+                "episode": "s08e01"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-22T23:00:00.000Z",
+        "date_label": "Sat Dec 23 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e02"
+            },
+            {
+                "title": "The OA",
+                "episode": "s01e08"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e08"
+            },
+            {
+                "title": "Sense8",
+                "episode": "s02e00"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e08"
+            },
+            {
+                "title": "The Graham Norton Show",
+                "episode": "s20e12"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e01"
+            },
+            {
+                "title": "The Last Leg",
+                "episode": "s10e11"
+            },
+            {
+                "title": "Have I Got News for You",
+                "episode": "s52e11"
+            },
+            {
+                "title": "Citizen Khan",
+                "episode": "s05e07"
+            },
+            {
+                "title": "Father Brown",
+                "episode": "s05e01"
+            },
+            {
+                "title": "Nowhere Boys",
+                "episode": "s03e08"
+            },
+            {
+                "title": "Late Night [Meyers]",
+                "episode": "s03e163"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e68"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e206"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e04"
+            },
+            {
+                "title": "Falling Water",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Project Runway",
+                "episode": "s15e14"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-23T23:00:00.000Z",
+        "date_label": "Sun Dec 24 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e04"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e09"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e09"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e03"
+            },
+            {
+                "title": "Grantchester",
+                "episode": "s02e00"
+            },
+            {
+                "title": "Pokemon",
+                "episode": "s19e44"
+            },
+            {
+                "title": "Thunderbirds Are Go!",
+                "episode": "s02e11"
+            },
+            {
+                "title": "The Late Show [Colbert]",
+                "episode": "s02e69"
+            },
+            {
+                "title": "The Tonight Show [Fallon]",
+                "episode": "s03e207"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-24T23:00:00.000Z",
+        "date_label": "Mon Dec 25 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e06"
+            },
+            {
+                "title": "The Man in the High Castle",
+                "episode": "s02e10"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e10"
+            },
+            {
+                "title": "Mrs Browns Boys",
+                "episode": "s03e15"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Call The Midwife",
+                "episode": "s05e00"
+            },
+            {
+                "title": "Doctor Who",
+                "episode": "s10e00"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-25T23:00:00.000Z",
+        "date_label": "Tue Dec 26 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e11"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Sister Wives",
+                "episode": "s08e07"
+            },
+            {
+                "title": "When Calls the Heart",
+                "episode": "s04e00"
+            },
+            {
+                "title": "The Librarians",
+                "episode": "s03e06"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-26T23:00:00.000Z",
+        "date_label": "Wed Dec 27 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e10"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e12"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e09"
+            },
+            {
+                "title": "Inside No. 9",
+                "episode": "s03e00"
+            },
+            {
+                "title": "Holby City",
+                "episode": "s19e12"
+            },
+            {
+                "title": "StarTalk with Neil deGrasse Tyson",
+                "episode": "s03e14"
+            },
+            {
+                "title": "Pawn Stars",
+                "episode": "s10e47"
+            },
+            {
+                "title": "Pawn Stars",
+                "episode": "s10e46"
+            },
+            {
+                "title": "Travelers",
+                "episode": "s01e11"
+            },
+            {
+                "title": "American Pickers",
+                "episode": "s09e34"
+            },
+            {
+                "title": "Americas Next Top Model",
+                "episode": "s23e03"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-27T23:00:00.000Z",
+        "date_label": "Thu Dec 28 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e12"
+            },
+            {
+                "title": "Puss in Boots",
+                "episode": "s04e13"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e11"
+            },
+            {
+                "title": "Jonathan Creek",
+                "episode": "s06e00"
+            },
+            {
+                "title": "Adam Ruins Everything",
+                "episode": "s01e26"
+            },
+            {
+                "title": "Shooter",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Kims Convenience",
+                "episode": "s01e13"
+            },
+            {
+                "title": "Mr. D",
+                "episode": "s06e10"
+            },
+            {
+                "title": "Moonshiners",
+                "episode": "s06e07"
+            },
+            {
+                "title": "Kims Convenience",
+                "episode": "s01e12"
+            },
+            {
+                "title": "Good Behavior",
+                "episode": "s01e08"
+            },
+            {
+                "title": "No Tomorrow",
+                "episode": "s01e10"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-28T23:00:00.000Z",
+        "date_label": "Fri Dec 29 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e14"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e13"
+            },
+            {
+                "title": "The Real World",
+                "episode": "s32e11"
+            },
+            {
+                "title": "Incorporated",
+                "episode": "s01e05"
+            },
+            {
+                "title": "Wahlburgers",
+                "episode": "s07e08"
+            },
+            {
+                "title": "Vikings",
+                "episode": "s04e15"
+            },
+            {
+                "title": "Duck Dynasty",
+                "episode": "s11e07"
+            },
+            {
+                "title": "Undercover Boss",
+                "episode": "s08e03"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-29T23:00:00.000Z",
+        "date_label": "Sat Dec 30 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e16"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e07"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e15"
+            },
+            {
+                "title": "QI",
+                "episode": "s14e10"
+            },
+            {
+                "title": "Delicious",
+                "episode": "s01e01"
+            },
+            {
+                "title": "Nowhere Boys",
+                "episode": "s03e09"
+            },
+            {
+                "title": "Top Chef",
+                "episode": "s14e05"
+            },
+            {
+                "title": "Project Runway",
+                "episode": "s15e15"
+            }
+        ]
+    },
+    {
+        "date": "2017-12-30T23:00:00.000Z",
+        "date_label": "Sun Dec 31 2017",
+        "shows": [
+            {
+                "title": "Trollhunters",
+                "episode": "s01e18"
+            },
+            {
+                "title": "The Grand Tour",
+                "episode": "s01e08"
+            },
+            {
+                "title": "Trollhunters",
+                "episode": "s01e17"
+            },
+            {
+                "title": "Casualty",
+                "episode": "s31e16"
+            },
+            {
+                "title": "Thunderbirds Are Go!",
+                "episode": "s02e12"
+            },
+            {
+                "title": "Gold Rush",
+                "episode": "s07e11"
+            }
+        ]
+    }
+]
