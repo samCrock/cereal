@@ -2,7 +2,7 @@
 node_modules
 library
 data/monthly.json
-assets/posters
+assets/posters/*
 release-builds
-dist
+dist/**/resources/app/assets/posters/*
 *.log
