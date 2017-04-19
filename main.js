@@ -28,10 +28,13 @@ function createWindow() {
     https.get('https://raw.githubusercontent.com/samCrock/cereal/master/package.json', (res) => {
         res.on('data', (d) => {
             var packageContent = JSON.parse(d);
-            process.stdout.write('Remote version -> ' + packageContent.version);
+            process.stdout.write('Remote version ->  ' + packageContent.version);
             if (packageContent.version !== localAppVersion) {
-                process.stdout.write('Need an update pal?');
-                app.update = true;
+                // if (packageContent.version !== localAppVersion) {
+                process.stdout.write('\nNeed an update pal?');
+                global.config = {
+                    update: true
+                };
             }
         });
     }).on('error', (e) => {
@@ -39,9 +42,12 @@ function createWindow() {
     });
     ///////////////
 
-    console.log('localAppVersion', localAppVersion);
+    console.log('Local version  -> ', localAppVersion);
     // Create the browser window.
-    mainWindow = new BrowserWindow()
+    mainWindow = new BrowserWindow({
+        show: false,
+        backgroundColor: '#2e2c29'
+    })
 
     mainWindow.maximize()
 
@@ -51,7 +57,7 @@ function createWindow() {
     mainWindow.setTitle(require('./package.json').name)
     mainWindow.titleBarStyle = 'hidden'
 
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {
@@ -65,7 +71,9 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function() {
+    createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
@@ -83,6 +91,3 @@ app.on('activate', function() {
         createWindow()
     }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
