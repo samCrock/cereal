@@ -1,8 +1,8 @@
 # Dependency directories
 node_modules
-library
+library/*
 data/monthly.json
-assets/posters/*
+assets/posters/*.jpg
 release-builds
 dist/**/resources/app/assets/posters/*
 *.log

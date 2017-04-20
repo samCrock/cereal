@@ -240,7 +240,7 @@
                                         console.log('Saved seasons:', Object.keys(showJson.Seasons).length, '/', seasons)
                                         $mdToast.show($mdToast.simple().textContent('Saved seasons: ' + Object.keys(showJson.Seasons).length + ' / ' + seasons))
                                         if (Object.keys(showJson.Seasons).length === parseInt(seasons)) {
-
+                                            // let db = new PouchDB('cereal')
                                             dbService.put(show, showJson)
                                                 .then(() => {
                                                     $rootScope.$broadcast('show_ready', showJson)

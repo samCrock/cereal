@@ -26,26 +26,12 @@
 
         db_module['put'] = function put(key, value) {
             return new Promise((resolve, reject) => {
-                db.get(key)
-                    .then(function(doc) {
-                        value._id = key
-                        value._rev = doc._rev
-                        db.put(value)
-                            .then(() => {
-                                resolve(value)
-                            }).catch((reason) => {
-                                reject(reason)
-                            })
-                    })
-                    .catch((reason) => {
-                        value._id = key
-                        db.put(value)
-                            .then(() => {
-                                resolve(value)
-                            }).catch((reason) => {
-                                reject(reason)
-                            })
-                    })
+                let obj = localStorage.getItem(key)
+                if (obj) {
+                    obj = value
+                }
+                localStorage.getItem(key)
+                resolve()
             })
         }
 
@@ -91,11 +77,6 @@
                         localStorage.lastUpdate = now
                         var year = now.getFullYear()
                         var month = now.getMonth()
-
-                        // if (month < 10) {
-                        //     month = month.toString()
-                        //     month = '0' + month
-                        // }
 
                         var months = [(parseInt(month) - 1) + '-' + year, month + '-' + year, (parseInt(month) + 1) + '-' + year]
                         var promises = []
@@ -209,9 +190,6 @@
                 }
             })
         }
-
-
-
 
         return db_module
 

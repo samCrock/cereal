@@ -5,7 +5,7 @@
         .module('app')
         .controller('showCtrl', showCtrl);
 
-    function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, libraryService, torrentService, subsService, commonService, wtService, dialogService, dbService) {
+    function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, torrentService, subsService, commonService, wtService, dialogService, dbService) {
 
         let fsExtra = require('fs-extra')
         let PouchDB = require('pouchdb-browser')

@@ -6,7 +6,7 @@
         .controller('mainCtrl', mainCtrl);
 
     /* @ngInject */
-    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, $mdToast, wtService, torrentService, jsonService, commonService, libraryService, dbService, updateService) {
+    function mainCtrl($scope, $interval, $state, $location, $anchorScroll, $rootScope, $timeout, $mdToast, wtService, torrentService, jsonService, commonService, dbService, updateService) {
 
         let fsExtra = require('fs-extra')
         let fsPath = require('fs-path')
@@ -138,11 +138,11 @@
 
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
-        if (!fsExtra.existsSync(__dirname + '/../../library')) {
-            fsExtra.mkdirSync(__dirname + '/../../library');
-        }
+        // if (!fsExtra.existsSync(__dirname + '/../../library')) {
+        //     fsExtra.mkdirSync(__dirname + '/../../library');
+        // }
 
-        libraryService.getLibrary().then((library) => {
+        dbService.fetchShows().then((library) => {
             $rootScope.library = library
             console.log('Library', library)
         })
@@ -150,7 +150,7 @@
         // var pending = JSON.parse(localStorage.getItem('pending'))
         // var isPending
 
-        $rootScope.wallpaper = __dirname + '/../../assets/bkg/cereal.jpg' // Default background
+        $rootScope.wallpaper = __dirname + '/../../assets/cereal.jpg' // Default background
 
 
         if (remote.getGlobal('config') && remote.getGlobal('config').update) {

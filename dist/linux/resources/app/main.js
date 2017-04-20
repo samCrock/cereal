@@ -26,8 +26,12 @@ function createWindow() {
 
     /////////////
     https.get('https://raw.githubusercontent.com/samCrock/cereal/master/package.json', (res) => {
+        var body = ''
         res.on('data', (d) => {
-            var packageContent = JSON.parse(d);
+            body += d
+        });
+        res.on('end', () => {
+            var packageContent = JSON.parse(body);
             process.stdout.write('Remote version ->  ' + packageContent.version);
             if (packageContent.version !== localAppVersion) {
                 // if (packageContent.version !== localAppVersion) {

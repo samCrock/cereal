@@ -6,7 +6,7 @@
         .service('torrentService', torrentService);
 
     /* @ngInject */
-    function torrentService(wtService, commonService, jsonService, subsService, libraryService, $rootScope, $timeout) {
+    function torrentService(wtService, commonService, jsonService, subsService, dbService, $rootScope, $timeout) {
 
 
         const os = require('os')
@@ -75,12 +75,12 @@
                                 .then((opts) => {
                                     subsService.download(opts)
                                         .then(() => {
-                                            libraryService.getLibrary().then((library) => {})
+                                            dbService.fetchShows().then((library) => {})
                                         })
                                 })
                                 .catch(() => {
                                     console.log('No subs found')
-                                    libraryService.getLibrary().then((library) => {})
+                                    dbService.fetchShows().then((library) => {})
                                 })
 
                             t.ready = true

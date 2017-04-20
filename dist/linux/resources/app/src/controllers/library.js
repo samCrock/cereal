@@ -5,7 +5,7 @@
         .module('app')
         .controller('libraryCtrl', libraryCtrl);
 
-    function libraryCtrl($rootScope, $state, $scope, commonService, libraryService) {
+    function libraryCtrl($rootScope, $state, $scope, commonService, dbService) {
 
         console.log('Library')
         $rootScope.loading = false
@@ -15,7 +15,7 @@
             return ('./assets/posters/' + commonService.spacedToDashed(show)) + '.jpg'
         }
 
-        libraryService.getLibrary().then((library) => {
+        dbService.fetchShows().then((library) => {
             console.log('Library --->', library)
             let empty = true
             for (var prop in library) {

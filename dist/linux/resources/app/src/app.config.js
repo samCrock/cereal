@@ -20,7 +20,6 @@
     require('./services/torrent-service.js')
     require('./services/wt-service.js')
     require('./services/common-service.js')
-    require('./services/library-service.js')
     require('./services/json-service.js')
     require('./services/poster-service.js')
     require('./services/subs-service.js')
