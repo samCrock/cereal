@@ -4,7 +4,6 @@ Cereal
 
 Stream & download your favorite shows
 
----
 
 ## Install
 ```
