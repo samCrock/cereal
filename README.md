@@ -20,4 +20,8 @@ $ npm run start
 $ npm run dist
 ```
 
-
+#### TODO
+*	Working auto-update
+*	Improved subtitles handling
+*	Paste torrent links & srt files
+*	Better player UI
