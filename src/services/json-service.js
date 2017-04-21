@@ -30,7 +30,6 @@
                             local_posters.push(dashedShowName)
                         })
                     resolve(local_posters)
-
                 })
             }
 
@@ -107,7 +106,7 @@
                             url: urlMain
                         }, function(error, response, body) {
 
-                            if (error || !response || !response.statusCode) return(error)
+                            if (error || !response || !response.statusCode) return (error)
 
                             console.log('Status', response.statusCode);
 
@@ -362,7 +361,7 @@
                                         console.log('lastSeason', lastSeason)
 
                                         let db = new PouchDB('cereal')
-                                        db.get(show)
+                                        dbService.get(show)
                                             .then(function(doc) {
                                                 doc.Updated = new Date()
                                                 if (doc.Seasons && !doc.Seasons[last]) doc.Seasons.push(lastSeason)
@@ -381,7 +380,7 @@
                                                         console.log('Added' + (lastSeason.length - doc.Seasons[last].length) + 'episodes to season' + last);
                                                     }
                                                 }
-                                                db.put(doc)
+                                                dbService.put(show, doc)
                                                     .then(() => {
                                                         $mdToast.show($mdToast.simple().textContent('Synced \'' + commonService.dashedToSpaced(show) + '\' season ' + seasons))
                                                         $rootScope.$broadcast('show_ready', doc)

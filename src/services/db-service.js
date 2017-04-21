@@ -26,12 +26,28 @@
 
         db_module['put'] = function put(key, value) {
             return new Promise((resolve, reject) => {
-                let obj = localStorage.getItem(key)
-                if (obj) {
-                    obj = value
-                }
-                localStorage.getItem(key)
-                resolve()
+                db.get(key)
+                    .then(function(doc) {
+                        value._id = doc._id
+                        value._rev = doc._rev
+                        db.put(value)
+                            .then(function(doc) {
+                                resolve(doc)
+                            })
+                            .catch((reason) => {
+                                reject(reason)
+                            })
+                    })
+                    .catch((reason) => {
+                        value._id = key
+                        db.put(value)
+                            .then(function(doc) {
+                                resolve(doc)
+                            })
+                            .catch((reason) => {
+                                reject(reason)
+                            })
+                    })
             })
         }
 
@@ -47,12 +63,24 @@
             })
         }
 
+        db_module['remove'] = function remove(value) {
+            return new Promise((resolve, reject) => {
+                db.remove(value)
+                    .then(function(doc) {
+                        resolve(doc)
+                    })
+                    .catch((reason) => {
+                        resolve(reason)
+                    })
+            })
+        }
+
         db_module['fetchShows'] = function get() {
             return new Promise((resolve, reject) => {
                 let library = {}
                 db.allDocs({
-                    include_docs: true
-                })
+                        include_docs: true
+                    })
                     .then(function(doc) {
                         for (var i = 0; i < doc.rows.length; i++) {
                             if (doc.rows[i].id !== 'calendar') {
@@ -71,7 +99,6 @@
             return new Promise(function(resolve, reject) {
 
                 function update() {
-
                     return new Promise(function(resolve, reject) {
                         const now = new Date()
                         localStorage.lastUpdate = now
@@ -179,8 +206,8 @@
                 if (localStorage.lastUpdate && sinceLastUpdate < 1) {
                     db.get('calendar')
                         .then(function(doc) {
-                            // resolve(doc.days)
-                            resolve(update())
+                            resolve(doc.days)
+                                // resolve(update())
                         })
                         .catch((err) => {
                             resolve(update())

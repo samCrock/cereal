@@ -5,7 +5,7 @@
         .module('app')
         .controller('episodeCtrl', episodeCtrl);
 
-    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, $mdToast, jsonService, torrentService, commonService, wtService) {
+    function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, $mdToast, jsonService, torrentService, dbService, commonService, wtService) {
 
         const supportedVideoExt = ['mkv', 'avi', 'mp4']
         const wt_client = wtService.client()
@@ -27,7 +27,7 @@
         let mode = 'stream'
         let title = $scope.show = commonService.capitalCase($stateParams.show.trim())
         let dashedTitle = commonService.spacedToDashed($scope.show)
-        // $scope.show = $scope.show.toUpperCase()
+            // $scope.show = $scope.show.toUpperCase()
         let episode = $scope.episode = $stateParams.episode.trim()
 
         let epObj = {
@@ -43,7 +43,7 @@
 
         $scope.back = () => {
             // Save progress
-            db.get(dashedTitle)
+            dbService.get(dashedTitle)
                 .then((doc) => {
                     doc.currentEpisode = {
                         s: s,
@@ -53,7 +53,7 @@
                     doc.Seasons[s][e].currentTime = video.currentTime
                     doc.Seasons[s][e].playProgress = commonService.mapRange(video.currentTime, 0, video.duration, 0, 100)
                     video.currentTime = doc.Seasons[s][e].currentTime
-                    db.put(doc)
+                    dbService.put(dashedTitle, doc)
                         .then(() => {
                             console.log('Saved playProgress to', doc.Seasons[s][e].playProgress + '%')
                             $rootScope.$broadcast('backEvent')
@@ -65,6 +65,7 @@
                 })
                 .catch((err) => {
                     console.log(err)
+                    $rootScope.$broadcast('backEvent')
                 })
         }
 
@@ -79,7 +80,7 @@
                     if (supportedVideoExt.indexOf(ext) > -1 && fileName.indexOf('Sample') === -1) {
                         console.log('Opening', file, ' in VLC')
                         commonService.openFile(file)
-                        // $scope.back()
+                            // $scope.back()
                         $mdToast.show($mdToast.simple().textContent('Opening ' + fileName))
                     }
                 })
@@ -106,7 +107,7 @@
                         video.src = videoFile
 
                         // RESUME
-                        db.get(dashedTitle)
+                        dbService.get(dashedTitle)
                             .then((doc) => {
                                 doc.currentEpisode = {
                                     s: s,

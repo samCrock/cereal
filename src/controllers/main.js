@@ -138,20 +138,12 @@
 
         if (!localStorage.lastUpdate) localStorage.lastUpdate = new Date()
 
-        // if (!fsExtra.existsSync(__dirname + '/../../library')) {
-        //     fsExtra.mkdirSync(__dirname + '/../../library');
-        // }
-
         dbService.fetchShows().then((library) => {
             $rootScope.library = library
             console.log('Library', library)
         })
 
-        // var pending = JSON.parse(localStorage.getItem('pending'))
-        // var isPending
-
         $rootScope.wallpaper = __dirname + '/../../assets/cereal.jpg' // Default background
-
 
         if (remote.getGlobal('config') && remote.getGlobal('config').update) {
             updateService.downloadDistro()

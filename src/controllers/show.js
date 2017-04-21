@@ -139,15 +139,16 @@
             $rootScope.current_show = $scope.show
             sessionStorage.setItem('current_show', JSON.stringify($scope.show))
             $rootScope.wallpaper = $scope.show.Wallpaper
-            db.get(commonService.spacedToDashed($scope.show.Title))
+            let dashedShowTitle = commonService.spacedToDashed($scope.show.Title)
+            dbService.get(dashedShowTitle)
                 .then((doc) => {
                     if (doc.currentEpisode) {
                         console.log(doc.currentEpisode)
                         $scope.selectedIndex = doc.currentEpisode.s - 1
                     }
-                    $scope.show._id = doc._id
-                    $scope.show._rev = doc._rev
-                    db.put($scope.show)
+                    // $scope.show._id = doc._id
+                    // $scope.show._rev = doc._rev
+                    dbService.put(dashedShowTitle, doc)
                         .then(() => {
                             console.log($scope.show.Title, 'synced')
                         })
@@ -158,7 +159,7 @@
                 .catch((err) => {
                     // console.log(err)
                     $scope.show._id = commonService.spacedToDashed($scope.show.Title)
-                    db.put($scope.show)
+                    dbService.put(dashedShowTitle, $scope.show)
                         .then(() => {
                             console.log($scope.show.Title, 'synced')
                         })
@@ -191,12 +192,13 @@
             delete $scope.show.Seasons[s][e].progress
             console.log($scope.show, result.episode, 'completed downloading')
             $scope.$applyAsync()
-            db.get(commonService.spacedToDashed($scope.show.Title))
+            let dashedShowTitle = commonService.spacedToDashed($scope.show.Title) 
+            dbService.get(dashedShowTitle)
                 .then((doc) => {
                     $scope.show._id = doc._id
                     $scope.show._rev = doc._rev
                     $scope.show.last_update = new Date()
-                    db.put($scope.show)
+                    dbService.put(dashedShowTitle, $scope.show)
                         .then(() => {
                             console.log($scope.show.Title, 'synced')
                         })
@@ -300,12 +302,13 @@
 
                 }
             }
-            db.get(commonService.spacedToDashed($scope.show.Title))
+            let dashedShowTitle = commonService.spacedToDashed($scope.show.Title)
+            dbService.get(dashedShowTitle)
                 .then((doc) => {
                     doc.Seasons[s][e].downloaded = false
                     delete doc.Seasons[s][e].eta
                     delete doc.Seasons[s][e].progress
-                    db.put(doc)
+                    dbService.put(dashedShowTitle, doc)
                         .then(() => {
                             console.log('Deleted from db')
                         })
@@ -323,9 +326,9 @@
                 .then(() => {
                     $rootScope.loading = true
                     let show = $scope.title
-                    db.get(commonService.spacedToDashed($scope.show.Title))
+                    dbService.get(commonService.spacedToDashed($scope.show.Title))
                         .then(function(doc) {
-                            return db.remove(doc)
+                            return dbService.remove(doc)
                         }).then(function(result) {
                             console.log('Deleted from db')
                         }).catch(function(err) {

@@ -62,7 +62,7 @@
         },
         "files": [
             "**/*",
-            "!library${/*}"
+            "!library"
         ]
     },
     "postinstall": "install-app-deps"
