@@ -10,13 +10,14 @@
         $rootScope.loading = false
         const wt_client = wtService.client()
         let fsExtra = require('fs-extra')
-        let recent = localStorage.getItem('recent')
-        if (recent) {
-            recent = JSON.parse(recent)
-        } else {
-            recent = []
+
+        function setRecentDownloads() {
+            let recent = localStorage.getItem('recent')
+            if (recent) {
+                recent = JSON.parse(recent)
+            } else { recent = [] }
+            $scope.recent = recent
         }
-        $scope.recent = recent
 
         let destroyShowListener;
         $scope.$on('$destroy', function() {
@@ -24,6 +25,7 @@
         })
         destroyShowListener = $rootScope.$on('episode_downloaded', (e, showResult) => {
             console.log('Downloaded', showResult);
+            setRecentDownloads()
             $scope.$applyAsync()
         })
 
@@ -66,5 +68,7 @@
             $state.go('app.episode', ({ show: episode.show, episode: episode.episode }))
         }
 
+        // INIT
+        setRecentDownloads()
     }
 })();
