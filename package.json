@@ -46,8 +46,9 @@
     "webtorrent": "0.98.5"
   },
   "devDependencies": {
-    "electron": "latest",
-    "electron-prebuilt": "^1.4.13"
+    "electron": "^1.4.13",
+    "electron-prebuilt": "^1.4.13",
+    "electron-packager": "latest"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
