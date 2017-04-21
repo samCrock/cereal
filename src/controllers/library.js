@@ -15,6 +15,16 @@
             return ('./assets/posters/' + commonService.spacedToDashed(show)) + '.jpg'
         }
 
+        $scope.sortableLibrary = (library) => {
+            var sortable = []
+            angular.forEach(library, function(value, key) {
+                if (value.hasOwnProperty('last_update')) {
+                    sortable.push(value)
+                }
+            })
+            return sortable
+        }
+
         dbService.fetchShows().then((library) => {
             console.log('Library --->', library)
             let empty = true

@@ -5,12 +5,12 @@
                 <h1 class="lime weight-100">This is your library</h1>
                 <h2 class="weight-300">Search for a show or check out the calendar to start downloading or streaming</h2>
             </div>
-            <md-card class="library_card" ng-repeat="(key, value) in library" ui-sref="app.show( { show: key } )" layout-align="center center">
-                <md-card-content class="poster_library" style="background: url({{ getPoster(key) }}) no-repeat center center; background-size: cover;">
+            <md-card class="library_card" ng-repeat="show in sortableLibrary(library) | orderBy:'last_update':reverse=true " ui-sref="app.show( { show: show.Title } )" layout-align="center center">
+                <md-card-content class="poster_library" style="background: url({{ getPoster(show.Title) }}) no-repeat center center; background-size: cover;">
                     <div class="poster_library_sub">
-                        <div class="poster_sub show">{{ key }}</div>
-                        <div ng-if="value.SeasonsCount > 1" class="poster_sub seasons"><span>{{ value.SeasonsCount }}</span> Seasons</div>
-                        <div ng-if="value.SeasonsCount == 1" class="poster_sub seasons"><span>{{ value.SeasonsCount }}</span> Season</div>
+                        <div class="poster_sub show">{{ show.Title }}</div>
+                        <div ng-if="show.SeasonsCount > 1" class="poster_sub seasons"><span>{{ show.SeasonsCount }}</span> Seasons</div>
+                        <div ng-if="show.SeasonsCount == 1" class="poster_sub seasons"><span>{{ show.SeasonsCount }}</span> Season</div>
                         <!-- <md-progress-linear class="thin" md-mode="determinate" ng-value="34"></md-progress-linear>  -->
                     </div>
                 </md-card-content>
