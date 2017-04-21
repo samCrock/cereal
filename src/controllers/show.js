@@ -144,7 +144,7 @@
                 .then((doc) => {
                     if (doc.currentEpisode) {
                         console.log(doc.currentEpisode)
-                        $scope.selectedIndex = doc.currentEpisode.s - 1
+                        $timeout(() => { $scope.selectedIndex = doc.currentEpisode.s - 1 }, 200)
                     }
                     // $scope.show._id = doc._id
                     // $scope.show._rev = doc._rev
@@ -192,7 +192,7 @@
             delete $scope.show.Seasons[s][e].progress
             console.log($scope.show, result.episode, 'completed downloading')
             $scope.$applyAsync()
-            let dashedShowTitle = commonService.spacedToDashed($scope.show.Title) 
+            let dashedShowTitle = commonService.spacedToDashed($scope.show.Title)
             dbService.get(dashedShowTitle)
                 .then((doc) => {
                     $scope.show._id = doc._id
