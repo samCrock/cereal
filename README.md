@@ -17,6 +17,7 @@ $ npm run start
 
 ### Create OS specific distributable
 ```
+$ npm install electron-packager -g
 $ npm run dist
 ```
 
