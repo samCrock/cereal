@@ -27,18 +27,13 @@
 
         dbService.fetchShows().then((library) => {
             console.log('Library --->', library)
-            let empty = true
             for (var prop in library) {
-                if (library.hasOwnProperty(prop)) {
-                    empty = false
-                }
                 let s_count = 0
                 for (var s in library[prop].Seasons) {
                     s_count++
                 }
                 library[prop].SeasonsCount = s_count
             }
-            $scope.isEmpty = empty
 
             $scope.library = library
 

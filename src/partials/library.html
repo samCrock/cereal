@@ -1,7 +1,7 @@
 <section >
     <div flex layout="column" layout-align="center center">
         <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container">
-            <div ng-if="isEmpty" style="max-width: 90%;">
+            <div ng-if="sortableLibrary(library).length == 0" style="max-width: 90%;">
                 <h1 class="lime weight-100">This is your library</h1>
                 <h2 class="weight-300">Search for a show or check out the calendar to start downloading or streaming</h2>
             </div>
