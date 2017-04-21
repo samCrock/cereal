@@ -1,4 +1,5 @@
-Cereal
+![Cereal](/assets/cereal.jpg)
+<!-- Cereal -->
 ===========
 
 Stream & download your favorite shows
