@@ -61,7 +61,7 @@ function createWindow() {
     mainWindow.setTitle(require('./package.json').name)
     mainWindow.titleBarStyle = 'hidden'
 
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {
