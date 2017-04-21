@@ -47,8 +47,7 @@
   },
   "devDependencies": {
     "electron": "^1.4.13",
-    "electron-prebuilt": "^1.4.13",
-    "electron-packager": "latest"
+    "electron-prebuilt": "^1.4.13"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
