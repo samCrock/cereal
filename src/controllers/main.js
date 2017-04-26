@@ -143,7 +143,7 @@
             console.log('Library', library)
         })
 
-        $rootScope.wallpaper = __dirname + '/../../assets/cereal.jpg' // Default background
+        $rootScope.wallpaper = 'assets/cereal.jpg' // Default background
 
         if (remote.getGlobal('config') && remote.getGlobal('config').update) {
             updateService.downloadDistro()
