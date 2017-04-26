@@ -16,8 +16,9 @@
 
         update_module['downloadDistro'] = function get() {
             return new Promise((resolve, reject) => {
-                let url = 'https://github.com/samCrock/cereal/raw/master/cereal_win32.tar.gz'
-                let out = fsExtra.createWriteStream('new-release.tar.gz_')
+                let fileName = 'Cereal-' + remote.getGlobal('config').remoteVersion + '.deb'
+                let url = 'https://github.com/samCrock/cereal/raw/master/dist/' + fileName
+                let out = fsExtra.createWriteStream('_update.deb')
                 let total, increment = 0
                 let updateProgress = 0;
                 let req = request({
@@ -37,16 +38,16 @@
                 })
 
                 let interval_update = $interval(() => {
-                    if (increment) console.log('Dowloading ->', commonService.mapRange(increment, 0, total, 0, 100) + '%')
-                }, 1000)
+                    if (increment) console.log('Downloading ->', commonService.mapRange(increment, 0, total, 0, 100) + '%')
+                }, 2000)
 
                 req.on('end', function() {
                     $interval.cancel(interval_update)
-                    fsExtra.rename('new-release.tar.gz_', 'new-release.tar.gz', () => {
-                        console.log('New release ready! Refresh is advised..')
-                    })
+                        fsExtra.rename('_update.deb', 'update.deb', () => {
+                            console.log('New release ready! Refresh is advised..')
+                        })
                 })
-                        
+
             })
         }
 

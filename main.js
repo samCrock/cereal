@@ -106,7 +106,7 @@ app.on('window-all-closed', function() {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     process.stdout.write('\nQuitting..');
-    let fileName = updateFileName
+    let fileName = 'update.deb'
     fs.readFile(fileName, (err) => {
         if (err) {
             process.stdout.write('No updates available');
@@ -123,7 +123,7 @@ app.on('window-all-closed', function() {
                 case 'win64':
                     return shell.openExternal('"' + fileName + '"')
                 default:
-                    return exec('sudo dpkg -i ./Cereal-0.1.1.deb')
+                    return exec('sudo dpkg -i ./' + fileName)
             }
 
         }
