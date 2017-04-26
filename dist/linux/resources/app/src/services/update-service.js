@@ -16,9 +16,9 @@
 
         update_module['downloadDistro'] = function get() {
             return new Promise((resolve, reject) => {
-                let fileName = 'Cereal-' + '0.1.1' + '.deb'
-                let url = 'https://github.com/samCrock/cereal/dist/linux'
-                let out = fsExtra.createWriteStream('_' + fileName)
+                let fileName = 'Cereal-' + remote.getGlobal('config').remoteVersion + '.deb'
+                let url = 'https://github.com/samCrock/cereal/raw/master/dist/' + fileName
+                let out = fsExtra.createWriteStream('_update.deb')
                 let total, increment = 0
                 let updateProgress = 0;
                 let req = request({
@@ -43,7 +43,7 @@
 
                 req.on('end', function() {
                     $interval.cancel(interval_update)
-                        fsExtra.rename('_' + fileName, fileName, () => {
+                        fsExtra.rename('_update.deb', 'update.deb', () => {
                             console.log('New release ready! Refresh is advised..')
                         })
                 })

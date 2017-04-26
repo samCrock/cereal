@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Link to the binary
-ln -sf '/opt/Cereal/Cereal' '/usr/local/bin/Cereal'
