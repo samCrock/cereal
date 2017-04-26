@@ -6,3 +6,4 @@ assets/posters/*
 release-builds
 dist/**/resources/app/assets/posters/*
 *.log
+electron-builder*
