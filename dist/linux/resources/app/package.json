@@ -2,7 +2,7 @@
   "name": "Cereal",
   "productName": "Cereal",
   "main": "main.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": "https://github.com/samCrock/cereal",
   "description": "stream & download series",
   "license": "MIT",
@@ -47,12 +47,15 @@
   },
   "devDependencies": {
     "electron": "^1.4.13",
-    "electron-prebuilt": "^1.4.13"
+    "electron-prebuilt": "^1.4.13",
+    "tar.gz": "latest"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
     "pack": "build --dir",
-    "dist": "build"
+    "dist-linux": "build -l",
+    "dist-win": "build -w",
+    "dist-ios": "build -m"
   },
   "build": {
     "appId": "cereal.io",

@@ -18,7 +18,7 @@
             return new Promise((resolve, reject) => {
                 let fileName = 'Cereal-' + remote.getGlobal('config').remoteVersion + '.deb'
                 let url = 'https://github.com/samCrock/cereal/raw/master/dist/' + fileName
-                let out = fsExtra.createWriteStream('_update.deb')
+                let out = fsExtra.createWriteStream('_update.tar')
                 let total, increment = 0
                 let updateProgress = 0;
                 let req = request({
@@ -43,7 +43,7 @@
 
                 req.on('end', function() {
                     $interval.cancel(interval_update)
-                        fsExtra.rename('_update.deb', 'update.deb', () => {
+                        fsExtra.rename('_update.tar', 'update.tar', () => {
                             console.log('New release ready! Refresh is advised..')
                         })
                 })

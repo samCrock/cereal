@@ -47,12 +47,15 @@
   },
   "devDependencies": {
     "electron": "^1.4.13",
-    "electron-prebuilt": "^1.4.13"
+    "electron-prebuilt": "^1.4.13",
+    "tar.gz": "latest"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",
     "pack": "build --dir",
-    "dist": "build"
+    "dist-l": "build -l",
+    "dist-w": "build -w",
+    "dist-m": "build -m"
   },
   "build": {
     "appId": "cereal.io",
