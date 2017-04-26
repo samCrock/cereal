@@ -1,0 +1,49 @@
+<section layout="column" layout="column" style="margin-top: 68px;">
+    <label ng-if="$root.pending.length == 0 && recent.length == 0" id="root-msg" style="font-size: 2em;">No pending or recent downloads</label>
+    <md-card class="pending_card" ng-show="torrent.progress < 100" ng-repeat="torrent in $root.pending | orderBy : '-progress' : reverse = false track by $index" layout-align="start">
+        <md-card-content layout-align="start center">
+            <md-progress-linear md-mode="determinate" value="{{ torrent.progress }}"></md-progress-linear>
+            <md-card-title layout="row" layout-align="space-between center">
+                <div flex="55">
+                    <md-button aria-label="Show" ui-sref="app.show({ show: torrent.title, episode: torrent.episode })">
+                        <label style="padding: 1rem; cursor: pointer;">{{ torrent.show }}</label>
+                    </md-button>
+                </div>
+                <div flex="15">
+                    <label>{{ torrent.episode }}</label>
+                </div>
+                <div flex="15">
+                    <label>{{ torrent.speed }}</label>
+                </div>
+                <div flex="15">
+                    <label>{{ torrent.eta_label }}</label>
+                </div>
+                <div>
+                    <md-button aria-label="Delete" class="md-button small_btn" ng-click="remove(torrent)">
+                        <i class="icon fa fa-trash fa-2x white" aria-hidden="true"></i>
+                    </md-button>
+                </div>
+            </md-card-title>
+        </md-card-content>
+    </md-card>
+    <md-card class="pending_card" ng-repeat="episode in recent track by $index" layout-align="start">
+        <md-card-content layout-align="start center">
+            <md-card-title layout="row" layout-align="space-between center">
+                <div flex="55">
+                    <md-button aria-label="Show" ui-sref="app.show({ show: episode.title, episode: episode.episode })">
+                        <label style="padding: 1rem; cursor: pointer;">{{ episode.show }}</label>
+                    </md-button>
+                </div>
+                <div flex="15">
+                    <label>{{ episode.episode }}</label>
+                </div>
+                <div layout="row">
+                    <!-- PLAY -->
+                    <md-button aria-label="Play" class="md-button small_btn" ng-click="play(episode)">
+                        <i class="poster_sub_show icon fa fa-play zoom-action fa-2x" aria-hidden="true"></i>
+                    </md-button>
+                </div>
+            </md-card-title>
+        </md-card-content>
+    </md-card>
+</section>
