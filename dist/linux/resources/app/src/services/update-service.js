@@ -17,7 +17,7 @@
         update_module['downloadDistro'] = function get() {
             return new Promise((resolve, reject) => {
                 let fileName = 'Cereal-' + '0.1.1' + '.deb'
-                let url = 'https://github.com/samCrock/cereal/blob/master/dist/Cereal-0.1.1.deb?raw=true'
+                let url = 'https://github.com/samCrock/cereal/dist/linux'
                 let out = fsExtra.createWriteStream('_' + fileName)
                 let total, increment = 0
                 let updateProgress = 0;
