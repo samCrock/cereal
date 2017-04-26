@@ -12,12 +12,12 @@ $ npm install
 
 ## Start
 ```
-$ npm run start
+$ npm start
 ```
 
 ### Create OS specific distributable
 ```
-$ npm install electron-packager -g
+$ npm i -g electron-builder
 $ npm run dist
 ```
 
