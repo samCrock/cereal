@@ -22,6 +22,7 @@ require('module').globalPaths.push(PATH_APP_NODE_MODULES)
 console.log('Current OS arch:', os.arch())
 console.log('Current OS platform:', os.platform())
 
+let updateFileName = ''
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -37,10 +38,12 @@ function createWindow() {
         res.on('end', () => {
             var packageContent = JSON.parse(body);
             process.stdout.write('Remote version ->  ' + packageContent.version);
+            updateFileName = 'Cereal-' + packageContent.version + '.deb'
             if (packageContent.version !== localAppVersion) {
                 process.stdout.write('\nNeed an update pal?');
                 global.config = {
-                    update: true
+                    update: true,
+                    remoteVersion: packageContent.version
                 };
             }
         });
@@ -103,7 +106,7 @@ app.on('window-all-closed', function() {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     process.stdout.write('\nQuitting..');
-    let fileName = 'Cereal-0.1.1.deb'
+    let fileName = updateFileName
     fs.readFile(fileName, (err) => {
         if (err) {
             process.stdout.write('No updates available');
