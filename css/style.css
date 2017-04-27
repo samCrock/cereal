@@ -800,7 +800,7 @@ section {
     background: rgba(0, 0, 0, .5);
     z-index: 1;
     left: calc(50% - 10rem);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 5rem;
     width: 20rem;
 }
