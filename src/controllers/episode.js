@@ -40,29 +40,33 @@
         console.log('Playing', epObj.show, epObj.episode)
 
         $scope.back = () => {
-            // Save progress
-            dbService.get(dashedTitle)
-                .then((doc) => {
-                    doc.currentEpisode = {
-                        s: s,
-                        e: e,
-                        label: episode
-                    }
-                    doc.Seasons[s][e].currentTime = Player.currentTime()
-                    doc.Seasons[s][e].playProgress = commonService.mapRange(Player.currentTime(), 0, Player.duration(), 0, 100)
-                    Player.currentTime(doc.Seasons[s][e].currentTime)
-                    dbService.put(dashedTitle, doc)
-                        .then(() => {
-                            console.log('Saved playProgress to', doc.Seasons[s][e].playProgress + '%')
-                            videojs('player').dispose()
-                            $rootScope.$broadcast('backEvent')
-                        })
-                })
-                .catch((err) => {
-                    console.log(err)
-                    videojs('player').dispose()
-                    $rootScope.$broadcast('backEvent')
-                })
+            if ($scope.player_error) {
+                $rootScope.$broadcast('backEvent')
+            } else {
+                // Save progress
+                dbService.get(dashedTitle)
+                    .then((doc) => {
+                        doc.currentEpisode = {
+                            s: s,
+                            e: e,
+                            label: episode
+                        }
+                        doc.Seasons[s][e].currentTime = Player.currentTime()
+                        doc.Seasons[s][e].playProgress = commonService.mapRange(Player.currentTime(), 0, Player.duration(), 0, 100)
+                        Player.currentTime(doc.Seasons[s][e].currentTime)
+                        dbService.put(dashedTitle, doc)
+                            .then(() => {
+                                console.log('Saved playProgress to', doc.Seasons[s][e].playProgress + '%')
+                                videojs('player').dispose()
+                                $rootScope.$broadcast('backEvent')
+                            })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        videojs('player').dispose()
+                        $rootScope.$broadcast('backEvent')
+                    })
+            }
         }
 
         $scope.vlc = function() {
@@ -75,6 +79,8 @@
                     ext = ext[ext.length - 1]
                     if (supportedVideoExt.indexOf(ext) > -1 && fileName.indexOf('Sample') === -1) {
                         console.log('Opening', file, ' in VLC')
+                        $rootScope.$broadcast('backEvent')
+
                         commonService.openFile(file)
                             // $scope.back()
                         $mdToast.show($mdToast.simple().textContent('Opening ' + fileName))
@@ -233,6 +239,14 @@
                                         this.addRemoteTextTrack(track)
                                     }
                                 }
+                            })
+
+                            // Handle player errors
+                            Player.on('error', function(event) {
+                                Player.error(null)
+                                videojs('player').dispose()
+                                console.log('Player error:', event)
+                                $scope.player_error = true
                             })
                             $rootScope.loading = false
                         })

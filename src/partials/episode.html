@@ -1,5 +1,6 @@
 <section layout="column" id="video_container" layout="column">
-    <md-button aria-label="Open with VLC" class="md-button" id="vlc_btn" ng-click="vlc()">VLC</md-button>
+    <md-button aria-label="Open with VLC" class="md-button" id="vlc_btn" ng-click="vlc()" ng-show="!player_error">VLC</md-button>
+    <md-button aria-label="Open with VLC" class="md-button" id="vlc_error_btn" ng-click="vlc()" ng-show="player_error">OPEN IN VLC</md-button>
     <md-button aria-label="Back" class="md-button" id="close_btn" ng-click="back()">
         <i class="icon fa fa-times" aria-hidden="true"></i>
     </md-button>
@@ -9,67 +10,75 @@
     <!-- <video id="player" autoplay controls preload="auto"></video> -->
     <!-- <video id="player" class="video-js" controls autoplay preload="auto" data-setup="{}"></video> -->
     <video id="player" class="video-js vjs-default-skin" autoplay controls preload="none" data-setup='{}'>
+        <!-- <input type=”file”> -->
     </video>
 </section>
 <!-- <script src="http://vjs.zencdn.net/5.19.2/video.js"></script> -->
 <style type="text/css">
 .video-js {
-  font-size: 10px;
-  color: #fff;
+    font-size: 10px;
+    color: #fff;
 }
 
 .vjs-default-skin .vjs-big-play-button {
-  font-size: 3em;
-  line-height: 1.5em;
-  height: 1.5em;
-  width: 3em;
-  /* 0.06666em = 2px default */
-  border: 0.06666em solid #fff;
-  /* 0.3em = 9px default */
-  border-radius: 0.3em;
-  /* Align top left. 0.5em = 15px default */
-  left: 0.5em;
-  top: 0.5em;
+    font-size: 3em;
+    line-height: 1.5em;
+    height: 1.5em;
+    width: 3em;
+    /* 0.06666em = 2px default */
+    border: 0.06666em solid #fff;
+    /* 0.3em = 9px default */
+    border-radius: 0.3em;
+    /* Align top left. 0.5em = 15px default */
+    left: 0.5em;
+    top: 0.5em;
 }
 
 .video-js .vjs-control-bar,
 .video-js .vjs-big-play-button,
 .video-js .vjs-menu-button .vjs-menu-content {
-  /* IE8 - has no alpha support */
-  background-color: #2B333F;
-  /* Opacity: 1.0 = 100%, 0.0 = 0% */
-  background-color: rgba(43, 51, 63, 0.7);
+    /* IE8 - has no alpha support */
+    background-color: #2B333F;
+    /* Opacity: 1.0 = 100%, 0.0 = 0% */
+    background-color: rgba(43, 51, 63, 0.7);
 }
 
+
 /* Slider - used for Volume bar and Progress bar */
+
 .video-js .vjs-slider {
-  background-color: #73859f;
-  background-color: rgba(115, 133, 159, 0.5);
+    background-color: #73859f;
+    background-color: rgba(115, 133, 159, 0.5);
 }
+
 
 /* The slider bar color is used for the progress bar and the volume bar
    (the first two can be removed after a fix that's coming) */
+
 .video-js .vjs-volume-level,
 .video-js .vjs-play-progress,
 .video-js .vjs-slider-bar {
-  background: #fff;
+    background: #fff;
 }
 
+
 /* The main progress bar also has a bar that shows how much has been loaded. */
+
 .video-js .vjs-load-progress {
-  /* For IE8 we'll lighten the color */
-  background: #bfc7d3;
-  /* Otherwise we'll rely on stacked opacities */
-  background: rgba(115, 133, 159, 0.5);
+    /* For IE8 we'll lighten the color */
+    background: #bfc7d3;
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba(115, 133, 159, 0.5);
 }
+
 
 /* The load progress bar also has internal divs that represent
    smaller disconnected loaded time ranges */
-.video-js .vjs-load-progress div {
-  /* For IE8 we'll lighten the color */
-  background: white;
-  /* Otherwise we'll rely on stacked opacities */
-  background: rgba(115, 133, 159, 0.75);
-}
 
+.video-js .vjs-load-progress div {
+    /* For IE8 we'll lighten the color */
+    background: white;
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba(115, 133, 159, 0.75);
+}
 </style>
