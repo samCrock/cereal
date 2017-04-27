@@ -181,17 +181,18 @@
         })
 
         $rootScope.$on('episode_downloaded', (event, result) => {
-            console.log('ep completed result', result)
+            console.log('Episode completed:', result)
             let e = result.episode.split('e')
             let s = e[0].split('s')
             s = parseInt(s[1], 10)
             e = parseInt(e[1], 10)
-            $scope.show.Seasons[s][e].downloaded = true
-            $scope.show.Seasons[s][e].loading = false
-            delete $scope.show.Seasons[s][e].eta
-            delete $scope.show.Seasons[s][e].progress
-            console.log($scope.show, result.episode, 'completed downloading')
-            $scope.$applyAsync()
+            if (result.show === $scope.show.Title) {
+                $scope.show.Seasons[s][e].downloaded = true
+                $scope.show.Seasons[s][e].loading = false
+                delete $scope.show.Seasons[s][e].eta
+                delete $scope.show.Seasons[s][e].progress
+                $scope.$applyAsync()
+            }
             let dashedShowTitle = commonService.spacedToDashed($scope.show.Title)
             dbService.get(dashedShowTitle)
                 .then((doc) => {
