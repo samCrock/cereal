@@ -348,28 +348,6 @@
         // INIT
         start()
 
-        /////////// SEASONS TABS WRAPPER OFFSET HANDLER ///////////
-        // var cumulativeOffset = function(element) {
-        //     var top = 0
-        //     do {
-        //         top += element.offsetTop || 0
-        //         element = element.offsetParent
-        //     } while (element);
-        //     return top
-        // }
-        // let tabsWrapper = document.getElementsByTagName('md-tabs-wrapper')[0]
-        // let orginalOffset = cumulativeOffset(tabsWrapper)
-        // window.addEventListener('scroll', (e) => {
-        //         window.requestAnimationFrame(() => {
-        //             let wrapperOffset = cumulativeOffset(tabsWrapper)
-        //             if (window.pageYOffset > orginalOffset && wrapperOffset) {
-        //                 tabsWrapper.classList.add('scrolled');
-        //             } else {
-        //                 tabsWrapper.classList.remove('scrolled');
-        //             }
-        //         })
-        //     })
-        //////////////////////
 
 
     }
