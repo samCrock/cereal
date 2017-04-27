@@ -1,0 +1,29 @@
+<section style="margin-top: 3em;">
+    <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date' " flex layout="column" layout-align="center center" class="day_container">
+        <div ng-click="scrollLeft('content_' + $index)" class="scroll_left"><i class="icon fa fa-angle-left " aria-hidden="true"></i></div>
+        <div ng-click="scrollRight('content_' + $index)" class="scroll_right"><i class="icon fa fa-angle-right " aria-hidden="true"></i></div>
+        <div class="calendar_day">
+            <span class="md-content-1 calendar_dotw light">{{ day.dateObj.dotw }}</span>
+            <span class="md-subhead calendar_month medium">
+                {{ day.dateObj.month }}</span>
+            <span class="md-subhead calendar_dotm semiBold">{{ day.dateObj.dotm }}</span>
+        </div>
+        <md-content class="calendar_content" layout="row" layout-align="" id="{{'content_' + $index}}">
+            <md-card ng-repeat="show in day.shows | filter:posterOnly" ui-sref="app.show( { show: show.title, episode: show.episode } )" layout="row" layout-align="center center">
+                <md-card-content ng-if="show.poster">
+                <div class="calendar_poster_container">
+                    <img ng-src="{{ show.poster }}" class="calendar_poster">
+                    <div ng-show="!show.loading" class="poster_sub_container">
+                        <div ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub show" aria-hidden="true">{{ show.title }}</div>
+                        <div ui-sref="app.show( { show: show.title, episode: show.episode } )" class="poster_sub seasons" aria-hidden="true">{{ show.episode }}</div>
+                        <!-- <i ng-click="stream( { show: show.title, episode: show.episode } )" class="poster_sub play fa fa-play" aria-hidden="true"></i> -->
+                        <!-- <i ng-click="download( { show: show.title, episode: show.episode } ); $event.stopPropagation();" class="poster_sub download fa fa-download" aria-hidden="true"></i> -->
+                        <i ng-click="playTrailer( { show: show.title }, $event ); $event.stopPropagation();" class="poster_sub trailer fa fa-youtube" aria-hidden="true"></i>
+                    </div>
+                </div>
+                </md-card-content>
+            </md-card>
+            <div style="padding-right: 5px; height: 1px;"></div>
+        </md-content>
+    </div>
+</section>

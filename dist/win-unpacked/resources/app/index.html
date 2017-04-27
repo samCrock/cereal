@@ -1,0 +1,46 @@
+<!-- <html lang="en" ng-app="app" style="background: url({{ $root.wallpaper }}) no-repeat center center fixed; background-size: cover;"> -->
+<html lang="en" ng-app="app">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://vjs.zencdn.net/5.19.2/video-js.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Cereal</title>
+</head>
+
+<body ng-cloak>
+
+    <body ng-app="app" ng-cloak>
+        <!-- <body ng-app="app"  style="background-image: url({{ $root.wallpaper }}) no-repeat center center fixed; background-size: cover;" ng-cloak> -->
+        <div ui-view="header" id="header"></div>
+        <div class="background-image" style="background: url({{ $root.wallpaper }}) no-repeat center center fixed; background-size: cover;"></div>
+        <div ng-show="$root.loading" layout="column" layout-fill layout-align="center center" class="content">
+            <cereal-loader type="0"></cereal-loader>
+            <label id="root-msg">{{ $root.msg }}</label>
+        </div>
+        <ui-view ng-show="!$root.loading">
+            <div layout="column" layout-fill layout-align="center center"></div>
+        </ui-view>
+        <!-- INJECT IT ALL -->
+        <script src="node_modules/angular/angular.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+        <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+        <script src="node_modules/angular-messages/angular-messages.min.js"></script>
+        <!-- Angular Material Library -->
+        <script src="node_modules/angular-material/angular-material.min.js"></script>
+        <script src="node_modules/angular-material-icons/angular-material-icons.min.js"></script>
+        <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+        <script src="http://vjs.zencdn.net/5.19.2/video.js"></script>
+        <!-- ngElectron  -->
+        <script type="text/javascript">
+        require('./src/app.module.js')
+        require('./src/app.config.js')
+        require('./src/layout.js')
+        </script>
+    </body>
+
+</html>
