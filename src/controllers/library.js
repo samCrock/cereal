@@ -38,7 +38,7 @@
       jsonService.getLocalPosters()
       .then((local_posters) => {
         for (var title in library) {
-          if (title && title !== undefined) {
+          if (title && title !== 'undefined') {
             console.log(title)
             let index = local_posters.indexOf(title)
             if (index >= 0) {
@@ -60,7 +60,7 @@
         .then((results) => {
           // console.log('--- All posters found ---', results)
           $scope.library = library
-          $rootScope.msg = 'Loading posters'
+          delete $rootScope.msg
           $rootScope.loading = false
           $scope.$apply()
         })
