@@ -37,9 +37,9 @@ function createWindow() {
     		});
     		res.on('end', () => {
     			var packageContent = JSON.parse(body);
-    			process.stdout.write('Remote version ->  ' + packageContent.version);
+    			console.log('Remote version ->  ' + packageContent.version);
     			if (packageContent.version !== localAppVersion) {
-    				process.stdout.write('\nUpdate available');
+    				console.log('\nUpdate available');
     				global.config = {
     					update: true,
     					remoteVersion: packageContent.version

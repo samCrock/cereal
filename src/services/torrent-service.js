@@ -8,7 +8,6 @@
   /* @ngInject */
   function torrentService(wtService, commonService, jsonService, subsService, dbService, $rootScope, $timeout) {
 
-
     const os = require('os')
     let util = require('util')
     let exec = require('child_process').exec

@@ -6,21 +6,13 @@
   .controller('calendarCtrl', calendarCtrl);
 
   function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService, dbService) {
-    console.log('Calendar')
     let fsExtra = require('fs-extra')
+    console.log('Calendar')
 
     $rootScope.loading = true
 
     $scope.posterOnly = (show) => {
       return show
-    }
-    $scope.scrollLeft = function(content_id) {
-      var content = document.getElementById(content_id)
-      content.scrollLeft -= 192 * 3 // scroll 3 shows (tmp)
-    }
-    $scope.scrollRight = function(content_id) {
-      var content = document.getElementById(content_id)
-      content.scrollLeft += 192 * 3 // scroll 3 shows (tmp)
     }
 
     $scope.stream = function(episode) {

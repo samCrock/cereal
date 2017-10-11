@@ -7,7 +7,6 @@
 
   /* @ngInject */
   function dbService(commonService, $rootScope, $interval) {
-
     let request = require('request')
     let cheerio = require('cheerio')
     let Promise = require('bluebird')
@@ -107,6 +106,8 @@
 
             let days = []
 
+            console.log(url + lastWeek)
+            
             request(url + lastWeek, function(error, response, html) {
 
               if (!error) {
@@ -161,7 +162,7 @@
                   week.push(day)
                 })
 
-                console.log(week)
+                // console.log(week)
 
                 db.get('calendar')
                 .then(function(doc) {
@@ -174,7 +175,7 @@
                   resolve(week)
                 })
                 .catch(function(err) {
-                  console.log('No calendar in db', err)
+                  console.log('No calendar in db')
                   db.put({
                     _id: 'calendar',
                     days: week
@@ -190,8 +191,8 @@
           })
         }
 
-        let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
-        // let sinceLastUpdate = 1
+        // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
+        let sinceLastUpdate = 1
         console.log(sinceLastUpdate + ' days since last update')
 
         if (localStorage.lastUpdate && sinceLastUpdate < 1) {

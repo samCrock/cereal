@@ -21,6 +21,7 @@
     json_module['getLocalPosters'] = function getLocalPosters() {
       return new Promise(function(resolve, reject) {
         let local_posters = []
+        console.log(__dirname + '/../../assets/posters')
         fsExtra.readdirSync(__dirname + '/../../assets/posters')
         .filter((file) => {
           let dashedShowName = file.split('.jpg')
@@ -259,12 +260,10 @@
 
 
     let updateRemote = function(show) {
-
       dbService.get(show)
       .then((showJson) => {
 
         let urlMain = 'https://trakt.tv/shows/' + show
-
         console.log('https://trakt.tv/shows/' + show)
 
         request.get({
