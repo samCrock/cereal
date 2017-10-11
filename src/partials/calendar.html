@@ -1,0 +1,24 @@
+<section style="margin-top: 3em;">
+  <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date'" flex layout="column" layout-align="center center" class="day_container">
+    <div class="calendar_day">
+      <span class="md-subhead calendar_month medium">{{ day.date_label }}</span>
+    </div>
+    <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container">
+
+      <md-card class="library_card" ng-repeat="show in day.shows | filter:posterOnly" ui-sref="app.show( { show: show.dashed_title, episode: show.episode } )" layout="row" layout-align="center center">
+        <md-card-content>
+          <div class="calendar_poster_container">
+            <img ng-src="{{ show.poster }}" class="calendar_poster">
+            <div ng-show="!show.loading" class="poster_sub_container">
+              <div ui-sref="app.show( { show: show.dashed_title, episode: show.episode } )" class="poster_sub show" aria-hidden="true">{{ show.title }}</div>
+              <div ui-sref="app.show( { show: show.dashed_title, episode: show.episode } )" class="poster_sub seasons" aria-hidden="true">{{ show.episode }}</div>
+              <i ng-click="playTrailer( { show: show.title }, $event ); $event.stopPropagation();" class="poster_sub trailer fa fa-youtube" aria-hidden="true"></i>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+
+      <div style="padding-right: 5px; height: 1px;"></div>
+    </md-content>
+  </div>
+</section>

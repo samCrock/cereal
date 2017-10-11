@@ -1,0 +1,7 @@
+# Dependency directories
+node_modules
+library/*
+dist
+data/monthly.json
+assets/posters/*
+*.log
