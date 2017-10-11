@@ -50,7 +50,7 @@
     "webtorrent": "^0.98.19"
   },
   "devDependencies": {
-    "electron": "^1.4.13",
+    "electron": "1.6.15",
     "electron-prebuilt": "^1.4.13",
     "electron-builder": "latest"
   },
