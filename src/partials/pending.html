@@ -5,8 +5,8 @@
       <md-progress-linear md-mode="determinate" value="{{ torrent.progress }}"></md-progress-linear>
       <md-card-title layout="row" layout-align="space-between center">
         <div flex="55">
-          <md-button aria-label="Show" ui-sref="app.show({ show: torrent.show, episode: torrent.episode })">
-            <label style="padding: 1rem; cursor: pointer;">{{ torrent.show }}</label>
+          <md-button aria-label="Show" ui-sref="app.show({ show: torrent.dashed_show, episode: torrent.episode })">
+            <label style="padding: 1rem; cursor: pointer;">{{ torrent.spaced_show }}</label>
           </md-button>
         </div>
         <div flex="15">
@@ -19,7 +19,7 @@
           <label>{{ torrent.eta_label }}</label>
         </div>
         <div>
-          <md-button aria-label="Delete" class="md-button small_btn" ng-click="remove(torrent)">
+          <md-button aria-label="Cancel" class="md-button small_btn" ng-click="cancel(torrent)">
             <i class="icon fa fa-trash fa-2x white" aria-hidden="true"></i>
           </md-button>
         </div>
@@ -30,8 +30,8 @@
     <md-card-content layout-align="start center">
       <md-card-title layout="row" layout-align="space-between center">
         <div flex="55">
-          <md-button aria-label="Show" ui-sref="app.show({ show: episode.show, episode: episode.episode })">
-            <label style="padding: 1rem; cursor: pointer;">{{ episode.show }}</label>
+          <md-button aria-label="Show" ui-sref="app.show({ show: episode.dashed_show, episode: episode.episode })">
+            <label style="padding: 1rem; cursor: pointer;">{{ episode.spaced_show }}</label>
           </md-button>
         </div>
         <div flex="15">
@@ -41,6 +41,10 @@
           <!-- PLAY -->
           <md-button aria-label="Play" class="md-button small_btn" ng-click="play(episode)">
             <i class="poster_sub_show icon fa fa-play zoom-action fa-2x" aria-hidden="true"></i>
+          </md-button>
+          <!-- REMOVE -->
+          <md-button aria-label="Remove" class="md-button small_btn"  ng-click="remove(episode)">
+            <i class="poster_sub_show icon fa fa-times fa-2x" aria-hidden="true"></i>
           </md-button>
         </div>
       </md-card-title>

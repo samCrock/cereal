@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-  .module('app')
-  .controller('showCtrl', showCtrl);
+    .module('app')
+    .controller('showCtrl', showCtrl);
 
   function showCtrl($rootScope, $state, $sce, $scope, $interval, $timeout, $stateParams, jsonService, torrentService, subsService, commonService, wtService, dialogService, dbService) {
 
@@ -15,11 +15,11 @@
 
     $rootScope.loading = true
     console.log('$stateParams', $stateParams)
-    $scope.title = $stateParams.show ? $stateParams.show : $rootScope.current_show.DashedTitle
+    $scope.dashed_title = $stateParams.show ? $stateParams.show : $rootScope.current_show.DashedTitle
     $scope.selected_ep = $stateParams.episode
-    // if ($rootScope.current_show) $rootScope.current_show.Title = $scope.title
+      // if ($rootScope.current_show) $rootScope.current_show.DashedTitle = $scope.dashed_title
     $scope.downloading = []
-    $scope.poster = 'res/posters/' + commonService.spacedToDashed($scope.title) + '.jpg'
+    $scope.poster = 'res/posters/' + $scope.dashed_title + '.jpg'
 
     let destroyShowListener;
     $scope.$on('$destroy', function() {
@@ -30,7 +30,7 @@
       formatDataAndSave(showResult)
       $scope.showIsLoading = false
       $rootScope.$applyAsync()
-      console.log('Show is ready')
+      console.log('Show is ready', showResult)
     })
 
     $scope.dotClass = function(episode) {
@@ -42,189 +42,194 @@
           episode.timePassed.indexOf('Yesterday') === -1 ||
           episode.timePassed && episode.timePassed.indexOf('NaN') !== -1)
           return 'hidden'
-        }
-        return ''
       }
+      return ''
+    }
 
-      $scope.timePassedCheck = function(tp) {
-        var visible = true
-        if (tp && tp.indexOf('NaN') !== -1) visible = false
-        return visible
-      }
+    $scope.timePassedCheck = function(tp) {
+      var visible = true
+      if (tp && tp.indexOf('NaN') !== -1) visible = false
+      return visible
+    }
 
-      $scope.stream = function(episode) {
-        console.log('PLAY ->', episode)
-        torrentService.searchTorrent({
-          show: $scope.title,
+    $scope.stream = function(episode) {
+      console.log('PLAY ->', episode)
+      torrentService.searchTorrent({
+          show: $scope.dashed_title,
           episode: episode.label
         })
         .then((t) => {
-          let streamObj = { magnet: t.magnet, path: __dirname + '/../../library/' + $scope.title + '/' + episode.label }
+          let streamObj = {
+            magnet: t.magnet,
+            path: __dirname + '/../../library/' + $scope.dashed_title + '/' + episode.label
+          }
           console.log('streamObj', streamObj)
           commonService.stream(streamObj)
         })
         .catch((reason) => {
           console.log(reason)
-          dialogService.notify({ title: 'Sorry', content: 'No results' })
+          dialogService.notify({
+            title: 'Sorry',
+            content: 'No results'
+          })
         })
-      }
+    }
 
-      // $scope.pauseDownload = function(episode) {
-      //     console.log('PAUSE DOWNLOAD ->', episode)
-      //     wt_client.get(episode.magnet).pause()
-      // }
-
-      $scope.play = function(episode) {
-        let recent = localStorage.getItem('recent')
-        if (recent) {
-          recent = JSON.parse(recent)
-          for (var i = recent.length - 1; i >= 0; i--) {
-            if (recent[i].torrent === episode.torrent) {
-              recent.splice(i, 1)
-              localStorage.setItem('recent', JSON.stringify(recent))
-            }
+    $scope.play = function(episode) {
+      let recent = localStorage.getItem('recent')
+      if (recent) {
+        recent = JSON.parse(recent)
+        for (var i = recent.length - 1; i >= 0; i--) {
+          if (recent[i].torrent === episode.torrent) {
+            recent.splice(i, 1)
+            localStorage.setItem('recent', JSON.stringify(recent))
           }
         }
-        $state.go('app.episode', ({ show: $scope.title, episode: episode.label }))
       }
+      $state.go('app.episode', ({
+        show: $scope.dashed_title,
+        episode: episode.label
+      }))
+    }
 
-      $interval(() => {
-        if ($rootScope.pending && $scope.show && $scope.show.Seasons) {
-          for (var i = 0; i < $rootScope.pending.length; i++) {
-            for (var s in $scope.show.Seasons) {
-              for (var e in $scope.show.Seasons[s]) {
-                if ($rootScope.pending[i].show === $scope.show.Title && $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
-                  $scope.show.Seasons[s][e].eta = commonService.formatTime($rootScope.pending[i].eta)
-                  if ($scope.show.Seasons[s][e].eta.indexOf('NaN') !== -1) $scope.show.Seasons[s][e].eta = ''
-                  $scope.show.Seasons[s][e].progress = $rootScope.pending[i].progress
-                  $scope.show.Seasons[s][e].magnet = $rootScope.pending[i].magnet
-                }
+    $interval(() => {
+      if ($rootScope.pending && $scope.show && $scope.show.Seasons) {
+        for (var i = 0; i < $rootScope.pending.length; i++) {
+          for (var s in $scope.show.Seasons) {
+            for (var e in $scope.show.Seasons[s]) {
+              if ($rootScope.pending[i].dashed_show === $scope.show.DashedTitle && $rootScope.pending[i].episode === $scope.show.Seasons[s][e].episode) {
+                $scope.show.Seasons[s][e].eta = commonService.formatTime($rootScope.pending[i].eta)
+                if ($scope.show.Seasons[s][e].eta.indexOf('NaN') !== -1) $scope.show.Seasons[s][e].eta = ''
+                $scope.show.Seasons[s][e].progress = $rootScope.pending[i].progress
+                $scope.show.Seasons[s][e].magnet = $rootScope.pending[i].magnet
               }
             }
           }
         }
-        $scope.$applyAsync()
-      }, 1000)
+      }
+      $scope.$applyAsync()
+    }, 1000)
 
-      function start() {
-        jsonService.getShow($scope.title)
+    function start() {
+      jsonService.getShow($scope.dashed_title)
         .then((showResult) => {
           formatDataAndSave(showResult)
         })
-      }
+    }
 
-      function formatDataAndSave(showResult) {
-        showResult.DashedTitle = $scope.title
-        console.log('formatDataAndSave', showResult)
-        if (showResult) {
-          for (var season in showResult.Seasons) {
-            for (var episode in showResult.Seasons[season]) {
-              var formatted_date = {}
-              formatted_date = commonService.getDayObject(showResult.Seasons[season][episode].date)
-              showResult.Seasons[season][episode].dotw = formatted_date.dotw
-              showResult.Seasons[season][episode].dotm = formatted_date.dotm
-              showResult.Seasons[season][episode].month = formatted_date.month
-              showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
+    function formatDataAndSave(showResult) {
+      showResult.DashedTitle = $scope.dashed_title
+      console.log('formatDataAndSave', showResult)
+      if (showResult) {
+        for (var season in showResult.Seasons) {
+          for (var episode in showResult.Seasons[season]) {
+            var formatted_date = {}
+            formatted_date = commonService.getDayObject(showResult.Seasons[season][episode].date)
+            showResult.Seasons[season][episode].dotw = formatted_date.dotw
+            showResult.Seasons[season][episode].dotm = formatted_date.dotm
+            showResult.Seasons[season][episode].month = formatted_date.month
+            showResult.Seasons[season][episode].timePassed = commonService.timePassed(showResult.Seasons[season][episode].date)
 
-              if ($rootScope.library[showResult.Title]) {
-                let episodes = $rootScope.library[showResult.Title]
-                for (var i = 0; i < episodes.length; i++) {
-                  if (episodes[i].episode === showResult.Seasons[season][episode].episode && showResult.Seasons[season][episode].progress === 100) {
-                    showResult.Seasons[season][episode].downloaded = true
-                  }
+            if ($rootScope.library[showResult.DashedTitle]) {
+              let episodes = $rootScope.library[showResult.DashedTitle]
+              for (var i = 0; i < episodes.length; i++) {
+                if (episodes[i].episode === showResult.Seasons[season][episode].episode && showResult.Seasons[season][episode].progress === 100) {
+                  showResult.Seasons[season][episode].downloaded = true
                 }
               }
             }
           }
         }
-        $scope.show = showResult
-        $rootScope.current_show = $scope.show
-        sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-        $rootScope.wallpaper = $scope.show.Wallpaper
-        dbService.get($scope.title)
+      }
+      $scope.show = showResult
+      $rootScope.current_show = $scope.show
+      sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+      $rootScope.wallpaper = $scope.show.Wallpaper
+      dbService.get($scope.dashed_title)
         .then((doc) => {
           if (doc.currentEpisode) {
             console.log(doc.currentEpisode)
-            $timeout(() => { $scope.selectedIndex = doc.currentEpisode.s - 1 }, 200)
+            $timeout(() => {
+              $scope.selectedIndex = doc.currentEpisode.s - 1
+            }, 200)
           }
-          dbService.put($scope.title, doc)
-          .then(() => {
-            console.log($scope.show.Title, 'synced')
-          })
-          .catch((err) => {
-            console.error('Error updating', $scope.title, err)
-          })
+          dbService.put($scope.dashed_title, doc)
+            .then(() => {
+              console.log($scope.show.DashedTitle, 'synced')
+            })
+            .catch((err) => {
+              console.error('Error updating', $scope.dashed_title, err)
+            })
         })
         .catch((err) => {
           // console.log(err)
-          $scope.show._id = $scope.title
-          dbService.put($scope.title, $scope.show)
-          .then(() => {
-            console.log($scope.show.Title, 'synced')
-          })
-          .catch((err) => {
-            console.error('Error updating', $scope.title, err)
-          })
+          $scope.show._id = $scope.dashed_title
+          dbService.put($scope.dashed_title, $scope.show)
+            .then(() => {
+              console.log($scope.show.DashedTitle, 'synced')
+            })
+            .catch((err) => {
+              console.error('Error updating', $scope.dashed_title, err)
+            })
         })
-        $rootScope.loading = false
+      $rootScope.loading = false
+      $scope.$applyAsync()
+    }
+
+    $scope.$on('show_overview', function(event, result) {
+      console.log('Overview ready')
+      $scope.show = result.show
+      $rootScope.loading = false
+      $scope.showIsLoading = true
+      $scope.$applyAsync()
+      formatDataAndSave($scope.show)
+    })
+
+    $rootScope.$on('episode_downloaded', (event, result) => {
+      console.log('Episode completed:', result)
+      let e = result.episode.split('e')
+      let s = e[0].split('s')
+      s = parseInt(s[1], 10)
+      e = parseInt(e[1], 10)
+      if (result.dashed_show === $scope.show.DashedTitle) {
+        $scope.show.Seasons[s][e].downloaded = true
+        $scope.show.Seasons[s][e].loading = false
+        delete $scope.show.Seasons[s][e].eta
+        delete $scope.show.Seasons[s][e].progress
         $scope.$applyAsync()
       }
-
-      $scope.$on('show_overview', function(event, result) {
-        console.log('Overview ready')
-        $scope.show = result.show
-        $rootScope.loading = false
-        $scope.showIsLoading = true
-        $scope.$applyAsync()
-        formatDataAndSave($scope.show)
-      })
-
-      $rootScope.$on('episode_downloaded', (event, result) => {
-        console.log('Episode completed:', result)
-        let e = result.episode.split('e')
-        let s = e[0].split('s')
-        s = parseInt(s[1], 10)
-        e = parseInt(e[1], 10)
-        if (result.show === $scope.show.Title) {
-          $scope.show.Seasons[s][e].downloaded = true
-          $scope.show.Seasons[s][e].loading = false
-          delete $scope.show.Seasons[s][e].eta
-          delete $scope.show.Seasons[s][e].progress
-          $scope.$applyAsync()
-        }
-        let dashedShowTitle = commonService.spacedToDashed($scope.show.Title)
-        dbService.get(dashedShowTitle)
+      dbService.get($scope.show.DashedTitle)
         .then((doc) => {
           $scope.show._id = doc._id
           $scope.show._rev = doc._rev
           $scope.show.last_update = new Date()
-          dbService.put(dashedShowTitle, $scope.show)
-          .then(() => {
-            console.log($scope.show.Title, 'synced')
-          })
-          .catch((err) => {
-            console.error('Error updating', $scope.title, err)
-          })
+          dbService.put($scope.show.DashedTitle, $scope.show)
+            .then(() => {
+              console.log($scope.show.DashedTitle, 'synced')
+            })
+            .catch((err) => {
+              console.error('Error updating', $scope.dashed_title, err)
+            })
         })
-      })
+    })
 
-      $scope.downloadEpisode = (episode) => {
-        let show = $scope.show.Title
-        let label = episode.label
-        let s = episode.s
-        let e = episode.e
-        let searchObject = {
-          show: show,
-          episode: label
-        }
-        if ($scope.show.Genres.indexOf('Talk Show') > -1) searchObject.date = episode.date
+    $scope.downloadEpisode = (episode) => {
+      let show = $scope.show.DashedTitle
+      let label = episode.label
+      let s = episode.s
+      let e = episode.e
+      let searchObject = {
+        show: show,
+        episode: label
+      }
+      if ($scope.show.Genres.indexOf('Talk Show') > -1) searchObject.date = episode.date
 
-        console.log('Download episode:', episode)
+      console.log('Download episode:', episode)
 
-        $scope.show.Seasons[s][e].loading = true
-        $scope.$applyAsync()
+      $scope.show.Seasons[s][e].loading = true
+      $scope.$applyAsync()
 
-        torrentService.searchTorrent(searchObject)
+      torrentService.searchTorrent(searchObject)
         .then((result) => {
           // $scope.show.Seasons[s][e].loading = false
           console.log(result, 'is downloading')
@@ -234,122 +239,131 @@
           console.log(reason)
           console.log($scope.show, s, e)
           $scope.show.Seasons[s][e].loading = false
-          dialogService.torrentForm({ show: $scope.show.Title, episode: $scope.show.Seasons[s][e].episode, date: $scope.show.Seasons[s][e].date })
-          .then((dialogResult) => {
-            console.log('Dialog result ->', dialogResult)
-            torrentService.searchTorrent(dialogResult)
-            .then((result) => {
-              console.log(result.episode, 'is downloading')
-              // $scope.show.Seasons[s][e].loading = false
-              torrentService.downloadTorrent(result)
-              .then((t) => {
-                delete $scope.show.Seasons[s][e].eta
-                $rootScope.current_show = $scope.show
-                sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-                $scope.show.Seasons[s][e].loading = false
-                $scope.show.Seasons[s][e].downloaded = true
-                console.log(result.episode, 'is ready')
-                $scope.showIsLoading = false
-                $scope.$applyAsync()
-              })
+          dialogService.torrentForm({
+              show: $scope.show.DashedTitle,
+              episode: $scope.show.Seasons[s][e].episode,
+              date: $scope.show.Seasons[s][e].date
             })
-          })
-          .catch(() => {
-            console.log('Dialog closed')
-          })
+            .then((dialogResult) => {
+              console.log('Dialog result ->', dialogResult)
+              torrentService.searchTorrent(dialogResult)
+                .then((result) => {
+                  console.log(result.episode, 'is downloading')
+                    // $scope.show.Seasons[s][e].loading = false
+                  torrentService.downloadTorrent(result)
+                    .then((t) => {
+                      delete $scope.show.Seasons[s][e].eta
+                      $rootScope.current_show = $scope.show
+                      sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+                      $scope.show.Seasons[s][e].loading = false
+                      $scope.show.Seasons[s][e].downloaded = true
+                      console.log(result.episode, 'is ready')
+                      $scope.showIsLoading = false
+                      $scope.$applyAsync()
+                    })
+                })
+            })
+            .catch(() => {
+              console.log('Dialog closed')
+            })
         })
-      }
+    }
 
-      $scope.playTrailer = () => {
-        let trailer = $scope.show.Trailer
-        console.log('Playing trailer:', trailer)
-        dialogService.trailer({ src: $scope.show.Trailer })
-      }
+    $scope.playTrailer = () => {
+      let trailer = $scope.show.Trailer
+      console.log('Playing trailer:', trailer)
+      dialogService.trailer({
+        src: $scope.show.Trailer
+      })
+    }
 
-      $scope.deleteEpisode = (showObj) => {
-        console.log('Deleting', showObj);
-        let show = $scope.title
-        let episode = showObj.episode.episode
-        let magnet = showObj.episode.magnet
-        let e = episode.split('e')
-        let s = e[0].split('s')
-        s = parseInt(s[1], 10)
-        e = parseInt(e[1], 10)
-        $timeout(() => {
-          $scope.show.Seasons[s][e].downloaded = false
-          $scope.show.Seasons[s][e].loading = false
-          delete $scope.show.Seasons[s][e].eta
-          delete $scope.show.Seasons[s][e].progress
-        }, 1000)
-        if (magnet) {
-          try {
-            wt_client.remove(magnet, () => {
-              console.log('Deleted from client')
-              for (var i = 0; i < $rootScope.pending.length; i++) {
-                if ($rootScope.pending[i].magnet === magnet) {
-                  $rootScope.pending.splice(i, 1)
-                }
+    $scope.deleteEpisode = (showObj) => {
+      console.log('Deleting', showObj);
+      let episode = showObj.episode.episode
+      let magnet = showObj.episode.magnet
+      let e = episode.split('e')
+      let s = e[0].split('s')
+      s = parseInt(s[1], 10)
+      e = parseInt(e[1], 10)
+      $timeout(() => {
+        $scope.show.Seasons[s][e].downloaded = false
+        $scope.show.Seasons[s][e].loading = false
+        delete $scope.show.Seasons[s][e].eta
+        delete $scope.show.Seasons[s][e].progress
+      }, 1000)
+      if (magnet) {
+        try {
+          wt_client.remove(magnet, () => {
+            console.log('Deleted from client')
+            for (var i = 0; i < $rootScope.pending.length; i++) {
+              if ($rootScope.pending[i].magnet === magnet) {
+                $rootScope.pending.splice(i, 1)
               }
-              let local_pending = JSON.parse(localStorage.getItem('pending'))
-              for (var i = 0; i < local_pending.length; i++) {
-                if (local_pending[i].magnet === magnet) {
-                  local_pending.splice(i, 1)
-                }
+            }
+            let local_pending = JSON.parse(localStorage.getItem('pending'))
+            for (var i = 0; i < local_pending.length; i++) {
+              if (local_pending[i].magnet === magnet) {
+                local_pending.splice(i, 1)
               }
-              localStorage.setItem('pending', JSON.stringify(local_pending))
-              console.log('Deleted from pending')
-            })
-          } catch (err) {
+            }
+            localStorage.setItem('pending', JSON.stringify(local_pending))
+            console.log('Deleted from pending')
+          })
+        } catch (err) {
 
-          }
         }
-        dbService.get($scope.title)
+      }
+      dbService.get($scope.dashed_title)
         .then((doc) => {
           doc.Seasons[s][e].downloaded = false
           delete doc.Seasons[s][e].eta
           delete doc.Seasons[s][e].progress
-          dbService.put($scope.title, doc)
-          .then(() => {
-            console.log('Deleted from db')
-          })
-          .catch((err) => {
-            console.error('Error writing db', err)
-          })
+          dbService.put($scope.dashed_title, doc)
+            .then(() => {
+              console.log('Deleted from db')
+            })
+            .catch((err) => {
+              console.error('Error writing db', err)
+            })
         })
-        $rootScope.$applyAsync()
-        rimraf(__dirname + '/../../library/' + show + '/' + episode, function(){
-          console.log('Deleted from actual folder')
-        });
-      }
+      $rootScope.$applyAsync()
+      rimraf(__dirname + '/../../library/' + commonService.dashedToSpaced($scope.dashed_title) + '/' + episode, function() {
+        console.log('Deleted from actual folder')
+      });
+    }
 
 
-      $scope.deleteShow = () => {
-        dialogService.confirm({ data: $scope.show.Title })
+    $scope.deleteShow = () => {
+      dialogService.confirm({
+          data: $scope.show.DashedTitle
+        })
         .then(() => {
           $rootScope.loading = true
-          let show = $scope.title
-          dbService.get(commonService.spacedToDashed($scope.show.Title))
-          .then(function(doc) {
-            return dbService.remove(doc)
-          }).then(function(result) {
-            console.log('Deleted from db')
-          }).catch(function(err) {
-            console.log(err)
-          })
+          let show = commonService.dashedToSpaced($scope.dashed_title)
+          dbService.get($scope.show.DashedTitle)
+            .then(function(doc) {
+              return dbService.remove(doc)
+            }).then(function(result) {
+              console.log('Deleted from db')
+            }).catch(function(err) {
+              console.log(err)
+            })
           delete $rootScope.current_show
           sessionStorage.removeItem('current_show')
           $rootScope.$applyAsync()
           fsExtra.removeSync(__dirname + '/../../library/' + show)
           console.log('Deleted from actual folder')
-          $state.go('app.library', {}, { reload: true })
+          $state.go('app.library', {}, {
+            reload: true
+          })
         })
 
-      }
-
-      // INIT
-      start()
-
-
-
     }
-  })();
+
+    // INIT
+    start()
+
+
+
+  }
+})();

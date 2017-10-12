@@ -14,7 +14,7 @@
 <md-nav-item md-nav-sref="app.search" name="search" aria-label="Search">
   <i class="white fa fa-search" aria-hidden="true"></i>
 </md-nav-item>
-<md-nav-item ng-if="$root.current_show.Title" md-nav-sref="app.show( { show: $root.current_show.DashedTitle } )" name="show">{{ current_show.Title }}</md-nav-item>
+<md-nav-item ng-if="$root.current_show.Title" md-nav-sref="app.show( { show: $root.current_show.DashedTitle } )" name="show">{{ current_show.SpacedTitle ? current_show.SpacedTitle : current_show.Title }}</md-nav-item>
 
 <md-fab-speed-dial md-open="" md-direction="down" class="md-scale" id="settings">
   <md-fab-trigger style="transform: translateX(8rem);">

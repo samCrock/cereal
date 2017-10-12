@@ -24,8 +24,6 @@
         $rootScope.msg = ''
         $scope.torrent_msg = {}
 
-        let title = $scope.show = commonService.capitalCase($stateParams.show.trim())
-        let dashedTitle = commonService.spacedToDashed($scope.show)
         let episode = $scope.episode = $stateParams.episode.trim()
 
         let epObj = {

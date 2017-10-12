@@ -1,7 +1,7 @@
 <section layout="column" layout-align="center center">
   <md-content>
     <div layout="column" class="show_recap">
-      <h1 class="title extraLight">{{ show.Title }}</h1>
+      <h1 class="title extraLight">{{ show.SpacedTitle }}</h1>
       <md-button aria-label="Delete" class="md-button small_btn show_delete_btn" ng-click="deleteShow()">
         <i class="poster_sub_show icon fa fa-trash fa-2x" aria-hidden="true"></i>
       </md-button>
@@ -31,15 +31,15 @@
             <progress-bar progress="episode.playProgress"></progress-bar>
             <md-card-content class="show_card_content" ng-class="episode.eta || episode.loading ? 'hover' : ''" layout-align="center center" layout="row">
               <div flex="100" layout="row">
-                <md-card-title layout="row" flex="68" layout-align="center center">
+                <md-card-title layout="row" flex="75" layout-align="center center">
                   <div flex="20" layout="column" style="min-width: 100px;">
                     <label class="ep_label semiBold">{{ episode.episode }}</label>
                     <label class="ep_time_passed light" ng-show="timePassedCheck(episode.timePassed)">{{ episode.timePassed }}</label>
                   </div>
                   <label class="ep_title" flex="80">{{ episode.title }} </label>
                 </md-card-title>
-                <label ng-class="dotClass(episode)" flex="2" style="margin-top: auto; margin-bottom: auto;">&#9679</label>
-                <md-card-title layout="column" class="show_actions" flex="30" layout-align="center center">
+                <label ng-class="dotClass(episode)" flex="5" style="margin-top: auto; margin-bottom: auto;">&#9679</label>
+                <md-card-title layout="column" class="show_actions" flex="20" layout-align="center center">
                   <div ng-if="dotClass(episode) != 'hidden'" layout="row">
                     <!-- ETA -->
                     <md-button ng-if="!episode.downloaded && episode.eta" class="md-button small_btn" ng-disabled="true" style="width: 8rem; cursor: default; box-shadow: none;">
@@ -54,10 +54,10 @@
                     <i class="poster_sub_show fa fa-pause fa-2x" aria-hidden="true"></i>
                   </md-button> -->
                   <!-- STREAM -->
-                  <md-button aria-label="Stream" class="md-button small_btn" ng-if="!episode.downloaded && !episode.loading" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
+                  <!-- <md-button aria-label="Stream" class="md-button small_btn" ng-if="!episode.downloaded && !episode.loading" ng-click="stream({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
                     <i class="poster_sub_show icon fa fa-play fa-2x stream-play" aria-hidden="true"></i>
                     <i class="poster_sub_show icon fa fa-magnet stream-magnet" aria-hidden="true"></i>
-                  </md-button>
+                  </md-button> -->
                   <!-- DOWNLOAD -->
                   <md-button aria-label="Download" class="md-button small_btn" ng-if="!episode.loading && !episode.downloaded && !episode.eta" ng-click="downloadEpisode({ label: episode.episode, date: episode.date, s: season, e: episodeN})">
                     <i class="poster_sub_show icon fa fa-download zoom-action fa-2x" aria-hidden="true"></i>

@@ -12,7 +12,7 @@
     let fsExtra = require('fs-extra')
     let recent = localStorage.getItem('recent')
 
-    console.log('recent', recent)
+    // console.log('recent', recent)
 
     function setRecentDownloads() {
       recent = localStorage.getItem('recent')
@@ -34,13 +34,13 @@
 
     var deleteFromPending = (torrent) => {
       for (var i = 0; i < $rootScope.pending.length; i++) {
-        if ($rootScope.pending[i].show === torrent.show && $rootScope.pending[i].episode === torrent.episode) {
+        if ($rootScope.pending[i].dashed_show === torrent.dashed_show && $rootScope.pending[i].episode === torrent.episode) {
           $rootScope.pending.splice(i, 1)
         }
       }
       let local_pending = JSON.parse(localStorage.getItem('pending'))
       for (var i = 0; i < local_pending.length; i++) {
-        if (local_pending[i].show === torrent.show && local_pending[i].episode === torrent.episode) {
+        if (local_pending[i].dashed_show === torrent.dashed_show && local_pending[i].episode === torrent.episode) {
           local_pending.splice(i, 1)
         }
       }
@@ -48,8 +48,18 @@
       $rootScope.$applyAsync()
     }
 
-    $scope.remove = (torrent) => {
-      console.log(torrent);
+    $scope.remove = (episode) => {
+      // console.log('episode', episode)
+      for (var i = recent.length - 1; i >= 0; i--) {
+        if (recent[i].torrent === episode.torrent) {
+          recent = recent.splice(i, 1)
+          localStorage.setItem('recent', JSON.stringify(recent))
+        }
+      }
+    }
+
+    $scope.cancel = (torrent) => {
+      console.log(torrent)
       if (wt_client.get(torrent.magnet)) {
         wt_client.remove(torrent.magnet, () => {
           console.log('Deleted from client')
@@ -62,12 +72,6 @@
     }
 
     $scope.play = function(episode) {
-      for (var i = recent.length - 1; i >= 0; i--) {
-        if (recent[i].torrent === episode.torrent) {
-          recent = recent.splice(i, 1)
-          localStorage.setItem('recent', JSON.stringify(recent))
-        }
-      }
       $state.go('app.episode', ({ show: episode.show, episode: episode.episode }))
     }
 

@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-  .module('app')
-  .service('torrentService', torrentService);
+    .module('app')
+    .service('torrentService', torrentService);
 
   /* @ngInject */
   function torrentService(wtService, commonService, jsonService, subsService, dbService, $rootScope, $timeout) {
@@ -33,25 +33,42 @@
     let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t) {
       return new Promise(function(resolve, reject) {
 
-        if (!t) { reject(404) }
+        if (!t) {
+          reject(404)
+        }
 
-        t.poster = './assets/posters/' + commonService.spacedToDashed(t.show) + '.jpg'
+        t.poster = './assets/posters/' + t.dashed_show + '.jpg'
 
         fsExtra.mkdirp(path, function(err) {
-
           if (err) return console.error(err)
-
-          // *********************** ADD ***********************
+            // *********************** ADD ***********************
           wt_client.add(t.magnet, {
-            path: path + t.show + '/' + t.episode
+            path: path + t.spaced_show + '/' + t.episode
           }, function(torrent) {
-            t.path = path + t.show + '/' + t.episode
+            t.path = path + t.spaced_show + '/' + t.episode
             torrent.id = t.id
 
             $rootScope.$broadcast('downloading', {
-              show: t.show,
+              show: t.spaced_show,
               episode: t.episode
             })
+
+            // Search for subs
+            subsService.search({
+                fileName: torrent.dn,
+                show: t.spaced_show,
+                episode: t.episode
+              })
+              .then((opts) => {
+                subsService.download(opts)
+                  .then(() => {
+                    dbService.fetchShows()
+                  })
+              })
+              .catch(() => {
+                console.log('No subs found')
+                dbService.fetchShows()
+              })
 
             if (torrent.progress != 1) {
               torrent.files.forEach(function(file) {
@@ -61,23 +78,6 @@
             // *********************** ON DONE ***********************
             torrent.on('done', () => {
               console.log(torrent.dn, ' ready!')
-
-              // Search for subs
-              subsService.search({
-                fileName: torrent.dn,
-                show: t.show,
-                episode: t.episode
-              })
-              .then((opts) => {
-                subsService.download(opts)
-                .then(() => {
-                  dbService.fetchShows().then((library) => {})
-                })
-              })
-              .catch(() => {
-                console.log('No subs found')
-                dbService.fetchShows().then((library) => {})
-              })
 
               t.ready = true
               delete t['download_info']
@@ -111,38 +111,32 @@
                 chalk.dim('               Eta : ') + commonService.formatTime(torrent.timeRemaining),
                 chalk.cyan('==================')
               ]
-
               logUpdate(output.join('\n'))
-
-              // Update pending in rootScope
+                // Update pending in rootScope
               $rootScope.pending.filter((pending) => {
                 if (pending.name === torrent.name) {
                   first = false
-                  pending.eta_label = commonService.formatTime(torrent.timeRemaining),
-                  pending.eta = torrent.timeRemaining,
+                  pending.eta_label = commonService.formatTime(torrent.timeRemaining)
+                  pending.eta = torrent.timeRemaining
                   pending.progress = Math.floor(torrent.progress * 100)
                   pending.speed = commonService.formatBytes(torrent.downloadSpeed) + '/s'
                 }
               })
               if (first) {
                 $rootScope.pending.push({
-                  show: t.show,
+                  spaced_show: t.spaced_show,
+                  dashed_show: t.dashed_show,
                   episode: t.episode,
                   name: torrent.name,
                   path: t.path,
                   magnet: t.magnet,
                 })
               }
-
             })
-
           })
-
-
         })
       })
     }
-
 
     // Search order:
     // PIRATEBAY
@@ -150,38 +144,35 @@
     // EZTV
     let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
       return new Promise(function(resolve, reject) {
-        var show = searchObj.show
+        var dashed_show = searchObj.show
         var episode = searchObj.episode
-        if (searchObj.date) episode = searchObj.date.split('T')[0].replace(/-/g, '.')
-        console.log(show, episode)
-        // Clear search string from year
-        var match = show.match(/(200[0-9]|201[0-9])/)
-        if (match) {
-          show = show.substring(0, match['index'])
-          console.log('Cleared show string:', show)
-          searchObj.clearedShow = show
+        var spaced_show = commonService.dashedToSpaced(dashed_show)
+        var formattedSearchObj = {
+          spaced_show: spaced_show,
+          dashed_show: dashed_show,
+          episode: episode
         }
-        searchTorrent_pirateBay(searchObj)
-        .then((torrent) => {
-          resolve(torrent)
-        })
-        .catch(() => {
-          if ($rootScope.CONFIG.engines === 1) reject()
-          searchTorrent_kickass(searchObj)
+        searchTorrent_pirateBay(formattedSearchObj)
           .then((torrent) => {
             resolve(torrent)
           })
           .catch(() => {
-            if ($rootScope.CONFIG.engines === 2) reject()
-            searchTorrent_eztv(searchObj)
-            .then((torrent) => {
-              resolve(torrent)
-            })
-            .catch(() => {
-              reject()
-            })
+            if ($rootScope.CONFIG.engines === 1) reject()
+            searchTorrent_kickass(formattedSearchObj)
+              .then((torrent) => {
+                resolve(torrent)
+              })
+              .catch(() => {
+                if ($rootScope.CONFIG.engines === 2) reject()
+                searchTorrent_eztv(formattedSearchObj)
+                  .then((torrent) => {
+                    resolve(torrent)
+                  })
+                  .catch(() => {
+                    reject()
+                  })
+              })
           })
-        })
       })
     }
 
@@ -189,16 +180,7 @@
     let searchTorrent_kickass = torrent_module['searchTorrent_kickass'] = function searchTorrent_kickass(searchObj) {
       return new Promise(function(resolve, reject) {
 
-        var show = searchObj.show
-        if (searchObj.clearedShow) {
-          searchObj.clearedShow = searchObj.clearedShow.split('.').join('')
-          show = searchObj.clearedShow
-        }
-
-        show = show.split('.').join('')
-
-        var episode = searchObj.episode
-        var searchString = show + ' ' + episode
+        var searchString = searchObj.spaced_show + ' ' + searchObj.episode
         console.log('Searching Kickass for: ' + searchString)
 
         searchString = encodeURIComponent(searchString)
@@ -222,13 +204,15 @@
             if (!data) reject('Offline')
 
             data = data[3]
-            // console.log('data', data)
+              // console.log('data', data)
 
             if (data && data.children) {
               torrent = {}
-              torrent.show = commonService.capitalCase(show)
-              if (searchObj.clearedShow) torrent.show = commonService.capitalCase(searchObj.show)
-              torrent.episode = episode
+                // torrent.show = commonService.capitalCase(show)
+              torrent.spaced_show = searchObj.spaced_show
+              torrent.dashed_show = searchObj.dashed_show
+                // if (searchObj.clearedShow) torrent.show = commonService.capitalCase(searchObj.show)
+              torrent.episode = searchObj.episode
 
               if (data) {
                 console.log('TORRENT DATA', data)
@@ -263,11 +247,7 @@
     //EZTV
     let searchTorrent_eztv = torrent_module['searchTorrent_eztv'] = function searchTorrent_eztv(searchObj) {
       return new Promise(function(resolve, reject) {
-        var show = searchObj.show
-        show = show.split('.').join('')
-
-        var episode = searchObj.episode
-        var searchString = show + ' ' + episode
+        var searchString = searchObj.spaced_show + ' ' + searchObj.episode
         console.log('Searching eztv for: ' + searchString)
 
         searchString = encodeURIComponent(searchString)
@@ -289,11 +269,13 @@
             var data = $('.forum_header_border')
 
             data = data[3]
-            // console.log('data', data)
+              // console.log('data', data)
 
             if (data.children) {
               torrent = {}
-              torrent.show = commonService.capitalCase(show)
+                // torrent.show = commonService.capitalCase(show)
+              torrent.spaced_show = searchObj.spaced_show
+              torrent.dashed_show = searchObj.dashed_show
               torrent.episode = episode
               torrent.name = data.children[3].children[1].children[0].data
               torrent.magnet = data.children[5].children[1].attribs.href
@@ -320,11 +302,7 @@
     // //PIRATEBAY
     let searchTorrent_pirateBay = torrent_module['searchTorrent_pirateBay'] = function searchTorrent_pirateBay(searchObj) {
       return new Promise(function(resolve, reject) {
-        var show = searchObj.show
-        show = show.split('.').join('')
-
-        var episode = searchObj.episode
-        var searchString = show + ' ' + episode
+        var searchString = searchObj.spaced_show + ' ' + searchObj.episode
         console.log('Searching PB for: ' + searchString)
 
         searchString = encodeURIComponent(searchString)
@@ -332,7 +310,6 @@
         // var url = 'https://thepiratebay.org/search/' + searchString + '/0/99/0'
         // var url = 'https://fastpiratebay.co.uk/s/?q=' + searchString + '&page=0&orderby=99'
         var url = 'https://tpb.tw/s/?q=' + searchString + '&page=0&orderby=99'
-
 
         console.log(url)
 
@@ -345,20 +322,22 @@
           if (!error && response.statusCode === 200) {
             var $ = cheerio.load(body)
             var data = $('#searchResult')
-            // console.log(data[''0    ])
-            // console.log('*************************')
-            // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
-            // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
-            // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
-            // console.log('', data['0'].children[3])
-            // console.log('*************************')
+              // console.log(data[''0    ])
+              // console.log('*************************')
+              // console.log('NAME', data['0'].children[3].children[3].children[1].children[1].children[0].data)
+              // console.log('MAGNET->', data['0'].children[3].children[3].children[3].attribs.href)
+              // console.log('SEEDS', data['0'].children[3].children[5].children[0].data)
+              // console.log('', data['0'].children[3])
+              // console.log('*************************')
             var torrent = {}
             if (!data) reject('Offline')
 
             if (data['0']) {
               var magnetURL = data[0].children[1].children[0].children[2].children[3] ? 'https://tpb.tw' + data[0].children[1].children[0].children[2].children[3].attribs.href : ''
-              torrent.show = commonService.capitalCase(show)
-              torrent.episode = episode
+                // torrent.show = commonService.capitalCase(show)
+              torrent.spaced_show = searchObj.spaced_show
+              torrent.dashed_show = searchObj.dashed_show
+              torrent.episode = searchObj.episode
               torrent.name = data['0'].children[1].children[0].children[2].children[1].children[1].children[0].data
 
               console.log(magnetURL);
@@ -374,7 +353,6 @@
                   var magnet = $('.download')
                   var details = $('#details')
 
-
                   torrent.magnet = magnet['0'].children[1].attribs.href
                   var size = details['0'].children[1].children[10].children[0].data
                   size = size.split('(')
@@ -384,11 +362,11 @@
                   console.log('torrent ->', torrent)
 
                   // if (commonService.areMatching(show, torrent.name)) {
-                    console.log('PB Search result ->', torrent)
-                    resolve(torrent)
-                  // } else {
+                  console.log('PB Search result ->', torrent)
+                  resolve(torrent)
+                    // } else {
                     // reject('No matching torrent found')
-                  // }
+                    // }
                 } else {
                   console.log('No results')
                   reject('No results')
@@ -407,31 +385,31 @@
       $rootScope.msg = 'Searching for' + ' ' + searchObj.show + ' ' + searchObj.episode
       return new Promise(function(resolve, reject) {
         searchTorrent(searchObj)
-        .then(function(t) {
-          // console.log('streamEpisode search result ->', t)
-          if (t.name) {
-            $rootScope.msg = 'Loading \n' + t.name
-            $rootScope.$apply()
-            switch (process.platform) {
-              case 'darwin':
-              resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
-              break
-              case 'win32':
-              resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
-              break
-              case 'win64':
-              resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
-              break
-              default:
-              resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
-              break
+          .then(function(t) {
+            // console.log('streamEpisode search result ->', t)
+            if (t.name) {
+              $rootScope.msg = 'Loading \n' + t.name
+              $rootScope.$apply()
+              switch (process.platform) {
+                case 'darwin':
+                  resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
+                  break
+                case 'win32':
+                  resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
+                  break
+                case 'win64':
+                  resolve(shell.openExternal('webtorrent download "' + t.magnet + '" --vlc'))
+                  break
+                default:
+                  resolve(exec('webtorrent download "' + t.magnet + '" --vlc'))
+                  break
+              }
+            } else {
+              $rootScope.msg = 'This episode in not available'
+              $rootScope.$apply()
+              reject($rootScope.msg)
             }
-          } else {
-            $rootScope.msg = 'This episode in not available'
-            $rootScope.$apply()
-            reject($rootScope.msg)
-          }
-        })
+          })
       })
     }
 

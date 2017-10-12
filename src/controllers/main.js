@@ -61,7 +61,6 @@
         })
 
         $rootScope.$on('downloading', (e, torrent) => {
-            console.log(e, torrent)
             $mdToast.show($mdToast.simple().textContent('Downloading ' + torrent.show + ' ' + torrent.episode))
         })
 
@@ -92,7 +91,7 @@
         $interval(() => {
             for (var i = 0; i < $rootScope.pending.length; i++) {
                 if ($rootScope.pending[i].progress === 100) {
-                    console.log('Removing', $rootScope.pending[i].show, $rootScope.pending[i].episode, 'from pending downloads')
+                    console.log('Removing', $rootScope.pending[i].dashed_show, $rootScope.pending[i].episode, 'from pending downloads')
                     $rootScope.pending.splice(i, 1)
                 }
             }
@@ -129,7 +128,7 @@
         // INIT show page
         if (sessionStorage.getItem('current_show')) {
             $rootScope.current_show = JSON.parse(sessionStorage.getItem('current_show'))
-            console.log('current_show :', $rootScope.current_show.Title)
+            console.log('current_show :', $rootScope.current_show.DashedTitle)
         } else {
             $rootScope.current_show = {}
         }

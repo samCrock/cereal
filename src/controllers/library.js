@@ -11,7 +11,7 @@
     $scope.library = {}
 
     $scope.getPoster = function(show) {
-      return ('./assets/posters/' + commonService.spacedToDashed(show)) + '.jpg'
+      return './assets/posters/' + show + '.jpg'
     }
 
     $scope.sortableLibrary = (library) => {

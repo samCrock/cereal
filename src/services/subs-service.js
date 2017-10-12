@@ -26,16 +26,15 @@
                 let fileName = searchObj.fileName
                 let show = searchObj.show
                 let episode = searchObj.episode
-                console.log('Searching Subscene for: ' + fileName)
-                console.log('                  Show: ' + show)
-                console.log('                    Ep: ' + episode)
+                // console.log('Searching Subscene for: ' + fileName)
+                // console.log('                  Show: ' + show)
+                // console.log('                    Ep: ' + episode)
 
                 let searchString = encodeURIComponent(fileName)
 
                 var url = 'http://subscene.com/subtitles/release?q=' + searchString;
                 request.get(url, function(error, response, body) {
                     if (error || !response) reject(error)
-                    if (response && response.statusCode) console.log(response.statusCode)
                     if (!error && response.statusCode == 200) {
                         var $ = cheerio.load(body)
                         var json = []
@@ -46,6 +45,7 @@
                         }
                         $('.a1').filter(function() {
                             var data = $(this)
+                            // console.log('Subs ->', data)
                             var link = data['0'].children[1].attribs.href
                             var lang = data['0'].children[1].children[1].children[0].data
                             lang = lang.trim()
