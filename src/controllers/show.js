@@ -329,7 +329,7 @@
       $rootScope.$applyAsync()
       rimraf(__dirname + '/../../library/' + commonService.dashedToSpaced($scope.dashed_title) + '/' + episode, function() {
         console.log('Deleted from actual folder')
-      });
+      })
     }
 
 
@@ -351,7 +351,7 @@
           delete $rootScope.current_show
           sessionStorage.removeItem('current_show')
           $rootScope.$applyAsync()
-          fsExtra.removeSync(__dirname + '/../../library/' + show)
+          rimraf(__dirname + '/../../library/' + show, () => {})
           console.log('Deleted from actual folder')
           $state.go('app.library', {}, {
             reload: true
