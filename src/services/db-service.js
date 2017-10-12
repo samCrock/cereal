@@ -141,7 +141,7 @@
                           network = result.children[i].children[1].children[0].children[6].children[1].children[0].data
                         }
                       } else {
-                        console.log('Finale || Premiere', result.children[i].children[1].children[0].children)
+                        // console.log('Finale || Premiere', result.children[i].children[1].children[0].children)
                         title = result.children[i].children[1].children[0].children[5].children[7].children[0].attribs['content']
                         network = result.children[i].children[1].children[0].children[5].children[1].children[0].data
                         episode = result.children[i].children[1].children[0].children[5].children[3].children[0].children[0].data
@@ -166,7 +166,7 @@
 
                 db.get('calendar')
                 .then(function(doc) {
-                  console.log('pre update', doc.days)
+                  // console.log('pre update', doc.days)
                   db.put({
                     _id: doc._id,
                     _rev: doc._rev,

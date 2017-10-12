@@ -106,7 +106,7 @@
                 day.shows.filter((show, j) => {
                   results.filter((poster) => {
                     if (poster && poster.title === show.dashed_title) {
-                      showsToUpdate.push({ title: show.title.toLowerCase(), poster: poster.poster })
+                      showsToUpdate.push({ title: show.dashed_title, poster: poster.poster })
                       $rootScope.days[i].shows[j].poster = poster.poster
                       $rootScope.$applyAsync()
                       // next()
