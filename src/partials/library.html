@@ -8,7 +8,7 @@
       <md-card class="library_card" ng-repeat="show in sortableLibrary(library) | orderBy:'last_download':reverse=true " ui-sref="app.show( { show: show.DashedTitle } )" layout-align="center center">
         <md-card-content class="poster_library" style="background: url({{ getPoster(show.DashedTitle) }}) no-repeat center center; background-size: cover;">
           <div class="poster_library_sub">
-            <div class="poster_sub show">{{ show.Title }}</div>
+            <div class="poster_sub show">{{ show.SpacedTitle }}</div>
             <div class="poster_sub fromNow">Downloaded {{ fromNow(show.last_download) }}</div>
           </div>
         </md-card-content>

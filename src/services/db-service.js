@@ -106,7 +106,7 @@
 
             let days = []
 
-            console.log(url + lastWeek)
+            // console.log(url + lastWeek)
 
             request(url + lastWeek, function(error, response, html) {
 
@@ -140,21 +140,24 @@
                         // console.log(result.children[i].children[1].children[0].children.length)
                         var episode, network, title, poster
                         if (result.children[i].children[1].children[0].children.length == 7) {
-                          // console.log('Regular', result.children[i].children[1].children[0].children[6].children)
                           if (result.children[i].children[1].children[0].children[6].children.length == 8) {
+                            title = result.children[i].children[1].children[0].children[6].children[7].children[0].attribs['content']
                             episode = result.children[i].children[1].children[0].children[6].children[3].children[0].children[0].data
                             network = result.children[i].children[1].children[0].children[6].children[2].children[0].data
+                            console.log(title, 'Season premiere')
                           } else {
                             title = result.children[i].children[1].children[0].children[6].children[6].children[0].attribs['content']
                             episode = result.children[i].children[1].children[0].children[6].children[2].children[0].children[0].data
                             network = result.children[i].children[1].children[0].children[6].children[1].children[0].data
+                              // console.log('Regular episode')
                           }
                         } else {
-                          // console.log('Finale || Premiere', result.children[i].children[1].children[0].children)
+                          // console.log('Finale || Premiere', result.children[i].children[1].children[0].children[5].children)
                           if (result.children[i].children[1].children[0].children[5].children.length == 9) {
                             title = result.children[i].children[1].children[0].children[5].children[8].children[0].attribs['content']
                             network = result.children[i].children[1].children[0].children[5].children[2].children[0].data
                             episode = result.children[i].children[1].children[0].children[5].children[4].children[0].children[0].data
+                            console.log(title, 'Season Finale')
                           } else {
                             title = result.children[i].children[1].children[0].children[5].children[7].children[0].attribs['content']
                             network = result.children[i].children[1].children[0].children[5].children[1].children[0].data
@@ -222,7 +225,7 @@
 
         // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
         let sinceLastUpdate = 1
-        // console.log(sinceLastUpdate + ' days since last update')
+          // console.log(sinceLastUpdate + ' days since last update')
 
         if (localStorage.lastUpdate && sinceLastUpdate < 1) {
           db.get('calendar')
