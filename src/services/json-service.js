@@ -21,7 +21,7 @@
     json_module['getLocalPosters'] = function getLocalPosters() {
       return new Promise(function(resolve, reject) {
         let local_posters = []
-        console.log(__dirname + '/../../assets/posters')
+        // console.log(__dirname + '/../../assets/posters')
         fsExtra.readdirSync(__dirname + '/../../assets/posters')
           .filter((file) => {
             let dashedShowName = file.split('.jpg')
@@ -179,7 +179,6 @@
                   })
                 }
               }, 200)
-
 
               function getSeason(error, response, body) {
                 if (error || !response) return reject(error)

@@ -17,7 +17,7 @@
     $scope.sortableLibrary = (library) => {
       var sortable = []
       angular.forEach(library, function(value, key) {
-        if (value.hasOwnProperty('last_update')) {
+        if (value.hasOwnProperty('last_download')) {
           sortable.push(value)
         }
       })

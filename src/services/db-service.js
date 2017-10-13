@@ -151,11 +151,22 @@
                           }
                         } else {
                           // console.log('Finale || Premiere', result.children[i].children[1].children[0].children)
-                          title = result.children[i].children[1].children[0].children[5].children[7].children[0].attribs['content']
-                          network = result.children[i].children[1].children[0].children[5].children[1].children[0].data
-                          episode = result.children[i].children[1].children[0].children[5].children[3].children[0].children[0].data
+                          if (result.children[i].children[1].children[0].children[5].children.length == 9) {
+                            title = result.children[i].children[1].children[0].children[5].children[8].children[0].attribs['content']
+                            network = result.children[i].children[1].children[0].children[5].children[2].children[0].data
+                            episode = result.children[i].children[1].children[0].children[5].children[4].children[0].children[0].data
+                          } else {
+                            title = result.children[i].children[1].children[0].children[5].children[7].children[0].attribs['content']
+                            network = result.children[i].children[1].children[0].children[5].children[1].children[0].data
+                            episode = result.children[i].children[1].children[0].children[5].children[3].children[0].children[0].data
+                          }
                         }
 
+                        episode = episode.split('x')
+                        if (episode[0].length == 1) episode[0] = '0' + episode[0]
+                        episode[0] = 's' + episode[0]
+                        episode[1] = 'e' + episode[1]
+                        episode = episode[0] + episode[1]
                         let showObject = {
                             title: title,
                             dashed_title: result.children[i].children[0].attribs['content'].split('/')[4],
@@ -175,7 +186,6 @@
                         }
                         // console.log(showObject)
                         day.shows.push(showObject)
-
                       }
                     }
                     if (day.shows.length > 0) week.push(day)
@@ -210,8 +220,8 @@
           })
         }
 
-        let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
-        // let sinceLastUpdate = 1
+        // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
+        let sinceLastUpdate = 1
         console.log(sinceLastUpdate + ' days since last update')
 
         if (localStorage.lastUpdate && sinceLastUpdate < 1) {

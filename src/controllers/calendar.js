@@ -7,7 +7,6 @@
 
   function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService, dbService) {
     let fsExtra = require('fs-extra')
-    console.log('Calendar')
 
     $rootScope.loading = true
 
@@ -61,7 +60,7 @@
 
     $scope.download = (showObj) => {
       torrentService.searchTorrent({
-          show: showObj.dashed_title,
+          show: showObj.show,
           episode: showObj.episode
         })
         .then((result) => {
@@ -73,80 +72,81 @@
     }
 
     if ($rootScope.reload) {
-      $rootScope.days = []
-      jsonService.getLocalPosters()
-        .then((local_posters) => {
-          $rootScope.msg = 'Loading this week\'s calendar'
-            // jsonService.month().then((data) => {
-          dbService.calendar()
-            .then((data) => {
-              // $rootScope.loading = false
-              $rootScope.msg = 'Loading posters'
+      $rootScope.msg = 'Loading this week\'s calendar'
+      var prereq = []
+      prereq.push(dbService.fetchShows())
+      prereq.push(dbService.calendar())
+      Promise.all(prereq).then((results) => {
+        $rootScope.library = results[0]
+        $rootScope.calendar = results[1]
 
-              let posterTitles = []
-              if (data) {
-                let posters = []
-                let showsToUpdate = []
-                  // let d, now, timeDiff, diffDays
-                console.log('Calendar ->', data)
+        console.log('Calendar ->', $rootScope.calendar)
+        console.log('Library  ->', $rootScope.library)
 
-                data.filter((day) => {
-                    // LAST WEEK ONLY
-                    day.shows.filter((show) => {
-                      let index = local_posters.indexOf(show.dashed_title)
-                      if (index >= 0) {
-                        show.poster = 'assets/posters/' + local_posters[index] + '.jpg'
-                      } else {
-                        posters.push(posterService.downloadPoster(show.dashed_title))
-                      }
+        // Auto download
+        if ($rootScope.CONFIG.auto_download) {
+          for (let [calK, calV] of Object.entries($rootScope.calendar)) {
+            calV.shows.map(show => {
+              if ($rootScope.library.hasOwnProperty(show.dashed_title) && $rootScope.library[show.dashed_title].last_download) {
+                $scope.download({
+                  show: show.dashed_title,
+                  episode: show.episode
+                })
+              }
+            })
+          }
+        }
 
-                      // If this show is in my library && autodownload is enabled, download this episode
-                      if ($rootScope.CONFIG.auto_download) {
-                        Object.keys($rootScope.library).forEach(function(key, index) {
-                          if (key === show.title) {
-                            console.log('New episode found', show.title, show.episode)
-                            $scope.download({
-                              show: show.title,
-                              episode: show.episode
-                            })
-                          }
-                        })
-                      }
-                    })
-                    $rootScope.days.push(day)
-                      // $scope.$apply()
+        $rootScope.days = []
+        jsonService.getLocalPosters()
+          .then((local_posters) => {
+            let posterTitles = []
+            if ($rootScope.calendar) {
+              let posters = []
+              let showsToUpdate = []
+
+              $rootScope.calendar
+                .filter((day) => {
+                  // LAST WEEK ONLY
+                  day.shows.filter((show) => {
+                    let index = local_posters.indexOf(show.dashed_title)
+                    if (index >= 0) {
+                      show.poster = 'assets/posters/' + local_posters[index] + '.jpg'
+                    } else {
+                      posters.push(posterService.downloadPoster(show.dashed_title))
+                    }
                   })
-                  // $rootScope.reload = false
+                  $rootScope.days.push(day)
+                })
+                $rootScope.reload = false
 
-                Promise.all(posters)
-                  .then((results) => {
-                    console.log('--- All posters found ---')
-                    $rootScope.days.filter((day, i) => {
-                      day.shows.filter((show, j) => {
-                        results.filter((poster) => {
-                          if (poster && poster.title === show.dashed_title) {
-                            showsToUpdate.push({
-                              title: show.dashed_title,
-                              poster: poster.poster
-                            })
-                            $rootScope.days[i].shows[j].poster = poster.poster
-                            $rootScope.$applyAsync()
-                              // next()
-                          }
-                        })
+              Promise.all(posters)
+                .then((results) => {
+                  console.log('--- All posters found ---')
+                  $rootScope.days.filter((day, i) => {
+                    day.shows.filter((show, j) => {
+                      results.filter((poster) => {
+                        if (poster && poster.title === show.dashed_title) {
+                          showsToUpdate.push({
+                            title: show.dashed_title,
+                            poster: poster.poster
+                          })
+                          $rootScope.days[i].shows[j].poster = poster.poster
+                          $rootScope.$applyAsync()
+                        }
                       })
                     })
-                    delete $rootScope.msg
-                    $rootScope.loading = false
                   })
-              } else {
-                delete $rootScope.msg
-                $rootScope.loading = false
-              }
-
-
-            })
-        })
+                  delete $rootScope.msg
+                  $rootScope.loading = false
+                  $rootScope.$apply()
+                })
+            } else {
+              delete $rootScope.msg
+              $rootScope.loading = false
+            }
+          })
+      })
     } else {
       delete $rootScope.msg
       $rootScope.loading = false

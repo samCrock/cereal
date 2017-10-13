@@ -204,9 +204,10 @@
 
     common_module['formatBytes'] = function formatBytes(bytes, decimals) {
       if (bytes == 0) return '0 Byte';
-      var k = 1000; // or 1024 for binary
+      // var k = 1000; // or 1024 for binary
+      var k = 1024; // or 1024 for binary
       var dm = decimals + 1 || 3;
-      var sizes = ['Bytes', 'Kb', 'Mb', 'Gb'];
+      var sizes = ['Bytes', 'KB', 'MB', 'GB'];
       var i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }

@@ -90,6 +90,17 @@
                 recent = []
               }
               recent.push(t)
+
+              // Remove from pending
+              for (var i = 0; i < $rootScope.pending.length; i++) {
+                if ($rootScope.pending[i].dashed_show == t.dashed_show && $rootScope.pending[i].episode == t.episode) {
+                  console.log('Removing', $rootScope.pending[i].dashed_show, $rootScope.pending[i].episode, 'from pending downloads')
+                  $rootScope.pending.splice(i, 1)
+                  localStorage.setItem('pending', JSON.stringify($rootScope.pending))
+                }
+              }
+
+
               localStorage.setItem('recent', JSON.stringify(recent))
               resolve(torrent.name)
               $rootScope.$apply()
@@ -101,17 +112,17 @@
             // *********************** ON DOWNLOAD ***********************
             let first = true
             torrent.on('download', (chunkSize) => {
-              var output = [
-                chalk.cyan(''),
-                chalk.cyan('=================='),
-                chalk.dim('              Name : ') + torrent.name,
-                chalk.dim('        Downloaded : ') + commonService.formatBytes(torrent.downloaded),
-                chalk.dim('             Speed : ') + commonService.formatBytes(torrent.downloadSpeed) + '/s',
-                chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100),
-                chalk.dim('               Eta : ') + commonService.formatTime(torrent.timeRemaining),
-                chalk.cyan('==================')
-              ]
-              logUpdate(output.join('\n'))
+              // var output = [
+              //   chalk.cyan(''),
+              //   chalk.cyan('=================='),
+              //   chalk.dim('              Name : ') + torrent.name,
+              //   chalk.dim('        Downloaded : ') + commonService.formatBytes(torrent.downloaded),
+              //   chalk.dim('             Speed : ') + commonService.formatBytes(torrent.downloadSpeed) + '/s',
+              //   chalk.dim('          Progress : ') + Math.floor(torrent.progress * 100),
+              //   chalk.dim('               Eta : ') + commonService.formatTime(torrent.timeRemaining),
+              //   chalk.cyan('==================')
+              // ]
+              // logUpdate(output.join('\n'))
                 // Update pending in rootScope
               $rootScope.pending.filter((pending) => {
                 if (pending.name === torrent.name) {
@@ -220,7 +231,6 @@
                 if (data.children[1].children[1]) torrent.magnet = data.children[1].children[1].children[5].attribs.href
                 if (data.children[3]) torrent.size = data.children[3].children[0].data
                 if (data.children[7]) torrent.seeds = data.children[7].children[0].data
-
                 if (torrent.magnet.indexOf('php?url=')) {
                   torrent.magnet = decodeURIComponent(torrent.magnet.split('php?url=')[1])
                 }
@@ -234,7 +244,6 @@
               console.log('No results')
               reject()
             }
-
           } else {
             console.log('Kickass is offline')
             reject()
@@ -276,14 +285,14 @@
                 // torrent.show = commonService.capitalCase(show)
               torrent.spaced_show = searchObj.spaced_show
               torrent.dashed_show = searchObj.dashed_show
-              torrent.episode = episode
+              torrent.episode = searchObj.episode
               torrent.name = data.children[3].children[1].children[0].data
               torrent.magnet = data.children[5].children[1].attribs.href
               torrent.size = data.children[7].children[0].data
               if (data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].data
               if (!data.children[11].children[0].data) torrent.seeds = data.children[11].children[0].children[0].data
 
-              if (commonService.areMatching(show, torrent.name)) {
+              if (commonService.areMatching(searchObj.spaced_show, torrent.name)) {
                 console.log('EZTV Search result ->', torrent)
                 resolve(torrent)
               } else {
@@ -369,14 +378,14 @@
                     // }
                 } else {
                   console.log('No results')
-                  reject('No results')
+                  reject()
                 }
               })
             } else {
               console.log('No results')
-              reject('No results')
+              reject()
             }
-          } else resolve(parseInt(response.statusCode))
+          } else reject()
         })
       })
     }

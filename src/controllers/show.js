@@ -202,7 +202,7 @@
         .then((doc) => {
           $scope.show._id = doc._id
           $scope.show._rev = doc._rev
-          $scope.show.last_update = new Date()
+          $scope.show.last_download = new Date()
           dbService.put($scope.show.DashedTitle, $scope.show)
             .then(() => {
               console.log($scope.show.DashedTitle, 'synced')
@@ -237,35 +237,39 @@
         })
         .catch((reason) => {
           console.log(reason)
-          console.log($scope.show, s, e)
+          // console.log($scope.show, s, e)
           $scope.show.Seasons[s][e].loading = false
-          dialogService.torrentForm({
-              show: $scope.show.DashedTitle,
-              episode: $scope.show.Seasons[s][e].episode,
-              date: $scope.show.Seasons[s][e].date
+            // dialogService.torrentForm({
+            //     show: $scope.show.DashedTitle,
+            //     episode: $scope.show.Seasons[s][e].episode,
+            //     date: $scope.show.Seasons[s][e].date
+            //   })
+          dialogService.notify({
+              title: 'Sorry',
+              content: 'No results'
             })
-            .then((dialogResult) => {
-              console.log('Dialog result ->', dialogResult)
-              torrentService.searchTorrent(dialogResult)
-                .then((result) => {
-                  console.log(result.episode, 'is downloading')
-                    // $scope.show.Seasons[s][e].loading = false
-                  torrentService.downloadTorrent(result)
-                    .then((t) => {
-                      delete $scope.show.Seasons[s][e].eta
-                      $rootScope.current_show = $scope.show
-                      sessionStorage.setItem('current_show', JSON.stringify($scope.show))
-                      $scope.show.Seasons[s][e].loading = false
-                      $scope.show.Seasons[s][e].downloaded = true
-                      console.log(result.episode, 'is ready')
-                      $scope.showIsLoading = false
-                      $scope.$applyAsync()
-                    })
-                })
-            })
-            .catch(() => {
-              console.log('Dialog closed')
-            })
+            // .then((dialogResult) => {
+            //   console.log('Dialog result ->', dialogResult)
+            //   torrentService.searchTorrent(dialogResult)
+            //     .then((result) => {
+            //       console.log(result.episode, 'is downloading')
+            //         // $scope.show.Seasons[s][e].loading = false
+            //       torrentService.downloadTorrent(result)
+            //         .then((t) => {
+            //           delete $scope.show.Seasons[s][e].eta
+            //           $rootScope.current_show = $scope.show
+            //           sessionStorage.setItem('current_show', JSON.stringify($scope.show))
+            //           $scope.show.Seasons[s][e].loading = false
+            //           $scope.show.Seasons[s][e].downloaded = true
+            //           console.log(result.episode, 'is ready')
+            //           $scope.showIsLoading = false
+            //           $scope.$applyAsync()
+            //         })
+            //     })
+            // })
+            // .catch(() => {
+            //   console.log('Dialog closed')
+            // })
         })
     }
 

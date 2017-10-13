@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-  .module('app')
-  .controller('pendingCtrl', pendingCtrl);
+    .module('app')
+    .controller('pendingCtrl', pendingCtrl);
 
   function pendingCtrl($rootScope, $state, $scope, $interval, wtService) {
 
@@ -18,7 +18,9 @@
       recent = localStorage.getItem('recent')
       if (recent) {
         recent = JSON.parse(recent)
-      } else { recent = [] }
+      } else {
+        recent = []
+      }
       $scope.recent = recent
     }
 
@@ -48,18 +50,12 @@
       $rootScope.$applyAsync()
     }
 
-    $scope.remove = (episode) => {
-      // console.log('episode', episode)
-      for (var i = recent.length - 1; i >= 0; i--) {
-        if (recent[i].torrent === episode.torrent) {
-          recent = recent.splice(i, 1)
-          localStorage.setItem('recent', JSON.stringify(recent))
-        }
-      }
+    $scope.remove = (index) => {
+      recent = recent.splice(index, 1)
+      localStorage.setItem('recent', JSON.stringify(recent))
     }
 
     $scope.cancel = (torrent) => {
-      console.log(torrent)
       if (wt_client.get(torrent.magnet)) {
         wt_client.remove(torrent.magnet, () => {
           console.log('Deleted from client')
@@ -72,7 +68,10 @@
     }
 
     $scope.play = function(episode) {
-      $state.go('app.episode', ({ show: episode.show, episode: episode.episode }))
+      $state.go('app.episode', ({
+        show: episode.dashed_show,
+        episode: episode.episode
+      }))
     }
 
     // INIT
