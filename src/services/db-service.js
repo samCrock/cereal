@@ -222,7 +222,7 @@
 
         // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
         let sinceLastUpdate = 1
-        console.log(sinceLastUpdate + ' days since last update')
+        // console.log(sinceLastUpdate + ' days since last update')
 
         if (localStorage.lastUpdate && sinceLastUpdate < 1) {
           db.get('calendar')

@@ -91,6 +91,30 @@
               }
               recent.push(t)
 
+              // Set last_download
+              dbService.get(t.dashed_show)
+                .then((doc) => {
+                  // $scope.show._id = doc._id
+                  // $scope.show._rev = doc._rev
+                  let e = t.episode.split('e')
+                  let s = e[0].split('s')
+                  s = parseInt(s[1], 10)
+                  e = parseInt(e[1], 10)
+                  doc.Seasons[s][e].downloaded = true
+                  doc.Seasons[s][e].loading = false
+                  delete doc.Seasons[s][e].eta
+                  delete doc.Seasons[s][e].progress
+                  doc.last_download = new Date()
+                  dbService.put(t.dashed_show, doc)
+                    .then(() => {
+                      console.log(t.dashed_show, 'synced')
+                      $rootScope.$apply()
+                    })
+                    .catch((err) => {
+                      console.error('Error updating', t.dashed_show, err)
+                    })
+                })
+
               // Remove from pending
               for (var i = 0; i < $rootScope.pending.length; i++) {
                 if ($rootScope.pending[i].dashed_show == t.dashed_show && $rootScope.pending[i].episode == t.episode) {
@@ -99,7 +123,6 @@
                   localStorage.setItem('pending', JSON.stringify($rootScope.pending))
                 }
               }
-
 
               localStorage.setItem('recent', JSON.stringify(recent))
               resolve(torrent.name)
@@ -123,7 +146,7 @@
               //   chalk.cyan('==================')
               // ]
               // logUpdate(output.join('\n'))
-                // Update pending in rootScope
+              // Update pending in rootScope
               $rootScope.pending.filter((pending) => {
                 if (pending.name === torrent.name) {
                   first = false

@@ -87,11 +87,19 @@
         if ($rootScope.CONFIG.auto_download) {
           for (let [calK, calV] of Object.entries($rootScope.calendar)) {
             calV.shows.map(show => {
-              if ($rootScope.library.hasOwnProperty(show.dashed_title) && $rootScope.library[show.dashed_title].last_download) {
-                $scope.download({
-                  show: show.dashed_title,
-                  episode: show.episode
-                })
+              var showInLibrary = $rootScope.library[show.dashed_title]
+              if ($rootScope.library.hasOwnProperty(show.dashed_title) && showInLibrary.last_download) {
+                for (var sK in showInLibrary.Seasons) {
+                  for (var epK in showInLibrary.Seasons[sK]) {
+                    var ep = showInLibrary.Seasons[sK][epK]                    
+                    if (ep.episode === show.episode && !ep.downloaded) {
+                      $scope.download({
+                        show: show.dashed_title,
+                        episode: show.episode
+                      })
+                    }
+                  }
+                }
               }
             })
           }
@@ -118,7 +126,7 @@
                   })
                   $rootScope.days.push(day)
                 })
-                $rootScope.reload = false
+              $rootScope.reload = false
 
               Promise.all(posters)
                 .then((results) => {

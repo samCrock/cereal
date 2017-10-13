@@ -198,19 +198,19 @@
         delete $scope.show.Seasons[s][e].progress
         $scope.$applyAsync()
       }
-      dbService.get($scope.show.DashedTitle)
-        .then((doc) => {
-          $scope.show._id = doc._id
-          $scope.show._rev = doc._rev
-          $scope.show.last_download = new Date()
-          dbService.put($scope.show.DashedTitle, $scope.show)
-            .then(() => {
-              console.log($scope.show.DashedTitle, 'synced')
-            })
-            .catch((err) => {
-              console.error('Error updating', $scope.dashed_title, err)
-            })
-        })
+      // dbService.get($scope.show.DashedTitle)
+      //   .then((doc) => {
+      //     $scope.show._id = doc._id
+      //     $scope.show._rev = doc._rev
+      //     $scope.show.last_download = new Date()
+      //     dbService.put($scope.show.DashedTitle, $scope.show)
+      //       .then(() => {
+      //         console.log($scope.show.DashedTitle, 'synced')
+      //       })
+      //       .catch((err) => {
+      //         console.error('Error updating', $scope.dashed_title, err)
+      //       })
+      //   })
     })
 
     $scope.downloadEpisode = (episode) => {
