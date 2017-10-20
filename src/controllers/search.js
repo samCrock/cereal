@@ -8,8 +8,9 @@
   function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService, commonService, posterService) {
 
     $rootScope.loading = false
-    let input = document.getElementById('search-input')
-    $timeout(() => { input.focus() })
+    $timeout(() => {
+      document.getElementById('search-input').focus()
+    }, 200)
     if (sessionStorage.getItem('search_results')) {
       $scope.shows = JSON.parse(sessionStorage.getItem('search_results'))
     }
@@ -18,9 +19,7 @@
     }
 
     $scope.$watch('show', (show) => {
-      if (show) {
-        $scope.show = commonService.capitalCase(show)
-      }
+      if (show) { $scope.show = commonService.capitalCase(show) }
     })
 
     $scope.openShow = function(show) {
@@ -45,6 +44,6 @@
       })
     }
 
-    $scope.search()
+    if (!sessionStorage.getItem('search_results')) $scope.search()
   }
 })();
