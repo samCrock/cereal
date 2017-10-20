@@ -75,7 +75,7 @@
       })
     }
 
-    db_module['fetchShows'] = function get() {
+    db_module['library'] = function get() {
       return new Promise((resolve, reject) => {
         let library = {}
         db.allDocs({
