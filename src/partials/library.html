@@ -1,12 +1,12 @@
 <section>
   <div flex layout="column" layout-align="center center">
     <md-content layout layout-wrap layout-align="center center" class="bg_default" id="library_container">
-      <div ng-if="sortableLibrary(library).length == 0" style="max-width: 90%; background: rgba(0,0,0,.3); border-radius: .5rem; margin-top: 10vh;">
+      <div ng-if="sortableLibrary($root.library).length == 0" style="max-width: 90%; background: rgba(0,0,0,.3); border-radius: .5rem; margin-top: 10vh;">
         <h1 class="lime weight-100">This is your library</h1>
         <h2 class="weight-300">Search for a show or check out the calendar to start downloading</h2>
       </div>
-      <md-card class="library_card" ng-repeat="show in sortableLibrary(library) | orderBy:'last_download':reverse=true " ui-sref="app.show( { show: show.DashedTitle } )" layout-align="center center">
-        <md-card-content class="poster_library" style="background: url({{ getPoster(show.DashedTitle) }}) no-repeat center center; background-size: cover;">
+      <md-card class="library_card" ng-repeat="show in sortableLibrary($root.library) | orderBy:'last_download':reverse=true " ui-sref="app.show( { show: show.DashedTitle } )" layout-align="center center">
+        <md-card-content class="poster_library" style="background: url({{ show.poster }}) no-repeat center center; background-size: cover;">
           <div class="poster_library_sub">
             <div class="poster_sub show">{{ show.SpacedTitle }}</div>
             <div class="poster_sub fromNow">Downloaded {{ fromNow(show.last_download) }}</div>

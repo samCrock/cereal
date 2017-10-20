@@ -56,7 +56,7 @@
       $state.go(prev_state.name, prev_state.params)
     })
 
-    // Downloading toast 
+    // Downloading toast
     $rootScope.$on('downloading', (e, torrent) => {
       $mdToast.show($mdToast.simple().textContent('Downloading ' + torrent.show + ' ' + torrent.episode))
     })
@@ -116,8 +116,7 @@
     }
 
     // Set reload
-    $rootScope.reload = true
-
+    $rootScope.reloadCalendar = true
 
     // Check update
     if (remote.getGlobal('config') && remote.getGlobal('config').update) {
