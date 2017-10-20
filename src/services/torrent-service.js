@@ -62,12 +62,12 @@
               .then((opts) => {
                 subsService.download(opts)
                   .then(() => {
-                    dbService.fetchShows()
+                    dbService.library()
                   })
               })
               .catch(() => {
                 console.log('No subs found')
-                dbService.fetchShows()
+                dbService.library()
               })
 
             if (torrent.progress != 1) {
@@ -108,12 +108,18 @@
                   dbService.put(t.dashed_show, doc)
                     .then(() => {
                       console.log(t.dashed_show, 'synced')
+                      // Sync library
+                      dbService.library()
+                      .then((library) => {
+                        $rootScope.library = library
+                      })
                       $rootScope.$apply()
                     })
                     .catch((err) => {
                       console.error('Error updating', t.dashed_show, err)
                     })
                 })
+
 
               // Remove from pending
               for (var i = 0; i < $rootScope.pending.length; i++) {
