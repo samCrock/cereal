@@ -1323,11 +1323,11 @@ md-input-container>md-select {
     background-size: cover;
     width: 100vw;
     height: 100vh;
-    -webkit-filter: grayscale(75%);
-    -moz-filter: grayscale(75%);
-    -o-filter: grayscale(75%);
-    -ms-filter: grayscale(75%);
-    filter: grayscale(75%);
+    /*-webkit-filter: grayscale(75%);*/
+    /*-moz-filter: grayscale(75%);*/
+    /*-o-filter: grayscale(75%);*/
+    /*-ms-filter: grayscale(75%);*/
+    filter: grayscale(80%) blur(16px);
   }
 
   .content {
