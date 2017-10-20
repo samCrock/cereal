@@ -50,9 +50,12 @@
       $rootScope.$applyAsync()
     }
 
-    $scope.remove = (index) => {
-      recent = recent.splice(index, 1)
-      localStorage.setItem('recent', JSON.stringify(recent))
+    $scope.remove = (episode) => {
+      recent.forEach((r, i) => {
+        if (r.magnet === episode.magnet) { recent.splice(i, 1) }
+        localStorage.setItem('recent', JSON.stringify(recent))
+      })
+      console.log('Recent', recent)
     }
 
     $scope.cancel = (torrent) => {

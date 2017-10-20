@@ -26,7 +26,7 @@
       </md-card-title>
     </md-card-content>
   </md-card>
-  <md-card class="pending_card" ng-repeat="episode in recent track by $index"" layout-align="start">
+  <md-card class="pending_card" ng-repeat="episode in recent track by $index" layout-align="start">
     <md-card-content layout-align="start center">
       <md-card-title layout="row" layout-align="space-between center">
         <div flex="55">
@@ -43,7 +43,7 @@
             <i class="poster_sub_show icon fa fa-play zoom-action fa-2x" aria-hidden="true"></i>
           </md-button>
           <!-- REMOVE -->
-          <md-button aria-label="Remove" class="md-button small_btn"  ng-click="remove($index)">
+          <md-button aria-label="Remove" class="md-button small_btn"  ng-click="remove(episode)">
             <i class="poster_sub_show icon fa fa-times fa-2x" aria-hidden="true"></i>
           </md-button>
         </div>
