@@ -22,6 +22,7 @@
       return new Promise(function(resolve, reject) {
         let local_posters = []
         // console.log(__dirname + '/../../assets/posters')
+        fsExtra.mkdirp(__dirname + '/../../assets/posters')
         fsExtra.readdirSync(__dirname + '/../../assets/posters')
           .filter((file) => {
             let dashedShowName = file.split('.jpg')
