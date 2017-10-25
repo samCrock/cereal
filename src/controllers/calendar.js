@@ -78,8 +78,8 @@
         $rootScope.library = results[0]
         $rootScope.calendar = results[1]
 
-        console.log('Calendar ->', $rootScope.calendar)
         console.log('Library  ->', $rootScope.library)
+        console.log('Calendar ->', $rootScope.calendar)
 
         // Auto download
         if ($rootScope.CONFIG.auto_download) {
@@ -107,11 +107,8 @@
         jsonService.getLocalPosters()
         .then((local_posters) => {
           let posterTitles = []
-          // if ($rootScope.calendar) {
           let posters = []
           let showsToUpdate = []
-
-
           // Set library posters
           for (var show in $rootScope.library) {
             let index = local_posters.indexOf(show)

@@ -156,7 +156,8 @@
               $scope.selectedIndex = doc.currentEpisode.s - 1
               // }, 200)
             } else {
-              $scope.selectedIndex = Object.keys(doc.Seasons).length
+              // console.log('Selecting index:', doc.Seasons)
+              if (doc.Seasons) $scope.selectedIndex = Object.keys(doc.Seasons).length
             }
             $scope.showIsLoading = false
           })

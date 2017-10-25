@@ -83,7 +83,7 @@
           })
           .then(function(doc) {
             for (var i = 0; i < doc.rows.length; i++) {
-              if (doc.rows[i].id !== 'calendar') {
+              if (doc.rows[i].id !== 'calendar' && doc.rows[i].id !== 'undefined') {
                 library[doc.rows[i].doc.DashedTitle] = (doc.rows[i].doc)
               }
             }
