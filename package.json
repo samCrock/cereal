@@ -50,9 +50,10 @@
     "webtorrent": "^0.98.19"
   },
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "1.6.15",
-    "electron-prebuilt": "^1.4.13",
-    "electron-builder": "latest"
+    "electron-builder": "latest",
+    "electron-prebuilt": "^1.4.13"
   },
   "scripts": {
     "start": "./node_modules/.bin/electron main.js",

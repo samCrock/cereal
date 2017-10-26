@@ -19,11 +19,11 @@
     let torrent_module = {}
 
 
-    torrent_module['downloadPosterFromUrl'] = function downloadPosterFromUrl(posterObj) {
-      request.get({ url: posterObj.url, encoding: 'binary' }, function(error, response, body) {
+    torrent_module['downloadPosterFromUrl'] = function downloadPosterFromUrl(path, url) {
+      request.get({ url: url, encoding: 'binary' }, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-          console.log('posterObj.path', posterObj.path)
-          fsExtra.outputFile(posterObj.path, body, 'binary', (err) => {
+          console.log('Saving poster', path)
+          fsExtra.outputFile(path, body, 'binary', (err) => {
             if (err) reject('Cannot write file :', err)
           })
         } else {

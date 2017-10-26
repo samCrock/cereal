@@ -9,6 +9,8 @@
 
     $rootScope.loading = true
 
+    $scope.fromNow = (date) => { return moment(date).fromNow() }
+
     $scope.sortableLibrary = (library) => {
       var sortable = []
       angular.forEach(library, function(value, key) {
@@ -17,10 +19,6 @@
         }
       })
       return sortable
-    }
-
-    $scope.fromNow = (date) => {
-      return moment(date).fromNow()
     }
 
     var library = $rootScope.library
@@ -82,8 +80,6 @@
     var library_container = document.getElementById('library_container')
     if (library_container) library_container.style.height = libraryHeight
       // ------------------------------------------
-
-
 
   }
 

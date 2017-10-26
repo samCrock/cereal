@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('app')
-    .controller('mainCtrl', mainCtrl);
+  .module('app')
+  .controller('mainCtrl', mainCtrl);
 
   /* @ngInject */
   function mainCtrl($scope, $interval, $window, $state, $location, $anchorScroll, $rootScope, $timeout, $mdToast, wtService, torrentService, jsonService, commonService, dbService, updateService) {
@@ -14,7 +14,7 @@
     let util = require('util')
     const wt_client = wtService.client()
 
-    let remote = require('electron').remote;
+    let remote = require('electron').remote
 
     // CONFIG SETUP
     $rootScope.CONFIG = {
@@ -83,18 +83,6 @@
       localStorage.setItem('pending', JSON.stringify([]))
     }
 
-
-    // let save_pending = () => {
-    //   console.log('Saving pending downloads...')
-    //   let temp = []
-    //   $rootScope.pending.filter((pending, i) => {
-    //     temp.push(pending)
-    //     delete temp[i].speed
-    //     delete temp[i].eta
-    //   })
-    //   localStorage.setItem('pending', JSON.stringify(temp))
-    // }
-
     // Save pending before exit
     window.onbeforeunload = function(e) {
       console.log('Saving pending downloads...')
@@ -125,9 +113,9 @@
       fs.readFile(fileName, (err) => {
         if (err) {
           updateService.downloadDistro()
-            .then(() => {
-              console.log('Ready to download update')
-            })
+          .then(() => {
+            console.log('Ready to download update')
+          })
         } else {
           console.log('Ready to update')
           $rootScope.update_progress = 'Update ready'
@@ -135,18 +123,9 @@
       })
     }
 
-    // Navbar reload button
-    $rootScope.reload = function() {
-      $window.location.reload()
-    }
-
-
-
     // INIT (calendar)
     $rootScope.currentNavItem = 'calendar'
     $state.go('app.calendar')
-
-
 
   }
 
