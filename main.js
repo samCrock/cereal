@@ -15,7 +15,6 @@ const BrowserWindow = electron.BrowserWindow
 const localAppVersion = require('./package.json').version ? require('./package.json').version : app.getVersion()
 const PATH_APP_NODE_MODULES = path.join(__dirname, '..', '..', 'app', 'node_modules')
 require('module').globalPaths.push(PATH_APP_NODE_MODULES)
-require('electron-debug')({ showDevTools: true })
 
 console.log('OS arch:', os.arch())
 console.log('OS platform:', os.platform())
