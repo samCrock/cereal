@@ -45,7 +45,7 @@
             let sidebar = $('.sidebar')
             let posterSrc = sidebar['0'].children[0].children[1].attribs['data-original']
 
-            console.log(posterSrc)
+            // console.log(posterSrc)
 
             request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
               if (!error && response.statusCode == 200) {

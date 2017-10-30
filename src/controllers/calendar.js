@@ -116,7 +116,7 @@
             if (false) { // Disable local posters
               $rootScope.library[show].poster = 'assets/posters/' + local_posters[index] + '.jpg'
             } else {
-              console.log('Missing library poster', show)
+              console.log('Downloading library poster', show)
               posters.push(posterService.downloadPoster(show))
             }
           }
@@ -129,7 +129,7 @@
                 if (false) { // Disable local posters
                 show.poster = 'assets/posters/' + local_posters[index] + '.jpg'
               } else {
-                console.log('Missing calendar poster', show)
+                console.log('Downloading calendar poster', show)
                 posters.push(posterService.downloadPoster(show.dashed_title))
               }
             })
