@@ -112,7 +112,8 @@
           // Set library posters
           for (var show in $rootScope.library) {
             let index = local_posters.indexOf(show)
-            if (index != -1) {
+            // if (index != -1) {
+            if (false) { // Disable local posters
               $rootScope.library[show].poster = 'assets/posters/' + local_posters[index] + '.jpg'
             } else {
               console.log('Missing library poster', show)
@@ -124,9 +125,11 @@
           .filter((day) => {
             day.shows.filter((show) => {
               let index = local_posters.indexOf(show.dashed_title)
-              if (index != -1) {
+              // if (index != -1) {
+                if (false) { // Disable local posters
                 show.poster = 'assets/posters/' + local_posters[index] + '.jpg'
               } else {
+                console.log('Missing calendar poster', show)
                 posters.push(posterService.downloadPoster(show.dashed_title))
               }
             })

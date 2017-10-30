@@ -143,7 +143,7 @@ md-tabs-content-wrapper {
 }
 
 md-tabs md-tabs-wrapper {
-  background: rgba(43, 40, 45, 0.3);
+  background: rgba(43, 40, 45, 0.6);
 }
 
 md-tabs .md-tab {
@@ -161,6 +161,7 @@ md-tabs .md-tab {
 }
 
 .show_recap {
+  background: rgba(43, 40, 45, 0.6);
   color: rgba(255, 255, 255, 0.95);
   text-align: center;
   position: relative;
@@ -187,7 +188,7 @@ md-tabs .md-tab {
   overflow: auto;
   font-weight: 200;
   max-height: 15rem;
-  background: rgba(0, 0, 0, 0.3);
+  /*background: rgba(0, 0, 0, 0.4);*/
   border-radius: 1%;
   padding: 1rem;
 }
@@ -357,7 +358,7 @@ md-tabs .md-tab {
 .poster_library:hover .poster_library_sub,
 .poster_library.hover .poster_library_sub {
   opacity: 1;
-  background: rgba(0, 0, 0, 0.3)
+  background: rgba(0, 0, 0, 0.4)
 }
 
 md-card {

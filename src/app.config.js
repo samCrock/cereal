@@ -7,7 +7,6 @@
 
   require('./controllers/main.js')
   require('./controllers/library.js')
-  require('./controllers/favourites.js')
   require('./controllers/calendar.js')
   require('./controllers/pending.js')
   require('./controllers/episode.js')
@@ -82,15 +81,7 @@
           }
         }
       })
-      // .state('app.favourites', {
-      //   url: '/favourites',
-      //   views: {
-      //     '@': {
-      //       controller: 'favouritesCtrl',
-      //       templateUrl: './src/partials/favourites.html'
-      //     }
-      //   }
-      // })
+
       .state('app.library', {
         url: '/library',
         views: {
@@ -100,6 +91,7 @@
           }
         }
       })
+
       .state('app.calendar', {
         url: '/calendar',
         views: {
@@ -109,6 +101,7 @@
           }
         }
       })
+
       .state('app.pending', {
         url: '/pending',
         views: {
@@ -118,6 +111,7 @@
           }
         }
       })
+
       .state('app.search', {
         url: '/search',
         views: {
@@ -127,6 +121,7 @@
           }
         }
       })
+
       .state('app.show', {
         url: '/show',
         params: {
@@ -140,6 +135,7 @@
           }
         }
       })
+
       .state('app.episode', {
         url: '/episode',
         params: {

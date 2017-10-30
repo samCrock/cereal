@@ -223,22 +223,24 @@
           })
         }
 
-        // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
-        let sinceLastUpdate = 1
-        // console.log(sinceLastUpdate + ' days since last update')
-
-        if (localStorage.lastUpdate && sinceLastUpdate < 1) {
-          db.get('calendar')
-          .then(function(doc) {
-            resolve(doc.days)
-            // resolve(update())
-          })
-          .catch((err) => {
-            resolve(update())
-          })
-        } else {
-          resolve(update())
-        }
+        resolve(update())
+        
+        // // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
+        // let sinceLastUpdate = 1
+        // // console.log(sinceLastUpdate + ' days since last update')
+        //
+        // if (localStorage.lastUpdate && sinceLastUpdate < 1) {
+        //   db.get('calendar')
+        //   .then(function(doc) {
+        //     resolve(doc.days)
+        //     // resolve(update())
+        //   })
+        //   .catch((err) => {
+        //     resolve(update())
+        //   })
+        // } else {
+        //   resolve(update())
+        // }
       })
     }
 

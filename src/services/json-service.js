@@ -112,9 +112,12 @@
             if (!error && response.statusCode === 200) {
               let $ = cheerio.load(body)
               let showJson
-              let seasons, network, premiered, runtime, genres, overview, trailer, title, wallpaper
+              let seasons, network, premiered, runtime, genres, overview, trailer, title, wallpaper, poster
               let genresArray = []
               if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
+
+                poster = $('.sidebar')['0'].children[0].children[1].attribs['data-original']
+
                 // title = commonService.capitalCase(show)
                 seasons = $('.season-count')[1].attribs['data-all-count']
                 network = $('.additional-stats')['0'].children[0].children[4] ? $('.additional-stats')['0'].children[0].children[4].data : ''
@@ -142,6 +145,7 @@
                 console.log('Overview    :', overview)
                 console.log('Trailer     :', trailer)
                 console.log('Wallpaper   :', wallpaper)
+                console.log('Poster      :', poster)
                 console.log('##########################')
                 showJson = {
                   Updated: new Date,
@@ -154,6 +158,7 @@
                   Overview: overview,
                   Trailer: trailer,
                   Wallpaper: wallpaper,
+                  Poster: poster,
                   Seasons: {}
                 }
               }

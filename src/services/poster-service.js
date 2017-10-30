@@ -33,7 +33,7 @@
     }
 
     // Downloads poster image then if fav is true, updates following.json w/ the relative path else updates monthly
-    torrent_module['downloadPoster'] = function downloadPoster(showName, scope) {
+    torrent_module['downloadPoster'] = function downloadPoster(showName) {
 
       return new Promise((resolve, reject) => {
         var url = 'https://trakt.tv/shows/' + showName
@@ -44,6 +44,8 @@
             let $ = cheerio.load(body)
             let sidebar = $('.sidebar')
             let posterSrc = sidebar['0'].children[0].children[1].attribs['data-original']
+
+            console.log(posterSrc)
 
             request.get({ url: posterSrc, encoding: 'binary' }, function(error, response, body) {
               if (!error && response.statusCode == 200) {
