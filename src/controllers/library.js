@@ -5,9 +5,9 @@
     .module('app')
     .controller('libraryCtrl', libraryCtrl);
 
-  function libraryCtrl($rootScope, $state, $scope, commonService, dbService, jsonService, posterService) {
+  function libraryCtrl($rootScope, $state, $scope, commonService, dbService, jsonService) {
 
-    $rootScope.loading = true
+    // $rootScope.loading = true
 
     $scope.fromNow = (date) => { return moment(date).fromNow() }
 
@@ -25,42 +25,6 @@
     console.log('Library --->', library)
     $rootScope.msg = 'Filling library'
     if (angular.equals({}, $scope.sortableLibrary(library))) $scope.emptyLibrary = true
-      // Check posters
-    let posters = []
-    jsonService.getLocalPosters()
-      .then((local_posters) => {
-        for (var title in library) {
-          if (title && title !== 'undefined') {
-            console.log(title)
-            let index = local_posters.indexOf(title)
-            if (index >= 0) {
-              let posterPath = 'assets/posters/' + local_posters[index] + '.jpg'
-                // console.log('--poster found--')
-              library[title].poster = posterPath
-            } else {
-              // console.log('Poster to download:', library[title].title)
-              posters.push(posterService.downloadPoster(title))
-            }
-            let s_count = 0
-            for (var s in library[title].Seasons) {
-              s_count++
-            }
-            library[title].SeasonsCount = s_count
-          }
-        }
-        Promise.all(posters)
-          .then((results) => {
-            // console.log('--- All posters found ---', results)
-            $rootScope.library = library
-            delete $rootScope.msg
-            $rootScope.loading = false
-              // $scope.$apply()
-          })
-      })
-      .catch((reason) => {
-        console.error(reason)
-        $rootScope.loading = false
-      })
 
     $scope.watch = (show) => {
       $state.go(app.episode({

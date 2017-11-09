@@ -17,22 +17,6 @@
     let json
     let json_module = {}
 
-    // Returns all downloaded poster show names
-    json_module['getLocalPosters'] = function getLocalPosters() {
-      return new Promise(function(resolve, reject) {
-        let local_posters = []
-        // console.log(__dirname + '/../../assets/posters')
-        fsExtra.mkdirp(__dirname + '/../../assets/posters')
-        fsExtra.readdirSync(__dirname + '/../../assets/posters')
-          .filter((file) => {
-            let dashedShowName = file.split('.jpg')
-            dashedShowName = dashedShowName[0]
-            local_posters.push(dashedShowName)
-          })
-        resolve(local_posters)
-      })
-    }
-
     // Get youtube trailer from show title
     json_module['getYTTrailer'] = function getYTTrailer(show) {
       return new Promise(function(resolve, reject) {

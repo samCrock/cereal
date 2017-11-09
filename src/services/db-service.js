@@ -6,7 +6,7 @@
   .service('dbService', dbService);
 
   /* @ngInject */
-  function dbService(commonService, $rootScope, $interval) {
+  function dbService(commonService, posterService, $rootScope, $interval) {
     let request = require('request')
     let cheerio = require('cheerio')
     let Promise = require('bluebird')
@@ -105,6 +105,7 @@
             let lastWeek = moment().subtract(6, 'days').format('YYYY-MM-DD')
 
             let days = []
+            let posterPromises = []
 
             // console.log(url + lastWeek)
 
@@ -137,8 +138,9 @@
 
                   for (i = 1; i < result.children.length; i++) {
                     if (result.children[i].attribs['data-episode-id']) {
-                      // console.log(result.children[i].children[1].children[0].children.length)
-                      var episode, network, title, poster
+                      var episode, network, title
+                      var poster = result.children[i].children[1].children[0].children[1].attribs['data-original'];
+
                       if (result.children[i].children[1].children[0].children.length == 7) {
                         if (result.children[i].children[1].children[0].children[6].children.length == 8) {
                           title = result.children[i].children[1].children[0].children[6].children[7].children[0].attribs['content']
@@ -170,12 +172,13 @@
                       episode[0] = 's' + episode[0]
                       episode[1] = 'e' + episode[1]
                       episode = episode[0] + episode[1]
+                      var dashed_title = result.children[i].children[0].attribs['content'].split('/')[4];
                       let showObject = {
                         title: title,
-                        dashed_title: result.children[i].children[0].attribs['content'].split('/')[4],
+                        dashed_title: dashed_title,
                         episode: episode,
                         network: network,
-                        runtime: result.children[i].attribs['data-runtime'],
+                        runtime: result.children[i].attribs['data-runtime']
                       }
                       // Clear year
                       if (title) {
@@ -188,6 +191,7 @@
                         }
                       }
                       // console.log(showObject)
+                      posterPromises.push(posterService.getPoster(dashed_title))
                       day.shows.push(showObject)
                     }
                   }
@@ -195,52 +199,52 @@
                 })
 
                 // console.log('Week ->', week)
-
-                db.get('calendar')
-                .then(function(doc) {
-                  // console.log('pre update', doc.days)
-                  db.put({
-                    _id: doc._id,
-                    _rev: doc._rev,
-                    days: week
+                Promise.all(posterPromises)
+                .then((posters_resolved) => {
+                  // console.log(posters_resolved)
+                  week.forEach( (day, d_index) => {
+                    day.shows.forEach( (show, s_index) => {
+                      posters_resolved.filter(pr => {
+                        // console.log(pr)
+                        if (pr.title === show.dashed_title) {
+                          show.poster = pr.poster
+                        }
+                      })
+                    })
                   })
-                  resolve(week)
-                })
-                .catch(function(err) {
-                  console.log('No calendar in db')
-                  db.put({
-                    _id: 'calendar',
-                    days: week
-                  })
-                  .then(() => {
+                  ///// DB SAVE /////
+                  db.get('calendar')
+                  .then(function(doc) {
+                    db.put({
+                      _id: doc._id,
+                      _rev: doc._rev,
+                      days: week
+                    })
                     resolve(week)
                   })
+                  .catch(function(err) {
+                    console.log('No calendar in db')
+                    db.put({
+                      _id: 'calendar',
+                      days: week
+                    })
+                    .then(() => {
+                      resolve(week)
+                    })
+                  })
+                  ///////////////////
+
                 })
-                // resolve(week)
+
               }
             })
+            // out of request
 
           })
         }
 
         resolve(update())
-        
-        // // let sinceLastUpdate = commonService.daysToNow(localStorage.lastUpdate)
-        // let sinceLastUpdate = 1
-        // // console.log(sinceLastUpdate + ' days since last update')
-        //
-        // if (localStorage.lastUpdate && sinceLastUpdate < 1) {
-        //   db.get('calendar')
-        //   .then(function(doc) {
-        //     resolve(doc.days)
-        //     // resolve(update())
-        //   })
-        //   .catch((err) => {
-        //     resolve(update())
-        //   })
-        // } else {
-        //   resolve(update())
-        // }
+
       })
     }
 

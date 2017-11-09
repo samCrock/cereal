@@ -5,7 +5,7 @@
   .module('app')
   .controller('calendarCtrl', calendarCtrl);
 
-  function calendarCtrl($rootScope, $scope, $interval, jsonService, posterService, commonService, torrentService, dialogService, dbService) {
+  function calendarCtrl($rootScope, $scope, $interval, jsonService, commonService, torrentService, dialogService, dbService) {
     let fsExtra = require('fs-extra')
 
     $rootScope.loading = true
@@ -29,25 +29,6 @@
       return show
     }
 
-    $scope.stream = function(episode) {
-      console.log('PLAY ->', episode)
-      torrentService.searchTorrent({
-        show: episode.show,
-        episode: episode.episode
-      })
-      .then((t) => {
-        let streamObj = {
-          magnet: t.magnet,
-          path: __dirname + '/../../library/' + episode.show + '/' + episode.episode
-        }
-        console.log('streamObj', streamObj)
-        commonService.stream(streamObj)
-      })
-      .catch((reason) => {
-        console.log(reason)
-      })
-    }
-
     $scope.playTrailer = function(show) {
       console.log(show)
       jsonService.getYTTrailer(show.show)
@@ -58,18 +39,20 @@
       })
     }
 
-    $scope.download = (showObj) => {
-      torrentService.searchTorrent({
-        show: showObj.show,
-        episode: showObj.episode
-      })
-      .then((result) => {
-        torrentService.downloadTorrent(result)
-        .then((t) => {
-          console.log('downloadTorrent result', t)
-        })
-      })
-    }
+    // $scope.download = (showObj) => {
+    //   torrentService.searchTorrent({
+    //     show: showObj.show,
+    //     episode: showObj.episode
+    //   })
+    //   .then((result) => {
+    //     torrentService.downloadTorrent(result)
+    //     .then((t) => {
+    //       console.log('downloadTorrent result', t)
+    //     })
+    //   })
+    // }
+
+
 
     if ($rootScope.reloadCalendar) {
       $rootScope.msg = 'Loading this week\'s calendar'
@@ -102,70 +85,10 @@
             })
           }
         }
-
-        $rootScope.days = []
-        jsonService.getLocalPosters()
-        .then((local_posters) => {
-          let posterTitles = []
-          let posters = []
-          let showsToUpdate = []
-          // Set library posters
-          for (var show in $rootScope.library) {
-            let index = local_posters.indexOf(show)
-            // if (index != -1) {
-            if (false) { // Disable local posters
-              $rootScope.library[show].poster = 'assets/posters/' + local_posters[index] + '.jpg'
-            } else {
-              console.log('Downloading library poster', show)
-              posters.push(posterService.downloadPoster(show))
-            }
-          }
-          // Set calendar posters
-          $rootScope.calendar
-          .filter((day) => {
-            day.shows.filter((show) => {
-              let index = local_posters.indexOf(show.dashed_title)
-              // if (index != -1) {
-                if (false) { // Disable local posters
-                show.poster = 'assets/posters/' + local_posters[index] + '.jpg'
-              } else {
-                console.log('Downloading calendar poster', show)
-                posters.push(posterService.downloadPoster(show.dashed_title))
-              }
-            })
-            $rootScope.days.push(day)
-          })
-
-
-
-
-          Promise.all(posters)
-          .then((results) => {
-            console.log('--- All posters found ---')
-            $rootScope.days.filter((day, i) => {
-              day.shows.filter((show, j) => {
-                results.filter((poster) => {
-                  if (poster && poster.title === show.dashed_title) {
-                    showsToUpdate.push({
-                      title: show.dashed_title,
-                      poster: poster.poster
-                    })
-                    $rootScope.days[i].shows[j].poster = poster.poster
-                    $rootScope.$applyAsync()
-                  }
-                })
-              })
-            })
-            delete $rootScope.msg
-            $rootScope.loading = false
-            $rootScope.reloadCalendar = false
-            $rootScope.$apply()
-          })
-          // } else {
-          //   delete $rootScope.msg
-          //   $rootScope.loading = false
-          // }
-        })
+        delete $rootScope.msg
+        $rootScope.loading = false
+        $rootScope.reloadCalendar = false
+        $rootScope.$apply()
       })
     } else {
       delete $rootScope.msg

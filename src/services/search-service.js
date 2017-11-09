@@ -15,25 +15,15 @@
     let search_module = {}
 
     search_module['show'] = function show(searchString) {
-
       return new Promise((resolve, reject) => {
-
-        // let dashedShowName = commonService.spacedToDashed(searchString)
-
         var url = 'https://trakt.tv/search/shows?query=' + encodeURIComponent(searchString)
-
         console.log(url)
-
         request.get(url, function(error, response, body) {
-
           if (error || !response) return reject(error)
-
           console.log(response.statusCode)
-
           if (!error && response.statusCode == 200) {
             let $ = cheerio.load(body)
             let items = $('.grid-item')
-            // console.log('items', items)
             let showObj = {}
             let results = []
             items.filter((i) => {
@@ -50,16 +40,13 @@
                   }
                   if (result.poster.indexOf('placeholder') === -1) results.push(result)
                 }
-
               }
             })
             resolve(results)
           } else reject()
         });
       });
-
     }
-
     return search_module;
   }
 })();

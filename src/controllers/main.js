@@ -12,9 +12,10 @@
     let fsPath = require('fs-path')
     let logUpdate = require('log-update')
     let util = require('util')
+    let remote = require('electron').remote
+
     const wt_client = wtService.client()
 
-    let remote = require('electron').remote
 
     // CONFIG SETUP
     $rootScope.CONFIG = {
@@ -63,7 +64,6 @@
 
     $rootScope.addListeners = true; // Related to player key events
 
-    $scope.default_poster = './assets/posters/default.jpg'
     $rootScope.wallpaper = 'assets/cereal.jpg' // Default background
 
     $rootScope.library = []

@@ -6,7 +6,7 @@
         <h2 class="weight-300">Search for a show or check out the calendar to start downloading</h2>
       </div>
       <md-card class="library_card" ng-repeat="show in sortableLibrary($root.library) | orderBy:'last_download':reverse=true " ui-sref="app.show( { show: show.DashedTitle } )" layout-align="center center">
-        <md-card-content class="poster_library" style="background: url({{ show.poster }}) no-repeat center center; background-size: cover;">
+        <md-card-content class="poster_library" style="background: url({{ show.Poster }}) no-repeat center center; background-size: cover;">
           <div class="poster_library_sub">
             <div class="poster_sub show">{{ show.SpacedTitle }}</div>
             <div class="poster_sub fromNow">Downloaded {{ fromNow(show.last_download) }}</div>

@@ -1,5 +1,5 @@
 <section style="margin-top: 3em;">
-  <div ng-repeat="day in $root.days | limitTo:8 | orderBy:'-date'" flex layout="column" layout-align="center center" class="day_container">
+  <div ng-repeat="day in $root.calendar | limitTo:8 | orderBy:'-date'" flex layout="column" layout-align="center center" class="day_container">
     <div class="calendar_day">
       <span class="md-subhead calendar_date medium">{{ calendarDate(day.date) }}</span>
       <span class="md-subhead complete_date medium">{{ completeDate(day.date) }}</span>

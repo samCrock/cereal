@@ -145,8 +145,10 @@
         $rootScope.current_show = $scope.show
         sessionStorage.setItem('current_show', JSON.stringify($scope.show))
         $rootScope.wallpaper = $scope.show.Wallpaper
+        $rootScope.poster = $scope.show.Poster
         dbService.get($scope.dashed_title)
         .then((doc) => {
+          console.log('Saving to db ->', doc)
           dbService.put($scope.dashed_title, doc)
           .then(() => {
             console.log($scope.show.DashedTitle, 'synced')
@@ -202,19 +204,7 @@
           delete $scope.show.Seasons[s][e].progress
           $scope.$applyAsync()
         }
-        // dbService.get($scope.show.DashedTitle)
-        //   .then((doc) => {
-        //     $scope.show._id = doc._id
-        //     $scope.show._rev = doc._rev
-        //     $scope.show.last_download = new Date()
-        //     dbService.put($scope.show.DashedTitle, $scope.show)
-        //       .then(() => {
-        //         console.log($scope.show.DashedTitle, 'synced')
-        //       })
-        //       .catch((err) => {
-        //         console.error('Error updating', $scope.dashed_title, err)
-        //       })
-        //   })
+
       })
 
       $scope.downloadEpisode = (episode) => {

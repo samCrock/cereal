@@ -5,26 +5,20 @@
   .module('app')
   .controller('searchCtrl', searchCtrl);
 
-  function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService, commonService, posterService) {
+  function searchCtrl($rootScope, $state, $scope, $timeout, $stateParams, searchService, commonService) {
 
     $rootScope.loading = false
-    $timeout(() => {
-      document.getElementById('search-input').focus()
-    }, 200)
-    if (sessionStorage.getItem('search_results')) {
-      $scope.shows = JSON.parse(sessionStorage.getItem('search_results'))
-    }
-    if (sessionStorage.getItem('search_string')) {
-      $scope.show = sessionStorage.getItem('search_string')
-    }
+
+    $timeout(() => { document.getElementById('search-input').focus() }, 200)
+
+    if (sessionStorage.getItem('search_results')) { $scope.shows = JSON.parse(sessionStorage.getItem('search_results')) }
+    if (sessionStorage.getItem('search_string')) { $scope.show = sessionStorage.getItem('search_string') }
 
     $scope.$watch('show', (show) => {
       if (show) { $scope.show = commonService.capitalCase(show) }
     })
 
     $scope.openShow = function(show) {
-      let posterPath = './assets/posters/' + show.dashedTitle + '.jpg'
-      posterService.downloadPosterFromUrl(posterPath, show.poster)
       console.log('app.show->', show)
       $state.go('app.show', { show: show.dashedTitle })
     }

@@ -33,9 +33,7 @@
     let downloadTorrent = torrent_module['downloadTorrent'] = function downloadTorrent(t) {
       return new Promise(function(resolve, reject) {
 
-        if (!t) {
-          reject(404)
-        }
+        if (!t) { reject(404) }
 
         t.poster = './assets/posters/' + t.dashed_show + '.jpg'
 
@@ -47,6 +45,8 @@
           }, function(torrent) {
             t.path = path + t.spaced_show + '/' + t.episode
             torrent.id = t.id
+
+            console.log('Download started')
 
             $rootScope.$broadcast('downloading', {
               show: t.spaced_show,
@@ -197,13 +197,13 @@
             resolve(torrent)
           })
           .catch(() => {
-            if ($rootScope.CONFIG.engines === 1) reject()
+            // if ($rootScope.CONFIG.engines === 1) reject()
             searchTorrent_kickass(formattedSearchObj)
               .then((torrent) => {
                 resolve(torrent)
               })
               .catch(() => {
-                if ($rootScope.CONFIG.engines === 2) reject()
+                // if ($rootScope.CONFIG.engines === 2) reject()
                 searchTorrent_eztv(formattedSearchObj)
                   .then((torrent) => {
                     resolve(torrent)
