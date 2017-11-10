@@ -8,15 +8,15 @@
   /* @ngInject */
   function mainCtrl($scope, $interval, $window, $state, $location, $anchorScroll, $rootScope, $timeout, $mdToast, wtService, torrentService, jsonService, commonService, dbService, updateService) {
 
-    let fsExtra = require('fs-extra')
-    let fsPath = require('fs-path')
-    let logUpdate = require('log-update')
-    let util = require('util')
-    let remote = require('electron').remote
+    const fsExtra = require('fs-extra'),
+    fsPath = require('fs-path'),
+    logUpdate = require('log-update'),
+    util = require('util'),
+    remote = require('electron').remote
 
     const wt_client = wtService.client()
 
-
+    console.log(remote)
     // CONFIG SETUP
     $rootScope.CONFIG = {
       engines: 2, // Number of torrent engines to use before rejecting searchTorrent (3 == all)

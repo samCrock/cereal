@@ -722,11 +722,27 @@ section {
   transform: translateX(44px);
 }
 
+#player_show_title span {
+  margin-left: 1rem;
+}
+
 #player_episode_label {
   color: rgba(227, 255, 30, 0.9);
   font-family: 'Regular';
   text-transform: uppercase;
   font-size: 1.8rem;
+}
+
+#player_filename {
+  position: fixed;
+  top: 6rem;
+  font-size: 1.5rem;
+  text-align: center;
+  width: calc(100% - 90px);
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Light';
+  transform: translateX(44px);
 }
 
 .font-10 {

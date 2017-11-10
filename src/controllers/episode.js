@@ -7,22 +7,23 @@
 
   function episodeCtrl($rootScope, $state, $scope, $interval, $stateParams, $mdToast, jsonService, torrentService, dbService, commonService, wtService) {
 
-    let chalk = require('chalk')
-    let logUpdate = require('log-update')
-    let fsExtra = require('fs-extra')
-    let fsPath = require('fs-path')
-    let path = __dirname + '/../../library/'
-    let PouchDB = require('pouchdb-browser')
-    let db = new PouchDB('cereal')
+    const chalk = require('chalk')
+    const logUpdate = require('log-update')
+    const fsExtra = require('fs-extra')
+    const fsPath = require('fs-path')
+    const path = __dirname + '/../../library/'
+    const PouchDB = require('pouchdb-browser')
+    const db = new PouchDB('cereal')
 
     const supportedVideoExt = ['mkv', 'avi', 'mp4']
     const wt_client = wtService.client()
 
-    let Player = videojs('player')
+    const Player = videojs('player')
 
     $rootScope.loading = false
     $rootScope.msg = ''
     $scope.torrent_msg = {}
+    $scope.fileName = ''
 
     let episode = $scope.episode = $stateParams.episode.trim()
     let dashed_show = $stateParams.show
@@ -101,6 +102,7 @@
           ext = ext[ext.length - 1]
 
           if (supportedVideoExt.indexOf(ext) > -1) {
+            $scope.fileName = file.split('/')[8]
             console.log('FILE ->', file)
             $rootScope.msg = spaced_show + ' ' + episode
             startPlayer()
@@ -223,21 +225,25 @@
                 $scope.torrent_msg = {}
                 $rootScope.$apply()
 
-                // let track = document.createElement('track')
                 let track = {}
                 track.kind = 'subtitles'
-                track.label = 'English'
                 track.srclang = 'en'
                 track.manualCleanup = true
                 var subs_files = fsExtra.readdirSync(library_element.path);
+
+                var first = true
                 for (var i = 0; i < subs_files.length; i++) {
                   if (subs_files[i].indexOf('.vtt') > -1) {
-                    console.log('Subs found ->', subs_files[i])
+                    console.log('Subs found ->', i, subs_files[i])
+                    track.label = subs_files[i]
                     track.src = library_element.path + '/' + subs_files[i]
-                    track.mode = 'showing'
+                    track.mode = 'hidden'
+                    if (first) track.mode = 'showing'
+                    first = false
                     this.addRemoteTextTrack(track)
                   }
                 }
+                console.log(this)
               })
 
               // Handle player errors
