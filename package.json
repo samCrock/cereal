@@ -2,7 +2,7 @@
   "name": "Cereal",
   "productName": "Cereal",
   "main": "main.js",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "repository": "https://github.com/samCrock/cereal",
   "description": "stream & download series",
   "license": "MIT",
