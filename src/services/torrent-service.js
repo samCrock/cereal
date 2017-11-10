@@ -46,7 +46,7 @@
             t.path = path + t.spaced_show + '/' + t.episode
             torrent.id = t.id
 
-            console.log('Download started')
+            // console.log('Download started')
 
             $rootScope.$broadcast('downloading', {
               show: t.spaced_show,

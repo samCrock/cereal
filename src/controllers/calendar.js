@@ -39,19 +39,18 @@
       })
     }
 
-    // $scope.download = (showObj) => {
-    //   torrentService.searchTorrent({
-    //     show: showObj.show,
-    //     episode: showObj.episode
-    //   })
-    //   .then((result) => {
-    //     torrentService.downloadTorrent(result)
-    //     .then((t) => {
-    //       console.log('downloadTorrent result', t)
-    //     })
-    //   })
-    // }
-
+    $scope.download = (showObj) => {
+      torrentService.searchTorrent({
+        show: showObj.show,
+        episode: showObj.episode
+      })
+      .then((result) => {
+        torrentService.downloadTorrent(result)
+        .then((t) => {
+          console.log('downloadTorrent result', t)
+        })
+      })
+    }
 
 
     if ($rootScope.reloadCalendar) {
@@ -64,31 +63,32 @@
         console.log('Library  ->', $rootScope.library)
         console.log('Calendar ->', $rootScope.calendar)
 
-        // Auto download
-        if ($rootScope.CONFIG.auto_download) {
-          for (let [calK, calV] of Object.entries($rootScope.calendar)) {
-            calV.shows.map(show => {
-              var showInLibrary = $rootScope.library[show.dashed_title]
-              if ($rootScope.library.hasOwnProperty(show.dashed_title) && showInLibrary.last_download) {
-                for (var sK in showInLibrary.Seasons) {
-                  for (var epK in showInLibrary.Seasons[sK]) {
-                    var ep = showInLibrary.Seasons[sK][epK]
-                    if (ep.episode === show.episode && !ep.downloaded) {
-                      $scope.download({
-                        show: show.dashed_title,
-                        episode: show.episode
-                      })
-                    }
-                  }
-                }
-              }
-            })
-          }
-        }
         delete $rootScope.msg
         $rootScope.loading = false
         $rootScope.reloadCalendar = false
         $rootScope.$apply()
+
+        // Auto download
+        for (var show in $rootScope.library) {
+          if ($rootScope.library[show]['last_download']) {
+            // console.log($rootScope.library[show]['DashedTitle'], $rootScope.library[show]['Seasons'])
+            for (var season in $rootScope.library[show]['Seasons']) {
+              for (var episodes in $rootScope.library[show]['Seasons'][season]) {
+                // console.log($rootScope.library[show]['DashedTitle'], $rootScope.library[show]['Seasons'][season][episodes])
+                let daysPassed = moment().diff(moment($rootScope.library[show]['Seasons'][season][episodes].date, moment.ISO_8601).toISOString(), 'days')
+                // console.log('daysPassed', daysPassed)
+                if (daysPassed >= 0 && daysPassed < 8 && !$rootScope.library[show]['Seasons'][season][episodes].downloaded) {
+                  console.log('Auto download ->', $rootScope.library[show]['SpacedTitle'], $rootScope.library[show]['Seasons'][season][episodes])
+                  $scope.download({
+                    show: $rootScope.library[show]['DashedTitle'],
+                    episode: $rootScope.library[show]['Seasons'][season][episodes].episode
+                  })
+                }
+              }
+            }
+          }
+        }
+
       })
     } else {
       delete $rootScope.msg

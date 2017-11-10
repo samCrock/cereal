@@ -16,7 +16,6 @@
 
     const wt_client = wtService.client()
 
-    console.log(remote)
     // CONFIG SETUP
     $rootScope.CONFIG = {
       engines: 2, // Number of torrent engines to use before rejecting searchTorrent (3 == all)
