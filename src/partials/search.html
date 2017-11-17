@@ -1,4 +1,4 @@
-<section >
+<section class="search-page">
     <div>
         <form ng-submit="search()">
             <md-input-container class="search-input" md-no-float>
@@ -6,16 +6,21 @@
                 <!-- <md-button aria-label="Go" class="md-fab back" ng-click="search()"> -->
                 <!-- <ng-md-icon icon="chevron_left"></ng-md-icon> -->
             </md-button>
+            <md-progress-linear md-mode="indeterminate" ng-if="loading" style="top: -24px;"></md-progress-linear>
             </md-input-container>
         </form>
-        <div ng-if="shows" flex layout="column" layout-align="center center">
+        <div ng-if="shows.length > 0 && !loading" flex layout="column" layout-align="center center">
             <md-content layout layout-wrap layout-align="center center" class="bg_default" style="width: 100%;">
-                <md-card class="library_card" ng-repeat="show in shows | orderBy : '-title' : reverse = true track by $index" layout-align="center center">
+                <md-card class="library_card" ng-repeat="show in shows | orderBy : '-title' : reverse = false track by $index" layout-align="center center">
                     <md-card-content>
                         <img ng-src="{{ show.poster }}" ng-click="openShow(show)" class="poster_library">
                     </md-card-content>
                 </md-card>
             </md-content>
         </div>
+        <div ng-if="shows.length == 0 && !loading" flex layout="column" layout-align="center center">
+            <label>No results</label>
+        </div>
+
     </div>
 </section>

@@ -83,13 +83,6 @@
               delete t['download_info']
 
               wt_client.remove(t.magnet)
-              let recent = localStorage.getItem('recent')
-              if (recent) {
-                recent = JSON.parse(recent)
-              } else {
-                recent = []
-              }
-              recent.push(t)
 
               // Set last_download
               dbService.get(t.dashed_show)
@@ -129,10 +122,20 @@
                   localStorage.setItem('pending', JSON.stringify($rootScope.pending))
                 }
               }
-
+              // Add to recent
+              let recent = localStorage.getItem('recent')
+              if (recent) {
+                recent = JSON.parse(recent)
+              } else {
+                recent = []
+              }
+              recent.push(t)
               localStorage.setItem('recent', JSON.stringify(recent))
+              $rootScope.recent = recent
+
               resolve(torrent.name)
-              $rootScope.$apply()
+
+              $rootScope.$applyAsync()
 
               // // Update pending downloads
               $rootScope.$emit('episode_downloaded', t)
@@ -184,27 +187,22 @@
     // EZTV
     let searchTorrent = torrent_module['searchTorrent'] = function searchTorrent(searchObj) {
       return new Promise(function(resolve, reject) {
-        var dashed_show = searchObj.show
+        var dashed_show = searchObj.dashed_show
         var episode = searchObj.episode
-        var spaced_show = commonService.dashedToSpaced(dashed_show)
-        var formattedSearchObj = {
-          spaced_show: spaced_show,
-          dashed_show: dashed_show,
-          episode: episode
-        }
-        searchTorrent_pirateBay(formattedSearchObj)
+        var spaced_show = searchObj.show
+        searchTorrent_pirateBay(searchObj)
           .then((torrent) => {
             resolve(torrent)
           })
           .catch(() => {
             // if ($rootScope.CONFIG.engines === 1) reject()
-            searchTorrent_kickass(formattedSearchObj)
+            searchTorrent_kickass(searchObj)
               .then((torrent) => {
                 resolve(torrent)
               })
               .catch(() => {
                 // if ($rootScope.CONFIG.engines === 2) reject()
-                searchTorrent_eztv(formattedSearchObj)
+                searchTorrent_eztv(searchObj)
                   .then((torrent) => {
                     resolve(torrent)
                   })

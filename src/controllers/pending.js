@@ -10,7 +10,7 @@
     $rootScope.loading = false
     const wt_client = wtService.client()
     let fsExtra = require('fs-extra')
-    let recent = localStorage.getItem('recent')
+    let recent = $rootScope.recent
 
     // console.log('recent', recent)
 
@@ -21,7 +21,7 @@
       } else {
         recent = []
       }
-      $scope.recent = recent
+      $rootScope.recent = recent
     }
 
     let destroyShowListener;
@@ -31,7 +31,7 @@
     destroyShowListener = $rootScope.$on('episode_downloaded', (e, showResult) => {
       console.log('Downloaded', showResult);
       setRecentDownloads()
-      $scope.$applyAsync()
+      $rootScope.$applyAsync()
     })
 
     var deleteFromPending = (torrent) => {
@@ -54,6 +54,7 @@
       recent.forEach((r, i) => {
         if (r.magnet === episode.magnet) { recent.splice(i, 1) }
         localStorage.setItem('recent', JSON.stringify(recent))
+        $rootScope.recent = recent
       })
       console.log('Recent', recent)
     }

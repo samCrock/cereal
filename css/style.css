@@ -846,7 +846,7 @@ section {
 
 .search-input input {
   font-size: 2.6rem;
-  height: 4rem;
+  height: 3rem;
   text-align: center;
   color: rgba(255, 255, 255, 1);
   background-color: rgba(48, 45, 50, 0.4);
@@ -854,7 +854,7 @@ section {
 
 #search-input {
   font-family: 'Light';
-  font-size: 4rem;
+  font-size: 3rem;
   height: 6rem;
   line-height: 4.5rem;
 }
@@ -1360,4 +1360,10 @@ md-input-container>md-select {
     color: rgba(227, 255, 30, 0.9);
     margin: auto;
     margin-right: 5rem;
+  }
+
+  .search-page label {
+      z-index: 1;
+      font-size: 2.5rem;
+      color: rgba(255,255,255,.9)
   }

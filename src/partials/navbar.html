@@ -1,17 +1,17 @@
 <md-nav-bar md-selected-nav-item="$root.currentNavItem" nav-bar-aria-label="navigation links" class="md-primary" layout layout-align="center center" ng-if="!isBack">
-  <md-nav-item md-nav-sref="app.library" name="library" aria-label="Library">
+  <md-nav-item ng-if="$root.library.hasOwnProperty" md-nav-sref="app.library" name="library" aria-label="Library">
     <i class="white fa fa-play" aria-hidden="true"></i>
   </md-nav-item>
   <md-nav-item md-nav-sref="app.calendar" name="calendar" aria-label="Calendar">
     <i class="white fa fa-calendar-o" aria-hidden="true"></i>
   </md-nav-item>
-  <md-nav-item md-nav-sref="app.pending" name="pending" aria-label="Pending">
+  <md-nav-item ng-if="$root.pending.length > 0 || $root.recent.length > 0" md-nav-sref="app.pending" name="pending" aria-label="Pending">
     <i class="white fa fa-download" aria-hidden="true"></i>
   </md-nav-item>
   <md-nav-item md-nav-sref="app.search" name="search" aria-label="Search">
     <i class="white fa fa-search" aria-hidden="true"></i>
   </md-nav-item>
-  <md-nav-item ng-if="$root.current_show.SpacedTitle" md-nav-sref="app.show( { show: $root.current_show.DashedTitle } )" name="show">{{ current_show.SpacedTitle }}</md-nav-item>
+  <md-nav-item ng-if="$root.current_show.Title" md-nav-sref="app.show( { show: $root.current_show.DashedTitle } )" name="show">{{ current_show.Title }}</md-nav-item>
 
   <md-fab-speed-dial md-open="" md-direction="down" class="md-scale" id="settings">
     <md-fab-trigger style="transform: translateX(8rem);">

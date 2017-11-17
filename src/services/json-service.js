@@ -101,7 +101,7 @@
               if ($('.additional-stats')['0'] && $('.additional-stats')['0'].children[0]) {
 
                 poster = $('.sidebar')['0'].children[0].children[1].attribs['data-original']
-
+                title = $('#summary-ratings-wrapper')['0'].next.children[0].children[0].children[1].children[0].children[0].data.trim()
                 // title = commonService.capitalCase(show)
                 seasons = $('.season-count')[1].attribs['data-all-count']
                 network = $('.additional-stats')['0'].children[0].children[4] ? $('.additional-stats')['0'].children[0].children[4].data : ''
@@ -119,7 +119,7 @@
                 })
                 wallpaper = $('#summary-wrapper')['0'].attribs['data-fanart']
                 console.log('##########################')
-                console.log('SpacedTitle :', commonService.dashedToSpaced(dashed_title))
+                console.log('Title :', title)
                 console.log('DashedTitle :', dashed_title)
                 console.log('Seasons     :', seasons)
                 console.log('Network     :', network)
@@ -133,7 +133,7 @@
                 console.log('##########################')
                 showJson = {
                   Updated: new Date,
-                  SpacedTitle: commonService.dashedToSpaced(dashed_title),
+                  Title: title,
                   DashedTitle: dashed_title,
                   Network: network,
                   Premiered: premiered,

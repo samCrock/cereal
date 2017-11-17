@@ -1,7 +1,7 @@
 <section layout="column" layout-align="center center">
   <md-content>
     <div layout="column" class="show_recap">
-      <h1 class="title extraLight">{{ show.SpacedTitle }}</h1>
+      <h1 class="title extraLight">{{ show.Title }}</h1>
       <md-button aria-label="Delete" class="md-button small_btn show_delete_btn" ng-click="deleteShow()">
         <i class="poster_sub_show icon fa fa-trash fa-2x" aria-hidden="true"></i>
       </md-button>
@@ -23,7 +23,7 @@
     </div>
     <div>
       <md-progress-linear ng-show="showIsLoading" md-mode="indeterminate"></md-progress-linear>
-      <md-tabs ng-show="!showIsLoading" md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);">
+      <md-tabs ng-show="!showIsLoading" md-selected="selectedIndex" md-dynamic-height md-border-bottom id="episode_list" onscroll="showScroll(event);" style="margin-bottom: 4rem;">
         <md-tab ng-repeat="(season, episodes) in show.Seasons" label="Season {{ season }}">
           <md-card class="borderless show_episode" ng-repeat="(episodeN, episode) in episodes track by $index" layout-align="start" id="{{ 'episode_' + ($index + 1) }}">
             <md-progress-linear ng-if="episode.loading && !episode.eta && !episode.downloaded" md-mode="indeterminate"></md-progress-linear>

@@ -19,12 +19,13 @@
     $scope.dashed_title = $stateParams.show ? $stateParams.show : $rootScope.current_show.DashedTitle
     $scope.selected_ep = $stateParams.episode
     $scope.downloading = []
-    $scope.poster = 'res/posters/' + $scope.dashed_title + '.jpg'
+    // $scope.poster = 'res/posters/' + $scope.dashed_title + '.jpg'
 
     let destroyShowListener;
     $scope.$on('$destroy', function() {
       destroyShowListener()
     })
+
     destroyShowListener = $rootScope.$on('show_ready', (e, showResult) => {
       sessionStorage.removeItem('current_show')
       formatDataAndSave(showResult)
@@ -52,46 +53,37 @@
         return visible
       }
 
-      $scope.stream = function(episode) {
-        console.log('PLAY ->', episode)
-        torrentService.searchTorrent({
-          show: $scope.dashed_title,
-          episode: episode.label
-        })
-        .then((t) => {
-          let streamObj = {
-            magnet: t.magnet,
-            path: __dirname + '/../../library/' + $scope.dashed_title + '/' + episode.label
-          }
-          console.log('streamObj', streamObj)
-          commonService.stream(streamObj)
-        })
-        .catch((reason) => {
-          console.log(reason)
-          dialogService.notify({
-            title: 'Sorry',
-            content: 'No results'
-          })
-        })
-      }
+    //   $scope.stream = function(episode) {
+    //     console.log('PLAY ->', episode)
+    //     torrentService.searchTorrent({
+    //       show: $scope.dashed_title,
+    //       episode: episode.label
+    //     })
+    //     .then((t) => {
+    //       let streamObj = {
+    //         magnet: t.magnet,
+    //         path: __dirname + '/../../library/' + $scope.dashed_title + '/' + episode.label
+    //       }
+    //       console.log('streamObj', streamObj)
+    //       commonService.stream(streamObj)
+    //     })
+    //     .catch((reason) => {
+    //       console.log(reason)
+    //       dialogService.notify({
+    //         title: 'Sorry',
+    //         content: 'No results'
+    //       })
+    //     })
+    //   }
 
       $scope.play = function(episode) {
-        let recent = localStorage.getItem('recent')
-        if (recent) {
-          recent = JSON.parse(recent)
-          for (var i = recent.length - 1; i >= 0; i--) {
-            if (recent[i].torrent === episode.torrent) {
-              recent.splice(i, 1)
-              localStorage.setItem('recent', JSON.stringify(recent))
-            }
-          }
-        }
         $state.go('app.episode', ({
           show: $scope.dashed_title,
           episode: episode.label
         }))
       }
 
+      // Loop through pending and update download status
       $interval(() => {
         if ($rootScope.pending && $scope.show && $scope.show.Seasons) {
           for (var i = 0; i < $rootScope.pending.length; i++) {
@@ -109,6 +101,7 @@
         }
         $scope.$applyAsync()
       }, 1000)
+
 
       function start() {
         jsonService.getShow($scope.dashed_title)
@@ -208,13 +201,16 @@
       })
 
       $scope.downloadEpisode = (episode) => {
-        let show = $scope.show.DashedTitle
-        let label = episode.label
+        // let show = $scope.show.DashedTitle
+        let spaced_show = $scope.show.Title
+        let dashed_show = $scope.show.DashedTitle
+        let episode_label = episode.label
         let s = episode.s
         let e = episode.e
         let searchObject = {
-          show: show,
-          episode: label
+          spaced_show: spaced_show,
+          dashed_show: dashed_show,
+          episode: episode_label
         }
         if ($scope.show.Genres.indexOf('Talk Show') > -1) searchObject.date = episode.date
 
